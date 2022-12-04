@@ -1,2 +1,2 @@
 export const forbiddenRedirect = 'Forbidden';
-export const unauthenticatedRedirect = 'Unauthorized';
+export const unauthenticatedRedirect = 'Login';

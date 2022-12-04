@@ -1,10 +1,9 @@
 import React from 'react'
 import { View , Text, StyleSheet} from 'react-native'
-import globalStyles from '../styles/Global'
 
 function Forbidden() {
   return (
-    <View style={globalStyles.page}>
+    <View >
         <Text>Forbidden</Text>
     </View>
   )

@@ -3,7 +3,7 @@ import { forbiddenRedirect } from '../utils/Redirect';
 import { AuthorizeContext } from './AuthorizeProvider';
 import useRouter from './hook/useRouter';
 interface Props extends PropsWithChildren {
-    forbiddenRedirect: string;
+    forbiddenRedirect?: string;
 }
 function NonAuthorize(props: Props) {
     const { authenticated, initLoading } = useContext(AuthorizeContext);

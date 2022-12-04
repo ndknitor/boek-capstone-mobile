@@ -1,32 +1,31 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { AxiosInterceptor } from './shared/component/AxiosInterceptor';
-import About from './pages/About';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AxiosInterceptor } from './component/AxiosInterceptor';
 import Forbidden from './pages/Forbidden';
-import Index from './pages/Index';
-import Render from './pages/Render';
-import Unauthorized from './pages/Unauthorized';
-import Layout from './shared/component/Layout';
+import Index from './pages/Index/Index';
+import Layout from './component/Layout';
+import Profile from './pages/Profile/Profile';
+import React from 'react';
+import Login from './pages/Login/Login';
 
 const Stack = createNativeStackNavigator();
 
 function Routers() {
   return (
-    <NavigationContainer >
+    <NavigationContainer>
       <AxiosInterceptor>
         <Layout>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={"Index"}>{() => <Index />}</Stack.Screen>
-            <Stack.Screen name={"About"}>{() => <About />}</Stack.Screen>
-            <Stack.Screen name={"Render"}>{() => <Render />}</Stack.Screen>
+            <Stack.Screen name={"Login"}>{() => <Login />}</Stack.Screen>
+            <Stack.Screen name={"Profile"}>{() => <Profile />}</Stack.Screen>
 
-            <Stack.Screen name={"Unauthorized"}>{() => <Unauthorized />}</Stack.Screen>
             <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
           </Stack.Navigator>
         </Layout>
       </AxiosInterceptor>
     </NavigationContainer>
-  )
+  );
 }
 
 export default Routers

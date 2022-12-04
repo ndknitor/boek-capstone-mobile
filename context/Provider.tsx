@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import Context, { useProvider } from './Context'
+import { Context, useProvider } from './Context'
 
 function Provider(props: PropsWithChildren<{}>) {
     return (
