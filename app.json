@@ -1,12 +1,14 @@
 {
   "expo": {
-    "name": "ReactNativeTemplate",
-    "slug": "ReactNativeTemplate",
-    "plugins": ["@react-native-google-signin/google-signin"],
+    "name": "Boek",
+    "slug": "Boek",
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,7 +22,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.knguyenzzz.ReactNativeTemplate"
+      "bundleIdentifier": "com.knguyenzzz.Boek"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -28,14 +30,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.knguyenzzz.ReactNativeTemplate"
+      "package": "com.knguyenzzz.Boek"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "9267f07a-27d1-4cc4-9b36-50b8b9d24522"
+        "projectId": "69ef5957-a3ab-41f2-81be-cf0593170fba"
       }
     }
   }

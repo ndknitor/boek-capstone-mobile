@@ -1,12 +1,14 @@
 import React from 'react';
 import useFooterComponent from './Footer.hook';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import useRouter from '../../libs/hook/useRouter';
 
 function Footer() {
   const { showed } = useFooterComponent();
+  const { navigate } = useRouter();
   return (
-    <View style={{ backgroundColor: "blue", display: showed ? "flex" : "none" }}>
-      <Text style={{ fontSize: 24}}>This is Footer</Text>
+    <View style={{ display: showed ? "flex" : "none" , flexDirection : "row"}}  >
+
     </View>
   )
 }

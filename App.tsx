@@ -4,6 +4,8 @@ import AuthorizeProvider from "./libs/AuthorizeProvider";
 import React from "react";
 import Routers from "./Routes";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { StatusBar } from "react-native";
+import { primaryColor } from "./utils/color";
 
 GoogleSignin.configure({
   webClientId: '652368417331-i91jda7knc2ardd0pnkq0cr3vog446qf.apps.googleusercontent.com',
@@ -13,6 +15,10 @@ GoogleSignin.configure({
 const App = () => {
   return (
     <AuthorizeProvider>
+      <StatusBar
+        backgroundColor={primaryColor}
+        barStyle="light-content"
+      />
       <Provider>
         <Routers />
         <Toast />

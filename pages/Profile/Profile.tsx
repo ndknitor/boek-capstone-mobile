@@ -1,8 +1,12 @@
+import { Button, Switch } from '@rneui/themed';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import TouchCard from '../../component/TouchCard/TouchCard';
+import useRouter from '../../libs/hook/useRouter';
+import { primaryColor } from '../../utils/color';
 
 function Profile() {
+  const { navigate } = useRouter();
   return (
     // <Authorize>
     <View>
@@ -18,7 +22,7 @@ function Profile() {
           <View style={styles.infoWarp}>
             <View style={styles.infoInner}>
               <Text style={styles.infoName}>Ngo Dinh Khoi Nguyen</Text>
-              <Text style={{ color: "white" }}>ditmemay@gmail.com</Text>
+              <Text style={{ color: "white" }}>ndkn@gmail.com</Text>
             </View>
           </View>
 
@@ -27,33 +31,32 @@ function Profile() {
 
       <View style={styles.body}>
 
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
-        <TouchCard label="Thông tin" />
 
-        <View style={styles.space} />
+        <TouchCard label="Thông tin cá nhân" onPress={() => navigate("PersonalInformation")} />
+        <TouchCard label="Thể loại yêu thích" />
+        <TouchCard label="Tổ chức quan tâm" />
 
-        <View style={{
-          height : 40,
-          borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 10,
-          },
-          shadowOpacity: 0.47,
-          shadowRadius: 8.65,
-          elevation: 10
-        }}>
-          <TouchableOpacity style={{ flex: 1, alignItems: "center", justifyContent: "center", minHeight: 56 }} >
-            <Text style={{ fontSize: 18, lineHeight: 28, color: "white" }}>Đăng xuất</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={{
+            minHeight: 50,
+            borderBottomWidth: 2,
+            borderBottomColor: "#CBD5EB",
+            width: "100%",
+            paddingTop: 12,
+            paddingBottom: 12,
+            flex: 1,
+            flexDirection: "row"
+          }}>
+          <View style={{ width: "75%", paddingLeft: 12 }}>
+            <Text>Khóa sinh trắc học</Text>
+          </View>
+          <View style={{ minWidth: "25%", paddingLeft: 12, flex: 1, alignItems: "flex-end" }}>
+            <Switch />
+          </View>
+        </TouchableOpacity>
+
+
+        <Button buttonStyle={{ marginTop: 80, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: primaryColor }}>Đăng xuất</Button>
 
       </View>
     </View>
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   infoInner: {
-    minWidth: "75%"
+    minWidth: "87%"
   },
   infoName: {
     color: "white",

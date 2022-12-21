@@ -9,7 +9,6 @@ function Layout({ children }: PropsWithChildren<{}>) {
         <>
             <Header />
             {children}
-            <Footer/>
         </>
     )
 }

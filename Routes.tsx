@@ -7,18 +7,27 @@ import Layout from './component/Layout';
 import Profile from './pages/Profile/Profile';
 import React from 'react';
 import Login from './pages/Login/Login';
+import { route } from './libs/hook/useRouter';
+import AskGenres from './pages/AskGenres/AskGenres';
+import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
+import { primaryColor } from './utils/color';
 
 const Stack = createNativeStackNavigator();
 
 function Routers() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={route}>
       <AxiosInterceptor>
         <Layout>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={"Index"}>{() => <Index />}</Stack.Screen>
-            <Stack.Screen name={"Login"}>{() => <Login />}</Stack.Screen>
+          <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
+            <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() => <Index />}</Stack.Screen>
+            <Stack.Screen options={{ headerShown : false}} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
+            
             <Stack.Screen name={"Profile"}>{() => <Profile />}</Stack.Screen>
+
+            <Stack.Screen options={{ title: "" }} name={"Login"}>{() => <Login />}</Stack.Screen>
+            <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
+
 
             <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
           </Stack.Navigator>

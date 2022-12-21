@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { route } from "../../libs/hook/useRouter";
 
 export default function useHeaderComponent() {
     const [showed, setShowed] = useState(false);
-    route.current?.addListener("state", (e) => {
-        const name = route.current?.getCurrentRoute()?.name;
-        if (
-            name === ""
-        ) {
-            setShowed(true);
+    useEffect(() => {
+        route.current?.addListener("state", (e) => {
+            const name = route.current?.getCurrentRoute()?.name;
+            if (
+                name === ""
+            ) {
+                setShowed(true);
+            }
+            else {
+                setShowed(false);
+            }
+        });
+        return () => {
+            route.current?.removeListener("state", () => { });
         }
-        else {
-            setShowed(false);
-        }
-    });
+    }, []);
     return { showed };
 }
