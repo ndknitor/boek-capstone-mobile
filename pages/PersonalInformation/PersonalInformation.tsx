@@ -1,32 +1,33 @@
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button } from '@rneui/themed';
+import { Button, CheckBox } from '@rneui/themed';
 import moment from 'moment';
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import editIcon from "../../assets/edit.png";
+import editIcon from "../../assets/icons//edit.png";
 import { dateFormat } from '../../utils/format';
+import avatar from "../../assets/avatar.jpg";
 import usePersonalInformationPage from './PersonalInformation.hook';
 
 function PersonalInformation() {
-  const { birth, handleConfirm, isDatePickerVisible, setDatePickerVisibility } = usePersonalInformationPage();
+  const { birth, handleConfirm, isDatePickerVisible, setDatePickerVisibility, gender, setGender } = usePersonalInformationPage();
   const nameRef = useRef<TextInput>(null);
-  const birthRef = useRef(null);
 
   return (
     <View>
       <View style={styles.headerContainer}>
         <View style={styles.avatarWarp}>
           <View style={styles.avatarRing}>
+            <Image source={avatar} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+
           </View>
         </View>
       </View>
-
       <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
         <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
           <Text>Email:</Text>
         </View>
         <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-          <Text style={{ fontSize: 16 }} >ndkn@gmail.com</Text>
+          <Text >ndkn@gmail.com</Text>
         </View>
       </View>
 
@@ -41,6 +42,30 @@ function PersonalInformation() {
           <TouchableOpacity onPress={() => nameRef.current?.focus()}>
             <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
           </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+        <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+          <Text>Giới tính:</Text>
+        </View>
+        <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "flex-end", flexDirection: "row" }}>
+          <CheckBox
+            title="Nữ"
+            checked={!gender}
+            center
+            checkedIcon="dot-circle-o"
+            onPress={() => setGender(false)}
+            uncheckedIcon="circle-o"
+            containerStyle={{ backgroundColor: "transparent"}} />
+          <CheckBox
+            title="Nam"
+            checked={gender}
+            center
+            checkedIcon="dot-circle-o"
+            uncheckedIcon="circle-o"
+            onPress={() => setGender(true)}
+            containerStyle={{ backgroundColor: "transparent" }} />
         </View>
       </View>
 
@@ -87,9 +112,8 @@ function PersonalInformation() {
       </View>
 
       <View style={{ alignItems: "center" }}>
-        <Button buttonStyle={{ marginTop: 80, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3" }}>Lưu</Button>
+        <Button buttonStyle={{ marginTop: 80, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3" }}>Lưu thay đổi</Button>
       </View>
-
       <DateTimePickerModal date={birth} maximumDate={new Date()} isVisible={isDatePickerVisible} mode="date" onConfirm={handleConfirm} onCancel={() => setDatePickerVisibility(false)} />
     </View>
   )
@@ -98,7 +122,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: "#1E293B",
     justifyContent: 'center',
-    height: 140
+    height: 180
   },
   avatarWarp: {
     minWidth: "25%",
@@ -109,9 +133,10 @@ const styles = StyleSheet.create({
   avatarRing: {
     borderWidth: 2,
     borderColor: "#064E3B",
-    height: 96,
-    width: 96,
-    borderRadius: 9999
+    height: 126,
+    width: 126,
+    borderRadius: 9999,
+    overflow: "hidden"
   }
 });
 

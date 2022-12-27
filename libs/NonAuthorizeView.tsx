@@ -5,7 +5,7 @@ function NonAuthorizeView(props:PropsWithChildren<{}>) {
     const {authenticated} = useAuth();
   return (
     authenticated ? null :
-    props.children
+    <>{props.children}</>
   )
 }
 

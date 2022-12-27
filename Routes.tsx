@@ -3,35 +3,37 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AxiosInterceptor } from './component/AxiosInterceptor';
 import Forbidden from './pages/Forbidden';
 import Index from './pages/Index/Index';
-import Layout from './component/Layout';
-import Profile from './pages/Profile/Profile';
 import React from 'react';
-import Login from './pages/Login/Login';
 import { route } from './libs/hook/useRouter';
 import AskGenres from './pages/AskGenres/AskGenres';
 import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
 import { primaryColor } from './utils/color';
+import Organizations from './pages/Organizations/Organizations';
+import Orders from './pages/Orders/Orders';
+import AskOrganizations from './pages/AskOrganizations/AskOrganizations';
+import useInit from './context/useInit';
+import AskPersonalInformation from './pages/AskPersonalInformation/AskPersonalInformation';
 
 const Stack = createNativeStackNavigator();
 
 function Routers() {
+  useInit();
   return (
     <NavigationContainer ref={route}>
       <AxiosInterceptor>
-        <Layout>
-          <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
-            <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() => <Index />}</Stack.Screen>
-            <Stack.Screen options={{ headerShown : false}} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
-            
-            <Stack.Screen name={"Profile"}>{() => <Profile />}</Stack.Screen>
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
+          <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() => <Index />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{() => <AskPersonalInformation />}</Stack.Screen>
 
-            <Stack.Screen options={{ title: "" }} name={"Login"}>{() => <Login />}</Stack.Screen>
-            <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
 
-
-            <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
-          </Stack.Navigator>
-        </Layout>
+          <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
+        </Stack.Navigator>
       </AxiosInterceptor>
     </NavigationContainer>
   );

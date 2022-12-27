@@ -3,12 +3,17 @@ import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import SelectedChip from '../../component/SeletedChip/SelectedChip'
 import StateLoader from '../../component/StateLoader/StateLoader'
+import useRouter from '../../libs/hook/useRouter'
+import { paletteRed, primaryColor, shade1 } from '../../utils/color'
 import useAskGenrePage from './AskGenres.hook'
-
-function AskGenres() {
-    const { searchMessage } = useAskGenrePage();
+interface AskGenresProps {
+    skiped?: boolean;
+}
+function AskGenres(props: AskGenresProps) {
+    const { replace } = useRouter();
+    const { searchMessage, onAskGenresSubmit, submitLoader } = useAskGenrePage();
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, borderWidth: 1 }}>
+        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn yêu thích thể loại sách nào ?</Text>
             <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
@@ -30,7 +35,7 @@ function AskGenres() {
                 <SelectedChip label="Châm biếm" />
                 <SelectedChip label="Xã hội" />
                 <SelectedChip label="Luật pháp" />
-                <SelectedChip label="Toán học"  />
+                <SelectedChip label="Toán học" />
                 <SelectedChip label="Gia Đình" />
                 <SelectedChip label="Ảo thuật" />
                 <SelectedChip label="Địa lý" />
@@ -41,13 +46,20 @@ function AskGenres() {
             <Input placeholder="Tìm kiếm thể loại" />
             <Text style={{ color: "red", marginBottom: 20 }}>{searchMessage}</Text>
 
-            <StateLoader loading={false}>
-                <Button buttonStyle={{
-                    borderRadius: 12, width: 120, height: 50, backgroundColor: "#3730A3"
-                }}>
-                    Xác nhận
-                </Button>
-            </StateLoader>
+            <View style={{ flexDirection: "row" }}>
+                {
+                    props.skiped &&
+                    <Button onPress={() => replace("AskOrganizations")} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: paletteRed }}>
+                        Bỏ qua
+                    </Button>
+                }
+                <View style={{ marginLeft: 10, marginRight: 10 }} />
+                <StateLoader loading={submitLoader} style={{ width: 120, height: 50 }}>
+                    <Button onPress={onAskGenresSubmit} buttonStyle={{ borderRadius: 12, height: "100%", backgroundColor: primaryColor }}>
+                        Xác nhận
+                    </Button>
+                </StateLoader>
+            </View>
 
         </View>
     )

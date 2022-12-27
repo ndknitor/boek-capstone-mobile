@@ -1,18 +1,19 @@
+import { LocationObject } from "expo-location";
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react"
+
 export interface Store {
-    count : number;
-    setCount : Dispatch<SetStateAction<number>>;
+    geoPosition: LocationObject | undefined;
+    setGeoPosition: Dispatch<SetStateAction<LocationObject>>;
 }
-export const useProvider: () => Store = () => {
-    const [count, setCount] = useState(0);
+export const useProvider = () => {
+    const [geoPosition, setGeoPosition] = useState<LocationObject>();
     return {
-        count,
-        setCount
+        geoPosition,
+        setGeoPosition
     };
 }
 export const Context = createContext<Store>({} as Store);
-export default function useAppContext()
-{
+export default function useAppContext() {
     return useContext(Context);
 }
 

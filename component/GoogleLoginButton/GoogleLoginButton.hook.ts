@@ -1,8 +1,9 @@
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import Toast from "react-native-toast-message";
 import auth from '@react-native-firebase/auth';
+import { GoogleLoginButtonProps } from "./GoogleLoginButton";
 
-export default function useGoogleLoginButtonComponent() {
+export default function useGoogleLoginButtonComponent(props: GoogleLoginButtonProps) {
     const googleLogin = async () => {
         // Check if your device supports Google Play
         try {
@@ -11,10 +12,7 @@ export default function useGoogleLoginButtonComponent() {
             const { idToken } = await GoogleSignin.signIn();
             // Create a Google credential with the token
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            Toast.show({
-                type: "success",
-                text1: "Đăng nhập thành công"
-            });
+            props.onSuccess && props.onSuccess(googleCredential);
             return auth().signInWithCredential(googleCredential);
         } catch (error) {
             Toast.show({

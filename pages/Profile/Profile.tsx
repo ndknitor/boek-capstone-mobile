@@ -1,75 +1,93 @@
-import { Button, Switch } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import TouchCard from '../../component/TouchCard/TouchCard';
-import useRouter from '../../libs/hook/useRouter';
-import { primaryColor } from '../../utils/color';
+import useProfilePage from './Profile.hook';
+import avatar from "../../assets/avatar.jpg";
+import { shade1 } from '../../utils/color';
+import { Button } from '@rneui/base';
+import AuthorizeView from '../../libs/AuthorizeView';
+import NonAuthorizeView from '../../libs/NonAuthorizeView';
+import GoogleLoginButton from '../../component/GoogleLoginButton/GoogleLoginButton';
+import accountWhite from "../../assets/icons/account-circle-white.png";
+import useAuth from '../../libs/hook/useAuth';
+
 
 function Profile() {
-  const { navigate } = useRouter();
+  const { authorizeNavigate, googleLoginOnSuccess } = useProfilePage();
+  const { authenticated } = useAuth();
   return (
     // <Authorize>
-    <View>
-
-      <View style={styles.headerContainer}>
+    <View style={{ flex: 1 }}>
+      <View style={{
+        backgroundColor: "#1E293B",
+        justifyContent: 'center',
+        height: 176
+      }}>
         <View style={styles.headerOuter}>
-          <View style={styles.avatarWarp}>
-            <View style={styles.avatarRing}>
-
+          <View style={{
+            minWidth: "30%",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <View style={{
+              borderWidth: 2,
+              borderColor: "#064E3B",
+              height: 113,
+              width: 113,
+              borderRadius: 9999,
+              overflow: "hidden"
+            }}>
+              <Image source={authenticated ? avatar : accountWhite} style={{
+                width: "100%",
+                height: "100%"
+              }} resizeMode="cover" />
             </View>
           </View>
 
-          <View style={styles.infoWarp}>
-            <View style={styles.infoInner}>
-              <Text style={styles.infoName}>Ngo Dinh Khoi Nguyen</Text>
-              <Text style={{ color: "white" }}>ndkn@gmail.com</Text>
+          <View style={{
+            minWidth: "75%",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <View style={{ minWidth: "87%" }}>
+              <AuthorizeView>
+                <Text style={styles.infoName}>Ngo Dinh Khoi Nguyen</Text>
+                <Text style={{ color: "white" }}>ndkn@gmail.com</Text>
+                <View style={{ marginTop: 10 }}></View>
+                <Text style={{ color: "white", fontWeight: "600" }}>Level : 1</Text>
+                <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : 69</Text>
+              </AuthorizeView>
+              <NonAuthorizeView>
+                <Text style={{ color: "white", fontSize: 16, marginBottom: 10 }}>Chào mừng bạn đến với Boek</Text>
+                <View style={{ width: "50%" }} >
+                  <GoogleLoginButton onSuccess={googleLoginOnSuccess} />
+                </View>
+              </NonAuthorizeView>
             </View>
+
           </View>
 
         </View>
       </View>
 
-      <View style={styles.body}>
+      <TouchCard label="Thông tin cá nhân" onPress={async () => await authorizeNavigate("PersonalInformation")} />
+      <TouchCard label="Đơn hàng" onPress={async () => await authorizeNavigate("Orders")} />
+      <TouchCard label="Thể loại sách yêu thích" onPress={async () => await authorizeNavigate("AskGenres")} />
+      <TouchCard label="Tổ chức quan tâm" onPress={async () => await authorizeNavigate("Organizations")} />
 
-
-        <TouchCard label="Thông tin cá nhân" onPress={() => navigate("PersonalInformation")} />
-        <TouchCard label="Thể loại yêu thích" />
-        <TouchCard label="Tổ chức quan tâm" />
-
-        <TouchableOpacity
-          style={{
-            minHeight: 50,
-            borderBottomWidth: 2,
-            borderBottomColor: "#CBD5EB",
-            width: "100%",
-            paddingTop: 12,
-            paddingBottom: 12,
-            flex: 1,
-            flexDirection: "row"
-          }}>
-          <View style={{ width: "75%", paddingLeft: 12 }}>
-            <Text>Khóa sinh trắc học</Text>
-          </View>
-          <View style={{ minWidth: "25%", paddingLeft: 12, flex: 1, alignItems: "flex-end" }}>
-            <Switch />
-          </View>
-        </TouchableOpacity>
-
-
-        <Button buttonStyle={{ marginTop: 80, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: primaryColor }}>Đăng xuất</Button>
-
-      </View>
+      <AuthorizeView>
+        <View style={{ width: "100%", paddingTop: 100, alignItems: "center", justifyContent: "center" }}>
+          <Button buttonStyle={{ height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: shade1 }}>Đăng xuất</Button>
+        </View>
+      </AuthorizeView>
     </View>
     // </Authorize>
   )
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: "#1E293B",
-    justifyContent: 'center',
-    height: 176
-  },
   headerOuter: {
     minHeight: 96,
     marginTop: 20,
@@ -78,36 +96,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row"
   },
-  avatarWarp: {
-    minWidth: "25%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  avatarRing: {
-    borderWidth: 2,
-    borderColor: "#064E3B",
-    height: 96,
-    width: 96,
-    borderRadius: 9999
-  },
-  infoWarp: {
-    minWidth: "75%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  infoInner: {
-    minWidth: "87%"
-  },
   infoName: {
     color: "white",
     fontWeight: "600",
     fontSize: 18,
     lineHeight: 28
-  },
-  body: {
-    alignItems: "center"
   },
   space: {
     minHeight: 80

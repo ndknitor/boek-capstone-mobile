@@ -2,7 +2,8 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { PropsWithChildren, useEffect } from 'react'
 
 const appxios = axios.create({
-    baseURL: ''
+    baseURL: '',
+    timeout: 5000
 })
 
 export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
@@ -13,6 +14,7 @@ export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
             return config;
         }
         const requestError = (error: any) => {
+            console.log(error);
 
             return Promise.reject(error);
         }

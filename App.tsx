@@ -14,16 +14,15 @@ GoogleSignin.configure({
 
 const App = () => {
   return (
-    <AuthorizeProvider>
-      <StatusBar
-        backgroundColor={primaryColor}
-        barStyle="light-content"
-      />
+    <>
+      <StatusBar backgroundColor={primaryColor} barStyle="light-content" />
       <Provider>
-        <Routers />
+        <AuthorizeProvider>
+          <Routers />
+        </AuthorizeProvider>
         <Toast />
       </Provider>
-    </AuthorizeProvider>
+    </>
   );
 }
 

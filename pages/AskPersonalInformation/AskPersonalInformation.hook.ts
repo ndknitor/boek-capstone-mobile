@@ -1,6 +1,7 @@
 import { useState } from "react";
+import editIcon from "../../assets/icons//edit.png";
 
-export default function usePersonalInformationPage() {
+export default function useAskPersonalInformationPage() {
     const [birth, setBirth] = useState<Date>(new Date());
     const [gender, setGender] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
