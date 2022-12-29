@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Dimensions, ScrollView, Image, ActivityIndicator } from 'react-native';
-import useRouter, { route } from '../../libs/hook/useRouter';
-import useIndexPage from './Index.hook';
+import { Text, View, TouchableOpacity, Dimensions, Image } from 'react-native';
+import useRouter from '../../libs/hook/useRouter';
 import { Button, Icon } from '@rneui/base';
 import Profile from '../Profile/Profile';
-import { primaryColor, shade1 } from '../../utils/color';
+import { primaryColor } from '../../utils/color';
 import QrCameraFrame from '../../component/QrCameraFrame/QrCameraFrame';
-import BookFair from '../BookFair/BookFair';
+import BookFairs from '../BookFairs/BookFairs';
 import Books from '../Books/Books';
 import PDFView from 'react-native-view-pdf';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
@@ -14,7 +13,7 @@ import accountWhite from "../../assets/icons/account-circle-white.png";
 
 function Index() {
 
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
   const [routes] = React.useState([
     { key: "0", title: 'Hội sách' },
     { key: "1", title: 'Sách' },
@@ -51,7 +50,7 @@ function Index() {
       navigationState={{ index, routes }}
       renderScene={
         SceneMap({
-          0: BookFair,
+          0: BookFairs,
           1: Books,
           2: Profile,
           3: Test
@@ -81,6 +80,10 @@ const Test = () => {
       <TouchableOpacity onPress={() => navigate("AskPersonalInformation")}>
         <Text>Ask PersonalInformation</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate("BookFairDetail")}>
+        <Text>BookFairDetail</Text>
+      </TouchableOpacity>
+
       <Button onPress={async () => scanQr ? setScanQr(false) : setScanQr(true)} > Scan</Button>
       <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
         <View style={{ width: 350, height: 350 }}>

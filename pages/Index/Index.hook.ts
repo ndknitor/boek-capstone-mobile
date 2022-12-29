@@ -4,11 +4,9 @@ import useAsyncEffect from "use-async-effect";
 import { sleep } from "../../utils/Redirect";
 
 export default function useIndexPage() {
-    const [loading, setLoading] = useState(true);
-
     useAsyncEffect(async () => {
-        await sleep(1000);
-        setLoading(false);
+        // await sleep(1000);
+        // setLoading(false);
         // const optionalConfigObject: AuthenticateConfig = {
         //     title: 'Yêu cầu xác thực', // Android
         //     imageColor: '#e00606', // Android
@@ -30,5 +28,4 @@ export default function useIndexPage() {
         // }
         //console.log(await TouchID.isSupported());
     }, []);
-    return { loading };
 }

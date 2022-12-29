@@ -1,9 +1,7 @@
-import { Animated, View, Image, TouchableOpacity, Text, Easing, GestureResponderEvent } from 'react-native'
+import { View, Image, TouchableOpacity, Text,  GestureResponderEvent } from 'react-native'
 import logo from "../../assets/logo.png";
 import bookmark from "../../assets/icons/bookmark-border-white.png";
 import bookmarkRemove from "../../assets/icons/bookmark-remove-white.png";
-import expandMore from "../../assets/icons/expand-more-black.png";
-import expandLess from "../../assets/icons/expand-less-black.png";
 import { paletteRed, shade1, shade9 } from '../../utils/color';
 import useOrganizationExpandComponent from './OrganizationView.hook';
 export interface OrganizationViewProps {
@@ -11,9 +9,8 @@ export interface OrganizationViewProps {
     onTrackPress?: (e: GestureResponderEvent) => void;
 }
 function OrganizationView(props: OrganizationViewProps) {
-    //const { animationHeight, toogleExpand, expand } = useOrganizationExpandComponent(props);
     return (
-        <Animated.View style={{ flex: 1, flexDirection: "row", height: 160, borderBottomColor: shade9, borderBottomWidth: 2 }}>
+        <View style={{ flex: 1, flexDirection: "row", height: 160, borderBottomColor: shade9, borderBottomWidth: 2 }}>
             <View style={{ height: 160, width: "25%" }}>
                 <Image style={{ height: "97%", width: "97%" }} source={logo} resizeMode={"contain"} />
             </View>
@@ -45,9 +42,8 @@ function OrganizationView(props: OrganizationViewProps) {
                         <Image source={props.tracked ? bookmarkRemove : bookmark} resizeMode={"contain"} style={{ width: "60%", height: "60%" }} />
                     </TouchableOpacity>
                 </View>
-
             </View>
-        </Animated.View>
+        </View>
     )
 }
 

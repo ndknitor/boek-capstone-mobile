@@ -17,10 +17,10 @@ function Organizations() {
     const getTabBarIcon = (props: any) => {
         const { route } = props
         if (route.key == 0) {
-            return <Image source={corporateFlare} style={{ width: 20, height: 20 }} />
+            return <Image source={corporateFlare} style={{ height: 25 }} resizeMode="contain" />
         }
         if (route.key == 1) {
-            return <Image source={trackChange} style={{ width: 20, height: 20 }} />
+            return <Image source={trackChange} style={{ height: 25 }} resizeMode="contain" />
         }
     }
     useEffect(() => {
@@ -29,7 +29,6 @@ function Organizations() {
 
     return (
         <>
-            <HeaderSearchBar value={searchValue} onChangeText={onSearchValueTextChange} />
             <TabView
                 tabBarPosition='bottom'
                 renderTabBar={(props) =>
@@ -55,27 +54,34 @@ function Organizations() {
 }
 function UnTrackedOrganizations() {
     return (
-        <ScrollView>
-            <OrganizationView />
-            <OrganizationView tracked />
-            <OrganizationView />
-            <OrganizationView />
-            <OrganizationView />
-            <OrganizationView />
-            <OrganizationView />
-            <OrganizationView />
-        </ScrollView>
+        <>
+            <HeaderSearchBar />
+            <ScrollView>
+                <OrganizationView />
+                <OrganizationView tracked />
+                <OrganizationView />
+                <OrganizationView />
+                <OrganizationView />
+                <OrganizationView />
+                <OrganizationView />
+                <OrganizationView />
+            </ScrollView>
+        </>
     )
 }
 function TrackedOrganizations() {
     return (
-        <ScrollView>
-            <OrganizationView tracked />
-            <OrganizationView tracked />
-            <OrganizationView tracked />
-            <OrganizationView tracked />
-            <OrganizationView tracked />
-        </ScrollView>
+        <>
+            <HeaderSearchBar />
+            <ScrollView>
+                <OrganizationView tracked />
+                <OrganizationView tracked />
+                <OrganizationView tracked />
+                <OrganizationView tracked />
+                <OrganizationView tracked />
+            </ScrollView>
+        </>
+
     );
 }
 
