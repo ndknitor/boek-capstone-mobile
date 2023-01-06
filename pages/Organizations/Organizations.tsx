@@ -1,15 +1,15 @@
-import { Icon, Text } from '@rneui/base';
-import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Image } from 'react-native'
-import { primaryColor, shade1 } from '../../utils/color';
+import { useState } from 'react'
+import { ScrollView, Image } from 'react-native'
+import { primaryColor } from '../../utils/color';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
-import useOrganizationsPage from './Organizations.hook';
 import trackChange from "../../assets/icons/track-changes-white.png";
 import corporateFlare from "../../assets/icons/corporate-fare-white.png";
 import OrganizationView from '../../component/OrganizationView/OrganizationView';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
+import Paging from '../../component/Paging/Paging';
+import { useTrackedOrganizationsPage, useUnTrackedOrganizationsPage } from './Organizations.hook';
 function Organizations() {
-    const { index, setIndex, searchValue, onSearchValueTextChange } = useOrganizationsPage();
+    const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: "0", title: 'Tổ chức' },
         { key: "1", title: 'Đã theo dõi' }
@@ -17,15 +17,12 @@ function Organizations() {
     const getTabBarIcon = (props: any) => {
         const { route } = props
         if (route.key == 0) {
-            return <Image source={corporateFlare} style={{ height: 25 }} resizeMode="contain" />
+            return <Image source={corporateFlare} style={{ height: 20 }} resizeMode="contain" />
         }
         if (route.key == 1) {
-            return <Image source={trackChange} style={{ height: 25 }} resizeMode="contain" />
+            return <Image source={trackChange} style={{ height: 20 }} resizeMode="contain" />
         }
     }
-    useEffect(() => {
-
-    }, []);
 
     return (
         <>
@@ -53,10 +50,12 @@ function Organizations() {
     )
 }
 function UnTrackedOrganizations() {
+    const hook = useUnTrackedOrganizationsPage();
     return (
         <>
-            <HeaderSearchBar />
+            <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
+                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
                 <OrganizationView />
                 <OrganizationView tracked />
                 <OrganizationView />
@@ -65,20 +64,24 @@ function UnTrackedOrganizations() {
                 <OrganizationView />
                 <OrganizationView />
                 <OrganizationView />
+                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
             </ScrollView>
         </>
     )
 }
 function TrackedOrganizations() {
+    const hook = useTrackedOrganizationsPage();
     return (
         <>
-            <HeaderSearchBar />
+            <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
+                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
                 <OrganizationView tracked />
                 <OrganizationView tracked />
                 <OrganizationView tracked />
                 <OrganizationView tracked />
                 <OrganizationView tracked />
+                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
             </ScrollView>
         </>
 

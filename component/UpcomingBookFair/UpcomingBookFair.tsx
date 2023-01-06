@@ -48,7 +48,7 @@ function UpcomingBookFair(props: UpcomingBookFairProps) {
                             <View style={{ width: "100%", height: "100%" }}>
                                 <LinearGradient
                                     start={{ x: 0.5, y: 1 }}
-                                    end={{ x: 0.5, y: 0 }}
+                                    end={{ x: 0.5, y: -0.1 }}
                                     colors={['rgba(255,255,255,0)', 'rgba(255,255,255,1)']}
                                     style={{ flex: 1 }}>
                                 </LinearGradient>

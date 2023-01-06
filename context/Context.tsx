@@ -3,9 +3,9 @@ import { createContext, Dispatch, SetStateAction, useContext, useState } from "r
 
 export interface Store {
     geoPosition: LocationObject | undefined;
-    setGeoPosition: Dispatch<SetStateAction<LocationObject>>;
+    setGeoPosition: Dispatch<SetStateAction<LocationObject | undefined>>;
 }
-export const useProvider = () => {
+export const useProvider : () => Store = () => {
     const [geoPosition, setGeoPosition] = useState<LocationObject>();
     return {
         geoPosition,

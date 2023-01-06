@@ -1,45 +1,49 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import useRouter from '../../libs/hook/useRouter';
 import { Button, Icon } from '@rneui/base';
 import Profile from '../Profile/Profile';
 import { primaryColor } from '../../utils/color';
 import QrCameraFrame from '../../component/QrCameraFrame/QrCameraFrame';
-import BookFairs from '../BookFairs/BookFairs';
 import Books from '../Books/Books';
 import PDFView from 'react-native-view-pdf';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import accountWhite from "../../assets/icons/account-circle-white.png";
+import Campaigns from '../Campaigns/Campaigns';
 
 function Index() {
 
   const [index, setIndex] = useState(0);
   const [routes] = React.useState([
     { key: "0", title: 'Hội sách' },
-    { key: "1", title: 'Sách' },
+    { key: "1", title: 'Tìm kiếm' },
     { key: "2", title: 'Cá nhân' },
     { key: "3", title: 'Test' }
   ]);
   const getTabBarIcon = (props: any) => {
     const { route } = props
     if (route.key == 0) {
-      return <Icon name='book' color={"white"} size={25} />
+      return <Icon name='book' color={"white"} size={20} />
     }
     if (route.key == 1) {
-      return <Icon name='book' type='entypo' color={"white"} size={25} />
+      return <Icon name='book' type='entypo' color={"white"} size={20} />
     }
     if (route.key == 2) {
-      return <Image source={accountWhite} style={{ height: 25 }} resizeMode={"contain"} />
+      return <Image source={accountWhite} style={{ height: 20 }} resizeMode={"contain"} />
     }
   }
 
   return (
     <TabView
+      lazy
+      animationEnabled
       tabBarPosition='bottom'
       swipeEnabled={false}
+      renderLazyPlaceholder={() => <ActivityIndicator size='large' style={{ width: "100%", height: "100%" }} />}
       renderTabBar={(props) =>
         <TabBar
           {...props}
+          style={{height : 60}}
           indicatorContainerStyle={{ backgroundColor: primaryColor }}
           indicatorStyle={{ backgroundColor: "white" }}
           inactiveColor={"white"}
@@ -50,7 +54,7 @@ function Index() {
       navigationState={{ index, routes }}
       renderScene={
         SceneMap({
-          0: BookFairs,
+          0: Campaigns,
           1: Books,
           2: Profile,
           3: Test
@@ -80,8 +84,11 @@ const Test = () => {
       <TouchableOpacity onPress={() => navigate("AskPersonalInformation")}>
         <Text>Ask PersonalInformation</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate("BookFairDetail")}>
-        <Text>BookFairDetail</Text>
+      <TouchableOpacity onPress={() => navigate("BookDetail")}>
+        <Text>BookDetail</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate("CampaignDetail")}>
+        <Text>CampaignDetail</Text>
       </TouchableOpacity>
 
       <Button onPress={async () => scanQr ? setScanQr(false) : setScanQr(true)} > Scan</Button>

@@ -11,5 +11,9 @@ export const shade8 = "#c3c1e3";
 export const shade9 = "#d7d6ed";
 export const shade10 = "#ebeaf6";
 
+export const palettePink = "#EE3F78";
 export const paletteRed = "#CF0012";
 export const paletteGray = "#AEA9BA";
+export const paletteGrayLight = "#c7cfd6";
+export const paletteGreen = "rgb(220,252,221)";
+export const paletteGreenBold = "rgb(22,101,52)";

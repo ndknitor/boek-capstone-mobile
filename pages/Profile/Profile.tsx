@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import TouchCard from '../../component/TouchCard/TouchCard';
 import useProfilePage from './Profile.hook';
@@ -10,10 +10,13 @@ import NonAuthorizeView from '../../libs/NonAuthorizeView';
 import GoogleLoginButton from '../../component/GoogleLoginButton/GoogleLoginButton';
 import accountWhite from "../../assets/icons/account-circle-white.png";
 import useAuth from '../../libs/hook/useAuth';
+import { customer, staff } from '../../utils/roles';
+export interface ProfileProps {
+  jumpTo : (key: string) => void;
+}
 
-
-function Profile() {
-  const { authorizeNavigate, googleLoginOnSuccess } = useProfilePage();
+function Profile(props: ProfileProps) {
+  const hook = useProfilePage(props);
   const { authenticated } = useAuth();
   return (
     // <Authorize>
@@ -62,27 +65,45 @@ function Profile() {
               <NonAuthorizeView>
                 <Text style={{ color: "white", fontSize: 16, marginBottom: 10 }}>Chào mừng bạn đến với Boek</Text>
                 <View style={{ width: "50%" }} >
-                  <GoogleLoginButton onSuccess={googleLoginOnSuccess} />
+                  <GoogleLoginButton onSuccess={hook.googleLoginOnSuccess} />
                 </View>
               </NonAuthorizeView>
             </View>
-
           </View>
-
         </View>
       </View>
 
-      <TouchCard label="Thông tin cá nhân" onPress={async () => await authorizeNavigate("PersonalInformation")} />
-      <TouchCard label="Đơn hàng" onPress={async () => await authorizeNavigate("Orders")} />
-      <TouchCard label="Thể loại sách yêu thích" onPress={async () => await authorizeNavigate("AskGenres")} />
-      <TouchCard label="Tổ chức quan tâm" onPress={async () => await authorizeNavigate("Organizations")} />
+      <AuthorizeView roles={[staff]}>
 
+      </AuthorizeView>
+      <AuthorizeView roles={[customer]}>
+        <TouchCard label="Thông tin cá nhân" onPress={async () => await hook.authorizeNavigate("PersonalInformation")} />
+        <TouchCard label="Đơn hàng" onPress={async () => await hook.authorizeNavigate("Orders")} />
+        {/* <TouchCard label="Sách của tôi"/> */}
+        <TouchCard label="Thể loại sách yêu thích" onPress={async () => await hook.authorizeNavigate("AskGenres")} />
+        <TouchCard label="Tổ chức quan tâm" onPress={async () => await hook.authorizeNavigate("Organizations")} />
+      </AuthorizeView>
+      <NonAuthorizeView>
+        <TouchCard label="Thông tin cá nhân" onPress={async () => await hook.authorizeNavigate("PersonalInformation")} />
+        <TouchCard label="Đơn hàng" onPress={async () => await hook.authorizeNavigate("Orders")} />
+        {/* <TouchCard label="Sách của tôi"/> */}
+        <TouchCard label="Thể loại sách yêu thích" onPress={async () => await hook.authorizeNavigate("AskGenres")} />
+        <TouchCard label="Tổ chức quan tâm" onPress={async () => await hook.authorizeNavigate("Organizations")} />
+      </NonAuthorizeView>
       <AuthorizeView>
         <View style={{ width: "100%", paddingTop: 100, alignItems: "center", justifyContent: "center" }}>
-          <Button buttonStyle={{ height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: shade1 }}>Đăng xuất</Button>
+          <Button
+            onPress={hook.logout}
+            buttonStyle={{
+              height: 40,
+              borderRadius: 24,
+              minWidth: 224,
+              minHeight: 56,
+              backgroundColor: shade1
+            }}>Đăng xuất</Button>
         </View>
       </AuthorizeView>
-    </View>
+    </View >
     // </Authorize>
   )
 }

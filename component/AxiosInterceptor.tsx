@@ -2,20 +2,19 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { PropsWithChildren, useEffect } from 'react'
 
 const appxios = axios.create({
-    baseURL: '',
-    timeout: 5000
+    baseURL: 'https://server.boek.live',
+    timeout: 7000
 })
 
 export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
 
     useEffect(() => {
         const beforeRequest = (config: AxiosRequestConfig<any>) => {
-
+            //console.log(config);
             return config;
         }
         const requestError = (error: any) => {
             console.log(error);
-
             return Promise.reject(error);
         }
         const onResponse = (response: AxiosResponse<any, any>) => {

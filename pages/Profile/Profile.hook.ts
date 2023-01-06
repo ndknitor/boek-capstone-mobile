@@ -3,8 +3,10 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import auth from '@react-native-firebase/auth';
 import useAuth from "../../libs/hook/useAuth";
 import useRouter from "../../libs/hook/useRouter";
+import { staff } from "../../utils/roles";
+import { ProfileProps } from "./Profile";
 
-export default function useProfilePage() {
+export default function useProfilePage(props: ProfileProps) {
     const { navigate, replace } = useRouter();
     const { authenticated, setAuthorize } = useAuth();
     const authorizeNavigate = async (page: string) => {
@@ -38,13 +40,16 @@ export default function useProfilePage() {
         }
     }
     const googleLoginOnSuccess = () => {
-        setAuthorize(true);
+        setAuthorize([staff]);
         //check if first login
-        replace("AskGenresWizard");
         //
-
     }
-    return { authorizeNavigate, googleLoginOnSuccess };
+    const logout = async () => {
+        await GoogleSignin.signOut();
+        props.jumpTo("0");
+        setAuthorize(false);
+    }
+    return { authorizeNavigate, googleLoginOnSuccess, logout };
     // const [enableBiometric, toogleEnableBiometric, setenableBiometric] = useBoolean(false);
     // const enableBiometricSuccess = () => {
     //     Toast.show({

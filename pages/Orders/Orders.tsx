@@ -3,14 +3,13 @@ import { View, Image, ScrollView, Text } from 'react-native'
 import { shade9 } from '../../utils/color';
 import useOrdersPage from './Orders.hook'
 import logo from "../../assets/logo.png";
-import { Tab, TabView } from '@rneui/base';
 
 function Orders() {
     useOrdersPage();
     const [index, setIndex] = useState(0);
     return (
         <View style={{ height: "100%", flex: 1 }}>
-            <TabView>
+            {/* <TabView>
                 <TabView.Item>
                     <ScrollView style={{ flex: 1, width: "100%", height: "100%" }}>
                         <View style={{ flex: 1, flexDirection: "row", height: 160, borderBottomColor: shade9, borderBottomWidth: 2 }}>
@@ -26,7 +25,7 @@ function Orders() {
                     </ScrollView>
                 </TabView.Item>
             </TabView>
-            <Tab />
+            <Tab /> */}
         </View>
     )
 }

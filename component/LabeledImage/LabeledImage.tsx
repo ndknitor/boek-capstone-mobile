@@ -1,20 +1,41 @@
 import React from 'react'
-import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity, GestureResponderEvent } from 'react-native'
 interface LabeledImageProps {
     source: ImageSourcePropType;
     label: string;
-    onPress?: () => void;
+    onPress?: (event : GestureResponderEvent) => void;
 }
 function LabeledImage(props: LabeledImageProps) {
     return (
-        <TouchableOpacity style={{ width: 100, height: 100, alignItems: "center", marginLeft: 10, marginRight: 10, marginBottom: 40, marginTop: 10 }}>
-            <View style={{ borderRadius: 9999, borderColor: "green", borderWidth: 1, overflow: "hidden", width: "80%", height: "80%" }}>
-                <Image source={props.source} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
-            </View>
-            <View style={{ alignItems: "center", width: "100%", marginTop: 6 }}>
-                <Text>{props.label}</Text>
-            </View>
-        </TouchableOpacity>
+        <View
+            style={{
+                width: 100,
+                height: 90,
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+            <TouchableOpacity
+                onPress={props.onPress}
+                style={{
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                <View
+                    style={{
+                        borderWidth: 1,
+                        width: 50,
+                        height: 50,
+                        borderRadius: 999,
+                        overflow: "hidden",
+                        marginBottom: 5
+                    }}>
+                    <Image source={props.source} style={{ width: 50, height: 50 }} resizeMode="cover" />
+                </View>
+                <View>
+                    <Text style={{ fontSize: 15, fontWeight: "600" }}>{props.label}</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
     )
 }
 

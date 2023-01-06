@@ -13,7 +13,10 @@ import Orders from './pages/Orders/Orders';
 import AskOrganizations from './pages/AskOrganizations/AskOrganizations';
 import useInit from './context/useInit';
 import AskPersonalInformation from './pages/AskPersonalInformation/AskPersonalInformation';
-import BookFairDetail from './pages/BookFairDetail/BookFairDetail';
+import BookDetail from './pages/BookDetail/BookDetail';
+import CampaignDetail from './pages/CampaignDetail/CampaignDetail';
+import IssuerDetail from './pages/IssuerDetail/IssuerDetail';
+import IssuerMoreBook from './pages/IssuerMoreBook/IssuerMoreBook';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +31,11 @@ function Routers() {
           <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
           <Stack.Screen options={{ headerShown: false }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
           <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{() => <AskPersonalInformation />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
 
-          <Stack.Screen options={{ title: "" }} name={"BookFairDetail"}>{() => <BookFairDetail />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"IssuerDetail"}>{(props) => <IssuerDetail {...props} />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"BookDetail"}>{() => <BookDetail />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"CampaignDetail"}>{() => <CampaignDetail />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>

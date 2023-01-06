@@ -1,36 +1,39 @@
 import { useEffect, useState } from "react";
 
-export default function useOrganizationsPage() {
-    const [index, setIndex] = useState(0);
-    const [notTrackedOrganizationSearch, setNotTrackedOrganizationSearch] = useState("");
-    const [trackedOrganizationSearch, setTrackedOrganizationSearch] = useState("");
-    const [searchValue, setSearchValue] = useState("");
-    const onSearchValueTextChange = (e: string) => {
-        if (index == 0) {
-            setNotTrackedOrganizationSearch(e);
-            setSearchValue(e);
-            return;
-        }
-        if (index == 1) {
-            setTrackedOrganizationSearch(e)
-            setSearchValue(e);
-            return;
-        }
+export function useUnTrackedOrganizationsPage() {
+    const [organizationSearchValue, setOrganizationSearchValue] = useState("");
+    const [maxPage, setMaxPage] = useState(100);
+    const [currentPage, setCurrentPage] = useState(1);
+    const onOrganizationSearchTextChange = (value: string) => {
+
     }
-    useEffect(() => {        
-        if (index == 0) {
-            setSearchValue(notTrackedOrganizationSearch);
-            return;
-        }
-        if (index == 1) {
-            setSearchValue(trackedOrganizationSearch);
-            return;
-        }
-    }, [index]);
+    const onPageNavigation = (page: number) => {
+        setCurrentPage(page);
+    }
     return {
-        index,
-        setIndex,
-        searchValue,
-        onSearchValueTextChange
+        organizationSearchValue,
+        maxPage,
+        currentPage,
+        onOrganizationSearchTextChange,
+        onPageNavigation
+    };
+}
+
+export function useTrackedOrganizationsPage(){
+    const [organizationSearchValue, setOrganizationSearchValue] = useState("");
+    const [maxPage, setMaxPage] = useState(100);
+    const [currentPage, setCurrentPage] = useState(1);
+    const onOrganizationSearchTextChange = (value: string) => {
+
+    }
+    const onPageNavigation = (page: number) => {
+        setCurrentPage(page);
+    }
+    return {
+        organizationSearchValue,
+        maxPage,
+        currentPage,
+        onOrganizationSearchTextChange,
+        onPageNavigation
     };
 }

@@ -5,7 +5,6 @@ import useAppContext from "./Context";
 
 export default function useInit() {
   const { setGeoPosition, geoPosition } = useAppContext();
-
   useAsyncEffect(async () => {
     if (geoPosition) {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -15,6 +14,7 @@ export default function useInit() {
       }
       const location = await Location.getCurrentPositionAsync({});
       setGeoPosition(location);
+      console.log(location);
     }
   }, []);
 }
