@@ -9,6 +9,7 @@ import { primaryColor } from "./utils/color";
 
 GoogleSignin.configure({
   webClientId: '652368417331-i91jda7knc2ardd0pnkq0cr3vog446qf.apps.googleusercontent.com',
+  iosClientId : "652368417331-1k2t1k8aks1g5483andfd5nja06th71d.apps.googleusercontent.com"
 });
 
 
