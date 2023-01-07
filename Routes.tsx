@@ -18,6 +18,7 @@ import CampaignDetail from './pages/CampaignDetail/CampaignDetail';
 import IssuerDetail from './pages/IssuerDetail/IssuerDetail';
 import IssuerMoreBook from './pages/IssuerMoreBook/IssuerMoreBook';
 import PriceComparison from './pages/PriceComparison/PriceComparison';
+import HeaderSearchBar from './component/HeaderSearchBar/HeaderSearchBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,13 +28,9 @@ function Routers() {
     <NavigationContainer ref={route}>
       <AxiosInterceptor>
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
-          <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() => <Index />}</Stack.Screen>
-          <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
-          <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
-          <Stack.Screen options={{ headerShown: false }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
-          <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{() => <AskPersonalInformation />}</Stack.Screen>
-          <Stack.Screen options={{ headerShown: false }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
-
+          <Stack.Screen options={{ title: "" }} name={"Index"}>{() => <Index />}</Stack.Screen>
+          <Stack.Screen options={{ title: "Tổ chức" }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
+          <Stack.Screen options={{ title: "" }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "So sánh giá" }} name={"PriceComparison"}>{(props) => <PriceComparison {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"IssuerDetail"}>{(props) => <IssuerDetail {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"BookDetail"}>{() => <BookDetail />}</Stack.Screen>
@@ -41,6 +38,10 @@ function Routers() {
           <Stack.Screen options={{ title: "" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
+
+          <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
+          <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{() => <AskPersonalInformation />}</Stack.Screen>
 
           <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
         </Stack.Navigator>

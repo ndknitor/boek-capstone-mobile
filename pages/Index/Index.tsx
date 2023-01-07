@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import useRouter from '../../libs/hook/useRouter';
 import { Button, Icon } from '@rneui/base';
@@ -10,10 +10,11 @@ import PDFView from 'react-native-view-pdf';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import accountWhite from "../../assets/icons/account-circle-white.png";
 import Campaigns from '../Campaigns/Campaigns';
-
+import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 function Index() {
 
   const [index, setIndex] = useState(0);
+  const { setOptions } = useRouter();
   const [routes] = React.useState([
     { key: "0", title: 'Hội sách' },
     { key: "1", title: 'Tìm kiếm' },
@@ -32,10 +33,16 @@ function Index() {
       return <Image source={accountWhite} style={{ height: 20 }} resizeMode={"contain"} />
     }
   }
-
+  useEffect(() => {
+    if (index == 1) {
+      setOptions({ headerTitle: (props) => <HeaderSearchBar {...props} /> })
+    }
+    else {
+      setOptions({ headerTitle: (props) => undefined })
+    }
+  }, [index]);
   return (
     <TabView
-      lazy
       animationEnabled
       tabBarPosition='bottom'
       swipeEnabled={false}
@@ -43,7 +50,7 @@ function Index() {
       renderTabBar={(props) =>
         <TabBar
           {...props}
-          style={{height : 60}}
+          style={{ height: 60 }}
           indicatorContainerStyle={{ backgroundColor: primaryColor }}
           indicatorStyle={{ backgroundColor: "white" }}
           inactiveColor={"white"}

@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import Swiper from 'react-native-swiper';
 import useBookFairPage from './Campaigns.hook';
 import OnGoingBookFair from '../../component/OnGoingBookFair/OnGoingBookFair';
 import UpcomingBookFair from '../../component/UpcomingBookFair/UpcomingBookFair';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
+import useRouter from '../../libs/hook/useRouter';
 
-function Campaigns() {
+function Campaigns(props : any) {
     useBookFairPage();
+    const { setOptions } = useRouter();
+    useEffect(() => {
+        setOptions({headerTitle : undefined});
+    }, [props]);
     return (
         <>
             {/* <HeaderSearchBar /> */}

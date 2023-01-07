@@ -9,57 +9,19 @@ import filterWhite from "../../assets/icons/filter-white.png";
 import sortWhite from "../../assets/icons/sort-white.png";
 import { Book } from '../../objects/entities/Book';
 import { books } from '../../utils/mock';
+import { useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
+import useRouter from '../../libs/hook/useRouter';
+import { SceneRendererProps } from 'react-native-tab-view';
 
+interface BooksProps extends SceneRendererProps {
 
-function Books() {
+}
+function Books(props: BooksProps) {
     const hook = useBooksPage();
+    const {} = useRouter();
     return (
         <>
-            <HeaderSearchBar  >
-                <View style={{
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    justifyContent: "flex-end",
-                    height: "100%"
-                }}>
-                    {/* <ModalSelector
-                        onChange={hook.onSortSelectChange}
-                        cancelText="Hủy"
-                        data={hook.sortOptionsModal}
-                        style={{ width: 125, height: "75%", marginRight: 10 }}>
-                        <View style={{
-                            backgroundColor: shade3,
-                            height: "100%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexDirection: "row",
-                            borderRadius: 24
-                        }}>
-                            <Image style={{ height: 22, width: 22, marginTop: 3, marginRight: 2 }}
-                                resizeMode="contain"
-                                source={sortWhite} />
-                            <Text style={{ color: "white" }} >Sắp xếp theo</Text>
-                        </View>
-                    </ModalSelector> */}
-                    {/* <ModalSelector
-                        onChange={(option) => { alert(`${option.label} (${option.key}) nom nom nom`) }}
-                        data={hook.filterOptionsModal}
-                        style={{ width: 75, height: "75%", marginRight: 10 }}>
-                        <View style={{
-                            backgroundColor: shade3,
-                            height: "100%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexDirection: "row",
-                            borderRadius: 24
-                        }}>
-                            <Image style={{ height: 22, width: 22, marginTop: 3, marginRight: 2 }} resizeMode="contain"
-                                source={filterWhite} />
-                            <Text style={{ color: "white" }}>Lọc</Text>
-                        </View>
-                    </ModalSelector> */}
-                </View>
-            </HeaderSearchBar>
             <ActivityIndicator
                 size="large"
                 style={{

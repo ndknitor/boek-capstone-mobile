@@ -140,7 +140,7 @@ function BookDetail() {
                     ]} />
                 </View>
             </ScrollView>
-            <Button buttonStyle={{ backgroundColor: primaryColor }}>Chọn mua</Button>
+            <Button buttonStyle={{ backgroundColor: primaryColor, padding : 12 }}>Chọn mua</Button>
         </>
     )
 }
