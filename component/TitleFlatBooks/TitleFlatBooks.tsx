@@ -22,16 +22,6 @@ function TitleFlatBooks(props: TitleFlatBooksProps) {
                     <BookCard book={e.item} />
                 }
             />
-            <View style={{ width: "100%", alignItems: "center", justifyContent: "center", marginTop: 20 }}>
-                <Button
-                    onPress={() => navigate("IssuerMoreBook")}
-                    buttonStyle={{
-                        width: 170,
-                        alignItems: "center",
-                        borderRadius: 8,
-                        backgroundColor: shade1
-                    }}>Xem thêm</Button>
-            </View>
         </>
     )
 }

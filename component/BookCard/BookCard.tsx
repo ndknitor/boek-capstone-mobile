@@ -6,19 +6,22 @@ import avatar from "../../assets/avatar.jpg";
 import shoppingBasketWhite from "../../assets/icons/shopping-basket-white.png";
 import { Book } from '../../objects/entities/Book';
 import { formatNumber } from '../../utils/format';
+import useRouter from '../../libs/hook/useRouter';
 interface BookCardProps {
   book: Book;
 }
 function BookCard({ book }: BookCardProps) {
+  const { navigate } = useRouter();
   return (
-    <TouchableOpacity
+    <View
       style={{
         width: 195,
         height: 260,
         alignItems: "center",
         justifyContent: "center"
       }}>
-      <View
+      <TouchableOpacity
+        onPress={() => navigate("BookDetail")}
         style={{
           borderColor: shade7,
           borderWidth: 1,
@@ -75,8 +78,8 @@ function BookCard({ book }: BookCardProps) {
 
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
     // <View style={{ borderWidth: 1, borderColor: shade7, borderRadius: 8, height: 480, padding: 10 }}>
     //   <TouchableOpacity style={{ width: "100%", height: "35%", alignItems: "center", justifyContent: "center", overflow: "hidden", borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
     //     <Image style={{ height: "100%", width: "100%" }} source={{ uri: book.imageUrl }} resizeMode='cover' />

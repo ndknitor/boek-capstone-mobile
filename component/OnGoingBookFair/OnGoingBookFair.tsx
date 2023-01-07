@@ -3,7 +3,6 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import img1 from "../../assets/wtd.webp";
-import img2 from "../../assets/hsxv.webp";
 
 interface OnGoingBookFairProps {
     title: string;

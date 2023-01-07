@@ -2,7 +2,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import React from 'react'
 import { TouchableOpacity, View, Image, StyleSheet, Text, Dimensions } from 'react-native';
 import googleLogo from '../../assets/icons/google.png';
-import { shade8 } from '../../utils/color';
+import { shade8, shade9 } from '../../utils/color';
 import useGoogleLoginButtonComponent from './GoogleLoginButton.hook';
 export interface GoogleLoginButtonProps {
     onSuccess?: (credential: FirebaseAuthTypes.AuthCredential) => void;
@@ -11,7 +11,7 @@ function GoogleLoginButton(props: GoogleLoginButtonProps) {
     const { googleLogin } = useGoogleLoginButtonComponent(props);
     return (
         <TouchableOpacity style={{
-            backgroundColor: shade8,//'#F8F8F8',
+            backgroundColor: shade9,//'#F8F8F8',
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,

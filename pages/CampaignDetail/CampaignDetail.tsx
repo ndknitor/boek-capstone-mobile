@@ -12,6 +12,8 @@ import TitleFlatBooks from '../../component/TitleFlatBooks/TitleFlatBooks';
 import useRouter from '../../libs/hook/useRouter';
 import { books, t } from '../../utils/mock';
 import TitleTabedFlatBooks from '../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
+import { Button } from '@rneui/base';
+import ShowMoreButton from '../../component/ShowMoreButton/ShowMoreButton';
 
 function CampaignDetail() {
     const hook = useCampaignDetaillPage();
@@ -78,6 +80,7 @@ function CampaignDetail() {
                             } />
 
                         <TitleFlatBooks data={books} title="Sách giảm giá" />
+                        <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
                         <TitleTabedFlatBooks title="Sách combo" data={[
                             {
                                 tabLabel: "Thể loại 1",
@@ -92,6 +95,7 @@ function CampaignDetail() {
                                 tabData: books
                             },
                         ]} />
+                        <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
                         <TitleTabedFlatBooks title="Thể loại 2" data={[
                             {
                                 tabLabel: "Thể loại 1",
@@ -106,48 +110,7 @@ function CampaignDetail() {
                                 tabData: books
                             },
                         ]} />
-                        <TitleTabedFlatBooks title="Thể loại 1" data={[
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                        ]} />
-                        <TitleTabedFlatBooks title="Thể loại 1" data={[
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                        ]} />
-                        <TitleTabedFlatBooks title="Thể loại 1" data={[
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                            {
-                                tabLabel: "Thể loại 1",
-                                tabData: books
-                            },
-                        ]} />
+                        <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
                         <View style={{ marginTop: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 20, fontWeight: "600", }}>Mô tả</Text>
                             <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, necessitatibus aliquam. Incidunt voluptatum provident consequuntur, soluta, sunt exercitationem corporis labore enim repellendus quae nobis sed quo est molestiae facere magnam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit consectetur magni inventore dolores sequi totam labore dolore placeat sed maxime eum aspernatur, minima distinctio nulla cum ipsa, velit illo vero!</Text>

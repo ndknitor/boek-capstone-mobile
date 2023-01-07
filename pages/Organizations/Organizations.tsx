@@ -55,7 +55,6 @@ function UnTrackedOrganizations() {
         <>
             <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
-                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
                 <OrganizationView />
                 <OrganizationView tracked />
                 <OrganizationView />
@@ -75,7 +74,6 @@ function TrackedOrganizations() {
         <>
             <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
-                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
                 <OrganizationView tracked />
                 <OrganizationView tracked />
                 <OrganizationView tracked />

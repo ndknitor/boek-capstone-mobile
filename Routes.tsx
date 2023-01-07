@@ -17,6 +17,7 @@ import BookDetail from './pages/BookDetail/BookDetail';
 import CampaignDetail from './pages/CampaignDetail/CampaignDetail';
 import IssuerDetail from './pages/IssuerDetail/IssuerDetail';
 import IssuerMoreBook from './pages/IssuerMoreBook/IssuerMoreBook';
+import PriceComparison from './pages/PriceComparison/PriceComparison';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ function Routers() {
           <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{() => <AskPersonalInformation />}</Stack.Screen>
           <Stack.Screen options={{ headerShown: false }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
 
+          <Stack.Screen options={{ title: "So sánh giá" }} name={"PriceComparison"}>{(props) => <PriceComparison {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"IssuerDetail"}>{(props) => <IssuerDetail {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"BookDetail"}>{() => <BookDetail />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"CampaignDetail"}>{() => <CampaignDetail />}</Stack.Screen>

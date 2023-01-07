@@ -23,7 +23,7 @@ function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
                     <TouchableOpacity
                         onPress={() => setIndex(e.index)}
                         style={{
-                            borderBottomColor : shade4,
+                            borderBottomColor: shade4,
                             borderBottomWidth: e.index == index ? 1 : 0,
                             paddingLeft: 20,
                             paddingRight: 20,
@@ -40,16 +40,6 @@ function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
                     <BookCard book={e.item} />
                 }
             />
-            <View style={{ width: "100%", alignItems: "center", justifyContent: "center", marginTop: 20 }}>
-                <Button
-                    onPress={() => navigate("IssuerMoreBook")}
-                    buttonStyle={{
-                        width: 170,
-                        alignItems: "center",
-                        borderRadius: 8,
-                        backgroundColor: shade1
-                    }}>Xem thêm</Button>
-            </View>
         </>
     )
 }
