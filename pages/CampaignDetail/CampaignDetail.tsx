@@ -1,47 +1,52 @@
 import React, { useRef } from 'react'
-import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated } from 'react-native'
 import { paletteGray, paletteGreen, paletteGreenBold, shade1, shade7 } from '../../utils/color';
 import img1 from "../../assets/wtd.webp";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
 import avatar from "../../assets/avatar.jpg";
-import verticalAlignTopWhite from "../../assets/icons/vertical-align-top-white.png";
 import useCampaignDetaillPage from './CampaignDetail.hook';
 import LabeledImage from '../../component/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../component/TitleFlatBooks/TitleFlatBooks';
 import useRouter from '../../libs/hook/useRouter';
 import { books, t } from '../../utils/mock';
 import TitleTabedFlatBooks from '../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
-import { Button } from '@rneui/base';
 import ShowMoreButton from '../../component/ShowMoreButton/ShowMoreButton';
-
+import verticalAlignTopWhite from "../../assets/icons/vertical-align-top-white.png";
 function CampaignDetail() {
     const hook = useCampaignDetaillPage();
     const { navigate } = useRouter();
     return (
         <>
-            <TouchableOpacity
-                onPress={hook.scrollToTop}
-                style={{
-                    display: hook.scrollToTopShowed ? "flex" : "none",
-                    backgroundColor: shade1,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 999,
-                    position: "absolute",
-                    zIndex: 1,
-                    bottom: 60,
-                    right: 10,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                <Image
-                    source={verticalAlignTopWhite}
-                    resizeMode="cover"
-                    style={{ width: 24, height: 24 }} />
-            </TouchableOpacity>
+            <Animated.View style={{
+                display: hook.scrollToTopButtonShowOpacity.display,
+                opacity : hook.scrollToTopButtonShowOpacity.opacity,
+                backgroundColor: shade1,
+                width: 40,
+                height: 40,
+                borderRadius: 999,
+                position: "absolute",
+                zIndex: 1,
+                bottom: 60,
+                right: 10,
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <TouchableOpacity
+                    onPress={hook.scrollToTop}
+                    style={{
+
+                    }}>
+                    <Image
+                        source={verticalAlignTopWhite}
+                        resizeMode="cover"
+                        style={{ width: 24, height: 24 }} />
+                </TouchableOpacity>
+            </Animated.View>
+
             <ScrollView
-                onScroll={hook.onScrollViewScroll}
+                onScrollEndDrag={hook.onScrollViewScroll}
+                onMomentumScrollEnd={hook.onScrollViewScroll}
                 ref={hook.scrollViewRef}>
                 <View style={{ backgroundColor: "white" }}>
                     <View style={{ width: "100%", padding: 10 }}>

@@ -18,7 +18,6 @@ import CampaignDetail from './pages/CampaignDetail/CampaignDetail';
 import IssuerDetail from './pages/IssuerDetail/IssuerDetail';
 import IssuerMoreBook from './pages/IssuerMoreBook/IssuerMoreBook';
 import PriceComparison from './pages/PriceComparison/PriceComparison';
-import HeaderSearchBar from './component/HeaderSearchBar/HeaderSearchBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,9 +34,9 @@ function Routers() {
           <Stack.Screen options={{ title: "" }} name={"IssuerDetail"}>{(props) => <IssuerDetail {...props} />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"BookDetail"}>{() => <BookDetail />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"CampaignDetail"}>{() => <CampaignDetail />}</Stack.Screen>
-          <Stack.Screen options={{ title: "" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
+          <Stack.Screen options={{ title: "Đơn hàng" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
           <Stack.Screen options={{ title: "" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
-          <Stack.Screen options={{ title: "" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
+          <Stack.Screen options={{ title: "Thông tin cá nhânu" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
 
           <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
           <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>

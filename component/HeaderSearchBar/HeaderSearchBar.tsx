@@ -1,6 +1,6 @@
-import {  NavigationContainerProps} from '@react-navigation/native';
+import { NavigationContainerProps } from '@react-navigation/native';
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { TouchableOpacity, View, Image, TextInput, Animated, Easing } from 'react-native'
+import { TouchableOpacity, View, Image, TextInput, Animated, Easing, NativeSyntheticEvent, TextInputFocusEventData } from 'react-native'
 import arrowBack from "../../assets/icons/arrow-back-white.png";
 import searchWhite from "../../assets/icons/search-white.png";
 import useRouter from '../../libs/hook/useRouter';
@@ -12,35 +12,16 @@ interface HeaderSearchBarProps extends PropsWithChildren {
     onSubmit?: () => void;
 }
 function HeaderSearchBar(props: HeaderSearchBarProps) {
-    // const [animationHeight] = useState(new Animated.Value(0));
-    // const nonExpandHeight = 55;
-    // useEffect(() => {
-    //     if (props.expanded) {
-    //         Animated.timing(animationHeight, {
-    //             duration: 100,
-    //             toValue: expandHeight,
-    //             easing: Easing.linear,
-    //             useNativeDriver: false
-    //         }).start();
-    //     }
-    //     else {
-    //         Animated.timing(animationHeight, {
-    //             duration: 100,
-    //             toValue: nonExpandHeight,
-    //             easing: Easing.linear,
-    //             useNativeDriver: false
-    //         }).start();
-    //     }
-    // }, [props.expanded]);
-    // const { goBack, canGoBack } = useRouter();
     return (
         <View style={{ height: "100%" }}>
             <View
                 style={{
                     //borderWidth: 1,
-                    flexDirection: "row"
+                    flexDirection: "row",
                 }}>
                 <TextInput
+                    onSubmitEditing={props.onSubmit}
+                    autoFocus={false}
                     value={props.value}
                     onChangeText={props.onChangeText}
                     placeholderTextColor={paletteGray}

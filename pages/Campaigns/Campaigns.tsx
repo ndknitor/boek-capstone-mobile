@@ -15,7 +15,6 @@ function Campaigns(props : any) {
     }, [props]);
     return (
         <>
-            {/* <HeaderSearchBar /> */}
             <ScrollView>
                 <View style={{
                     backgroundColor: "white",
@@ -28,7 +27,7 @@ function Campaigns(props : any) {
                     shadowRadius: 16.00,
                     elevation: 24
                 }}>
-                    <View style={{ width: "100%", padding: 10 }}>
+                    <View style={{ width: "100%", padding: 10, marginBottom : 20 }}>
                         <Text style={{ fontSize: 20, fontWeight: "700" }}>Hội sách đang diễn ra</Text>
                     </View>
                     <View style={{ height: 300 }}>

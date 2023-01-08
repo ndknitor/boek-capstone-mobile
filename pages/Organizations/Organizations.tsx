@@ -53,7 +53,6 @@ function UnTrackedOrganizations() {
     const hook = useUnTrackedOrganizationsPage();
     return (
         <>
-            <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
                 <OrganizationView />
                 <OrganizationView tracked />
@@ -72,7 +71,6 @@ function TrackedOrganizations() {
     const hook = useTrackedOrganizationsPage();
     return (
         <>
-            <HeaderSearchBar value={hook.organizationSearchValue} onChangeText={hook.onOrganizationSearchTextChange} />
             <ScrollView>
                 <OrganizationView tracked />
                 <OrganizationView tracked />

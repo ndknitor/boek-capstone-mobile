@@ -15,8 +15,6 @@ function IssuerMoreBook(props: IssuerMoreBookProps) {
     const hook = useIssuerMoreBookPage(props);
     return (
         <>
-            <HeaderSearchBar />
-
             <View style={{ backgroundColor: "white" }}>
                 <Text style={{ fontSize: 18, fontWeight: "600", margin: 10 }}>Sách giảm giá</Text>
                 <FlatList

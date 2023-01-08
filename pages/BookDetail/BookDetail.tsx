@@ -53,9 +53,9 @@ function BookDetail() {
 
                         <View style={{ width: "30%", justifyContent: "center" }}>
                             <View>
-                                <Button 
-                                onPress={() => navigate("PriceComparison")}
-                                buttonStyle={{ borderRadius: 8, backgroundColor: shade1 }}>So sánh giá</Button>
+                                <Button
+                                    onPress={() => navigate("PriceComparison")}
+                                    buttonStyle={{ borderRadius: 8, backgroundColor: shade1 }}>So sánh giá</Button>
                             </View>
                         </View>
                     </View>
@@ -128,6 +128,7 @@ function BookDetail() {
                         <Text style={{ marginBottom: 10 }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat voluptate, repellendus laborum tempora iure laudantium aperiam saepe veniam ipsam voluptatibus porro molestias corrupti perspiciatis obcaecati unde doloribus eveniet mollitia expedita.</Text>
                     </View>
                     <ShowMoreButton />
+                    <View style={{ marginBottom: 30 }} />
                     <TitleTabedFlatBooks title="Có thể bạn quan tâm" data={[
                         {
                             tabLabel: "Cùng thể loại",
@@ -140,7 +141,7 @@ function BookDetail() {
                     ]} />
                 </View>
             </ScrollView>
-            <Button buttonStyle={{ backgroundColor: primaryColor, padding : 12 }}>Chọn mua</Button>
+            <Button buttonStyle={{ backgroundColor: primaryColor, padding: 12 }}>Chọn mua</Button>
         </>
     )
 }

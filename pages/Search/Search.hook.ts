@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import useAsyncEffect from "use-async-effect";
-import appxios from "../../component/AxiosInterceptor";
 import { Book } from "../../objects/entities/Book";
-import { BooksGetResponse } from "../../objects/response/BooksGetResponse";
-import EndPont from "../../utils/EndPoint";
+import { IndexContext } from "../Index/Index.hook";
+import { SearchProps } from "./Search";
 interface SelectModalOption {
     key: number;
     section?: boolean;
     label: string;
 }
-export default function useBooksPage() {
+export default function useSearchsPage(props: SearchProps) {
     const scrollViewRef = useRef<ScrollView>(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -153,9 +152,10 @@ export default function useBooksPage() {
             animated: true
         });
     }
-
     useAsyncEffect(async () => {
+
         await processGetBooks(1, "");
+
     }, []);
 
     return {

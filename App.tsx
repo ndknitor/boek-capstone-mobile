@@ -6,10 +6,11 @@ import Routers from "./Routes";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { StatusBar } from "react-native";
 import { primaryColor } from "./utils/color";
+import { MenuProvider } from "react-native-popup-menu";
 
 GoogleSignin.configure({
   webClientId: '652368417331-i91jda7knc2ardd0pnkq0cr3vog446qf.apps.googleusercontent.com',
-  iosClientId : "652368417331-1k2t1k8aks1g5483andfd5nja06th71d.apps.googleusercontent.com"
+  iosClientId: "652368417331-1k2t1k8aks1g5483andfd5nja06th71d.apps.googleusercontent.com"
 });
 
 
@@ -19,7 +20,9 @@ const App = () => {
       <StatusBar backgroundColor={primaryColor} barStyle="light-content" />
       <Provider>
         <AuthorizeProvider>
-          <Routers />
+          <MenuProvider>
+            <Routers />
+          </MenuProvider>
         </AuthorizeProvider>
         <Toast />
       </Provider>

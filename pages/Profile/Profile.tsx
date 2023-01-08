@@ -12,7 +12,7 @@ import accountWhite from "../../assets/icons/account-circle-white.png";
 import useAuth from '../../libs/hook/useAuth';
 import { customer, staff } from '../../utils/roles';
 export interface ProfileProps {
-  jumpTo : (key: string) => void;
+  jumpTo: (key: string) => void;
 }
 
 function Profile(props: ProfileProps) {
