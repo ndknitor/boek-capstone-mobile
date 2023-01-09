@@ -2,7 +2,7 @@ import { View, Image, TouchableOpacity, Text,  GestureResponderEvent } from 'rea
 import logo from "../../assets/logo.png";
 import bookmark from "../../assets/icons/bookmark-border-white.png";
 import bookmarkRemove from "../../assets/icons/bookmark-remove-white.png";
-import { paletteRed, shade1, shade9 } from '../../utils/color';
+import { paletteRed, primaryTint1, primaryTint9,  } from '../../utils/color';
 import useOrganizationExpandComponent from './OrganizationView.hook';
 export interface OrganizationViewProps {
     tracked?: boolean;
@@ -10,7 +10,7 @@ export interface OrganizationViewProps {
 }
 function OrganizationView(props: OrganizationViewProps) {
     return (
-        <View style={{ flex: 1, flexDirection: "row", height: 160, borderBottomColor: shade9, borderBottomWidth: 2 }}>
+        <View style={{ flex: 1, flexDirection: "row", height: 160, borderBottomColor: primaryTint9, borderBottomWidth: 2 }}>
             <View style={{ height: 160, width: "25%" }}>
                 <Image style={{ height: "97%", width: "97%" }} source={logo} resizeMode={"contain"} />
             </View>
@@ -23,7 +23,7 @@ function OrganizationView(props: OrganizationViewProps) {
                 <View style={{ alignItems: "center", justifyContent: "center",width: "100%", height: "80%" }}>
 
                     <TouchableOpacity onPress={props.onTrackPress} style={{
-                        backgroundColor: props.tracked ? paletteRed : shade1,
+                        backgroundColor: props.tracked ? paletteRed : primaryTint1,
                         borderRadius: 9999,
                         width: 45,
                         height: 45,

@@ -1,7 +1,7 @@
 import { Button } from '@rneui/base'
 import React from 'react'
 import { ButtonProps, GestureResponderEvent, View } from 'react-native'
-import { shade1 } from '../../utils/color'
+import { primaryTint1 } from '../../utils/color';
 interface ShowMoreButtonProps {
     onPress?: (event: GestureResponderEvent) => void;
 }
@@ -14,7 +14,7 @@ function ShowMoreButton(props: ShowMoreButtonProps) {
                     width: 170,
                     alignItems: "center",
                     borderRadius: 8,
-                    backgroundColor: shade1
+                    backgroundColor: primaryTint1
                 }}>Xem thêm</Button>
         </View>
     )

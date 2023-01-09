@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FlatList, TouchableOpacity, Text, View } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
 import { Book } from '../../objects/entities/Book';
-import { shade1, shade4 } from '../../utils/color';
+import { primaryTint4 } from '../../utils/color';
 import { range } from '../../utils/format'
 import BookCard from '../BookCard/BookCard';
 interface TitleTabedFlatBooks {
@@ -23,7 +23,7 @@ function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
                     <TouchableOpacity
                         onPress={() => setIndex(e.index)}
                         style={{
-                            borderBottomColor: shade4,
+                            borderBottomColor: primaryTint4,
                             borderBottomWidth: e.index == index ? 1 : 0,
                             paddingLeft: 20,
                             paddingRight: 20,

@@ -1,7 +1,7 @@
 import { Button } from '@rneui/base';
 import React from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
-import { paletteGray, palettePink, primaryColor, shade1, shade5, shade6, shade7 } from '../../utils/color';
+import { paletteGray, palettePink, primaryColor, primaryTint1, primaryTint5} from '../../utils/color';
 import { formatNumber } from '../../utils/format';
 import { books } from '../../utils/mock';
 import useBookDetailPage from './BookDetail.hook';
@@ -21,7 +21,7 @@ function BookDetail() {
             <ScrollView style={{ backgroundColor: "white" }}>
                 <View style={{ alignItems: "center" }}>
                     <View style={{ width: "70%", height: 400, paddingTop: 20 }}>
-                        <View style={{ borderRadius: 24, borderWidth: 1, borderColor: shade5, overflow: "hidden" }}>
+                        <View style={{ borderRadius: 24, borderWidth: 1, borderColor: primaryTint5, overflow: "hidden" }}>
                             <Image
                                 style={{ width: "100%", height: "100%" }}
                                 source={{ uri: book.imageUrl }}
@@ -55,7 +55,7 @@ function BookDetail() {
                             <View>
                                 <Button
                                     onPress={() => navigate("PriceComparison")}
-                                    buttonStyle={{ borderRadius: 8, backgroundColor: shade1 }}>So sánh giá</Button>
+                                    buttonStyle={{ borderRadius: 8, backgroundColor: primaryTint1 }}>So sánh giá</Button>
                             </View>
                         </View>
                     </View>

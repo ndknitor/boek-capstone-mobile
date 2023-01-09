@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, ViewStyle, StyleProp } from 'react-native'
-import { primaryColor, shade3 } from '../../utils/color';
+import { primaryColor, primaryTint3 } from '../../utils/color';
 import navigateBack from "../../assets/icons/navigate-left-white.png";
 import navigateNext from "../../assets/icons/navigate-right-white.png";
 import usePagingComponent from './Paging.hook';
@@ -40,7 +40,7 @@ function Paging(props: PagingProps) {
                     onPress={() => props.onPageNavigation && props.onPageNavigation(1)}
                     style={{
                         display: hook.showStartDot ? "flex" : "none",
-                        backgroundColor: shade3,
+                        backgroundColor: primaryTint3,
                         width: 30,
                         height: 30,
                         borderRadius: 9999,
@@ -71,7 +71,7 @@ function Paging(props: PagingProps) {
                                 onPress={() => props.onPageNavigation && props.onPageNavigation(item)}
                                 key={Math.random()}
                                 style={{
-                                    backgroundColor: shade3,
+                                    backgroundColor: primaryTint3,
                                     width: 30,
                                     height: 30,
                                     borderRadius: 9999,
@@ -88,7 +88,7 @@ function Paging(props: PagingProps) {
                     onPress={() => props.onPageNavigation && props.onPageNavigation(props.maxPage)}
                     style={{
                         display: hook.showEndDot ? "flex" : "none",
-                        backgroundColor: shade3,
+                        backgroundColor: primaryTint3,
                         width: 30,
                         height: 30,
                         borderRadius: 9999,

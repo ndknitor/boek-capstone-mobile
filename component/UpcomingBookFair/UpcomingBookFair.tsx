@@ -1,10 +1,10 @@
 import React from 'react'
 import { TouchableOpacity, View, Text, Image } from 'react-native'
-import { shade6, } from '../../utils/color'
 import image from "../../assets/hsxv.webp";
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import img1 from "../../assets/wtd.webp";
+import { primaryTint6 } from '../../utils/color';
 interface UpcomingBookFairProps {
     title: string;
     location: string;
@@ -15,7 +15,7 @@ interface UpcomingBookFairProps {
 function UpcomingBookFair(props: UpcomingBookFairProps) {
     return (
         <View style={{ height: 220, justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity style={{ width: "100%", height: "100%", borderBottomColor: shade6, borderBottomWidth: 1 }}>
+            <TouchableOpacity style={{ width: "100%", height: "100%", borderBottomColor: primaryTint6, borderBottomWidth: 1 }}>
                 <View
                     style={{ position: "absolute", width: "100%", height: "100%", alignItems: "center", justifyContent: "center", zIndex: 1 }}>
                     <View style={{ width: "92%", height: "90%", justifyContent: "flex-end" }}>

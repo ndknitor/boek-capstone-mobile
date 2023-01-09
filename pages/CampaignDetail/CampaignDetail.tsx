@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated } from 'react-native'
-import { paletteGray, paletteGreen, paletteGreenBold, shade1, shade7 } from '../../utils/color';
+import { paletteGray, paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../utils/color';
 import img1 from "../../assets/wtd.webp";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
@@ -20,8 +20,8 @@ function CampaignDetail() {
         <>
             <Animated.View style={{
                 display: hook.scrollToTopButtonShowOpacity.display,
-                opacity : hook.scrollToTopButtonShowOpacity.opacity,
-                backgroundColor: shade1,
+                opacity: hook.scrollToTopButtonShowOpacity.opacity,
+                backgroundColor: primaryTint1,
                 width: 40,
                 height: 40,
                 borderRadius: 999,
@@ -75,8 +75,7 @@ function CampaignDetail() {
                             </View>
                             <Text >Kết thúc : 07:00 05/12/2022</Text>
                         </View>
-                        <Text style={{ fontSize: 22, fontWeight: "600", }}>Nhà phát hành và ưu đãi</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray, marginBottom: 10 }}>(Nhấn vào NPH để xem chi tiết ưu đãi)</Text>
+                        <Text style={{ fontSize: 22, fontWeight: "600", }}>Nhà phát hành</Text>
                         <FlatList
                             horizontal
                             data={t}
@@ -127,7 +126,7 @@ function CampaignDetail() {
                             renderItem={e =>
                                 <LabeledImage label={e.item.toString()} source={avatar} />
                             } />
-                        <View style={{ borderWidth: 1, borderColor: shade7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
+                        <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>
                             <Text style={{ fontSize: 13, }}>Boek không chịu trách nhiệm về việc đơn hàng đổi trả sách của khách hàng. Xin liên hệ về các nhà phát hành nếu liên quan về đổi trả sách.</Text>
                         </View>

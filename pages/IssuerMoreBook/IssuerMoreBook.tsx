@@ -4,7 +4,7 @@ import BookCard from '../../component/BookCard/BookCard';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 import Paging from '../../component/Paging/Paging';
 import PageProps from '../../objects/schemes/PageProps'
-import { shade4 } from '../../utils/color';
+import { primaryTint4 } from '../../utils/color';
 import { range } from '../../utils/format';
 import { books } from '../../utils/mock';
 import useIssuerMoreBookPage from './IssuerMoreBook.hook';
@@ -24,7 +24,7 @@ function IssuerMoreBook(props: IssuerMoreBookProps) {
                         <TouchableOpacity
                             onPress={() => hook.setIndex(e.index)}
                             style={{
-                                borderBottomColor: shade4,
+                                borderBottomColor: primaryTint4,
                                 borderBottomWidth: e.index == hook.index ? 1 : 0,
                                 paddingLeft: 20,
                                 paddingRight: 20,

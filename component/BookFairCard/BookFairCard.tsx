@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
-import { paletteGreen, paletteGreenBold, shade4 } from '../../utils/color';
+import { paletteGreen, paletteGreenBold, primaryTint4 } from '../../utils/color';
 import image from "../../assets/hsxv.webp";
 import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
@@ -9,7 +9,7 @@ import calendarBlack from "../../assets/icons/calendar-today-black.png";
 
 function BookFairCard() {
     return (
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: shade4, borderRadius: 8, paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ marginBottom: 5, width: "45%" }}>
                     <Image

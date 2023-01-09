@@ -27,6 +27,7 @@ function Organizations() {
     return (
         <>
             <TabView
+                swipeEnabled={false}
                 tabBarPosition='bottom'
                 renderTabBar={(props) =>
                     <TabBar

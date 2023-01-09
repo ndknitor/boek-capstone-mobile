@@ -4,7 +4,7 @@ import { View, Text, ScrollView } from 'react-native'
 import SelectedChip from '../../component/SeletedChip/SelectedChip'
 import StateLoader from '../../component/StateLoader/StateLoader'
 import useRouter from '../../libs/hook/useRouter'
-import { paletteRed, primaryColor, shade1 } from '../../utils/color'
+import { paletteRed, primaryColor } from '../../utils/color'
 import useAskGenrePage from './AskGenres.hook'
 interface AskGenresProps {
     skiped?: boolean;

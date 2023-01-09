@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 import corporateFlare from "../../assets/icons/corporate-fare-black.png";
-import { shade7 } from '../../utils/color';
+import { primaryTint7 } from '../../utils/color';
 
 
 function OrganizationCard() {
     return (
-        <View style={{ borderWidth: 1, borderColor: shade7, height: 100, borderRadius: 8 }}>
+        <View style={{ borderWidth: 1, borderColor: primaryTint7, height: 100, borderRadius: 8 }}>
             <View style={{ flex: 1, flexDirection: "row" }}>
                 <View style={{ height: "100%", width: "25%", alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ height: "80%", width: "80%" }} source={corporateFlare} resizeMode="contain" />

@@ -4,7 +4,6 @@ import React, { useReducer } from 'react'
 import { FlatList, Text, View } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
 import { Book } from '../../objects/entities/Book';
-import { shade1 } from '../../utils/color';
 import BookCard from '../BookCard/BookCard';
 interface TitleFlatBooksProps {
     data: Book[];

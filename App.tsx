@@ -7,7 +7,6 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { DrawerLayoutAndroid, StatusBar } from "react-native";
 import { primaryColor } from "./utils/color";
 import { MenuProvider } from "react-native-popup-menu";
-import Drawer from "./component/Drawer/Drawer";
 
 GoogleSignin.configure({
   webClientId: '652368417331-i91jda7knc2ardd0pnkq0cr3vog446qf.apps.googleusercontent.com',

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, View, Image, Text } from 'react-native'
 import PageProps from '../../objects/schemes/PageProps';
-import { paletteGray, paletteGrayLight, paletteGreen, paletteGreenBold, palettePink, shade4, shade5, shade6, shade7 } from '../../utils/color';
+import { paletteGray, paletteGrayLight, paletteGreen, paletteGreenBold, palettePink, primaryTint6 } from '../../utils/color';
 import { books } from '../../utils/mock';
 import usePriceComparisonPage from './PriceComparison.hook'
 export interface PriceComparisonProps extends PageProps {
@@ -48,9 +48,9 @@ function PriceComparison(props: PriceComparisonProps) {
             </View>
             <ScrollView>
 
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
+                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: primaryTint6 }}>
                     <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
+                        <View style={{ borderWidth: 1, borderColor: primaryTint6, borderRadius: 8, overflow: "hidden" }}>
                             <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
                         </View>
                     </View>
@@ -64,213 +64,9 @@ function PriceComparison(props: PriceComparisonProps) {
                     </View>
                 </View>
 
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
+                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: primaryTint6 }}>
                     <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-
-
-
-
-
-
-
-
-
-
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
-                            <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
-                        </View>
-                    </View>
-                    <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                        <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
-                        <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
-                            69.000 đ
-                        </Text>
-                        <Text style={{ width: "70%", borderRadius: 24, textAlign: "center", padding: 5, backgroundColor: paletteGrayLight, fontSize: 15, fontWeight: "500" }}>Lớn hơn 1000 đ</Text>
-                    </View>
-                </View>
-
-                <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: shade6 }}>
-                    <View style={{ padding: 10, width: "40%" }} >
-                        <View style={{ borderWidth: 1, borderColor: shade6, borderRadius: 8, overflow: "hidden" }}>
+                        <View style={{ borderWidth: 1, borderColor: primaryTint6, borderRadius: 8, overflow: "hidden" }}>
                             <Image source={{ uri: book.imageUrl }} style={{ height: 140 }} resizeMode="cover" />
                         </View>
                     </View>

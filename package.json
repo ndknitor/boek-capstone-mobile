@@ -34,6 +34,7 @@
     "react-native": "^0.70.6",
     "react-native-draggable": "^3.3.0",
     "react-native-drawer-layout": "^2.0.0",
+    "react-native-final-tree-view": "^3.0.0",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-modal-datetime-picker": "^14.0.1",
     "react-native-modal-selector": "^2.1.2",
