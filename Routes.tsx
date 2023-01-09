@@ -64,6 +64,7 @@ function StackNavigator() {
 function TabNavigator() {
   return (
     <Tab.Navigator
+      safeAreaInsets={{ bottom: 0 }}
       screenOptions={{
         tabBarStyle: {
           height: "7%"
@@ -78,7 +79,7 @@ function TabNavigator() {
         tabBarInactiveBackgroundColor: primaryColor,
         tabBarActiveBackgroundColor: primaryTint1,
         lazy: true
-      }}>
+      }} >
       <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={20} /> }} name="Campaigns" component={Campaigns} />
       <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={20} /> }} name="Search" component={Search} />
       <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 20 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
