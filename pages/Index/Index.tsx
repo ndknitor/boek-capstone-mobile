@@ -56,18 +56,22 @@ function Content() {
       setOptions({
         headerTitle: () =>
           <HeaderSearchBar
+            focus={index == 1}
             onSubmit={onSearchSubmit}
             onChangeText={text => context.setSearchValue(text)} />
+      });
+    }
+    else
+    {
+      setOptions({
+        headerTitle : undefined
       })
     }
-    else {
-      setOptions({ headerTitle: undefined });
-    }
+
   }, [index]);
   return (
     <>
       <TabView
-        lazy
         animationEnabled
         tabBarPosition='bottom'
         swipeEnabled={false}
@@ -116,9 +120,6 @@ const Test = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigate("AskPersonalInformation")}>
         <Text>Ask PersonalInformation</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate("BookDetail")}>
-        <Text>BookDetail</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigate("CampaignDetail")}>
         <Text>CampaignDetail</Text>

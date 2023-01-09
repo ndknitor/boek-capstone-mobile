@@ -4,46 +4,12 @@ import useAsyncEffect from "use-async-effect";
 import { Book } from "../../objects/entities/Book";
 import { IndexContext } from "../Index/Index.hook";
 import { SearchProps } from "./Search";
-interface SelectModalOption {
-    key: number;
-    section?: boolean;
-    label: string;
-}
-export default function useSearchsPage(props: SearchProps) {
+export function useBooksPage(props: SearchProps) {
     const scrollViewRef = useRef<ScrollView>(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(100);
     const [books, setBooks] = useState<Book[]>([]);
-    const [sortOptionsModal, setSortOptionsModal] = useState<SelectModalOption[]>([
-        { key: Math.random(), label: "Mới nhất", section: true },
-        { key: Math.random(), label: "Cũ nhất" },
-        { key: Math.random(), label: "Bán chạy nhất" }
-    ]);
-    const [filterOptionsModal, setfilterOptionsModal] = useState<SelectModalOption[]>([
-        { key: Math.random(), label: "Tất cả", section: true },
-        { key: Math.random(), label: "Thể loại" },
-        { key: Math.random(), label: "Bán chạy" }
-    ]);
-    const onSortSelectChange = (option: SelectModalOption) => {
-        const result: SelectModalOption[] = [];
-        sortOptionsModal.map(element => {
-            if (element.key == option.key) {
-                result.push({
-                    key: element.key,
-                    label: element.label,
-                    section: true
-                });
-            }
-            else {
-                result.push({
-                    key: element.key,
-                    label: element.label
-                });
-            }
-        });
-        setSortOptionsModal(result);
-    }
     const processGetBooks = async (page: number, search: string) => {
         setBooks(
             [
@@ -165,9 +131,19 @@ export default function useSearchsPage(props: SearchProps) {
         maxPage,
         setCurrentPage,
         loading,
-        sortOptionsModal,
-        filterOptionsModal,
-        onSortSelectChange,
         onPageNavigation
+    };
+}
+export function useBookFairsPage(props: SearchProps) {
+    const scrollViewRef = useRef<ScrollView>(null);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(100);
+
+    return {
+        scrollViewRef,
+        loading,
+        currentPage,
+        maxPage
     };
 }

@@ -1,12 +1,13 @@
 import { NavigationContainerProps } from '@react-navigation/native';
-import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { Input } from '@rneui/base';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { TouchableOpacity, View, Image, TextInput, Animated, Easing, NativeSyntheticEvent, TextInputFocusEventData } from 'react-native'
 import arrowBack from "../../assets/icons/arrow-back-white.png";
 import searchWhite from "../../assets/icons/search-white.png";
-import useRouter from '../../libs/hook/useRouter';
 import { paletteGray, primaryColor } from '../../utils/color';
 
 interface HeaderSearchBarProps extends PropsWithChildren {
+    focus: boolean;
     value?: string;
     onChangeText?: (e: string) => void;
     onSubmit?: () => void;
@@ -18,26 +19,24 @@ function HeaderSearchBar(props: HeaderSearchBarProps) {
                 style={{
                     //borderWidth: 1,
                     flexDirection: "row",
+                    width: "85%"
                 }}>
-                <TextInput
+                <Input
                     onSubmitEditing={props.onSubmit}
-                    autoFocus={false}
                     value={props.value}
                     onChangeText={props.onChangeText}
                     placeholderTextColor={paletteGray}
                     placeholder="Tìm kiếm"
                     style={{
+                        color : "white",
                         fontSize: 16,
-                        color: "white",
                         borderBottomWidth: 1,
                         borderBottomColor: "white",
-                        paddingBottom: 4,
-                        height: "75%",
-                        width: "83%"
+                        width: "100%"
                     }} />
                 <View style={{ width: "15%" }}>
-                    <TouchableOpacity onPress={props.onSubmit} style={{ alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
-                        <Image source={searchWhite} style={{ height: "100%" }} resizeMode="contain" />
+                    <TouchableOpacity onPress={props.onSubmit} style={{ alignItems: "center", justifyContent: "center", width: 30, height: "100%" }}>
+                        <Image source={searchWhite} style={{ width: "100%" }} resizeMode="contain" />
                     </TouchableOpacity>
                 </View>
             </View>

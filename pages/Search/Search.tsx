@@ -1,15 +1,19 @@
-import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable } from 'react-native'
+import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable, DrawerLayoutAndroid, BackHandler } from 'react-native'
 import BookCard from '../../component/BookCard/BookCard';
 import Paging from '../../component/Paging/Paging';
-import { shade1, } from '../../utils/color';
+import { shade1 } from '../../utils/color';
 import filterBlack from "../../assets/icons/filter-black.png";
 import sortBlack from "../../assets/icons/sort-black.png";
 import { books } from '../../utils/mock';
 import { SceneMap, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import useSearchsPage from './Search.hook';
+import { useBookFairsPage, useBooksPage } from './Search.hook';
+import { range } from '../../utils/format';
+import BookFairCard from '../../component/BookFairCard/BookFairCard';
 import { Button } from '@rneui/base';
+import DrawerLayout from 'react-native-drawer-layout';
+
 export interface SearchProps extends SceneRendererProps {
 
 }
@@ -23,6 +27,7 @@ function Search(props: SearchProps) {
     return (
         <TabView
             lazy
+            swipeEnabled={false}
             animationEnabled
             tabBarPosition='top'
             renderLazyPlaceholder={() => <ActivityIndicator size='large' style={{ width: "100%", height: "100%" }} />}
@@ -48,29 +53,93 @@ function Search(props: SearchProps) {
     )
 }
 function Books(props: SearchProps) {
-    const hook = useSearchsPage(props);
+    const hook = useBooksPage(props);
+    const drawerRef = useRef<DrawerLayout>(null);
     return (
         <>
-            <ActivityIndicator
-                size="large"
-                style={{
-                    display: hook.loading ? "flex" : "none",
-                    zIndex: 1,
-                    opacity: 0.6,
-                    position: "absolute",
-                    width: "100%",
-                    height: "90%",
-                    top: 90
-                }} />
-            <ScrollView
-                ref={hook.scrollViewRef}
-                scrollEnabled={!hook.loading}
-                style={{
-                    backgroundColor: "white",
-                }}>
+            <DrawerLayout
+                ref={drawerRef}
+                drawerWidth={200}
+                drawerPosition={"left"}
+                drawerBackgroundColor="#ddd"
+                renderNavigationView={
+                    () =>
+                        <View>
+                            <Button onPress={() => drawerRef.current?.closeDrawer()}>Close</Button>
+                            <Text>I am in the drawer!</Text>
+                        </View>
+                }>
+                <PageLoader loading={hook.loading} />
+                <ScrollView
+                    ref={hook.scrollViewRef}
+                    scrollEnabled={!hook.loading}
+                    style={{
+                        backgroundColor: "white",
+                    }}>
+                    <View style={{
+                        marginBottom: 5,
+                        width: "100%",
+                        height: 35,
+                        flexDirection: "row"
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => drawerRef.current?.openDrawer()}
+                            style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: shade1 }}>
+                            <Image source={filterBlack} resizeMode="center" style={{ width: "10%" }} />
+                            <Text>Lọc</Text>
+                        </TouchableOpacity>
+                        <View style={{ width: "50%" }}>
+                            <Menu >
+                                <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
+                                    <Image source={sortBlack} resizeMode="center" style={{ width: "10%" }} />
+                                    <Text>Sắp xếp</Text>
+                                </MenuTrigger>
+                                <MenuOptions optionsContainerStyle={{ padding: 7 }}>
+                                    <MenuOption onSelect={() => alert(`Save`)}>
+                                        <Text style={{ fontSize: 16 }}>Gần đây nhất</Text>
+                                    </MenuOption>
+                                    <MenuOption onSelect={() => alert(`Not called`)}>
+                                        <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
+                                    </MenuOption>
+                                    <MenuOption onSelect={() => alert(`Not called`)}>
+                                        <Text style={{ fontSize: 16 }}>Giá thấp nhất</Text>
+                                    </MenuOption>
+                                    <MenuOption onSelect={() => alert(`Not called`)} >
+                                        <Text>
+                                            <Text style={{ fontSize: 16 }}>Giá cao nhất</Text>
+                                        </Text>
+                                    </MenuOption>
+                                </MenuOptions>
+                            </Menu>
+                        </View>
+                    </View>
+                    <View style={{ padding: 10, flexDirection: "row", flexWrap: "wrap" }}>
+                        {
+                            books.map(item =>
+                                <View key={Math.random()}>
+                                    <BookCard book={item} />
+                                </View>
+                            )
+                        }
+                    </View>
+                    <View style={{ marginBottom: 20 }}>
+                        <Paging maxPage={hook.maxPage} currentPage={hook.currentPage} onPageNavigation={hook.onPageNavigation} />
+                    </View>
+                </ScrollView>
+            </DrawerLayout>
+
+        </>
+    );
+}
+
+function BookFairs(props: SearchProps) {
+    const hook = useBookFairsPage(props);
+    return (
+        <View style={{ backgroundColor: "white" }}>
+            <PageLoader loading={hook.loading} />
+            <ScrollView style={{ padding: 7, height: "100%" }} contentContainerStyle={{ alignItems: "center" }}>
+
                 <View style={{
-                    borderColor: shade1,
-                    borderTopWidth: 1,
                     marginBottom: 5,
                     width: "100%",
                     height: 35,
@@ -107,27 +176,37 @@ function Books(props: SearchProps) {
                         </Menu>
                     </View>
                 </View>
-                <View style={{ padding: 10, flexDirection: "row" }}>
-                    {
-                        books.map(item =>
-                            <View key={Math.random()}>
-                                <BookCard book={item} />
-                            </View>
-                        )
-                    }
-                </View>
-                <View style={{ marginBottom: 20 }}>
-                    <Paging maxPage={hook.maxPage} currentPage={hook.currentPage} onPageNavigation={hook.onPageNavigation} />
+
+                {
+                    range(0, 5).map(item =>
+                        <View key={Math.random()} style={{ marginBottom: 10 }}>
+                            <BookFairCard />
+                        </View>
+                    )
+                }
+
+                <View style={{ marginBottom: 10, width: "100%", height: "100%" }}>
+                    <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} />
                 </View>
             </ScrollView>
-        </>
-    );
-}
-function BookFairs(props: SearchProps) {
-    return (
-        <View style={{ width: "100%", height: "100%", borderWidth: 1 }}>
 
         </View>
+    );
+}
+
+function PageLoader({ loading }: { loading: boolean }) {
+    return (
+        <ActivityIndicator
+            size="large"
+            style={{
+                display: loading ? "flex" : "none",
+                zIndex: 1,
+                opacity: 0.6,
+                position: "absolute",
+                width: "100%",
+                height: "90%",
+                top: 90
+            }} />
     );
 }
 

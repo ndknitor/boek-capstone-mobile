@@ -4,7 +4,6 @@ import Swiper from 'react-native-swiper';
 import useBookFairPage from './Campaigns.hook';
 import OnGoingBookFair from '../../component/OnGoingBookFair/OnGoingBookFair';
 import UpcomingBookFair from '../../component/UpcomingBookFair/UpcomingBookFair';
-import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 import useRouter from '../../libs/hook/useRouter';
 
 function Campaigns(props : any) {
