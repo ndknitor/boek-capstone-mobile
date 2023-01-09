@@ -19,7 +19,7 @@ function CampaignDetail() {
     return (
         <>
             <Animated.View style={{
-                display: hook.scrollToTopButtonShowOpacity.display,
+                display: hook.scrollToTopButtonShowOpacity.display ? "flex" : "none",
                 opacity: hook.scrollToTopButtonShowOpacity.opacity,
                 backgroundColor: primaryTint1,
                 width: 40,

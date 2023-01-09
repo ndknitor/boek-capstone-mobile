@@ -1,12 +1,11 @@
-import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable, DrawerLayoutAndroid, BackHandler } from 'react-native'
+import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable, DrawerLayoutAndroid, BackHandler, Keyboard } from 'react-native'
 import BookCard from '../../component/BookCard/BookCard';
 import Paging from '../../component/Paging/Paging';
-import { paletteGray, paletteGrayLight, primaryTint1, primaryTint10, primaryTint4, primaryTint7, primaryTint9 } from '../../utils/color';
+import { paletteGray, paletteGrayLight, primaryColor, primaryTint1, primaryTint10, primaryTint4, primaryTint7, primaryTint9 } from '../../utils/color';
 import filterBlack from "../../assets/icons/filter-black.png";
 import sortBlack from "../../assets/icons/sort-black.png";
 import { books } from '../../utils/mock';
-import { SceneMap, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import { range } from '../../utils/format';
@@ -15,49 +14,41 @@ import expandMoreBlack from "../../assets/icons/expand-more-black.png";
 import expandLessBlack from "../../assets/icons/expand-less-black.png";
 import DrawerLayout from 'react-native-drawer-layout';
 import TreeView from 'react-native-final-tree-view';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 
-export interface SearchProps extends SceneRendererProps {
+const Tab = createMaterialTopTabNavigator();
+
+export interface SearchProps {
 
 }
 function Search(props: SearchProps) {
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: "0", title: 'Sách' },
-        { key: "1", title: 'Hội sách' },
-    ]);
-
     return (
-        <TabView
-            lazy
-            swipeEnabled={false}
-            animationEnabled
-            tabBarPosition='top'
-            renderLazyPlaceholder={() => <ActivityIndicator size='large' style={{ width: "100%", height: "100%" }} />}
-            renderTabBar={(props) =>
-                <TabBar
-                    {...props}
-                    indicatorContainerStyle={{ backgroundColor: primaryTint1 }}
-                    indicatorStyle={{ backgroundColor: "white" }}
-                    inactiveColor={"white"}
-                    activeColor={"white"}
-                    labelStyle={{ fontSize: 13 }}
-                />}
-            navigationState={{ index, routes }}
-            renderScene={
-                SceneMap({
-                    0: Books,
-                    1: BookFairs
-                })
-            }
-            onIndexChange={setIndex}
-            initialLayout={{ width: Dimensions.get("screen").width }}
-        />
+        <>
+            <HeaderSearchBar />
+            <Tab.Navigator screenOptions={{
+                tabBarLabelStyle: {
+                    color: primaryColor,
+                    fontWeight: "500"
+                },
+                tabBarIndicatorStyle: {
+                    backgroundColor: primaryColor
+                },
+                swipeEnabled: false
+            }}>
+                <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
+                <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
+            </Tab.Navigator>
+
+        </>
+
     )
 }
 function Books(props: SearchProps) {
     const hook = useBooksPage(props);
     return (
         <>
+
             <DrawerLayout
                 ref={hook.filterBooksDrawerRef}
                 drawerWidth={250}
@@ -82,7 +73,7 @@ function Books(props: SearchProps) {
                                             <Text
                                                 style={{
                                                     marginLeft: 25 * item.level,
-                                                    fontSize: item.level ? 16 : 18,
+                                                    fontSize: item.level ? 14 : 16,
                                                 }}>
                                                 {item.node.name}
                                             </Text>
@@ -189,7 +180,7 @@ function BookFairs(props: SearchProps) {
                                         <Text
                                             style={{
                                                 marginLeft: 25 * item.level,
-                                                fontSize: item.level ? 16 : 18,
+                                                fontSize: item.level ? 14 : 16,
                                             }}>
                                             {item.node.name}
                                         </Text>

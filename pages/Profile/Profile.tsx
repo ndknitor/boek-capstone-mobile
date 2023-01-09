@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import TouchCard from '../../component/TouchCard/TouchCard';
 import useProfilePage from './Profile.hook';
 import avatar from "../../assets/avatar.jpg";
-import { shade1 } from '../../utils/color';
 import { Button } from '@rneui/base';
 import AuthorizeView from '../../libs/AuthorizeView';
 import NonAuthorizeView from '../../libs/NonAuthorizeView';
@@ -11,8 +10,8 @@ import GoogleLoginButton from '../../component/GoogleLoginButton/GoogleLoginButt
 import accountWhite from "../../assets/icons/account-circle-white.png";
 import useAuth from '../../libs/hook/useAuth';
 import { customer, staff } from '../../utils/roles';
+import { primaryTint1 } from '../../utils/color';
 export interface ProfileProps {
-  jumpTo: (key: string) => void;
 }
 
 function Profile(props: ProfileProps) {
@@ -99,7 +98,7 @@ function Profile(props: ProfileProps) {
               borderRadius: 24,
               minWidth: 224,
               minHeight: 56,
-              backgroundColor: shade1
+              backgroundColor: primaryTint1
             }}>Đăng xuất</Button>
         </View>
       </AuthorizeView>
