@@ -15,13 +15,8 @@ interface HeaderSearchBarProps extends PropsWithChildren {
 function HeaderSearchBar(props: HeaderSearchBarProps) {
     return (
         <SafeAreaView>
-            <View style={{ height: "100%" }}>
-                <View
-                    style={{
-                        //borderWidth: 1,
-                        flexDirection: "row",
-                        width: "85%"
-                    }}>
+            <View style={{ height: "100%", width: "98%", flexDirection: "row" }}>
+                <View style={{ width: "90%" }}>
                     <Input
                         onSubmitEditing={props.onSubmit}
                         value={props.value}
@@ -32,14 +27,13 @@ function HeaderSearchBar(props: HeaderSearchBarProps) {
                             color: "white",
                             fontSize: 16,
                             borderBottomWidth: 1,
-                            borderBottomColor: "white",
-                            width: "100%"
+                            borderBottomColor: "white"
                         }} />
-                    <View style={{ width: "15%" }}>
-                        <TouchableOpacity onPress={props.onSubmit} style={{ alignItems: "center", justifyContent: "center", width: 30, height: "100%" }}>
-                            <Image source={searchWhite} style={{ width: "100%" }} resizeMode="contain" />
-                        </TouchableOpacity>
-                    </View>
+                </View>
+                <View style={{ width: "10%", paddingTop : 5 }}>
+                    <TouchableOpacity onPress={props.onSubmit} style={{ height: "100%" }}>
+                        <Image source={searchWhite} style={{ width: 35 }} resizeMode="contain" />
+                    </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
