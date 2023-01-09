@@ -34,7 +34,9 @@ function Search(props: SearchProps) {
                 tabBarIndicatorStyle: {
                     backgroundColor: primaryColor
                 },
-                swipeEnabled: false
+                swipeEnabled: false,
+                lazy: true,
+                lazyPlaceholder : () => <ActivityIndicator size="large"/>
             }}>
                 <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
                 <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
@@ -105,13 +107,13 @@ function Books(props: SearchProps) {
                         <TouchableOpacity
                             onPress={() => hook.filterBooksDrawerRef.current?.openDrawer()}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
-                            <Image source={filterBlack} resizeMode="center" style={{ width: "10%" }} />
+                            <Image source={filterBlack} resizeMode="center" style={{ width: 20 }} />
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
                             <Menu >
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
-                                    <Image source={sortBlack} resizeMode="center" style={{ width: "10%" }} />
+                                    <Image source={sortBlack} resizeMode="center" style={{ width: 20 }} />
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
@@ -207,13 +209,13 @@ function BookFairs(props: SearchProps) {
                         <TouchableOpacity
                             onPress={() => hook.filterBookFairsDrawerRef.current?.openDrawer()}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
-                            <Image source={filterBlack} resizeMode="center" style={{ width: "10%" }} />
+                            <Image source={filterBlack} resizeMode="center" style={{ width: 20 }} />
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
                             <Menu >
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
-                                    <Image source={sortBlack} resizeMode="center" style={{ width: "10%" }} />
+                                    <Image source={sortBlack} resizeMode="center" style={{ width: 20 }} />
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>

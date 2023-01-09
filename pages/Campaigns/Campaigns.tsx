@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView } from 'react-native'
 import Swiper from 'react-native-swiper';
 import useBookFairPage from './Campaigns.hook';
 import OnGoingBookFair from '../../component/OnGoingBookFair/OnGoingBookFair';
@@ -13,7 +13,7 @@ function Campaigns(props : any) {
         setOptions({headerTitle : undefined});
     }, [props]);
     return (
-        <>
+        <SafeAreaView>
             <ScrollView>
                 <View style={{
                     backgroundColor: "white",
@@ -92,7 +92,7 @@ function Campaigns(props : any) {
                 </View>
 
             </ScrollView>
-        </>
+        </SafeAreaView>
     )
 }
 

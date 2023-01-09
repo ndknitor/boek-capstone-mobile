@@ -22,7 +22,7 @@ import Campaigns from './pages/Campaigns/Campaigns';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import { Icon } from '@rneui/base';
-import { Image } from 'react-native';
+import { ActivityIndicator, Image } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
 import Index from './pages/Index/Index';
 
@@ -66,17 +66,18 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          height: 60
+          height: "7%"
         },
         headerShown: false,
         tabBarLabelStyle:
         {
           fontSize: 13,
           color: "white",
-          marginBottom : 4
+          marginBottom: 4
         },
         tabBarInactiveBackgroundColor: primaryColor,
-        tabBarActiveBackgroundColor: primaryTint1
+        tabBarActiveBackgroundColor: primaryTint1,
+        lazy: true
       }}>
       <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={20} /> }} name="Campaigns" component={Campaigns} />
       <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={20} /> }} name="Search" component={Search} />
