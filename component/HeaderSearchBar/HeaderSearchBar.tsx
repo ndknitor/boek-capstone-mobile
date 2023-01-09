@@ -14,29 +14,28 @@ interface HeaderSearchBarProps extends PropsWithChildren {
 }
 function HeaderSearchBar(props: HeaderSearchBarProps) {
     return (
-        <SafeAreaView>
-            <View style={{ height: "100%", width: "98%", flexDirection: "row" }}>
-                <View style={{ width: "90%" }}>
-                    <Input
-                        onSubmitEditing={props.onSubmit}
-                        value={props.value}
-                        onChangeText={props.onChangeText}
-                        placeholderTextColor={paletteGray}
-                        placeholder="Tìm kiếm"
-                        style={{
-                            color: "white",
-                            fontSize: 16,
-                            borderBottomWidth: 1,
-                            borderBottomColor: "white"
-                        }} />
-                </View>
-                <View style={{ width: "10%", paddingTop : 5 }}>
-                    <TouchableOpacity onPress={props.onSubmit} style={{ height: "100%" }}>
-                        <Image source={searchWhite} style={{ width: 35 }} resizeMode="contain" />
-                    </TouchableOpacity>
-                </View>
+        <View style={{ height: "110%", width: "98%", flexDirection: "row" }}>
+            <View style={{ width: "90%" }}>
+                <Input
+                    onSubmitEditing={props.onSubmit}
+                    value={props.value}
+                    onChangeText={props.onChangeText}
+                    placeholderTextColor={paletteGray}
+                    placeholder="Tìm kiếm"
+                    style={{
+                        //borderWidth: 1,
+                        color: "white",
+                        fontSize: 16,
+                        borderBottomWidth: 1,
+                        borderBottomColor: "white"
+                    }} />
             </View>
-        </SafeAreaView>
+            <View style={{ width: "10%", paddingTop: 5 }}>
+                <TouchableOpacity onPress={props.onSubmit} style={{ height: "100%" }}>
+                    <Image source={searchWhite} style={{ width: 35 }} resizeMode="contain" />
+                </TouchableOpacity>
+            </View>
+        </View>
     )
 }
 
