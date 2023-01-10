@@ -3,6 +3,7 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import img1 from "../../assets/wtd.webp";
+import useRouter from '../../libs/hook/useRouter';
 
 interface OnGoingBookFairProps {
     title: string;
@@ -12,8 +13,9 @@ interface OnGoingBookFairProps {
     publishers: string;
 }
 function OnGoingBookFair(props: OnGoingBookFairProps) {
+    const {navigate} = useRouter();
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate("CampaignDetail")}>
             <Image source={img1} style={{ width: "100%", height: "100%" }} resizeMethod="resize" resizeMode="contain" />
 
             <LinearGradient

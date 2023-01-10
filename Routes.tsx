@@ -74,7 +74,7 @@ function TabNavigator() {
         {
           fontSize: 13,
           color: "white",
-          marginBottom: 4
+          marginBottom: "8%"
         },
         tabBarInactiveBackgroundColor: primaryColor,
         tabBarActiveBackgroundColor: primaryTint1,

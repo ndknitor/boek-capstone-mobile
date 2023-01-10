@@ -8,7 +8,7 @@ export default function useCampaignDetaillPage() {
     const [maxPage, setMaxPage] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const scrollToTopButtonShowOpacity = useShowOpacityAnimation(500);
+    const scrollToTopButtonShowOpacity = useShowOpacityAnimation(300, false);
 
     const onBooksPageNavigation = (page: number) => {
         setCurrentPage(page);

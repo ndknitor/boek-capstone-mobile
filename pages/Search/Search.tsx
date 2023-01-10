@@ -5,7 +5,7 @@ import { paletteGray, paletteGrayLight, primaryColor, primaryTint1, primaryTint1
 import filterBlack from "../../assets/icons/filter-black.png";
 import sortBlack from "../../assets/icons/sort-black.png";
 import { books } from '../../utils/mock';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createContext, Dispatch, PropsWithChildren, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import { range } from '../../utils/format';
@@ -24,7 +24,7 @@ export interface SearchProps {
 }
 function Search(props: SearchProps) {
     return (
-        <>
+        <SearchPageContextProvider>
             <HeaderSearchBar />
             <Tab.Navigator screenOptions={{
                 tabBarLabelStyle: {
@@ -36,18 +36,18 @@ function Search(props: SearchProps) {
                 },
                 swipeEnabled: false,
                 lazy: true,
-                lazyPlaceholder : () => <ActivityIndicator size="large"/>
+                lazyPlaceholder: () => <ActivityIndicator size="large" />
             }}>
                 <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
                 <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
             </Tab.Navigator>
 
-        </>
+        </SearchPageContextProvider>
 
     )
 }
-function Books(props: SearchProps) {
-    const hook = useBooksPage(props);
+function Books() {
+    const hook = useBooksPage();
     return (
         <>
 
@@ -154,8 +154,8 @@ function Books(props: SearchProps) {
     );
 }
 
-function BookFairs(props: SearchProps) {
-    const hook = useBookFairsPage(props);
+function BookFairs() {
+    const hook = useBookFairsPage();
     return (
         <>
             <PageLoader loading={hook.loading} />
@@ -252,6 +252,21 @@ function BookFairs(props: SearchProps) {
                 </ScrollView>
             </DrawerLayout>
         </>
+    );
+}
+
+interface SearchPageContextData {
+    searchValue: string;
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
+
+const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
+function SearchPageContextProvider(props: PropsWithChildren) {
+    const [searchValue, setSearchValue] = useState("");
+    return (
+        <SearchPageContext.Provider value={{ searchValue, setSearchValue }}>
+            {props.children}
+        </SearchPageContext.Provider>
     );
 }
 
