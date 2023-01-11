@@ -20,7 +20,7 @@ function Index() {
   const { navigate } = useRouter();
   const [scanQr, setScanQr] = useState(false);
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {/* <PDFView
         fadeInDuration={250}
         style={{ width: "100%", height: "100%", }}
@@ -35,9 +35,6 @@ function Index() {
       <TouchableOpacity onPress={() => navigate("AskPersonalInformation")}>
         <Text>Ask PersonalInformation</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate("CampaignDetail")}>
-        <Text>CampaignDetail</Text>
-      </TouchableOpacity>
 
       <Button onPress={async () => scanQr ? setScanQr(false) : setScanQr(true)} > Scan</Button>
       <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
@@ -45,7 +42,7 @@ function Index() {
           <QrCameraFrame onBarCodeScanned={(e) => { alert(e.data); setScanQr(false) }} scanQr={scanQr} onCameraPermissionError={() => setScanQr(false)} />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 export default Index

@@ -1,6 +1,5 @@
-import React, { useRef } from 'react'
 import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated } from 'react-native'
-import { paletteGray, paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../utils/color';
+import { paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../utils/color';
 import img1 from "../../assets/wtd.webp";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";

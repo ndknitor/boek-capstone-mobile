@@ -1,21 +1,21 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable, DrawerLayoutAndroid, BackHandler, Keyboard } from 'react-native'
 import BookCard from '../../component/BookCard/BookCard';
 import Paging from '../../component/Paging/Paging';
-import { paletteGray, paletteGrayLight, primaryColor, primaryTint1, primaryTint10, primaryTint4, primaryTint7, primaryTint9 } from '../../utils/color';
+import { primaryColor, primaryTint1, primaryTint10, primaryTint4 } from '../../utils/color';
 import filterBlack from "../../assets/icons/filter-black.png";
 import sortBlack from "../../assets/icons/sort-black.png";
 import { books } from '../../utils/mock';
-import React, { createContext, Dispatch, PropsWithChildren, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import { range } from '../../utils/format';
 import BookFairCard from '../../component/BookFairCard/BookFairCard';
-import expandMoreBlack from "../../assets/icons/expand-more-black.png";
-import expandLessBlack from "../../assets/icons/expand-less-black.png";
 import DrawerLayout from 'react-native-drawer-layout';
 import TreeView from 'react-native-final-tree-view';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
+import expandMoreBlack from "../../assets/icons/expand-more-black.png";
+import expandLessBlack from "../../assets/icons/expand-less-black.png";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -23,9 +23,10 @@ export interface SearchProps {
 
 }
 function Search(props: SearchProps) {
+    const context = useContext(SearchPageContext);
     return (
         <SearchPageContextProvider>
-            <HeaderSearchBar />
+            <HeaderSearchBar onChangeText={context.setSearchValue} value={context.searchValue} />
             <Tab.Navigator screenOptions={{
                 tabBarLabelStyle: {
                     color: primaryColor,
@@ -36,12 +37,11 @@ function Search(props: SearchProps) {
                 },
                 swipeEnabled: false,
                 lazy: true,
-                lazyPlaceholder: () => <ActivityIndicator size="large" />
+                lazyPlaceholder: () => <ActivityIndicator size="large" style={{height : "100%"}} />
             }}>
                 <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
                 <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
             </Tab.Navigator>
-
         </SearchPageContextProvider>
 
     )
@@ -50,7 +50,7 @@ function Books() {
     const hook = useBooksPage();
     return (
         <>
-
+            <PageLoader loading={hook.loading} />
             <DrawerLayout
                 ref={hook.filterBooksDrawerRef}
                 drawerWidth={250}
@@ -91,7 +91,6 @@ function Books() {
                                 } />
                         </ScrollView>
                 }>
-                <PageLoader loading={hook.loading} />
                 <ScrollView
                     ref={hook.booksScrollViewRef}
                     scrollEnabled={!hook.loading}
@@ -107,13 +106,13 @@ function Books() {
                         <TouchableOpacity
                             onPress={() => hook.filterBooksDrawerRef.current?.openDrawer()}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
-                            <Image source={filterBlack} resizeMode="center" style={{ width: 20 }} />
+                            <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
                             <Menu >
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
-                                    <Image source={sortBlack} resizeMode="center" style={{ width: 20 }} />
+                                    <Image source={sortBlack} resizeMode="center" style={{ width: 16 }} />
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
@@ -198,8 +197,7 @@ function BookFairs() {
                             } />
                     </ScrollView>
                 }>
-                <ScrollView style={{ padding: 7, height: "100%" }} contentContainerStyle={{ alignItems: "center" }}>
-
+                <ScrollView style={{ padding: 7, height: "100%", backgroundColor : "white" }} contentContainerStyle={{ alignItems: "center" }}>
                     <View style={{
                         marginBottom: 5,
                         width: "100%",
@@ -209,13 +207,13 @@ function BookFairs() {
                         <TouchableOpacity
                             onPress={() => hook.filterBookFairsDrawerRef.current?.openDrawer()}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
-                            <Image source={filterBlack} resizeMode="center" style={{ width: 20 }} />
+                            <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
                             <Menu >
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
-                                    <Image source={sortBlack} resizeMode="center" style={{ width: 20 }} />
+                                    <Image source={sortBlack} resizeMode="center" style={{ width: 16 }} />
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
@@ -237,7 +235,6 @@ function BookFairs() {
                             </Menu>
                         </View>
                     </View>
-
                     {
                         range(0, 5).map(item =>
                             <View key={Math.random()} style={{ marginBottom: 10 }}>
@@ -245,28 +242,12 @@ function BookFairs() {
                             </View>
                         )
                     }
-
                     <View style={{ marginBottom: 10, width: "100%", height: "100%" }}>
                         <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} />
                     </View>
                 </ScrollView>
             </DrawerLayout>
         </>
-    );
-}
-
-interface SearchPageContextData {
-    searchValue: string;
-    setSearchValue: Dispatch<SetStateAction<string>>
-}
-
-const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
-function SearchPageContextProvider(props: PropsWithChildren) {
-    const [searchValue, setSearchValue] = useState("");
-    return (
-        <SearchPageContext.Provider value={{ searchValue, setSearchValue }}>
-            {props.children}
-        </SearchPageContext.Provider>
     );
 }
 
@@ -283,6 +264,21 @@ function PageLoader({ loading }: { loading: boolean }) {
                 height: "90%",
                 top: 90
             }} />
+    );
+}
+
+interface SearchPageContextData {
+    searchValue: string;
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
+
+const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
+function SearchPageContextProvider(props: PropsWithChildren) {
+    const [searchValue, setSearchValue] = useState("");
+    return (
+        <SearchPageContext.Provider value={{ searchValue, setSearchValue }}>
+            {props.children}
+        </SearchPageContext.Provider>
     );
 }
 

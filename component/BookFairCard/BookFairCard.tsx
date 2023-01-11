@@ -23,11 +23,16 @@ function BookFairCard() {
                 <View style={{ padding: 10, width: "55%" }}>
                     <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 5 }}>Tri ân thầy cô 20/11</Text>
                     <View style={{ flexDirection: "row" }}>
-                        <Image source={calendarBlack} style={{ height: 20, width: 25 }} resizeMode="contain" />
+                        <View style={{ alignItems: "center", justifyContent: "center" }}>
+                            <Image source={calendarBlack} style={{ height: 17, width: 25 }} resizeMode="contain" />
+                        </View>
+
                         <Text>Thời gian: 11/11/1111</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
-                        <Image source={locationBlack} style={{ height: 20, width: 25 }} resizeMode="contain" />
+                        <View style={{ alignItems: "center", justifyContent: "center" }}>
+                            <Image source={locationBlack} style={{ height: 17, width: 25 }} resizeMode="contain" />
+                        </View>
                         <Text>Địa điểm</Text>
                     </View>
                 </View>

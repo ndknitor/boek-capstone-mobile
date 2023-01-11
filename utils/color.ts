@@ -14,16 +14,26 @@ export const primaryTint10 = "#ebeaf6";
 
 export const paletteGray = "#AEA9BA";
 
-export const paletteGrayTint1 = "#AEA9BA";
-export const paletteGrayTint2 = "#b6b2c1";
-export const paletteGrayTint3 = "#bebac8";
-export const paletteGrayTint4 = "#c6c3cf";
-export const paletteGrayTint5 = "#cecbd6";
-export const paletteGrayTint6 = "#d7d4dd";
-export const paletteGrayTint7 = "#dfdde3";
-export const paletteGrayTint8 = "#e7e5ea";
-export const paletteGrayTint9 = "#efeef1";
-export const paletteGrayTint10 = "#f7f6f8";
+export const paletteGrayTint1 = "#b6b2c1";
+export const paletteGrayTint2 = "#bebac8";
+export const paletteGrayTint3 = "#c6c3cf";
+export const paletteGrayTint4 = "#cecbd6";
+export const paletteGrayTint5 = "#d7d4dd";
+export const paletteGrayTint6 = "#dfdde3";
+export const paletteGrayTint7 = "#e7e5ea";
+export const paletteGrayTint8 = "#efeef1";
+export const paletteGrayTint9 = "#f7f6f8";
+
+export const paletteGrayShade1 = "#9d98a7";
+export const paletteGrayShade2 = "#8b8795";
+export const paletteGrayShade3 = "#7a7682";
+export const paletteGrayShade4 = "#686570";
+export const paletteGrayShade5 = "#57555d";
+export const paletteGrayShade6 = "#46444a";
+export const paletteGrayShade7 = "#343338";
+export const paletteGrayShade8 = "#232225";
+export const paletteGrayShade9 = "#111113";
+
 
 
 export const palettePink = "#EE3F78";
