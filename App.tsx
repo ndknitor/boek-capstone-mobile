@@ -4,7 +4,7 @@ import AuthorizeProvider from "./libs/AuthorizeProvider";
 import React from "react";
 import Routers from "./Routes";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { DrawerLayoutAndroid, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { primaryColor } from "./utils/color";
 import { MenuProvider } from "react-native-popup-menu";
 

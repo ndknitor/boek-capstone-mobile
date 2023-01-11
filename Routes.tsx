@@ -67,7 +67,7 @@ function StackNavigator() {
 function TabNavigator() {
   return (
     <Tab.Navigator
-      safeAreaInsets={{ bottom: 0 }}
+      safeAreaInsets={{}}
       screenOptions={{
         tabBarStyle: {
           height: 60
@@ -77,18 +77,18 @@ function TabNavigator() {
         {
           fontSize: 13,
           color: "white",
-          marginBottom: "11%"
+          marginBottom: "12%"
         },
         tabBarIconStyle: {
-          marginTop: 10
+          marginTop: 5
         },
         tabBarInactiveBackgroundColor: primaryColor,
         tabBarActiveBackgroundColor: primaryTint1,
         lazy: true
       }} >
-      <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={20} /> }} name="Campaigns" component={Campaigns} />
-      <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={20} /> }} name="Search" component={Search} />
-      <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 20 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
+      <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={17} /> }} name="Campaigns" component={Campaigns} />
+      <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={17} /> }} name="Search" component={Search} />
+      <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 17 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
       <Tab.Screen name="Test" options={{ title: "Test" }} component={Index} />
     </Tab.Navigator>
   );
