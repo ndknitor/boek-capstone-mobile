@@ -7,7 +7,6 @@ import { books } from '../../utils/mock';
 import useBookDetailPage from './BookDetail.hook';
 import avatar from "../../assets/avatar.jpg";
 import TitleTabedFlatBooks from '../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
-import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import ShowMoreButton from '../../component/ShowMoreButton/ShowMoreButton';
 import useRouter from '../../libs/hook/useRouter';

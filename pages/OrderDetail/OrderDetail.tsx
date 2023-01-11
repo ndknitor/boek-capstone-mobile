@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
-import { paletteGray } from '../../utils/color';
+import { paletteGray, paletteGrayShade2, paletteGreen, paletteGreenBold } from '../../utils/color';
 import { books } from '../../utils/mock';
 
 function OrderDetail() {
@@ -26,11 +26,18 @@ function OrderDetail() {
             </View>
             <View style={{
               //borderWidth: 1,
-              width: "60%",
-              padding: 6
+              width: "60%"
             }}>
-              <View style={{ borderWidth: 1, height: "100%" }}>
-
+              <View style={{
+                //borderWidth: 1,
+                height: "100%",
+                justifyContent: "center"
+              }}>
+                <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>{item.name}</Text>
+                <Text style={{ marginBottom: 5, color: paletteGrayShade2 }}>{item.issuer.name}</Text>
+                <Text style={{ marginBottom: 5, }}>Số lượng : 2</Text>
+                <Text style={{ marginBottom: 5 }}>Đơn giá : 69.000 đ</Text>
+                <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>Tổng : 138.000 đ</Text>
               </View>
             </View>
           </View>
@@ -40,13 +47,36 @@ function OrderDetail() {
         //borderWidth: 1,
         padding: 10
       }}>
-        <Text style={{ fontSize: 18, fontWeight: "600" }}>Thông tin đơn hàng</Text>
-        <Text style={styles.infoText}>Địa chỉ: sdjfnj k ksd fjskfs djfk k</Text>
-        <Text style={styles.infoText}>Hình thức thanh toán: Offline</Text>
-        <Text style={styles.infoText}>Ngày đặt hàng: 11/11/1111</Text>
-        <Text style={styles.infoText}>Ngày giao hàng: 11/11/1111</Text>
-        <Text style={styles.infoText}>Ngày nhận hàng: 11/11/1111</Text>
-        <Text style={styles.infoText}>Ghi chú: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias rerum quidem velit molestias culpa, totam ad! Molestias, quasi quia, neque obcaecati cum ipsam vero dignissimos doloremque aut accusamus recusandae suscipit?</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "50%", justifyContent: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600" }}>Tổng tiền: 69.000.000 đ</Text>
+          </View>
+          <View style={{ width: "50%", height: 40 }}>
+            <View style={{
+              backgroundColor: paletteGreen,
+              justifyContent: "center",
+              height: "100%"
+            }}>
+              <Text style={{
+                color: paletteGreenBold,
+                fontSize: 15,
+                fontWeight: "500",
+                textAlign: "center"
+              }}>Giao hàng thành công</Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            //borderWidth: 1
+          }}>
+          <Text style={styles.infoText}>Địa chỉ: sdjfnj k ksd fjskfs djfk k</Text>
+          <Text style={styles.infoText}>Hình thức thanh toán: Offline</Text>
+          <Text style={styles.infoText}>Ngày đặt hàng: 11/11/1111</Text>
+          <Text style={styles.infoText}>Ngày giao hàng: 11/11/1111</Text>
+          <Text style={styles.infoText}>Ngày nhận hàng: 11/11/1111</Text>
+          <Text style={styles.infoText}>Ghi chú: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias rerum quidem velit molestias culpa, totam ad! Molestias, quasi quia, neque obcaecati cum ipsam vero dignissimos doloremque aut accusamus recusandae suscipit?</Text>
+        </View>
       </View>
     </ScrollView>
   )
@@ -55,7 +85,7 @@ const styles = StyleSheet.create({
   infoText: {
     marginTop: 20,
     fontSize: 16
-  }
+  },
 });
 
 export default OrderDetail

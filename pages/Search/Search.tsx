@@ -1,21 +1,22 @@
-import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, Dimensions, Pressable, DrawerLayoutAndroid, BackHandler, Keyboard } from 'react-native'
+import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
 import BookCard from '../../component/BookCard/BookCard';
 import Paging from '../../component/Paging/Paging';
 import { primaryColor, primaryTint1, primaryTint10, primaryTint4 } from '../../utils/color';
 import filterBlack from "../../assets/icons/filter-black.png";
 import sortBlack from "../../assets/icons/sort-black.png";
 import { books } from '../../utils/mock';
-import React, { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
+import React, { PropsWithChildren, useContext, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { useBookFairsPage, useBooksPage } from './Search.hook';
+import { SearchPageContext, useBookFairsPage, useBooksPage } from './Search.hook';
 import { range } from '../../utils/format';
 import BookFairCard from '../../component/BookFairCard/BookFairCard';
 import DrawerLayout from 'react-native-drawer-layout';
 import TreeView from 'react-native-final-tree-view';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 import expandMoreBlack from "../../assets/icons/expand-more-black.png";
 import expandLessBlack from "../../assets/icons/expand-less-black.png";
+import { ParamListBase } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,6 +29,7 @@ function Search(props: SearchProps) {
         <SearchPageContextProvider>
             <HeaderSearchBar onChangeText={context.setSearchValue} value={context.searchValue} />
             <Tab.Navigator screenOptions={{
+
                 tabBarLabelStyle: {
                     color: primaryColor,
                     fontWeight: "500"
@@ -37,7 +39,7 @@ function Search(props: SearchProps) {
                 },
                 swipeEnabled: false,
                 lazy: true,
-                lazyPlaceholder: () => <ActivityIndicator size="large" style={{height : "100%"}} />
+                lazyPlaceholder: () => <ActivityIndicator size="large" style={{ height: "100%" }} />
             }}>
                 <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
                 <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
@@ -46,8 +48,8 @@ function Search(props: SearchProps) {
 
     )
 }
-function Books() {
-    const hook = useBooksPage();
+function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
+    const hook = useBooksPage(props);
     return (
         <>
             <PageLoader loading={hook.loading} />
@@ -153,8 +155,8 @@ function Books() {
     );
 }
 
-function BookFairs() {
-    const hook = useBookFairsPage();
+function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
+    const hook = useBookFairsPage(props);
     return (
         <>
             <PageLoader loading={hook.loading} />
@@ -197,7 +199,7 @@ function BookFairs() {
                             } />
                     </ScrollView>
                 }>
-                <ScrollView style={{ padding: 7, height: "100%", backgroundColor : "white" }} contentContainerStyle={{ alignItems: "center" }}>
+                <ScrollView style={{ padding: 7, height: "100%", backgroundColor: "white" }} contentContainerStyle={{ alignItems: "center" }}>
                     <View style={{
                         marginBottom: 5,
                         width: "100%",
@@ -267,16 +269,12 @@ function PageLoader({ loading }: { loading: boolean }) {
     );
 }
 
-interface SearchPageContextData {
-    searchValue: string;
-    setSearchValue: Dispatch<SetStateAction<string>>
-}
 
-const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
 function SearchPageContextProvider(props: PropsWithChildren) {
     const [searchValue, setSearchValue] = useState("");
+    const [onSubmit, setOnSubmit] = useState<() => void>(() => { });
     return (
-        <SearchPageContext.Provider value={{ searchValue, setSearchValue }}>
+        <SearchPageContext.Provider value={{ searchValue, setSearchValue, onSubmit, setOnSubmit }}>
             {props.children}
         </SearchPageContext.Provider>
     );

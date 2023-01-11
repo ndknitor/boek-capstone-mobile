@@ -1,13 +1,22 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
+import { ParamListBase } from "@react-navigation/native";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
 import useAsyncEffect from "use-async-effect";
 import { Book } from "../../objects/entities/Book";
 import { IndexContext } from "../Index/Index.hook";
-import { SearchProps } from "./Search";
 
+interface SearchPageContextData {
+    searchValue: string;
+    setSearchValue: Dispatch<SetStateAction<string>>;
+    onSubmit: () => void;
+    setOnSubmit: Dispatch<SetStateAction<() => void>>;
+}
 
-export function useBooksPage() {
+export const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
+
+export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBooksTreeData = [
         {
             id: 0,
@@ -111,6 +120,7 @@ export function useBooksPage() {
     const filterBooksDrawerRef = useRef<DrawerLayout>(null);
     const booksScrollViewRef = useRef<ScrollView>(null);
 
+    const context = useContext(SearchPageContext);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(100);
@@ -131,11 +141,21 @@ export function useBooksPage() {
             animated: true
         });
     }
+    const onSearchSubmit = () => {
+
+    }
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('tabPress', (e) => {
+            context.setOnSubmit(onSearchSubmit);
+        });
+        context.setOnSubmit(onSearchSubmit);
+        return unsubscribe;
+    }, []);
     useAsyncEffect(async () => {
 
         await processGetBooks(1, "");
 
-    }, []);
+    }, [/*currentPage*/]);
 
     return {
         books,
@@ -151,7 +171,7 @@ export function useBooksPage() {
 }
 
 
-export function useBookFairsPage() {
+export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBookFairsTreeData = [
         {
             id: 0,
@@ -253,13 +273,25 @@ export function useBookFairsPage() {
         },
     ];
 
-
+    const context = useContext(SearchPageContext);
     const bookFairsScrollViewRef = useRef<ScrollView>(null);
     const filterBookFairsDrawerRef = useRef<DrawerLayout>(null);
 
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(100);
+
+    const onSearchSubmit = () => {
+
+    }
+
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('tabPress', (e) => {
+            //context.setOnSubmit(onSearchSubmit);
+        });
+        //context.setOnSubmit(onSearchSubmit);
+        return unsubscribe;
+    }, []);
 
     return {
         bookFairsScrollViewRef,
