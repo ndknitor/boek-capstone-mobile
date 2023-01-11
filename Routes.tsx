@@ -67,7 +67,7 @@ function StackNavigator() {
 function TabNavigator() {
   return (
     <Tab.Navigator
-      safeAreaInsets={{}}
+      safeAreaInsets={{ bottom: 0 }}
       screenOptions={{
         tabBarStyle: {
           height: 60
