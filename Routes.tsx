@@ -22,7 +22,7 @@ import Campaigns from './pages/Campaigns/Campaigns';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import { Icon } from '@rneui/base';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, Platform } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
 import Index from './pages/Index/Index';
 import OrderDetail from './pages/OrderDetail/OrderDetail';
@@ -77,7 +77,7 @@ function TabNavigator() {
         {
           fontSize: 13,
           color: "white",
-          marginBottom: "14%"
+          marginBottom: DimensionsStyle.safeAreaBottomHeight || 8
         },
         tabBarIconStyle: {
           //marginTop: 5
@@ -93,5 +93,29 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
+
+
+function isIphoneX() {
+  const iphoneXLength = 812
+  const iphoneXSMaxLength = 896
+  const windowDimensions = Dimensions.get('window')
+  return (
+    Platform.OS === 'ios' &&
+    !Platform.isPad &&
+    !Platform.isTV &&
+    (windowDimensions.width === iphoneXLength ||
+      windowDimensions.height === iphoneXLength ||
+      windowDimensions.width === iphoneXSMaxLength ||
+      windowDimensions.height === iphoneXSMaxLength)
+  )
+}
+
+const DimensionsStyle = {
+  safeAreaTopHeight: Platform.OS === 'ios' ? (isIphoneX() ? 44 : 20) : 0,
+  safeAreaBottomHeight: Platform.OS === 'ios' && isIphoneX() ? 35 : 0,
+  tabBarHeight: Platform.OS === 'ios' ? 17 : 20,
+  bottomAreaHeight: Platform.OS === 'ios' && isIphoneX() ? 34 : 0
+}
+
 
 export default Routers
