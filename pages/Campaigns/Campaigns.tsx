@@ -13,7 +13,10 @@ function Campaigns(props : any) {
         setOptions({headerTitle : undefined});
     }, [props]);
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{
+            backgroundColor : "transparent"
+            
+        }} >
             <ScrollView>
                 <View style={{
                     backgroundColor: "white",
