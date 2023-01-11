@@ -77,7 +77,7 @@ function TabNavigator() {
         {
           fontSize: 13,
           color: "white",
-          marginBottom: "12%"
+          marginBottom: "13%"
         },
         tabBarIconStyle: {
           marginTop: 5
