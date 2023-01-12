@@ -47,23 +47,19 @@ function OrderDetail() {
         //borderWidth: 1,
         padding: 10
       }}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "50%", justifyContent: "center" }}>
-            <Text style={{ fontSize: 16, fontWeight: "600" }}>Tổng tiền: 69.000.000 đ</Text>
-          </View>
-          <View style={{ width: "50%", height: 40 }}>
-            <View style={{
-              backgroundColor: paletteGreen,
-              justifyContent: "center",
-              height: "100%"
-            }}>
-              <Text style={{
-                color: paletteGreenBold,
-                fontSize: 15,
-                fontWeight: "500",
-                textAlign: "center"
-              }}>Giao hàng thành công</Text>
-            </View>
+        <Text style={{ marginBottom: 10, fontSize: 16, fontWeight: "600" }}>Tổng tiền: 69.000.000 đ</Text>
+        <View style={{  marginBottom: 10, width: "50%", height: 40 }}>
+          <View style={{
+            backgroundColor: paletteGreen,
+            justifyContent: "center",
+            height: "100%"
+          }}>
+            <Text style={{
+              color: paletteGreenBold,
+              fontSize: 15,
+              fontWeight: "500",
+              textAlign: "center"
+            }}>Giao hàng thành công</Text>
           </View>
         </View>
         <View
@@ -83,8 +79,7 @@ function OrderDetail() {
 }
 const styles = StyleSheet.create({
   infoText: {
-    marginTop: 20,
-    fontSize: 16
+    marginTop: 20
   },
 });
 

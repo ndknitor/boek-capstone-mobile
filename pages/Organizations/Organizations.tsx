@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ScrollView, Image } from 'react-native'
-import { primaryColor } from '../../utils/color';
+import { primaryColor, primaryTint1 } from '../../utils/color';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
 import trackChange from "../../assets/icons/track-changes-white.png";
 import corporateFlare from "../../assets/icons/corporate-fare-white.png";
@@ -8,25 +8,40 @@ import OrganizationView from '../../component/OrganizationView/OrganizationView'
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Paging from '../../component/Paging/Paging';
 import { useTrackedOrganizationsPage, useUnTrackedOrganizationsPage } from './Organizations.hook';
-function Organizations() {
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: "0", title: 'Tổ chức' },
-        { key: "1", title: 'Đã theo dõi' }
-    ]);
-    const getTabBarIcon = (props: any) => {
-        const { route } = props
-        if (route.key == 0) {
-            return <Image source={corporateFlare} style={{ height: 20 }} resizeMode="contain" />
-        }
-        if (route.key == 1) {
-            return <Image source={trackChange} style={{ height: 20 }} resizeMode="contain" />
-        }
-    }
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+const Tab = createBottomTabNavigator();
+
+function Organizations() {
     return (
-        <>
-            <TabView
+        <Tab.Navigator screenOptions={{
+            tabBarInactiveBackgroundColor: primaryColor,
+            tabBarActiveBackgroundColor: primaryTint1,
+            tabBarStyle: {
+                height: 60
+            },
+            headerShown: false,
+            tabBarLabelStyle:
+            {
+                fontSize: 13,
+                color: "white",
+                marginBottom: "6%"
+            }
+        }}>
+            <Tab.Screen options={{
+                tabBarLabel: "Tổ chức",
+                tabBarIcon: () => <Image source={corporateFlare} style={{ height: 20 }} resizeMode="contain" />
+            }}
+                name="UnTrackedOrganizations"
+                component={UnTrackedOrganizations}></Tab.Screen>
+            <Tab.Screen
+                options={{
+                    tabBarLabel: "Đã theo dõi",
+                    tabBarIcon: () => <Image source={trackChange} style={{ height: 20 }} resizeMode="contain" />
+                }}
+                name="TrackedOrganizations"
+                component={TrackedOrganizations}></Tab.Screen>
+            {/* <TabView
                 swipeEnabled={false}
                 tabBarPosition='bottom'
                 renderTabBar={(props) =>
@@ -46,8 +61,8 @@ function Organizations() {
                         1: TrackedOrganizations,
                     })
                 }
-                onIndexChange={setIndex} />
-        </>
+                onIndexChange={setIndex} /> */}
+        </Tab.Navigator>
     )
 }
 function UnTrackedOrganizations() {

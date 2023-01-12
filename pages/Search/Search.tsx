@@ -1,9 +1,7 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
 import BookCard from '../../component/BookCard/BookCard';
 import Paging from '../../component/Paging/Paging';
-import { primaryColor, primaryTint1, primaryTint10, primaryTint4 } from '../../utils/color';
-import filterBlack from "../../assets/icons/filter-black.png";
-import sortBlack from "../../assets/icons/sort-black.png";
+import { paletteRed, primaryColor, primaryTint1, primaryTint10, primaryTint4 } from '../../utils/color';
 import { books } from '../../utils/mock';
 import React, { PropsWithChildren, useContext, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -14,9 +12,12 @@ import DrawerLayout from 'react-native-drawer-layout';
 import TreeView from 'react-native-final-tree-view';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import HeaderSearchBar from '../../component/HeaderSearchBar/HeaderSearchBar';
+import filterBlack from "../../assets/icons/filter-black.png";
+import sortBlack from "../../assets/icons/sort-black.png";
 import expandMoreBlack from "../../assets/icons/expand-more-black.png";
 import expandLessBlack from "../../assets/icons/expand-less-black.png";
 import { ParamListBase } from '@react-navigation/native';
+import { Button } from '@rneui/base';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -55,7 +56,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
             <PageLoader loading={hook.loading} />
             <DrawerLayout
                 ref={hook.filterBooksDrawerRef}
-                drawerWidth={250}
+                drawerWidth={280}
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
                 renderNavigationView={
@@ -64,7 +65,6 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                             <TreeView
                                 initialExpanded={false}
                                 data={hook.filterBooksTreeData}
-
                                 renderNode={item =>
                                     <View style={{
                                         borderBottomWidth: item.hasChildrenNodes ? 1 : 0,
@@ -91,6 +91,20 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     </View>
 
                                 } />
+                            <View style={{
+                                //borderWidth: 1,
+                                flexDirection: "row",
+                                paddingTop: 25,
+                                paddingBottom: 25
+                            }}>
+
+                                <View style={{ width: "50%", padding: 10 }}>
+                                    <Button buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
+                                </View>
+                                <View style={{ width: "50%", padding: 10 }}>
+                                    <Button buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
+                                </View>
+                            </View>
                         </ScrollView>
                 }>
                 <ScrollView
@@ -162,7 +176,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
             <PageLoader loading={hook.loading} />
             <DrawerLayout
                 ref={hook.filterBookFairsDrawerRef}
-                drawerWidth={250}
+                drawerWidth={280}
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
                 renderNavigationView={() =>
@@ -170,7 +184,6 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         <TreeView
                             initialExpanded={false}
                             data={hook.filterBookFairsTreeData}
-
                             renderNode={item =>
                                 <View style={{
                                     borderBottomWidth: item.hasChildrenNodes ? 1 : 0,
@@ -195,8 +208,20 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                         </View>
                                     }
                                 </View>
-
                             } />
+                        <View style={{
+                            //borderWidth: 1,
+                            flexDirection: "row",
+                            paddingTop: 25,
+                            paddingBottom: 25
+                        }}>
+                            <View style={{ width: "50%", padding: 10 }}>
+                                <Button buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
+                            </View>
+                            <View style={{ width: "50%", padding: 10 }}>
+                                <Button buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
+                            </View>
+                        </View>
                     </ScrollView>
                 }>
                 <ScrollView style={{ padding: 7, height: "100%", backgroundColor: "white" }} contentContainerStyle={{ alignItems: "center" }}>
@@ -268,7 +293,6 @@ function PageLoader({ loading }: { loading: boolean }) {
             }} />
     );
 }
-
 
 function SearchPageContextProvider(props: PropsWithChildren) {
     const [searchValue, setSearchValue] = useState("");

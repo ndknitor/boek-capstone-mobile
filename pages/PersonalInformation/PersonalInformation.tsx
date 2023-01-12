@@ -45,7 +45,7 @@ function PersonalInformation() {
         </View>
       </View>
 
-      <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+      {/* <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
         <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
           <Text>Giới tính:</Text>
         </View>
@@ -67,7 +67,7 @@ function PersonalInformation() {
             onPress={() => setGender(true)}
             containerStyle={{ backgroundColor: "transparent" }} />
         </View>
-      </View>
+      </View> */}
 
       <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
         <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
@@ -83,7 +83,7 @@ function PersonalInformation() {
         </View>
       </View>
 
-      <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+      {/* <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
         <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
           <Text>Ngày sinh:</Text>
         </View>
@@ -97,7 +97,7 @@ function PersonalInformation() {
             <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
 
       <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
         <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
