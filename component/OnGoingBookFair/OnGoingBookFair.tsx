@@ -17,7 +17,6 @@ function OnGoingBookFair(props: OnGoingBookFairProps) {
     return (
         <TouchableOpacity onPress={() => navigate("CampaignDetail")}>
             <Image source={img1} style={{ width: "100%", height: "100%" }} resizeMethod="resize" resizeMode="contain" />
-
             <LinearGradient
                 start={{ x: 0.5, y: 0.2 }}
                 end={{ x: 0.5, y: 1 }}

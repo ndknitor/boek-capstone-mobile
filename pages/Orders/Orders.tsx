@@ -9,7 +9,7 @@ import Paging from '../../component/Paging/Paging';
 function Orders() {
     const hook = useOrdersPage();
     return (
-        <ScrollView style={{
+        <ScrollView ref={hook.ordersScrollViewRef} style={{
             padding: 10,
         }}>
             {

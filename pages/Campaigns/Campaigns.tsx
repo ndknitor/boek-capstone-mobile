@@ -6,17 +6,46 @@ import OnGoingBookFair from '../../component/OnGoingBookFair/OnGoingBookFair';
 import UpcomingBookFair from '../../component/UpcomingBookFair/UpcomingBookFair';
 import useRouter from '../../libs/hook/useRouter';
 
-function Campaigns(props: any) {
+function Campaigns() {
     useBookFairPage();
     const { setOptions } = useRouter();
-    useEffect(() => {
-        setOptions({ headerTitle: undefined });
-    }, [props]);
     return (
-        <>
-            <ScrollView>
-                <SafeAreaView>
+        <ScrollView>
+            <SafeAreaView>
+                <View style={{
+                    backgroundColor: "white",
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 12,
+                    },
+                    shadowOpacity: 0.58,
+                    shadowRadius: 16.00,
+                    elevation: 24
+                }}>
 
+                    <View style={{ width: "100%", padding: 10, marginBottom: 20 }}>
+                        <Text style={{ fontSize: 20, fontWeight: "700" }}>Hội sách đang diễn ra</Text>
+                    </View>
+                    <View style={{ height: 300 }}>
+                        <Swiper autoplay autoplayTimeout={8} showsButtons>
+                            <View>
+                                <OnGoingBookFair title="Tri ân thầy cô 20/11" endTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                            </View>
+                            <View>
+                                <OnGoingBookFair title="Tri ân thầy cô 20/11" endTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                            </View>
+                        </Swiper>
+                    </View>
+                </View>
+
+                <View>
+                    <View style={{ width: "100%", padding: 10, paddingTop: 20, }}>
+                        <Text style={{ fontSize: 20, fontWeight: "700", }}>Hội sách sắp diễn ra</Text>
+                    </View>
+                    <View style={{ width: "100%", padding: 20 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "700" }}>Gần bạn nhất</Text>
+                    </View>
                     <View style={{
                         backgroundColor: "white",
                         shadowColor: "#000",
@@ -26,32 +55,17 @@ function Campaigns(props: any) {
                         },
                         shadowOpacity: 0.58,
                         shadowRadius: 16.00,
-                        elevation: 24
+                        elevation: 6
                     }}>
-
-                        <View style={{ width: "100%", padding: 10, marginBottom: 20 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "700" }}>Hội sách đang diễn ra</Text>
-                        </View>
-                        <View style={{ height: 300 }}>
-                            <Swiper autoplay autoplayTimeout={8} showsButtons>
-                                <View>
-                                    <OnGoingBookFair title="Tri ân thầy cô 20/11" endTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                                </View>
-                                <View>
-                                    <OnGoingBookFair title="Tri ân thầy cô 20/11" endTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                                </View>
-                            </Swiper>
-                        </View>
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
                     </View>
 
-                    <View>
-                        <View style={{ width: "100%", padding: 10, paddingTop: 20, }}>
-                            <Text style={{ fontSize: 20, fontWeight: "700", }}>Hội sách sắp diễn ra</Text>
-                        </View>
-                        <View style={{ width: "100%", padding: 20 }}>
-                            <Text style={{ fontSize: 18, fontWeight: "700" }}>Gần bạn nhất</Text>
-                        </View>
-                        <View style={{
+                    <View style={{ width: "100%", padding: 20 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "700" }}>Có thể loại sách bạn thích</Text>
+                    </View>
+                    <View
+                        style={{
                             backgroundColor: "white",
                             shadowColor: "#000",
                             shadowOffset: {
@@ -62,41 +76,20 @@ function Campaigns(props: any) {
                             shadowRadius: 16.00,
                             elevation: 6
                         }}>
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                        </View>
-
-                        <View style={{ width: "100%", padding: 20 }}>
-                            <Text style={{ fontSize: 18, fontWeight: "700" }}>Có thể loại sách bạn thích</Text>
-                        </View>
-                        <View
-                            style={{
-                                backgroundColor: "white",
-                                shadowColor: "#000",
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 12,
-                                },
-                                shadowOpacity: 0.58,
-                                shadowRadius: 16.00,
-                                elevation: 6
-                            }}>
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                        </View>
-
-                        <View style={{ width: "100%", padding: 20 }}>
-                            <Text style={{ fontSize: 18, fontWeight: "700" }}>Vì bạn quan tâm [Organization]</Text>
-                        </View>
-                        <View>
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                            <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
-                        </View>
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
                     </View>
-                </SafeAreaView>
 
-            </ScrollView>
-        </>
+                    <View style={{ width: "100%", padding: 20 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "700" }}>Vì bạn quan tâm [Organization]</Text>
+                    </View>
+                    <View>
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                        <UpcomingBookFair title="Tri ân thầy cô 20/11" dateTime="07:00 05/12/2022" location="Quận 7" organizations="FPT, Viettel" publishers="Kim Đồng" />
+                    </View>
+                </View>
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 

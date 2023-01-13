@@ -224,7 +224,10 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         </View>
                     </ScrollView>
                 }>
-                <ScrollView style={{ padding: 7, height: "100%", backgroundColor: "white" }} contentContainerStyle={{ alignItems: "center" }}>
+                <ScrollView
+                    ref={hook.bookFairsScrollViewRef}
+                    style={{ padding: 7, height: "100%", backgroundColor: "white" }}
+                    contentContainerStyle={{ alignItems: "center" }}>
                     <View style={{
                         marginBottom: 5,
                         width: "100%",
@@ -270,7 +273,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         )
                     }
                     <View style={{ marginBottom: 10, width: "100%", height: "100%" }}>
-                        <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} />
+                        <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
                     </View>
                 </ScrollView>
             </DrawerLayout>

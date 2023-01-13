@@ -284,6 +284,13 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const onSearchSubmit = () => {
 
     }
+    const onPageNavigation = (page: number) => {
+        setCurrentPage(page);
+        bookFairsScrollViewRef.current?.scrollTo({
+            y: 0,
+            animated: true
+        });
+    }
 
     useEffect(() => {
         const unsubscribe = props.navigation.addListener('tabPress', (e) => {
@@ -297,6 +304,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
         bookFairsScrollViewRef,
         filterBookFairsTreeData,
         filterBookFairsDrawerRef,
+        onPageNavigation,
         loading,
         currentPage,
         maxPage

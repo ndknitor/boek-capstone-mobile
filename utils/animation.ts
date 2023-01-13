@@ -12,7 +12,7 @@ export function useShowOpacityAnimation(duration: number, initDisplayValue?: boo
         else {
             Animated.timing(opacity, {
                 toValue: 0,
-                useNativeDriver: false,
+                useNativeDriver: true,
                 duration: duration
             }).start(() => setDisplay(false));
         }
@@ -21,7 +21,7 @@ export function useShowOpacityAnimation(duration: number, initDisplayValue?: boo
         if (display == true) {
             Animated.timing(opacity, {
                 toValue: 1,
-                useNativeDriver: false,
+                useNativeDriver: true,
                 duration: duration
             }).start();
         }

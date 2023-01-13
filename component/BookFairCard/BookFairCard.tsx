@@ -5,11 +5,15 @@ import image from "../../assets/hsxv.webp";
 import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
+import useRouter from '../../libs/hook/useRouter';
 
 
 function BookFairCard() {
+    const { navigate } = useRouter();
     return (
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
+        <TouchableOpacity
+            onPress={() => navigate("CampaignDetail")}
+            style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ marginBottom: 5, width: "45%" }}>
                     <Image

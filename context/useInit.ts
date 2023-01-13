@@ -1,4 +1,4 @@
-import { PermissionsAndroid } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import useAsyncEffect from "use-async-effect";
 import useAppContext from "./Context";

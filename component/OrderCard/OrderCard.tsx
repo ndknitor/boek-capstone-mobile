@@ -2,7 +2,7 @@ import { Button } from '@rneui/base';
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
-import { paletteGray, paletteGrayShade2, paletteGrayTint5, paletteGreen, paletteGreenBold, primaryTint1, primaryTint4 } from '../../utils/color'
+import { paletteGrayShade2, paletteGrayTint5, paletteGreen, paletteGreenBold, primaryTint1, primaryTint4 } from '../../utils/color'
 import { books } from '../../utils/mock'
 
 function OrderCard() {
@@ -14,7 +14,8 @@ function OrderCard() {
                 backgroundColor: "white",
                 borderWidth: 1,
                 height: 60 + 40 + (130 * 2),
-                borderRadius: 3,
+                borderRadius: 8,
+                overflow: "hidden",
                 borderColor: primaryTint4
             }}>
             <View style={{ height: 40 }}>
