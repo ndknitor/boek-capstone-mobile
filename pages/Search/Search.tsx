@@ -18,6 +18,8 @@ import expandMoreBlack from "../../assets/icons/expand-more-black.png";
 import expandLessBlack from "../../assets/icons/expand-less-black.png";
 import { ParamListBase } from '@react-navigation/native';
 import { Button } from '@rneui/base';
+import ExpandToggleView from '../../component/ExpandToggleView/ExpandToggleView';
+import DateTimePickerInput from '../../component/DateTimePickerInput/DateTimePickerInput';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -66,6 +68,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                 initialExpanded={false}
                                 data={hook.filterBooksTreeData}
                                 renderNode={item =>
+
                                     <View style={{
                                         borderBottomWidth: item.hasChildrenNodes ? 1 : 0,
                                         padding: 15,
@@ -139,11 +142,11 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                         <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
                                     </MenuOption>
                                     <MenuOption onSelect={() => alert(`Not called`)}>
-                                        <Text style={{ fontSize: 16 }}>Giá thấp nhất</Text>
+                                        <Text style={{ fontSize: 16 }}>Giá thấp dần</Text>
                                     </MenuOption>
                                     <MenuOption onSelect={() => alert(`Not called`)} >
                                         <Text>
-                                            <Text style={{ fontSize: 16 }}>Giá cao nhất</Text>
+                                            <Text style={{ fontSize: 16 }}>Giá cao dần</Text>
                                         </Text>
                                     </MenuOption>
                                 </MenuOptions>
@@ -175,40 +178,52 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
         <>
             <PageLoader loading={hook.loading} />
             <DrawerLayout
-                ref={hook.filterBookFairsDrawerRef}
+                ref={hook.ref.filterBookFairsDrawerRef}
                 drawerWidth={280}
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
                 renderNavigationView={() =>
                     <ScrollView>
-                        <TreeView
-                            initialExpanded={false}
-                            data={hook.filterBookFairsTreeData}
-                            renderNode={item =>
-                                <View style={{
-                                    borderBottomWidth: item.hasChildrenNodes ? 1 : 0,
-                                    padding: 15,
-                                    flexDirection: "row",
-                                    borderColor: primaryTint4,
-                                    backgroundColor: item.hasChildrenNodes ? "white" : primaryTint10
-                                }}>
-                                    <View style={{ width: "85%" }}>
-                                        <Text
-                                            style={{
-                                                marginLeft: 25 * item.level,
-                                                fontSize: item.level ? 14 : 16,
-                                            }}>
-                                            {item.node.name}
-                                        </Text>
+                        <ExpandToggleView label="Thời gian">
+                            <View style={{ backgroundColor: primaryTint10 }}>
+                                <View style={{ flexDirection: "row", height: 40 }}>
+                                    <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                        <Text style={{ fontSize: 15 }}>Từ :</Text>
                                     </View>
-                                    {
-                                        item.hasChildrenNodes &&
-                                        <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
-                                            <Image source={item.isExpanded ? expandLessBlack : expandMoreBlack} style={{ height: 25 }} resizeMode="contain" />
-                                        </View>
-                                    }
+                                    <View style={{ width: "60%" }}>
+                                        <DateTimePickerInput
+                                            maximumDate={hook.input.filterEndDate.filterEndDate}
+                                            value={hook.input.filterStartDate.filterStartDate}
+                                            onConfirm={hook.input.filterStartDate.setfilterStartDate}
+                                            onReset={() => hook.input.filterStartDate.setfilterStartDate(undefined)} />
+                                    </View>
                                 </View>
-                            } />
+                                <View style={{ flexDirection: "row", height: 40 }}>
+                                    <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                        <Text style={{ fontSize: 15 }}>Đến :</Text>
+                                    </View>
+                                    <View style={{ width: "60%" }}>
+                                        <DateTimePickerInput
+                                            minimumDate={hook.input.filterStartDate.filterStartDate}
+                                            value={hook.input.filterEndDate.filterEndDate}
+                                            onConfirm={hook.input.filterEndDate.setfilterEndDate}
+                                            onReset={() => hook.input.filterEndDate.setfilterEndDate(undefined)} />
+                                    </View>
+                                </View>
+                            </View>
+                        </ExpandToggleView>
+                        <ExpandToggleView label="Địa điểm">
+
+                        </ExpandToggleView>
+                        <ExpandToggleView label="Thể loại">
+
+                        </ExpandToggleView>
+                        <ExpandToggleView label="Nhà phát hành">
+
+                        </ExpandToggleView>
+                        <ExpandToggleView label="Tổ chức">
+
+                        </ExpandToggleView>
                         <View style={{
                             //borderWidth: 1,
                             flexDirection: "row",
@@ -225,7 +240,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                     </ScrollView>
                 }>
                 <ScrollView
-                    ref={hook.bookFairsScrollViewRef}
+                    ref={hook.ref.bookFairsScrollViewRef}
                     style={{ padding: 7, height: "100%", backgroundColor: "white" }}
                     contentContainerStyle={{ alignItems: "center" }}>
                     <View style={{
@@ -235,7 +250,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         flexDirection: "row"
                     }}>
                         <TouchableOpacity
-                            onPress={() => hook.filterBookFairsDrawerRef.current?.openDrawer()}
+                            onPress={() => hook.ref.filterBookFairsDrawerRef.current?.openDrawer()}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
                             <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
                             <Text>Lọc</Text>
@@ -273,7 +288,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         )
                     }
                     <View style={{ marginBottom: 10, width: "100%", height: "100%" }}>
-                        <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
+                        <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                     </View>
                 </ScrollView>
             </DrawerLayout>

@@ -1,0 +1,46 @@
+import React, { PropsWithChildren, useState } from 'react'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
+import useBoolean from '../../libs/hook/useBoolean'
+import { primaryTint4 } from '../../utils/color';
+import expandMoreBlack from "../../assets/icons/expand-more-black.png";
+import expandLessBlack from "../../assets/icons/expand-less-black.png";
+interface ExpandToggleViewProps extends PropsWithChildren {
+    label: string;
+}
+function ExpandToggleView(props: ExpandToggleViewProps) {
+    const [expanded, toggleExpanded] = useBoolean();
+    return (
+        <View
+            style={{
+                borderColor: primaryTint4,
+                backgroundColor: "white",
+                borderBottomWidth: 1
+            }}>
+            <TouchableOpacity
+                onPress={() => toggleExpanded()}
+                style={{
+
+                    padding: 15,
+                    flexDirection: "row"
+                }}>
+                <View style={{ width: "85%" }}>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                        }}>
+                        {props.label}
+                    </Text>
+                </View>
+                <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
+                    <Image source={expanded ? expandLessBlack : expandMoreBlack} style={{ height: 25 }} resizeMode="contain" />
+                </View>
+            </TouchableOpacity>
+            {
+                expanded &&
+                props.children
+            }
+        </View>
+    )
+}
+
+export default ExpandToggleView

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, TouchableOpacity, Text } from 'react-native'
+import { View, Image, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';
 import image from "../../assets/LBC828K4.webp";
 import avatar from "../../assets/avatar.jpg";
@@ -15,7 +15,7 @@ function BookCard({ book }: BookCardProps) {
   return (
     <View
       style={{
-        width: 195,
+        width: Dimensions.get("screen").width / 100 * 47.5, //195,
         height: 260,
         alignItems: "center",
         justifyContent: "center"

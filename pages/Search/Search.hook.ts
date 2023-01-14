@@ -281,6 +281,9 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(100);
 
+    const [filterStartDate, setfilterStartDate] = useState<Date>();
+    const [filterEndDate, setfilterEndDate] = useState<Date>();
+
     const onSearchSubmit = () => {
 
     }
@@ -301,12 +304,28 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     }, []);
 
     return {
-        bookFairsScrollViewRef,
-        filterBookFairsTreeData,
-        filterBookFairsDrawerRef,
-        onPageNavigation,
+        ref: {
+            bookFairsScrollViewRef,
+            filterBookFairsTreeData,
+            filterBookFairsDrawerRef,
+        },
+        paging: {
+            onPageNavigation,
+            currentPage,
+            maxPage
+        },
+        input: {
+            filterStartDate :
+            {
+                filterStartDate,
+                setfilterStartDate
+            },
+            filterEndDate :
+            {
+                filterEndDate,
+                setfilterEndDate
+            }
+        },
         loading,
-        currentPage,
-        maxPage
     };
 }

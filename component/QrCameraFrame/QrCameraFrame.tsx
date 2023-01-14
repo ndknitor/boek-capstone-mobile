@@ -12,24 +12,52 @@ export interface QrCameraFrameProps {
 function QrCameraFrame(props: QrCameraFrameProps) {
     const { cameraPermission } = useQrCameraFrameComponent(props);
     return (
-        <View style={{ 
-            flex: 1,
-            overflow : "hidden",
-            alignItems: props.scanQr ? "stretch" : "center",
-            justifyContent: "center",
-            borderRadius: 30,
-            backgroundColor: paletteGray }}>
+        <View style={{
+            overflow: "hidden",
+            width: "100%",
+            height: "100%",
+            backgroundColor: paletteGray,
+            borderRadius: 30
+        }}>
             {
                 cameraPermission &&
-                    props.scanQr ?
-                    <BarCodeScanner
-                        onBarCodeScanned={props.onBarCodeScanned}
-                        style={{ height: Dimensions.get("screen").height }} />
-                    :
-                    <Image source={logo} style={{ width: "90%" }} resizeMode={'contain'} />
-
+                props.scanQr &&
+                <BarCodeScanner
+                    onBarCodeScanned={props.onBarCodeScanned}
+                    style={{
+                        //height : "100%"
+                        height: "200%",
+                        marginTop : -200
+                    }} />
             }
+            <View style={{
+                display: props.scanQr && cameraPermission ? "none" : "flex",
+                height: "100%",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                <Image source={logo} style={{ width: "90%" }} resizeMode={'contain'} />
+            </View>
         </View>
+        // <View style={{ 
+        //     flex: 1,
+        //     overflow : "hidden",
+        //     alignItems: props.scanQr ? "stretch" : "center",
+        //     justifyContent: "center",
+        //     borderRadius: 30,
+        //     backgroundColor: paletteGray }}>
+        //     {
+        //         cameraPermission &&
+        //             props.scanQr ?
+        //             <BarCodeScanner
+        //                 onBarCodeScanned={props.onBarCodeScanned}
+        //                 style={{ height: Dimensions.get("screen").height }} />
+        //             :
+        //             <Image source={logo} style={{ width: "90%" }} resizeMode={'contain'} />
+
+        //     }
+        // </View>
     )
 }
 

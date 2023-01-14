@@ -3,11 +3,18 @@ import { useState } from "react";
 export default function usePersonalInformationPage() {
     const [birth, setBirth] = useState<Date>(new Date());
     const [gender, setGender] = useState(false);
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const handleConfirm = (date: Date) => {
-        setBirth(date);
-        setDatePickerVisibility(false);
+    return {
+        input:
+        {
+            birth: {
+                birth,
+                setBirth
+            },
+            gender:
+            {
+                gender,
+                setGender
+            }
+        }
     };
-    return { birth, isDatePickerVisible, gender, setGender, setDatePickerVisibility, handleConfirm };
 }
