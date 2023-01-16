@@ -192,10 +192,10 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     </View>
                                     <View style={{ width: "60%" }}>
                                         <DateTimePickerInput
-                                            maximumDate={hook.input.filterEndDate.filterEndDate}
-                                            value={hook.input.filterStartDate.filterStartDate}
-                                            onConfirm={hook.input.filterStartDate.setfilterStartDate}
-                                            onReset={() => hook.input.filterStartDate.setfilterStartDate(undefined)} />
+                                            maximumDate={hook.input.filterEndDate.value}
+                                            value={hook.input.filterStartDate.value}
+                                            onConfirm={hook.input.filterStartDate.set}
+                                            onReset={() => hook.input.filterStartDate.set(undefined)} />
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: "row", height: 40 }}>
@@ -204,10 +204,10 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     </View>
                                     <View style={{ width: "60%" }}>
                                         <DateTimePickerInput
-                                            minimumDate={hook.input.filterStartDate.filterStartDate}
-                                            value={hook.input.filterEndDate.filterEndDate}
-                                            onConfirm={hook.input.filterEndDate.setfilterEndDate}
-                                            onReset={() => hook.input.filterEndDate.setfilterEndDate(undefined)} />
+                                            minimumDate={hook.input.filterStartDate.value}
+                                            value={hook.input.filterEndDate.value}
+                                            onConfirm={hook.input.filterEndDate.set}
+                                            onReset={() => hook.input.filterEndDate.set(undefined)} />
                                     </View>
                                 </View>
                             </View>
@@ -256,7 +256,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
-                            <Menu >
+                            <Menu>
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
                                     <Image source={sortBlack} resizeMode="center" style={{ width: 16 }} />
                                     <Text>Sắp xếp</Text>
@@ -272,9 +272,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                         <Text style={{ fontSize: 16 }}>Giá thấp nhất</Text>
                                     </MenuOption>
                                     <MenuOption onSelect={() => alert(`Not called`)} >
-                                        <Text>
-                                            <Text style={{ fontSize: 16 }}>Giá cao nhất</Text>
-                                        </Text>
+                                        <Text style={{ fontSize: 16 }}>Giá cao nhất</Text>
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>

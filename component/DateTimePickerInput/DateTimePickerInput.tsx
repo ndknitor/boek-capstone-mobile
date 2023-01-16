@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useState } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import calendarBlack from "../../assets/icons/calendar-today-black.png";
+import eventBlack from "../../assets/icons/event-black.png";
 import closeBlack from "../../assets/icons/close-black.png";
 import { paletteGray } from '../../utils/color';
 import { dateFormat } from '../../utils/format';
@@ -11,7 +11,7 @@ interface DateTimePickerInputProps {
     hideReset?: boolean;
     format?: string;
     value?: Date;
-    blankLabel?: string;
+    placeholder?: string;
     maximumDate?: Date;
     minimumDate?: Date;
     mode?: "date" | "time" | "datetime";
@@ -20,7 +20,7 @@ interface DateTimePickerInputProps {
     onReset?: () => void;
 }
 function DateTimePickerInput(props: DateTimePickerInputProps) {
-    const blankLabel = props.blankLabel || "Chọn ngày"
+    const blankLabel = props.placeholder || "Chọn ngày"
     const [showModal, setShowModal] = useState(false);
     return (
         <>
@@ -65,7 +65,7 @@ function DateTimePickerInput(props: DateTimePickerInputProps) {
                         props.icon ?
                             <props.icon />
                             :
-                            <Image source={calendarBlack} style={{ width: 20, height: 20 }} resizeMode="contain" />
+                            <Image source={eventBlack} style={{ width: 20, height: 20 }} resizeMode="contain" />
                     }
                 </TouchableOpacity>
                 {

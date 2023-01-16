@@ -7,10 +7,8 @@ const appxios = axios.create({
 })
 
 export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
-
     useEffect(() => {
         const beforeRequest = (config: AxiosRequestConfig<any>) => {
-            //console.log(config);
             return config;
         }
         const requestError = (error: any) => {

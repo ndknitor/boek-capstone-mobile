@@ -15,7 +15,7 @@ function BookCard({ book }: BookCardProps) {
   return (
     <View
       style={{
-        width: Dimensions.get("screen").width / 100 * 47.5, //195,
+        width: 195,
         height: 260,
         alignItems: "center",
         justifyContent: "center"

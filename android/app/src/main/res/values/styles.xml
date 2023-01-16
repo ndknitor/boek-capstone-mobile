@@ -5,6 +5,8 @@
     <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+    <item name="android:datePickerDialogTheme">@style/datePickerTheme</item>
   </style>
   <style name="ResetEditText" parent="@android:style/Widget.EditText">
     <item name="android:padding">0dp</item>
@@ -14,4 +16,10 @@
   <style name="Theme.App.SplashScreen" parent="AppTheme">
     <item name="android:windowBackground">@drawable/splashscreen</item>
   </style>
+
+  	<style name="datePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+	    <item name="colorAccent">#3730a3</item>
+	    <item name="colorControlActivated">#4b45ac</item>
+      <item name="colorControlHighlight">#5f59b5</item>
+ 	</style>
 </resources>

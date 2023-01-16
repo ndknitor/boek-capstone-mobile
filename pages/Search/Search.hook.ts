@@ -5,7 +5,6 @@ import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
 import useAsyncEffect from "use-async-effect";
 import { Book } from "../../objects/entities/Book";
-import { IndexContext } from "../Index/Index.hook";
 
 interface SearchPageContextData {
     searchValue: string;
@@ -315,15 +314,15 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
             maxPage
         },
         input: {
-            filterStartDate :
+            filterStartDate:
             {
-                filterStartDate,
-                setfilterStartDate
+                value: filterStartDate,
+                set: setfilterStartDate
             },
-            filterEndDate :
+            filterEndDate:
             {
-                filterEndDate,
-                setfilterEndDate
+                value: filterEndDate,
+                set: setfilterEndDate
             }
         },
         loading,

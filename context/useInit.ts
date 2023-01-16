@@ -7,7 +7,6 @@ export default function useInit() {
   const { setGeoPosition, geoPosition } = useAppContext();
   useAsyncEffect(async () => {
     if (geoPosition) {
-      console.log(AsyncStorage.getItem("hello"));
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         alert('Permission to access location was denied');
