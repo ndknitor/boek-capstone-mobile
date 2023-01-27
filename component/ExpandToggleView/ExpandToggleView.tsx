@@ -1,14 +1,25 @@
-import React, { PropsWithChildren, useState } from 'react'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import useBoolean from '../../libs/hook/useBoolean'
 import { primaryTint4 } from '../../utils/color';
 import expandMoreBlack from "../../assets/icons/expand-more-black.png";
 import expandLessBlack from "../../assets/icons/expand-less-black.png";
+import useAsyncEffect from 'use-async-effect';
 interface ExpandToggleViewProps extends PropsWithChildren {
     label: string;
+    onExpand?: () => void;
+    onCollapse?: () => void;
 }
 function ExpandToggleView(props: ExpandToggleViewProps) {
     const [expanded, toggleExpanded] = useBoolean();
+    useAsyncEffect(() => {
+        if (expanded) {
+            props.onExpand && props.onExpand();
+        }
+        else {
+            props.onCollapse && props.onCollapse();
+        }
+    }, [expanded]);
     return (
         <View
             style={{

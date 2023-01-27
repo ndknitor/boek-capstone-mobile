@@ -34,9 +34,11 @@ const EndPont =
             index: "/api/books",
             genre: "/api/books/genre"
         },
+        campaigns: "/api/campaigns",
         formats: "/api/formats",
         genres: "/api/genres",
-        publisher: "​/api​/publishers"
+        publishers: "/api/publishers",
+        languages: "api/languages"
     }
 }
 export default EndPont;

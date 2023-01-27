@@ -1,10 +1,21 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { PropsWithChildren, useEffect } from 'react'
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const appxios = axios.create({
     baseURL: 'https://server.boek.live',
-    timeout: 7000
-})
+    validateStatus: () => true,
+});
+appxios.defaults.timeout = 3000;
+export function setAuthorizationBearer(jwt?: string) {
+    if (jwt) {
+        appxios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+    }
+    else {
+        delete appxios.defaults.headers.common['Authorization'];
+    }
+
+}
 
 export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
     useEffect(() => {
@@ -16,11 +27,17 @@ export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
             return Promise.reject(error);
         }
         const onResponse = (response: AxiosResponse<any, any>) => {
-
             return response;
         }
-        const onResponseError = (error: any) => {
-
+        const onResponseError = (error: AxiosError) => {
+            if (error.code == "ERR_NETWORK") {
+                Toast.show({
+                    text1: "Lỗi",
+                    text2: "Không thể kết nối mạng, vui lòng thử lại sau",
+                    type : "error"
+                });
+            }
+            console.log(error);
             return Promise.reject(error);
         }
         appxios.interceptors.request.use(beforeRequest, requestError);

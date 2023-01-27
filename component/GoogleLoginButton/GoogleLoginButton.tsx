@@ -5,10 +5,9 @@ import googleLogo from '../../assets/icons/google.png';
 import { primaryTint9 } from '../../utils/color';
 import useGoogleLoginButtonComponent from './GoogleLoginButton.hook';
 export interface GoogleLoginButtonProps {
-    onSuccess?: (credential: FirebaseAuthTypes.AuthCredential) => void;
+    onPress?: () => void;
 }
 function GoogleLoginButton(props: GoogleLoginButtonProps) {
-    const { googleLogin } = useGoogleLoginButtonComponent(props);
     return (
         <TouchableOpacity style={{
             backgroundColor: primaryTint9,//'#F8F8F8',
@@ -20,7 +19,7 @@ function GoogleLoginButton(props: GoogleLoginButtonProps) {
             height: 50,
             width: "100%"
         }}
-            onPress={async (e) => await googleLogin()}>
+            onPress={props.onPress}>
             <View style={{ width: "100%", flexDirection: "row", height: "100%" }}>
                 <View style={{ alignItems: "center", justifyContent: "center", width: "65%", height: "100%" }}>
                     <Text style={styles.title}>Đăng nhập</Text>

@@ -6,19 +6,21 @@ export default function usePagingComponent(props: PagingProps) {
     const [showStartDot, setShowStartDot] = useState(false);
     const [showEndDot, setShowEndDot] = useState(false);
     const range = (start: number, end: number) => Array.from(Array(end - start + 1).keys()).map(x => x + start);
-    useEffect(() => {        
+    useEffect(() => {
         if (props.currentPage < 3) {
             setStartPage(1);
             if (props.maxPage > 5) {
-                setEndPage(5);    
+                setEndPage(5);
             }
-            else
-            {
+            else {
                 setEndPage(props.maxPage);
             }
             setShowStartDot(false);
             if (props.maxPage > 5) {
                 setShowEndDot(true);
+            }
+            else {
+                setShowEndDot(false);
             }
             return;
         }
@@ -41,8 +43,7 @@ export default function usePagingComponent(props: PagingProps) {
             if (props.maxPage - props.currentPage > 2) {
                 setShowEndDot(true);
             }
-            else
-            {
+            else {
                 setShowEndDot(false);
             }
             return;

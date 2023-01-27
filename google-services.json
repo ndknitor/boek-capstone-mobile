@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "652368417331-e19p9k238invhhrpv7ak6839qrj38svr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.knguyenzzz.Boek",
-            "certificate_hash": "1cb91e1b0ba0c7638a011e35d8c57c878399794f"
-          }
-        },
-        {
           "client_id": "652368417331-mjm9108ibsjb97u3fc04ga5sioq1rdq9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -45,6 +37,13 @@
             {
               "client_id": "652368417331-i91jda7knc2ardd0pnkq0cr3vog446qf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "652368417331-1k2t1k8aks1g5483andfd5nja06th71d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.knguyenzzz.Boek"
+              }
             }
           ]
         }

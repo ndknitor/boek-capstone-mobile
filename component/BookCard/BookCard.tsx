@@ -1,14 +1,11 @@
 import React from 'react'
 import { View, Image, TouchableOpacity, Text, Dimensions } from 'react-native'
-import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';
-import image from "../../assets/LBC828K4.webp";
-import avatar from "../../assets/avatar.jpg";
-import shoppingBasketWhite from "../../assets/icons/shopping-basket-white.png";
-import { Book } from '../../objects/entities/Book';
-import { formatNumber } from '../../utils/format';
+import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';;
 import useRouter from '../../libs/hook/useRouter';
+import { BookViewModel } from '../../objects/viewmodels/books/BookViewModel';
+import { formatNumber } from '../../utils/format';
 interface BookCardProps {
-  book: Book;
+  book: BookViewModel;
 }
 function BookCard({ book }: BookCardProps) {
   const { navigate } = useRouter();
@@ -58,12 +55,12 @@ function BookCard({ book }: BookCardProps) {
             height: "90%"
           }}>
             <View style={{ height: "30%", paddingLeft: 2 }}>
-              <Text style={{ fontSize: 16, fontWeight: "600" }}>Doraemon</Text>
+              <Text style={{ fontSize: 16, fontWeight: "600" }}>{book.name}</Text>
             </View>
             <View style={{ height: "70%", width: "100%", flexDirection: "row" }}>
               <View style={{ width: "60%", height: "100%", justifyContent: "flex-start", paddingLeft: 2 }}>
-                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>69.000đ</Text>
-                <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>69.000đ</Text>
+                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(book.coverPrice as number)}đ</Text>
+                <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>{formatNumber(book.coverPrice as number)}đ</Text>
               </View>
               <View style={{ width: "40%", height: "100%", alignItems: "flex-start", justifyContent: "flex-start" }}>
                 <View style={{

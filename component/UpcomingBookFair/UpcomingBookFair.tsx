@@ -1,9 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, View, Text, Image } from 'react-native'
 import image from "../../assets/hsxv.webp";
-import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
-import img1 from "../../assets/wtd.webp";
 import { primaryTint6 } from '../../utils/color';
 import useRouter from '../../libs/hook/useRouter';
 interface UpcomingBookFairProps {

@@ -6,18 +6,22 @@ import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
 import useRouter from '../../libs/hook/useRouter';
+import { CampaignViewModel } from '../../objects/viewmodels/campaigns/CampaignViewModel';
+import moment from 'moment';
+interface BookFairCardProps {
+    campagin?: CampaignViewModel
+}
 
-
-function BookFairCard() {
+function BookFairCard({ campagin }: BookFairCardProps) {
     const { navigate } = useRouter();
     return (
         <TouchableOpacity
             onPress={() => navigate("CampaignDetail")}
-            style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
+            style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, padding: 10, flexDirection: "row", flexWrap: "wrap" }}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ marginBottom: 5, width: "45%" }}>
                     <Image
-                        source={image}
+                        source={{ uri: campagin?.imageUrl }}
                         resizeMode="contain"
                         style={{
                             width: "100%",
@@ -25,56 +29,54 @@ function BookFairCard() {
                         }} />
                 </View>
                 <View style={{ padding: 10, width: "55%" }}>
-                    <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 5 }}>Tri ân thầy cô 20/11</Text>
+                    <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 5 }}>{campagin?.name}</Text>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ alignItems: "center", justifyContent: "center" }}>
                             <Image source={calendarBlack} style={{ height: 17, width: 25 }} resizeMode="contain" />
                         </View>
 
-                        <Text>Thời gian: 11/11/1111</Text>
+                        <Text>{moment(campagin?.startOfflineDate).format("DD/MM/YYYY HH:MM:SS")}</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ alignItems: "center", justifyContent: "center" }}>
                             <Image source={locationBlack} style={{ height: 17, width: 25 }} resizeMode="contain" />
                         </View>
-                        <Text>Địa điểm</Text>
+                        <Text>{"Địa điểm"}</Text>
                     </View>
                 </View>
             </View>
             <View style={{ width: "100%", flexDirection: "row" }}>
                 <View style={{ width: "100%", flexDirection: "row", alignItems: "center" }}>
-                    <View>
-                        <View
-                            style={{
-                                position: "absolute",
-                                borderRadius: 999,
-                                width: 25,
-                                height: 25,
-                                overflow: "hidden"
-                            }}>
-                            <Image source={avatar} style={{ width: "100%", height: "100%" }} />
-                        </View>
-                        <View
-                            style={{
-                                marginLeft: 15,
-                                position: "absolute",
-                                borderRadius: 999,
-                                width: 25,
-                                height: 25,
-                                overflow: "hidden"
-                            }}>
-                            <Image source={image} style={{ width: "100%", height: "100%" }} />
-                        </View>
-                        <View
-                            style={{
-                                marginLeft: 30,
-                                borderRadius: 999,
-                                width: 25,
-                                height: 25,
-                                overflow: "hidden"
-                            }}>
-                            <Image source={avatar} style={{ width: "100%", height: "100%" }} />
-                        </View>
+                    <View
+                        style={{
+                            position: "absolute",
+                            borderRadius: 999,
+                            width: 25,
+                            height: 25,
+                            overflow: "hidden"
+                        }}>
+                        <Image source={avatar} style={{ width: "100%", height: "100%" }} />
+                    </View>
+                    <View
+                        style={{
+                            marginLeft: 15,
+                            position: "absolute",
+                            borderRadius: 999,
+                            width: 25,
+                            height: 25,
+                            overflow: "hidden"
+                        }}>
+                        <Image source={image} style={{ width: "100%", height: "100%" }} />
+                    </View>
+                    <View
+                        style={{
+                            marginLeft: 30,
+                            borderRadius: 999,
+                            width: 25,
+                            height: 25,
+                            overflow: "hidden"
+                        }}>
+                        <Image source={avatar} style={{ width: "100%", height: "100%" }} />
                     </View>
                     <View style={{ paddingLeft: 5, flex: 1 }}>
                         <Text >Các nhà phát hành: Tên nhà phát hành, Tên nhà phát hành</Text>

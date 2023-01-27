@@ -1,11 +1,38 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import useAsyncEffect from "use-async-effect";
+import appxios, { setAuthorizationBearer } from '../component/AxiosInterceptor';
+import useAuth from '../libs/hook/useAuth';
+import { LoginViewModel } from '../objects/viewmodels/users/LoginViewModel';
+import StorageKey from '../utils/storageKey';
 import useAppContext from "./Context";
+import auth from '@react-native-firebase/auth';
+import { BaseResponseModel } from '../objects/responses/BaseResponseModel';
+import EndPont from '../utils/EndPoint';
+
 
 export default function useInit() {
-  const { setGeoPosition, geoPosition } = useAppContext();
+  const { setGeoPosition, geoPosition, setUser } = useAppContext();
+  const { setAuthorize } = useAuth();
   useAsyncEffect(async () => {
+    const userJsonString = await AsyncStorage.getItem(StorageKey.user);
+    if (auth().currentUser) {
+      let user: LoginViewModel;
+      if (userJsonString) {
+        user = JSON.parse(userJsonString);
+      }
+      else {
+        const request = {
+          idToken: await auth().currentUser?.getIdToken()
+      };
+        const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
+        user = loginResponse.data.data;
+      }
+      setUser(user);
+      setAuthorize([user.role.toString()]);
+      setAuthorizationBearer(user.accessToken);
+    }
+
     if (geoPosition) {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
