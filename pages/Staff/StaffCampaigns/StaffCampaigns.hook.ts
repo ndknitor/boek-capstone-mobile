@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ScrollView } from "react-native";
 import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/campaigns/StaffCampaignMobilesViewModel";
 import EndPont from "../../../utils/EndPoint";
 import { mockStaffCampaigns } from "../../../utils/mock";
 
 export default function useStaffCampaignsPage() {
+    const scrollViewRef = useRef<ScrollView>(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(100);
+
     const [loading, setLoading] = useState(false);
 
-    const [onGoingCampagins, setOnGoingCampagins] = useState<StaffCampaignMobilesViewModel[]>([]);
-    const [upComingCampagins, setUpComingCampagins] = useState<StaffCampaignMobilesViewModel[]>([]);
+    const [campagins, setCampagins] = useState<StaffCampaignMobilesViewModel[]>([]);
 
+    const onPageNavigation = (page: number) => {
+        setCurrentPage(page);
+        scrollViewRef.current?.scrollTo({
+            y : 0
+        });
+    }
     useEffect(() => {
-        setOnGoingCampagins(mockStaffCampaigns.slice(0,4));
-        setUpComingCampagins(mockStaffCampaigns.slice(0,4));
+        setCampagins(mockStaffCampaigns);
         // setLoading(true);
         // appxios.get(EndPont.public.campaigns.mobile.staffs)
         //     .then(resposne => {
@@ -25,10 +35,17 @@ export default function useStaffCampaignsPage() {
         //     });
     }, []);
     return {
+        ref: {
+            scrollViewRef
+        },
+        paging: {
+            currentPage,
+            maxPage,
+            onPageNavigation
+        },
         loading,
         data: {
-            onGoingCampagins,
-            upComingCampagins
+            campagins
         }
     };
 }
