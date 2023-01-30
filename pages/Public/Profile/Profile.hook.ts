@@ -104,26 +104,29 @@ export default function useProfilePage(props: ProfileProps) {
         }
     }
     const googleLogin = async () => {
+        console.log(0);
         if (auth().currentUser) {
+            console.log(1);
             return auth().currentUser;
         }
+        console.log(2);
         try {
-            console.log(0);
+            console.log(3);
             if (Platform.OS == "android") {
                 await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-                console.log(1);
+                console.log(4);
             }
             await GoogleSignin.signOut();
-            console.log(2);
+            console.log(5);
             let user = {} as User;
             user = await GoogleSignin.signIn();
-            console.log(3);
-            const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
-            console.log(4);
-            const credential = await auth().signInWithCredential(googleCredential);
-            console.log(5);
-            console.log(credential);
             console.log(6);
+            const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
+            console.log(7);
+            const credential = await auth().signInWithCredential(googleCredential);
+            console.log(8);
+            console.log(credential);
+            console.log(9);
             return credential.user;
         } catch (error) {
             console.log(error);
