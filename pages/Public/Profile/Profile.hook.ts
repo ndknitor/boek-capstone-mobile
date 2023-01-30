@@ -105,6 +105,9 @@ export default function useProfilePage(props: ProfileProps) {
     }
     const googleLogin = async () => {
         console.log(0);
+        if (auth()) {
+            console.log(0.1);
+        }
         if (auth().currentUser) {
             console.log(1);
             return auth().currentUser;
