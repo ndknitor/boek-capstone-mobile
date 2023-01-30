@@ -1,5 +1,5 @@
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import { ProfileProps } from "./Profile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GoogleSignin, User } from "@react-native-google-signin/google-signin";
@@ -12,7 +12,7 @@ import { LoginViewModel } from "../../../objects/viewmodels/users/LoginViewModel
 import EndPont from "../../../utils/EndPoint";
 import StorageKey from "../../../utils/storageKey";
 import { Role } from "../../../objects/enums/Role";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useProfilePage(props: ProfileProps) {
     const { navigate, replace } = useRouter();
@@ -45,6 +45,7 @@ export default function useProfilePage(props: ProfileProps) {
                     text1: "Đăng nhập thất bại",
                     text2: "Tài khoản của bạn không được phép đăng nhập"
                 });
+                await logout();
                 setLoading(false);
                 return;
             }
@@ -118,15 +119,18 @@ export default function useProfilePage(props: ProfileProps) {
             setLoading(false);
         }
     }
-    const logout = async () => {
+    const logout = async (navigate?: boolean) => {
         if (await GoogleSignin.isSignedIn()) {
+            await GoogleSignin.signOut();
             await auth().signOut();
         }
         setAuthorize(false);
         setAuthorizationBearer();
         setUser(undefined);
         await AsyncStorage.removeItem(StorageKey.user);
-        props.navigation.jumpTo("Campaigns");
+        if (navigate) {
+            props.navigation.jumpTo("Campaigns");
+        }
     }
 
     return {

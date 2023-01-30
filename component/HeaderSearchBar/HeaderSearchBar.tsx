@@ -3,7 +3,8 @@ import { Input } from '@rneui/base';
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { TouchableOpacity, View, Image, TextInput, Animated, Easing, NativeSyntheticEvent, TextInputFocusEventData, SafeAreaView } from 'react-native'
 import searchWhite from "../../assets/icons/search-white.png";
-import { useShowOpacityAnimation } from '../../utils/animation';
+import arrowBackWhite from "../../assets/icons/arrow-back-white.png";
+import useRouter from '../../libs/hook/useRouter';
 import { paletteGray, primaryColor } from '../../utils/color';
 
 interface HeaderSearchBarProps extends PropsWithChildren {
@@ -12,7 +13,7 @@ interface HeaderSearchBarProps extends PropsWithChildren {
     onSubmit?: () => void;
 }
 function HeaderSearchBar(props: HeaderSearchBarProps) {
-
+    const { canGoBack, goBack } = useRouter();
     return (
         <SafeAreaView style={{ backgroundColor: primaryColor }}>
             <View style={{
@@ -20,7 +21,24 @@ function HeaderSearchBar(props: HeaderSearchBarProps) {
                 width: "98%",
                 flexDirection: "row",
             }}>
-                <View style={{ width: "90%" }}>
+                <View
+                    style={{
+                        //borderWidth: 1,
+                        width: canGoBack() ? "10%" : 0,
+                        height: "100%"
+                    }}>
+                    <TouchableOpacity
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                            height: "100%"
+                        }}
+                        onPress={goBack}>
+                        <Image source={arrowBackWhite} resizeMode="contain" style={{ width: "100%", height: "40%" }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ width: canGoBack() ? "80%" : "90%" }}>
                     <Input
                         onSubmitEditing={props.onSubmit}
                         value={props.value}

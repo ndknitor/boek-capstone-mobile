@@ -1,7 +1,7 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
 import React, { PropsWithChildren, useContext, useState } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { SearchPageContext, useBookFairsPage, useBooksPage } from './Search.hook';
+import { useBookFairsPage, useBooksPage } from './Search.hook';
 import DrawerLayout from 'react-native-drawer-layout';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { ParamListBase } from '@react-navigation/native';
@@ -20,6 +20,7 @@ import PageLoader from '../../../component/PageLoader/PageLoader';
 import { BookFormat } from '../../../objects/enums/BookFormat';
 import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { CampaignFormat } from '../../../objects/enums/CampaignFormat';
+import { SearchPageContext, SearchPageContextProvider } from '../../../component/SearchContextProvider/SearchContextProvider';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -374,18 +375,6 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                 </ScrollView>
             </DrawerLayout>
         </>
-    );
-}
-
-
-
-function SearchPageContextProvider(props: PropsWithChildren) {
-    const [searchValue, setSearchValue] = useState("");
-    const [onSubmit, setOnSubmit] = useState<() => void>(() => { });
-    return (
-        <SearchPageContext.Provider value={{ searchValue, setSearchValue, onSubmit, setOnSubmit }}>
-            {props.children}
-        </SearchPageContext.Provider>
     );
 }
 

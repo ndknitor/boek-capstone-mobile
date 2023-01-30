@@ -71,6 +71,7 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                         <View style={{ alignItems: "flex-end" }}>
                             <SelectDropdown
                                 ref={hook.ref.addressInputRef}
+                                defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
                                 renderDropdownIcon={() => <></>}
                                 buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
                                 buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}

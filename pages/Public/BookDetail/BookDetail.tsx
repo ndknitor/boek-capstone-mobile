@@ -3,18 +3,18 @@ import React from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
 import useBookDetailPage from './BookDetail.hook';
 import avatar from "../../../assets/avatar.jpg";
-import { books } from '../../../utils/mock';
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteGray, palettePink, primaryColor, primaryTint1, primaryTint5 } from '../../../utils/color';
 import LinearGradient from 'react-native-linear-gradient';
 import ShowMoreButton from '../../../component/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { formatNumber } from '../../../utils/format';
+import { mockBooks } from '../../../utils/mock';
 
 
 function BookDetail() {
     const hook = useBookDetailPage();
-    const book = books[0];
+    const book = mockBooks[0];
     const { navigate } = useRouter();
     return (
         <>
@@ -39,8 +39,8 @@ function BookDetail() {
                     </View>
                     <View style={{ marginBottom: 20, flexDirection: "row" }}>
                         <View style={{ width: "40%", alignItems: "flex-start", justifyContent: "center" }}>
-                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(book.coverPrice)} đ</Text>
-                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(book.coverPrice)} đ</Text>
+                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(book.coverPrice as number)} đ</Text>
+                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(book.coverPrice as number)} đ</Text>
                         </View>
 
                         <View style={{ width: "30%", alignItems: "center", justifyContent: "center" }}>
@@ -132,11 +132,11 @@ function BookDetail() {
                     <TitleTabedFlatBooks title="Có thể bạn quan tâm" data={[
                         {
                             tabLabel: "Cùng thể loại",
-                            tabData: books
+                            tabData: mockBooks
                         },
                         {
                             tabLabel: "Cùng nhà phát hành",
-                            tabData: books
+                            tabData: mockBooks
                         }
                     ]} />
                 </View>

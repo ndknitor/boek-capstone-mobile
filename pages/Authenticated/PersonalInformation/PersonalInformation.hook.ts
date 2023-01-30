@@ -4,6 +4,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import appxios from "../../../component/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
+import useUpdateDepsEffect from "../../../libs/hook/useUpdateDepsEffect";
 import useUpdateEffect from "../../../libs/hook/useUpdateEffect";
 import { Role } from "../../../objects/enums/Role";
 import { UpdateCustomerRequestModel } from "../../../objects/requests/users/UpdateCustomerRequestModel";
@@ -104,6 +105,7 @@ export default function usePersonalInformationPage() {
         setLoading(true);
         if (user && user.role == Role.staff) {
             appxios.get<UserViewModel>(EndPont.users.me).then(response => {
+                setEmail(response.data.email);
                 setName(response.data.name);
                 setAddress(response.data.address);
                 setPhone(response.data.phone);
@@ -120,7 +122,7 @@ export default function usePersonalInformationPage() {
                 setAddress(response.data.user.address);
                 setPhone(response.data.user.phone);
                 if (response.data.dob) {
-                    setBirth(response.data.dob);
+                    setBirth(new Date(response.data.dob));
                 }
                 setGender(response.data.gender as boolean);
             })
@@ -130,13 +132,13 @@ export default function usePersonalInformationPage() {
         }
     }, []);
 
-    useUpdateEffect(() => {
+    useUpdateDepsEffect(() => {
         if (!loading) {
             if (!buttonShowed) {
                 setButtonShowed(true);
             }
         }
-    }, [name, gender, address, phone, gender]);
+    }, [name, gender, address, phone]);
 
     return {
         buttonShowed,
@@ -147,7 +149,7 @@ export default function usePersonalInformationPage() {
             inputAddressRef,
             inputPhoneRef
         },
-        data:{
+        data: {
             email
         },
         event: {

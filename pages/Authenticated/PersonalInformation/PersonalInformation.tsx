@@ -1,9 +1,6 @@
 import { Button, CheckBox } from '@rneui/themed';
-import moment from 'moment';
-import React, { useRef } from 'react'
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import editIcon from "../../../assets/icons/edit.png";
-import avatar from "../../../assets/avatar.jpg";
 import usePersonalInformationPage from './PersonalInformation.hook';
 import DateTimePickerInput from "../../../component/DateTimePickerInput/DateTimePickerInput";
 import AuthorizeView from "../../../libs/AuthorizeView";
@@ -13,10 +10,11 @@ import PageLoader from '../../../component/PageLoader/PageLoader';
 import SelectDropdown from 'react-native-select-dropdown';
 import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { paletteGrayShade5 } from '../../../utils/color';
+import useAppContext from '../../../context/Context';
 
 function PersonalInformation() {
   const hook = usePersonalInformationPage();
-
+  const { user } = useAppContext();
   return (
     <>
       <PageLoader loading={hook.loading} />
@@ -24,7 +22,7 @@ function PersonalInformation() {
         <View style={styles.headerContainer}>
           <View style={styles.avatarWarp}>
             <View style={styles.avatarRing}>
-              <Image source={avatar} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+              <Image source={{ uri: user?.imageUrl }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
 
             </View>
           </View>
@@ -34,7 +32,7 @@ function PersonalInformation() {
             <Text>Email:</Text>
           </View>
           <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <Text >{hook.data.email}</Text>
+            <Text>{hook.data.email}</Text>
           </View>
         </View>
 
@@ -106,13 +104,14 @@ function PersonalInformation() {
           <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
             <View style={{ alignItems: "flex-end" }}>
               <SelectDropdown
+                defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
                 ref={hook.ref.inputAddressRef}
                 renderDropdownIcon={() => <></>}
                 buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
                 buttonTextStyle={{
                   fontSize: 14,
                   textAlign: "right",
-                  color: hook.input.address.value === "" ? "black" : paletteGrayShade5
+                  color: hook.input.address.value ? "black" : paletteGrayShade5
                 }}
                 defaultButtonText="Chọn địa điểm"
                 onChangeSearchInputText={() => { console.log("Hello") }}
@@ -120,8 +119,6 @@ function PersonalInformation() {
                 onSelect={(selectedItem, index) => {
                   hook.input.address.set(selectedItem as string);
                   console.log(hook.input.address.value);
-                  
-                  
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;

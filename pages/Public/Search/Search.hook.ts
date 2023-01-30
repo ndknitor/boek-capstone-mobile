@@ -4,6 +4,7 @@ import { createContext, Dispatch, SetStateAction, useContext, useEffect, useRef,
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
 import appxios from "../../../component/AxiosInterceptor";
+import { SearchPageContext } from "../../../component/SearchContextProvider/SearchContextProvider";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { AuthorBooksViewModel } from "../../../objects/viewmodels/authors/AuthorBooksViewModel";
 import { BookViewModel } from "../../../objects/viewmodels/books/BookViewModel";
@@ -14,14 +15,6 @@ import { MultiUserViewModel } from "../../../objects/viewmodels/users/MultiUserV
 import EndPont from "../../../utils/EndPoint";
 import { getMaxPage } from "../../../utils/paging";
 
-
-interface SearchPageContextData {
-    searchValue: string;
-    setSearchValue: Dispatch<SetStateAction<string>>;
-    onSubmit: () => void;
-    setOnSubmit: Dispatch<SetStateAction<() => void>>;
-}
-export const SearchPageContext = createContext<SearchPageContextData>({} as SearchPageContextData);
 
 export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBooksDrawerRef = useRef<DrawerLayout>(null);
@@ -272,7 +265,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     const getCampaigns = (page: number) => {
         setLoading(true);
-        appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns}?Page=${page}&Size=10`)
+        appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns.index}?Page=${page}&Size=10`)
             .then(response => {
                 if (response.status == 200) {
                     setCampaigns(response.data.data);
@@ -367,7 +360,6 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     useEffect(() => {
         getCampaigns(1);
-
         const unsubscribe = props.navigation.addListener('tabPress', (e) => {
             //context.setOnSubmit(onSearchSubmit);
         });

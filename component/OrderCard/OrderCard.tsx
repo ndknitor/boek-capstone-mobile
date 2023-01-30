@@ -3,11 +3,11 @@ import React from 'react'
 import { View, Text, Image } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
 import { paletteGrayShade2, paletteGrayTint5, paletteGreen, paletteGreenBold, primaryTint1, primaryTint4 } from '../../utils/color'
-import { books } from '../../utils/mock'
+import { mockBooks } from '../../utils/mock';
 
 function OrderCard() {
     const { navigate } = useRouter();
-    const orderBook = books.slice(0, 2);
+    const orderBook = mockBooks.slice(0, 2);
     return (
         <View key={Math.random()}
             style={{
@@ -56,7 +56,7 @@ function OrderCard() {
                         }}>
                             <Text style={{ fontSize: 16, fontWeight: "600" }}>{item.name}</Text>
                             <Text>Số lượng : 2</Text>
-                            <Text style={{ color: paletteGrayShade2 }}>{item.issuer.name}</Text>
+                            <Text style={{ color: paletteGrayShade2 }}>{item.issuer.user.name}</Text>
                         </View>
                         <View style={{
                             //borderWidth: 1,

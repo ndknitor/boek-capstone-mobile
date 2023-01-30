@@ -10,6 +10,7 @@ import Campaigns from './pages/Public/Campaigns/Campaigns';
 import { Icon } from '@rneui/base';
 import { Image } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
+import workHistoryWhite from "./assets/icons/work-history-white.png";
 import useAuth from './libs/hook/useAuth';
 import useAuthorizeInit from './libs/hook/useAuthorizeInit';
 import useInit from './context/useInit';
@@ -29,9 +30,9 @@ import AskPersonalInformation from './pages/Customer/AskPersonalInformation/AskP
 import Search from './pages/Public/Search/Search';
 import Profile from './pages/Public/Profile/Profile';
 import StaffCampaigns from './pages/Staff/StaffCampaigns/StaffCampaigns';
-import StaffSearch from './pages/Staff/StaffSearch/StaffSearch';
 import { Role } from './objects/enums/Role';
-import { BottomTabNavigationConfig } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
+import StaffOrders from './pages/Staff/StaffOrders/StaffOrders';
+import StaffCampagin from './pages/Staff/StaffCampagin/StaffCampagin';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,7 +52,12 @@ function StackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
 
-      <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() => roles.find(r => r == Role.staff.toString())?.length == 1 ? <StaffTabNavigator /> : <TabNavigator />}</Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() =>
+        roles.find(r => r == Role.staff.toString())?.length == 1 ?
+          <StaffTabNavigator />
+          :
+          <TabNavigator />
+      }</Stack.Screen>
       {/* Public */}
       <Stack.Screen options={{ title: "So sánh giá" }} name={"PriceComparison"}>{(props) => <PriceComparison {...props} />}</Stack.Screen>
       <Stack.Screen options={{ title: "" }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
@@ -69,6 +75,9 @@ function StackNavigator() {
       <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{(props) => <AskPersonalInformation  {...props} />}</Stack.Screen>
 
+      {/* Staff */}
+      <Stack.Screen options={{ headerShown: false }} name={"StaffCampagin"}>{(props) => <StaffCampagin />}</Stack.Screen>
+
       <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
     </Stack.Navigator>
   );
@@ -76,6 +85,7 @@ function StackNavigator() {
 function TabNavigator() {
   return (
     <Tab.Navigator
+      backBehavior='none'
       safeAreaInsets={{ bottom: 0 }}
       screenOptions={{
         tabBarStyle: {
@@ -105,6 +115,7 @@ function TabNavigator() {
 function StaffTabNavigator() {
   return (
     <Tab.Navigator
+      backBehavior='none'
       safeAreaInsets={{ bottom: 0 }}
       screenOptions={{
         tabBarStyle: {
@@ -125,7 +136,7 @@ function StaffTabNavigator() {
         lazy: true
       }}>
       <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={17} /> }} name="StaffCampaigns" component={StaffCampaigns} />
-      <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={17} /> }} name="StaffSearch" component={StaffSearch} />
+      <Tab.Screen options={{ title: "Đơn hàng", tabBarIcon: () => <Image source={workHistoryWhite} style={{ height: 17 }} resizeMode={"contain"} /> }} name="StaffOrders" component={StaffOrders} />
       <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 17 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
     </Tab.Navigator>
   );

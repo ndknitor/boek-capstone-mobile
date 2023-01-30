@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import useProfilePage from './Profile.hook';
-import avatar from "../../../assets/avatar.jpg";
 import { Button } from '@rneui/base';
 import accountWhite from "../../../assets/icons/account-circle-white.png";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
@@ -13,12 +12,14 @@ import TouchCard from '../../../component/TouchCard/TouchCard';
 import { primaryTint1 } from '../../../utils/color';
 import { Role } from '../../../objects/enums/Role';
 import PageLoader from '../../../component/PageLoader/PageLoader';
+import useAppContext from '../../../context/Context';
 export interface ProfileProps extends BottomTabScreenProps<ParamListBase> {
 
 }
 function Profile(props: ProfileProps) {
   const hook = useProfilePage(props);
   const { authenticated } = useAuth();
+  const { user } = useAppContext();
   return (
     <>
       <PageLoader loading={hook.loading} />
@@ -43,7 +44,7 @@ function Profile(props: ProfileProps) {
                 borderRadius: 9999,
                 overflow: "hidden"
               }}>
-                <Image source={authenticated ? avatar : accountWhite} style={{
+                <Image source={authenticated ? {uri : user?.imageUrl} : accountWhite} style={{
                   width: "100%",
                   height: "100%"
                 }} resizeMode="cover" />
@@ -58,8 +59,8 @@ function Profile(props: ProfileProps) {
             }}>
               <View style={{ minWidth: "87%" }}>
                 <AuthorizeView>
-                  <Text style={styles.infoName}>Ngo Dinh Khoi Nguyen</Text>
-                  <Text style={{ color: "white" }}>ndkn@gmail.com</Text>
+                  <Text style={styles.infoName}>{user?.name}</Text>
+                  <Text style={{ color: "white" }}>{user?.email}</Text>
                   <View style={{ marginTop: 10 }}></View>
                   <AuthorizeView roles={[Role.customer.toString()]}>
                     <Text style={{ color: "white", fontWeight: "600" }}>Level : 1</Text>
@@ -100,7 +101,7 @@ function Profile(props: ProfileProps) {
         <AuthorizeView>
           <View style={{ width: "100%", paddingTop: 100, alignItems: "center", justifyContent: "center" }}>
             <Button
-              onPress={async () => await hook.event.logout()}
+              onPress={async () => await hook.event.logout(true)}
               buttonStyle={{
                 height: 40,
                 borderRadius: 24,

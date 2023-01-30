@@ -10,7 +10,7 @@ export interface BasicBookViewModel {
     translator: string
     imageUrl: string;
     coverPrice: number;
-    description: number;
+    description: string;
     language: string;
     size: string;
     releasedYear: number;

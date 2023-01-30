@@ -1,545 +1,900 @@
 import { Book } from "../objects/entities/Book";
+import { BookViewModel } from "../objects/viewmodels/books/BookViewModel";
+import { StaffCampaignMobilesViewModel } from "../objects/viewmodels/campaigns/StaffCampaignMobilesViewModel";
 import { range } from "./format";
 export const t = range(1, 20);
 
-export const books: Book[] =
-    [
-        {
-            "id": 12,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
-                "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
-                }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                }
-            ]
+export const mockBooks: BookViewModel[] = [
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
         },
-        {
-            "id": 13,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
                 "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
-                }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                }
-            ]
+                "statusName": "string",
+                "imageUrl": "string"
+            }
         },
-        {
-            "id": 14,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
-                "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
-                }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                }
-            ]
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
         },
-        {
-            "id": 15,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
-                "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
                 }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
                 }
-            ]
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
         },
-        {
-            "id": 16,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
                 "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
-                }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                }
-            ]
+                "statusName": "string",
+                "imageUrl": "string"
+            }
         },
-        {
-            "id": 17,
-            "code": "TB004_Test",
-            "genreId": 48,
-            "publisherId": 2,
-            "issuerId": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-            "isbn10": "",
-            "isbn13": "",
-            "name": "Book4_Test",
-            "translator": "Book_Translator_Test",
-            "imageUrl": "https://salt.tikicdn.com/cache/w1200/ts/product/88/3b/22/5911d66164e96a2d8b3c77bcee059983.jpg",
-            "coverPrice": 18000.0000,
-            "description": "Book4_Description_Test",
-            "language": "VN",
-            "size": "Book4_Size_Test",
-            "releasedYear": 2022,
-            "page": 200,
-            "isSeries": false,
-            "isCombo": false,
-            "status": 1,
-            "statusName": "Phát hành",
-            "genre": {
-                "id": 48,
-                "categoryId": null,
-                "name": "Tiểu thuyết",
-                "displayIndex": 8,
-                "status": true,
-                "statusName": "Hoạt động"
-            },
-            "issuer": {
-                "id": "90bbc35c-b655-4ae1-9bf5-7c3c4aba2ee0",
-                "code": "I307304132",
-                "name": "BIZBOOK",
-                "email": "ngcphungnguyn@gmail.com",
-                "address": "",
-                "phone": "0123456789",
-                "roleName": "Issuer",
-                "role": 2,
-                "status": true,
-                "statusName": null,
-                "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu0FH3PWgtOhqCmxcKHFIWcYY-6j_C9f7nq9oBcA=s96-c"
-            },
-            "publisher": {
-                "id": 2,
-                "code": "NXBKD",
-                "name": "NXB Kim Đồng",
-                "email": "cskh_online@nxbkimdong.com.vn",
-                "address": "Số 55 Quang Trung, Nguyễn Du, Hai Bà Trưng, Hà Nội",
-                "imageUrl": "https://theme.hstatic.net/200000343865/1000938429/14/logo.png?v=180",
-                "phone": "01900571595"
-            },
-            "bookAuthors": [
-                {
-                    "id": 27,
-                    "bookId": 15,
-                    "authorId": 1,
-                    "author": {
-                        "id": 1,
-                        "name": "Nguyễn Nhật Ánh",
-                    }
-                },
-                {
-                    "id": 28,
-                    "bookId": 15,
-                    "authorId": 2,
-                    "author": {
-                        "id": 2,
-                        "name": "Sven Carlsson, Jonas",
-                    }
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
                 }
-            ],
-            "formats": [
-                {
-                    "id": 43,
-                    "bookId": 15,
-                    "type": 1,
-                    "typeName": "Bìa cứng",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
-                },
-                {
-                    "id": 44,
-                    "bookId": 15,
-                    "type": 2,
-                    "typeName": "Bìa mềm",
-                    "url": "https://salt.tikicdn.com/ts/product/6d/61/45/4d4166c4fee360442889f320c84a12c5.jpg",
-                    "createdDate": new Date("2022-12-30T16:17:03.187"),
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
                 }
-            ]
-        }
-    ];
-export const campaigns = [
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "string",
+        "genreId": 0,
+        "publisherId": 0,
+        "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "isbn10": "string",
+        "isbn13": "string",
+        "name": "string",
+        "translator": "string",
+        "imageUrl": "https://th.bing.com/th/id/OIP.iWXhpy2Qtp630wf8zbD1IgHaHa?w=187&h=187&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "coverPrice": 0,
+        "description": "string",
+        "language": "string",
+        "size": "string",
+        "releasedYear": 0,
+        "page": 0,
+        "isSeries": true,
+        "pdfExtraPrice": 0,
+        "pdfTrialUrl": "string",
+        "audioExtraPrice": 0,
+        "audioTrialUrl": "string",
+        "status": 0,
+        "statusName": "string",
+        "fullPdfAndAudio": true,
+        "onlyPdf": true,
+        "onlyAudio": true,
+        "genre": {
+            "id": 0,
+            "parentId": 0,
+            "name": "string",
+            "displayIndex": 0,
+            "status": true,
+            "statusName": "string"
+        },
+        "issuer": {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "description": "string",
+            "user": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "code": "string",
+                "name": "string",
+                "email": "user@example.com",
+                "address": "string",
+                "phone": "string",
+                "roleName": "string",
+                "role": 0,
+                "status": true,
+                "statusName": "string",
+                "imageUrl": "string"
+            }
+        },
+        "publisher": {
+            "id": 0,
+            "code": "string",
+            "name": "string",
+            "email": "string",
+            "address": "string",
+            "imageUrl": "string",
+            "phone": "string"
+        },
+        "bookAuthors": [
+            {
+                "id": 0,
+                "bookId": 0,
+                "authorId": 0,
+                "author": {
+                    "id": 0,
+                    "name": "string",
+                    "imageUrl": "string",
+                    "description": "string"
+                }
+            }
+        ],
+        "bookItems": [
+            {
+                "id": 0,
+                "parentBookId": 0,
+                "bookId": 0,
+                "displayIndex": 0,
+                "book": {
+                    "id": 0,
+                    "code": "string",
+                    "genreId": 0,
+                    "publisherId": 0,
+                    "issuerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "isbn10": "string",
+                    "isbn13": "string",
+                    "name": "string",
+                    "translator": "string",
+                    "imageUrl": "string",
+                    "coverPrice": 0,
+                    "description": "string",
+                    "language": "string",
+                    "size": "string",
+                    "releasedYear": 0,
+                    "page": 0,
+                    "isSeries": true,
+                    "pdfExtraPrice": 0,
+                    "pdfTrialUrl": "string",
+                    "audioExtraPrice": 0,
+                    "audioTrialUrl": "string",
+                    "status": 0,
+                    "statusName": "string",
+                    "fullPdfAndAudio": true,
+                    "onlyPdf": true,
+                    "onlyAudio": true
+                }
+            }
+        ]
+    }
+]
+export const mockCampaigns = [
     {
         "id": 1,
         "code": "cb6a648f-8f5a-47ce-abe5-a4b56119d9a0",
@@ -891,3 +1246,254 @@ export const campaigns = [
         ]
     }
 ];
+
+export const mockStaffCampaigns: StaffCampaignMobilesViewModel[] = [
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "code": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "description": "string",
+        "imageUrl": "https://static.ladipage.net/5dcdfbb918ed7f6153f62d0b/banner-1200x628px-20210414080426.jpg",
+        "format": 0,
+        "privacy": 0,
+        "address": "string",
+        "offlineStatus": 0,
+        "startOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOfflineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "onlineStatus": 0,
+        "startOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "endOnlineDate": new Date("2023-01-27T14:39:43.790Z"),
+        "createdDate": new Date("2023-01-27T14:39:43.790Z"),
+        "updatedDate": new Date("2023-01-27T14:39:43.790Z"),
+        "statusOfflineName": "string",
+        "statusOnlineName": "string",
+        "formatName": "string",
+        "privacyName": "string",
+        "issuers": [
+            {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "description": "string",
+                "user": {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "code": "string",
+                    "name": "string",
+                    "email": "user@example.com",
+                    "address": "string",
+                    "phone": "string",
+                    "roleName": "string",
+                    "role": 0,
+                    "status": true,
+                    "statusName": "string",
+                    "imageUrl": "string"
+                }
+            }
+        ]
+    },
+]
+
+// export const mockOrders : Order
