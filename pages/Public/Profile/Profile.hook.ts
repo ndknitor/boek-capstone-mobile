@@ -13,6 +13,7 @@ import EndPont from "../../../utils/EndPoint";
 import StorageKey from "../../../utils/storageKey";
 import { Role } from "../../../objects/enums/Role";
 import { useState } from "react";
+import { Platform } from "react-native";
 
 export default function useProfilePage(props: ProfileProps) {
     const { navigate, replace } = useRouter();
@@ -103,19 +104,26 @@ export default function useProfilePage(props: ProfileProps) {
         }
     }
     const googleLogin = async () => {
-        // Check if your device supports Google Play
         if (auth().currentUser) {
             return auth().currentUser;
         }
         try {
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            // Get the users ID token
+            console.log(0);
+            if (Platform.OS == "android") {
+                await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+                console.log(1);
+            }
             await GoogleSignin.signOut();
+            console.log(2);
             let user = {} as User;
             user = await GoogleSignin.signIn();
+            console.log(3);
             const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
+            console.log(4);
             const credential = await auth().signInWithCredential(googleCredential);
+            console.log(5);
             console.log(credential);
+            console.log(6);
             return credential.user;
         } catch (error) {
             console.log(error);
