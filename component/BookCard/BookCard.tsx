@@ -6,6 +6,7 @@ import { BookViewModel } from '../../objects/viewmodels/books/BookViewModel';
 import { formatNumber } from '../../utils/format';
 interface BookCardProps {
   book: BookViewModel;
+  
 }
 function BookCard({ book }: BookCardProps) {
   const { navigate } = useRouter();

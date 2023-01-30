@@ -22,14 +22,15 @@ export default function useProfilePage(props: ProfileProps) {
     const [loading, setLoading] = useState(false);
 
     const onLogin = async () => {
-        setLoading(true);
         const currentUser = await googleLogin();
+        setLoading(true);
         if (!currentUser) {
             Toast.show({
                 type: "error",
                 text1: "Đăng nhập thất bại",
                 text2: "Quá trình đăng nhập được hủy"
             });
+            setLoading(false);
             return;
         }
         const idToken = await currentUser.getIdToken();
@@ -69,8 +70,10 @@ export default function useProfilePage(props: ProfileProps) {
             return loginResponse.data.data;
         }
         const createCustomerResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.users.index, request);
+        console.log(createCustomerResponse.data);
         if (createCustomerResponse.status == 200) {
-            await loginSuccess(loginResponse.data.data);
+            await loginSuccess(createCustomerResponse.data.data);
+            setLoading(false);
             replace("AskPersonalInformation");
             return loginResponse.data.data;
         }

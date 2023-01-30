@@ -68,7 +68,7 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                         <Text>Địa chỉ: <Text style={{ color: "red" }}>*</Text></Text>
                     </View>
                     <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-                        <View style={{ alignItems: "flex-end" }}>
+                    <View style={{ alignItems: "flex-end" }}>
                             <SelectDropdown
                                 ref={hook.ref.addressInputRef}
                                 defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
