@@ -1,14 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import useAsyncEffect from "use-async-effect";
-import appxios, { setAuthorizationBearer } from '../component/AxiosInterceptor';
+import appxios, { setAuthorizationBearer } from '../components/AxiosInterceptor';
 import useAuth from '../libs/hook/useAuth';
 import { LoginViewModel } from '../objects/viewmodels/Users/LoginViewModel';
 import StorageKey from '../utils/storageKey';
 import useAppContext from "./Context";
 import auth from '@react-native-firebase/auth';
 import { BaseResponseModel } from '../objects/responses/BaseResponseModel';
-import EndPont from '../utils/EndPoint';
+import EndPont from '../utils/endPoints';
 
 
 export default function useInit() {

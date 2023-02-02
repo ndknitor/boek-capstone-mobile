@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
+import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
 import { BookViewModel } from "../../../objects/viewmodels/Books/BookViewModel";
 import { mockBooks } from "../../../utils/mock";
 
@@ -11,7 +12,7 @@ export function useStaffBooksPage() {
 
     const [search, setSearch] = useState("");
 
-    const [books, setBooks] = useState<BookViewModel[]>([]);
+    const [books, setBooks] = useState<MobileBookProductViewModel[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(100);
     const onPageNavigation = (page: number) => {

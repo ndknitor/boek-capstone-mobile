@@ -16,10 +16,10 @@ export interface BasicBookViewModel {
     releasedYear: number;
     page: number;
     isSeries?: boolean;
-    pdfExtraPrice: number;
-    pdfTrialUrl: string;
-    audioExtraPrice: number;
-    audioTrialUrl: string;
+    pdfExtraPrice?: number;
+    pdfTrialUrl?: string;
+    audioExtraPrice?: number;
+    audioTrialUrl?: string;
     status: number;
     statusName: string;
     fullPdfAndAudio: boolean;

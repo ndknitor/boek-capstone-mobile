@@ -33,8 +33,8 @@ function OrderDetail() {
                 height: "100%",
                 justifyContent: "center"
               }}>
-                <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>{item.name}</Text>
-                <Text style={{ marginBottom: 5, color: paletteGrayShade2 }}>{item.issuer.user.name}</Text>
+                <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>{item.book?.name}</Text>
+                <Text style={{ marginBottom: 5, color: paletteGrayShade2 }}>{item.book?.issuer.user.name}</Text>
                 <Text style={{ marginBottom: 5, }}>Số lượng : 2</Text>
                 <Text style={{ marginBottom: 5 }}>Đơn giá : 69.000 đ</Text>
                 <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>Tổng : 138.000 đ</Text>

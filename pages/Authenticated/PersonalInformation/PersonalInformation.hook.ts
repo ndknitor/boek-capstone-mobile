@@ -2,17 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { TextInput } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import appxios from "../../../component/AxiosInterceptor";
+import appxios from "../../../components/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
 import useUpdateDepsEffect from "../../../libs/hook/useUpdateDepsEffect";
-import useUpdateEffect from "../../../libs/hook/useUpdateEffect";
 import { Role } from "../../../objects/enums/Role";
 import { UpdateCustomerRequestModel } from "../../../objects/requests/users/UpdateCustomerRequestModel";
 import { UpdateUserRequestModel } from "../../../objects/requests/users/UpdateUserRequestModel";
 import { CustomerUserViewModel } from "../../../objects/viewmodels/Users/customers/CustomerUserViewModel";
 import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
 import { UserViewModel } from "../../../objects/viewmodels/Users/UserViewModel";
-import EndPont from "../../../utils/EndPoint";
+import EndPont from "../../../utils/endPoints";
 import { maxDate, maxLength, required, validate, ValidationMessages } from "../../../utils/Validators";
 
 export default function usePersonalInformationPage() {

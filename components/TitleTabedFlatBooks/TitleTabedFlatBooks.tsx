@@ -2,13 +2,13 @@ import { Button } from '@rneui/base';
 import React, { useState } from 'react'
 import { FlatList, TouchableOpacity, Text, View } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
+import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
 import { primaryTint4 } from '../../utils/color';
-import { range } from '../../utils/format'
 import BookCard from '../BookCard/BookCard';
 interface TitleTabedFlatBooks {
     title: string;
-    data: { tabLabel: string, tabData: BookViewModel[] }[];
+    data: { tabLabel: string, tabData: MobileBookProductViewModel[] }[];
 }
 function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
     const { navigate } = useRouter();

@@ -3,14 +3,14 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react'
 import { ScrollView, View, Image, Text } from 'react-native'
 import { paletteGray, paletteGrayLight, paletteGreen, paletteGreenBold, palettePink, primaryTint6 } from '../../../utils/color';
-import { books } from '../../../utils/mock';
+import { mockBooks } from '../../../utils/mock';
 import usePriceComparisonPage from './PriceComparison.hook'
 export interface PriceComparisonProps extends StackScreenProps<ParamListBase> {
 
 }
 function PriceComparison(props: PriceComparisonProps) {
     const hook = usePriceComparisonPage(props);
-    const book = books[0];
+    const book = mockBooks[0];
     return (
         <View style={{ backgroundColor: "white" }}>
             <View style={{
@@ -42,7 +42,7 @@ function PriceComparison(props: PriceComparisonProps) {
                     <Image source={{ uri: book.imageUrl }} style={{ height: 120 }} resizeMode="cover" />
                 </View>
                 <View style={{ width: "60%", justifyContent: "flex-end", paddingLeft: 20, paddingBottom: 20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.book?.name}</Text>
                     <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
                     <Text style={{ fontSize: 18, fontWeight: "600", color: palettePink }}>69.000 đ</Text>
                 </View>
@@ -56,7 +56,7 @@ function PriceComparison(props: PriceComparisonProps) {
                         </View>
                     </View>
                     <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.book?.name}</Text>
                         <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
                         <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
                             69.000 đ
@@ -72,7 +72,7 @@ function PriceComparison(props: PriceComparisonProps) {
                         </View>
                     </View>
                     <View style={{ width: "60%", justifyContent: "center" }}>
-                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: "600" }}>{book.book?.name}</Text>
                         <Text style={{ fontSize: 16, color: paletteGray }}>Tên hội sách</Text>
                         <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: "600", color: palettePink }}>
                             69.000 đ

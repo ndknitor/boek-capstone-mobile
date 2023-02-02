@@ -6,14 +6,13 @@ import { GoogleSignin, User } from "@react-native-google-signin/google-signin";
 import useRouter from "../../../libs/hook/useRouter";
 import useAppContext from "../../../context/Context";
 import useAuth from "../../../libs/hook/useAuth";
-import appxios, { setAuthorizationBearer } from "../../../component/AxiosInterceptor";
+import appxios, { setAuthorizationBearer } from "../../../components/AxiosInterceptor";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { LoginViewModel } from "../../../objects/viewmodels/Users/LoginViewModel";
-import EndPont from "../../../utils/EndPoint";
+import EndPont from "../../../utils/endPoints";
 import StorageKey from "../../../utils/storageKey";
 import { Role } from "../../../objects/enums/Role";
 import { useState } from "react";
-import { Platform } from "react-native";
 
 export default function useProfilePage(props: ProfileProps) {
     const { navigate, replace } = useRouter();

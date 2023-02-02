@@ -6,10 +6,10 @@ import avatar from "../../../assets/avatar.jpg";
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteGray, palettePink, primaryColor, primaryTint1, primaryTint5 } from '../../../utils/color';
 import LinearGradient from 'react-native-linear-gradient';
-import ShowMoreButton from '../../../component/ShowMoreButton/ShowMoreButton';
-import TitleTabedFlatBooks from '../../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
-import { formatNumber } from '../../../utils/format';
+import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
+import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { mockBooks } from '../../../utils/mock';
+import formatNumber from '../../../libs/functions/formatNumber';
 
 
 function BookDetail() {
@@ -31,16 +31,16 @@ function BookDetail() {
                     </View>
                 </View>
                 <View style={{ padding: 10, paddingTop: 20 }}>
-                    <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{book.name}</Text>
-                    <Text style={{ fontSize: 16 }}>Thể loại: {book.genre.name}</Text>
+                    <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{book.book?.name}</Text>
+                    <Text style={{ fontSize: 16 }}>Thể loại: {book.book?.genre.name}</Text>
 
                     <View style={{ justifyContent: 'flex-start', alignItems: "flex-end", marginBottom: 5 }}>
                         <Text style={{ fontSize: 16 }}>Có <Text style={{ color: primaryColor, fontWeight: "600" }}>69 </Text>giá khác</Text>
                     </View>
                     <View style={{ marginBottom: 20, flexDirection: "row" }}>
                         <View style={{ width: "40%", alignItems: "flex-start", justifyContent: "center" }}>
-                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(book.coverPrice as number)} đ</Text>
-                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(book.coverPrice as number)} đ</Text>
+                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(book.book?.coverPrice as number)} đ</Text>
+                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(book.book?.coverPrice as number)} đ</Text>
                         </View>
 
                         <View style={{ width: "30%", alignItems: "center", justifyContent: "center" }}>

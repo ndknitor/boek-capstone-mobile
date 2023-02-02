@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AxiosInterceptor } from './component/AxiosInterceptor';
+import { AxiosInterceptor } from './components/AxiosInterceptor';
 import Forbidden from './pages/Forbidden';
 import React from 'react';
 import { route } from './libs/hook/useRouter';
@@ -33,7 +33,7 @@ import StaffCampaigns from './pages/Staff/StaffCampaigns/StaffCampaigns';
 import { Role } from './objects/enums/Role';
 import StaffOrders from './pages/Staff/StaffOrders/StaffOrders';
 import StaffCampagin from './pages/Staff/StaffCampagin/StaffCampagin';
-import PageLoader from './component/PageLoader/PageLoader';
+import PageLoader from './components/PageLoader/PageLoader';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

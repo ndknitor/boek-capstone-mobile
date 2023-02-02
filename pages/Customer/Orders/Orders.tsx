@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { View, Image, ScrollView, Text } from 'react-native'
 import useOrdersPage from './Orders.hook'
 import logo from "../../assets/logo.png";
-import { range } from '../../../utils/format';
-import OrderCard from '../../../component/OrderCard/OrderCard';
-import Paging from '../../../component/Paging/Paging';
+import OrderCard from '../../../components/OrderCard/OrderCard';
+import Paging from '../../../components/Paging/Paging';
+import range from '../../../libs/functions/range';
 
 
 function Orders() {

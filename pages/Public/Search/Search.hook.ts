@@ -3,8 +3,8 @@ import { ParamListBase } from "@react-navigation/native";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
-import appxios from "../../../component/AxiosInterceptor";
-import { SearchPageContext } from "../../../component/SearchContextProvider/SearchContextProvider";
+import appxios from "../../../components/AxiosInterceptor";
+import { SearchPageContext } from "../../../components/SearchContextProvider/SearchContextProvider";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { AuthorBooksViewModel } from "../../../objects/viewmodels/Authors/AuthorBooksViewModel";
 import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
@@ -12,8 +12,8 @@ import { CampaignViewModel } from "../../../objects/viewmodels/Campaigns/Campaig
 import { GenreBooksViewModel } from "../../../objects/viewmodels/Genres/GenreBooksViewModel";
 import { PublisherViewModel } from "../../../objects/viewmodels/Publishers/PublisherViewModel";
 import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserViewModel";
-import EndPont from "../../../utils/EndPoint";
-import { getMaxPage } from "../../../utils/paging";
+import EndPont from "../../../utils/endPoints";
+import { getMaxPage } from "../../../libs/functions/paging";
 
 
 export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {

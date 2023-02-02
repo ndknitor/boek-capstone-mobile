@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Dimensions, Image, ActivityIndicator, Saf
 import { Button, Icon } from '@rneui/base';
 import PDFView from 'react-native-view-pdf';
 import useRouter from '../../../libs/hook/useRouter';
-import QrCameraFrame from '../../../component/QrCameraFrame/QrCameraFrame';
+import QrCameraFrame from '../../../components/QrCameraFrame/QrCameraFrame';
 
 function Index() {
   const { navigate } = useRouter();

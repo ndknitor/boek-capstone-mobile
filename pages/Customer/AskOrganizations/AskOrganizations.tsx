@@ -1,8 +1,8 @@
 import { Button, Input } from '@rneui/base'
 import React from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import SelectedChip from '../../../component/SeletedChip/SelectedChip';
-import StateLoader from '../../../component/StateLoader/StateLoader';
+import SelectedChip from '../../../components/SeletedChip/SelectedChip';
+import StateLoader from '../../../components/StateLoader/StateLoader';
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteRed, primaryColor } from '../../../utils/color';
 import useAskOrganizationsPage from './AskOrganizations.hook'

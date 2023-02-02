@@ -7,11 +7,11 @@ import { ParamListBase } from '@react-navigation/native';
 import useAuth from '../../../libs/hook/useAuth';
 import AuthorizeView from '../../../libs/AuthorizeView';
 import NonAuthorizeView from '../../../libs/NonAuthorizeView';
-import GoogleLoginButton from '../../../component/GoogleLoginButton/GoogleLoginButton';
-import TouchCard from '../../../component/TouchCard/TouchCard';
+import GoogleLoginButton from '../../../components/GoogleLoginButton/GoogleLoginButton';
+import TouchCard from '../../../components/TouchCard/TouchCard';
 import { primaryTint1 } from '../../../utils/color';
 import { Role } from '../../../objects/enums/Role';
-import PageLoader from '../../../component/PageLoader/PageLoader';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 import useAppContext from '../../../context/Context';
 export interface ProfileProps extends BottomTabScreenProps<ParamListBase> {
 

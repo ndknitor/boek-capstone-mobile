@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity, GestureResponderEvent } from 'react-native'
 interface LabeledImageProps {
     source: ImageSourcePropType;
-    label: string;
+    label?: string;
     onPress?: (event : GestureResponderEvent) => void;
 }
 function LabeledImage(props: LabeledImageProps) {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
-import EndPont from "../../../utils/EndPoint";
+import EndPont from "../../../utils/endPoints";
 import { mockStaffCampaigns } from "../../../utils/mock";
 
 export default function useStaffCampaignsPage() {

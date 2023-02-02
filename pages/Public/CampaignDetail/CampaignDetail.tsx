@@ -6,10 +6,10 @@ import avatar from "../../../assets/avatar.jpg";
 import useCampaignDetaillPage from './CampaignDetail.hook';
 import verticalAlignTopWhite from "../../../assets/icons/vertical-align-top-white.png";
 import useRouter from '../../../libs/hook/useRouter';
-import LabeledImage from '../../../component/LabeledImage/LabeledImage';
-import TitleFlatBooks from '../../../component/TitleFlatBooks/TitleFlatBooks';
-import ShowMoreButton from '../../../component/ShowMoreButton/ShowMoreButton';
-import TitleTabedFlatBooks from '../../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
+import LabeledImage from '../../../components/LabeledImage/LabeledImage';
+import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
+import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
+import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../../utils/color';
 import { mockBooks, mockIssuer } from '../../../utils/mock';
 function CampaignDetail() {
@@ -79,7 +79,7 @@ function CampaignDetail() {
                             horizontal
                             data={mockIssuer}
                             renderItem={e =>
-                                <LabeledImage onPress={() => navigate("IssuerDetail")} label={e.item.user.name} source={avatar} />
+                                <LabeledImage onPress={() => navigate("IssuerDetail")} label={e.item?.user.name} source={avatar} />
                             } />
 
                         <TitleFlatBooks data={mockBooks} title="Sách giảm giá" />
@@ -123,7 +123,7 @@ function CampaignDetail() {
                             horizontal
                             data={mockIssuer}
                             renderItem={e =>
-                                <LabeledImage label={e.item.user.name} source={avatar} />
+                                <LabeledImage label={e.item?.user.name} source={avatar} />
                             } />
                         <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>

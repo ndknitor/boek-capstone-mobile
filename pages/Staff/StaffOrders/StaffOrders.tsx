@@ -4,13 +4,13 @@ import { paletteGray, paletteGrayLight, paletteGreen, paletteGreenBold, primaryC
 import useStaffOrdersPage from './StaffOrders.hook';
 import image from "../../../assets/hsxv.webp";
 import addWhite from "../../../assets/icons/add-white.png";
-import Paging from '../../../component/Paging/Paging';
+import Paging from '../../../components/Paging/Paging';
 import { range } from '../../../utils/format';
 import { Button } from '@rneui/base';
 import DrawerLayout from 'react-native-drawer-layout';
-import SelectedChip from '../../../component/SeletedChip/SelectedChip';
+import SelectedChip from '../../../components/SeletedChip/SelectedChip';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import FloatActionButton from '../../../component/FloatActionButton/FloatActionButton';
+import FloatActionButton from '../../../components/FloatActionButton/FloatActionButton';
 
 const Tab = createMaterialTopTabNavigator();
 

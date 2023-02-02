@@ -10,7 +10,7 @@ export interface BookProductItemViewModel {
     pdfExtraPrice?: number;
     displayPdfIndex?: number;
     withAudio: boolean;
-    audioExtraPrice: number;
+    audioExtraPrice?: number;
     displayAudioIndex?: number;
-    book: BookViewModel;
+    book?: BookViewModel;
 }

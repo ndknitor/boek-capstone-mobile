@@ -3,10 +3,10 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Button } from '@rneui/base';
 import React, { useEffect } from 'react'
 import { ScrollView, View, Image, Text } from 'react-native';
-import TitleFlatBooks from '../../../component/TitleFlatBooks/TitleFlatBooks';
-import TitleTabedFlatBooks from '../../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
-import { books } from '../../../utils/mock';
+import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
+import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import avatar from "../../../assets/avatar.jpg";
+import { mockBooks } from '../../../utils/mock';
 
 function IssuerDetail(props: StackScreenProps<ParamListBase>) {
     useEffect(() => {
@@ -47,19 +47,19 @@ function IssuerDetail(props: StackScreenProps<ParamListBase>) {
                 </View>
             </View>
             <View style={{ padding: 10 }}>
-                <TitleFlatBooks data={books} title="Sách giảm giá" />
+                <TitleFlatBooks data={mockBooks} title="Sách giảm giá" />
                 <TitleTabedFlatBooks title="Thể loại 1" data={[
                     {
                         tabLabel: "Thể loại 1",
-                        tabData: books
+                        tabData: mockBooks
                     },
                     {
                         tabLabel: "Thể loại 1",
-                        tabData: books
+                        tabData: mockBooks
                     },
                     {
                         tabLabel: "Thể loại 1",
-                        tabData: books
+                        tabData: mockBooks
                     },
                 ]} />
             </View>

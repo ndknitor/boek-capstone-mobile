@@ -1,4 +1,4 @@
-const EndPont =
+const endPont =
 {
     admin: {
         authors: "/api/admin/authors",
@@ -56,4 +56,4 @@ const EndPont =
         languages: "api/languages",
     }
 }
-export default EndPont;
+export default endPont;

@@ -13,19 +13,19 @@ export interface BookViewModel {
     isbn10: string;
     isbn13: string;
     name: string;
-    translator: string;
-    imageUrl: string;
+    translator?: string;
+    imageUrl?: string;
     coverPrice?: number;
-    description: string;
-    language: string;
-    size: string;
+    description?: string;
+    language?: string;
+    size?: string;
     releasedYear?: number;
     page?: number;
     isSeries?: boolean;
     pdfExtraPrice?: number;
-    pdfTrialUrl: string;
+    pdfTrialUrl?: string;
     audioExtraPrice?: number;
-    audioTrialUrl: string;
+    audioTrialUrl?: string;
     status?: number;
     statusName: string;
     fullPdfAndAudio: boolean;
@@ -33,7 +33,7 @@ export interface BookViewModel {
     onlyAudio: boolean;
     genre: GenreViewModel;
     issuer: IssuerViewModel;
-    publisher: PublisherViewModel;
+    publisher?: PublisherViewModel;
     bookAuthors: BookAuthorViewModel[];
     bookItems: ParentBookItemViewModel[];
 }

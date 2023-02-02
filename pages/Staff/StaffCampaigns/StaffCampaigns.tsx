@@ -3,10 +3,10 @@ import { ScrollView, View, Text, Image, TouchableOpacity, ActivityIndicator } fr
 import { primaryColor, primaryTint6, } from '../../../utils/color';
 import moment from 'moment';
 import useStaffCampaignsPage from './StaffCampaigns.hook';
-import PageLoader from '../../../component/PageLoader/PageLoader';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 import useRouter from '../../../libs/hook/useRouter';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import Paging from '../../../component/Paging/Paging';
+import Paging from '../../../components/Paging/Paging';
 import { ParamListBase } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();

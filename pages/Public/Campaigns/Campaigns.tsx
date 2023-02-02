@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { View, Text, ScrollView, SafeAreaView } from 'react-native'
 import Swiper from 'react-native-swiper';
 import useCampaignsPage from './Campaigns.hook';
-import OnGoingBookFair from '../../../component/OnGoingBookFair/OnGoingBookFair';
-import UpcomingBookFair from '../../../component/UpcomingBookFair/UpcomingBookFair';
+import OnGoingBookFair from '../../../components/OnGoingBookFair/OnGoingBookFair';
+import UpcomingBookFair from '../../../components/UpcomingBookFair/UpcomingBookFair';
 import AuthorizeView from '../../../libs/AuthorizeView';
 import NonAuthorizeView from '../../../libs/NonAuthorizeView';
-import PageLoader from '../../../component/PageLoader/PageLoader';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 
 function Campaigns() {
     const hook = useCampaignsPage();

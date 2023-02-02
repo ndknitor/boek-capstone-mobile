@@ -3,7 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Button, CheckBox } from '@rneui/base'
 import React from 'react'
 import { TextInput, TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
-import DateTimePickerInput from '../../../component/DateTimePickerInput/DateTimePickerInput';
+import DateTimePickerInput from '../../../components/DateTimePickerInput/DateTimePickerInput';
 import { getMessage } from '../../../utils/Validators';
 import editIcon from "../../../assets/icons/edit.png";
 import useAskPersonalInformationPage from './AskPersonalInformation.hook';

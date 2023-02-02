@@ -11,7 +11,7 @@ export interface MobileBookProductViewModel {
     issuerId?: string;
     title: string;
     description: string;
-    imageUrl: string;
+    imageUrl?: string;
     saleQuantity: number;
     discount?: number;
     salePrice: number;
@@ -20,15 +20,15 @@ export interface MobileBookProductViewModel {
     format?: number;
     formatName: string;
     withPdf?: boolean;
-    pdfExtraPrice: number;
+    pdfExtraPrice?: number;
     displayPdfIndex?: number;
     withAudio?: boolean;
     displayAudioIndex?: number;
     audioExtraPrice?: number;
     status?: number;
     statusName: string;
-    book: BookViewModel;
+    book?: BookViewModel;
     bookProductItems: BookProductItemViewModel[];
-    otherMobileBookProducts: OtherMobileBookProductsViewModel[];
-    unhierarchicalBookProducts: UnhierarchicalBookProductsViewModel[];
+    otherMobileBookProducts?: OtherMobileBookProductsViewModel[];
+    unhierarchicalBookProducts?: UnhierarchicalBookProductsViewModel[];
 }

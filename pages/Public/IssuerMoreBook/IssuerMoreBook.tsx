@@ -2,10 +2,10 @@ import { ParamListBase } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useState } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native'
-import BookCard from '../../../component/BookCard/BookCard';
-import Paging from '../../../component/Paging/Paging';
+import BookCard from '../../../components/BookCard/BookCard';
+import Paging from '../../../components/Paging/Paging';
+import range from '../../../libs/functions/range';
 import { primaryTint4 } from '../../../utils/color';
-import { range } from '../../../utils/format';
 import { mockBooks } from '../../../utils/mock';
 import useIssuerMoreBookPage from './IssuerMoreBook.hook';
 

@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Button, Icon } from "@rneui/base";
 import { ScrollView, View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
-import BookCard from "../../../component/BookCard/BookCard";
-import HeaderSearchBar from "../../../component/HeaderSearchBar/HeaderSearchBar";
-import PageLoader from "../../../component/PageLoader/PageLoader";
-import Paging from "../../../component/Paging/Paging";
+import BookCard from "../../../components/BookCard/BookCard";
+import HeaderSearchBar from "../../../components/HeaderSearchBar/HeaderSearchBar";
+import PageLoader from "../../../components/PageLoader/PageLoader";
+import Paging from "../../../components/Paging/Paging";
 import { paletteGrayLight, paletteGrayShade2, paletteGrayTint5, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint4, primaryTint7 } from "../../../utils/color";
 import workHistoryWhite from "../../../assets/icons/work-history-white.png";
 import filterBlack from "../../../assets/icons/filter-black.png";
@@ -15,9 +15,9 @@ import { mockBooks } from "../../../utils/mock";
 import useRouter from "../../../libs/hook/useRouter";
 import avatar from "../../../assets/avatar.jpg";
 import { useStaffBooksPage, useStaffCampaignOrderPage } from "./StaffCampagin.hook";
-import { range } from "../../../utils/format";
-import Header from "../../../component/Header/Header";
+import Header from "../../../components/Header/Header";
 import DrawerLayout from "react-native-drawer-layout";
+import range from "../../../libs/functions/range";
 
 
 const Tab = createBottomTabNavigator();

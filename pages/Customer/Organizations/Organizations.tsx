@@ -6,8 +6,8 @@ import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { useTrackedOrganizationsPage, useUnTrackedOrganizationsPage } from './Organizations.hook';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { primaryColor, primaryTint1 } from '../../../utils/color';
-import OrganizationView from '../../../component/OrganizationView/OrganizationView';
-import Paging from '../../../component/Paging/Paging';
+import OrganizationView from '../../../components/OrganizationView/OrganizationView';
+import Paging from '../../../components/Paging/Paging';
 
 const Tab = createBottomTabNavigator();
 
