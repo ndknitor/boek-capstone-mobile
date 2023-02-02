@@ -30,7 +30,7 @@ export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
             return response;
         }
         const onResponseError = (error: AxiosError) => {
-            if (error.code == "ERR_NETWORK") {
+            if (error.code == "ERR_NETWORK" || error.code == "ECONNABORTED") {
                 Toast.show({
                     text1: "Lỗi",
                     text2: "Không thể kết nối mạng, vui lòng thử lại sau",

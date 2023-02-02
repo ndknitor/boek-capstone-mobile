@@ -3,7 +3,7 @@ import * as Location from 'expo-location';
 import useAsyncEffect from "use-async-effect";
 import appxios, { setAuthorizationBearer } from '../component/AxiosInterceptor';
 import useAuth from '../libs/hook/useAuth';
-import { LoginViewModel } from '../objects/viewmodels/users/LoginViewModel';
+import { LoginViewModel } from '../objects/viewmodels/Users/LoginViewModel';
 import StorageKey from '../utils/storageKey';
 import useAppContext from "./Context";
 import auth from '@react-native-firebase/auth';
@@ -13,7 +13,7 @@ import EndPont from '../utils/EndPoint';
 
 export default function useInit() {
   const { setGeoPosition, geoPosition, setUser } = useAppContext();
-  const { setAuthorize } = useAuth();
+  const { setAuthorize, initLoading, setInitLoading } = useAuth();
   useAsyncEffect(async () => {
     const userJsonString = await AsyncStorage.getItem(StorageKey.user);
     if (auth().currentUser) {
@@ -24,7 +24,7 @@ export default function useInit() {
       else {
         const request = {
           idToken: await auth().currentUser?.getIdToken()
-      };
+        };
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         user = loginResponse.data.data;
       }
@@ -42,6 +42,9 @@ export default function useInit() {
       const location = await Location.getCurrentPositionAsync({});
       setGeoPosition(location);
       console.log(location);
+    }
+    if (initLoading) {
+      setInitLoading(false);
     }
   }, []);
 }

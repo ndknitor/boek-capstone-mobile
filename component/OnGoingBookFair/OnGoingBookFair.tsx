@@ -1,4 +1,3 @@
-import MaskedView from '@react-native-masked-view/masked-view'
 import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'

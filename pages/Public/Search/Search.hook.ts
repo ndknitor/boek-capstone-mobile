@@ -1,17 +1,17 @@
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { ParamListBase } from "@react-navigation/native";
-import { createContext, Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
 import appxios from "../../../component/AxiosInterceptor";
 import { SearchPageContext } from "../../../component/SearchContextProvider/SearchContextProvider";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
-import { AuthorBooksViewModel } from "../../../objects/viewmodels/authors/AuthorBooksViewModel";
-import { BookViewModel } from "../../../objects/viewmodels/books/BookViewModel";
-import { CampaignViewModel } from "../../../objects/viewmodels/campaigns/CampaignViewModel";
-import { GenreBooksViewModel } from "../../../objects/viewmodels/genres/GenreBooksViewModel";
-import { PublisherViewModel } from "../../../objects/viewmodels/publishers/PublisherViewModel";
-import { MultiUserViewModel } from "../../../objects/viewmodels/users/MultiUserViewModel";
+import { AuthorBooksViewModel } from "../../../objects/viewmodels/Authors/AuthorBooksViewModel";
+import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
+import { CampaignViewModel } from "../../../objects/viewmodels/Campaigns/CampaignViewModel";
+import { GenreBooksViewModel } from "../../../objects/viewmodels/Genres/GenreBooksViewModel";
+import { PublisherViewModel } from "../../../objects/viewmodels/Publishers/PublisherViewModel";
+import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserViewModel";
 import EndPont from "../../../utils/EndPoint";
 import { getMaxPage } from "../../../utils/paging";
 
@@ -24,7 +24,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
-    const [books, setBooks] = useState<BookViewModel[]>([]);
+    const [books, setBooks] = useState<MobileBookProductViewModel[]>([]);
 
     const [genres, setGenres] = useState<GenreBooksViewModel[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
@@ -32,6 +32,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const [authors, setAuthors] = useState<AuthorBooksViewModel[]>([]);
     const [publishers, setPublishers] = useState<PublisherViewModel[]>([]);
 
+    const [search, setSearch] = useState("");
     const [seletedGenre, setSeletedGenre] = useState<number[]>([]);
     const [selectedFormats, setSelectedFormats] = useState<number[]>([]);
     const [selectedLanguage, setSelectedLanguage] = useState<string[]>([]);
@@ -41,7 +42,32 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
 
     const getBooks = (page: number) => {
         setLoading(true);
-        appxios.get<BaseResponsePagingModel<BookViewModel>>(`${EndPont.public.books.index}?Page=${page}`)
+        const query = new URLSearchParams();
+        if (seletedGenre.length > 0) {
+            seletedGenre.map(item => query.append("BookProductItems.Book.GenreIds", item.toString()))
+        }
+        if (selectedFormats.length > 0) {
+            selectedFormats.map(item => query.append("Formats", item.toString()))
+        }
+        if (selectedLanguage.length > 0) {
+            selectedLanguage.map(item => query.append("BookProductItems.Book.Languages", item.toString()))
+        }
+        if (seletedIssuer.length > 0) {
+            seletedIssuer.map(item => query.append("BookProductItems.Book.IssuerIds", item.toString()))
+        }
+        if (seletedAuthor.length > 0) {
+            seletedAuthor.map(item => query.append("BookProductItems.Book.BookAuthors.AuthorIds", item.toString()))
+        }
+        if (selectedPublisher.length > 0) {
+            selectedPublisher.map(item => query.append("BookProductItems.Book.PublisherIds", item.toString()))
+        }
+        if (context.searchValue && context.searchValue != "") {
+            query.append("Title", context.searchValue);
+        }
+        query.append("Page", page.toString());
+        query.append("Size", "30");
+        console.log(query.toString());
+        appxios.get<BaseResponsePagingModel<MobileBookProductViewModel>>(`${EndPont.public.books.mobile.products.index}?${query.toString()}`)
             .then(response => {
                 setBooks(response.data.data);
                 setCurrentPage(page);
@@ -60,7 +86,8 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         });
     }
     const onSearchSubmit = () => {
-
+        getBooks(1);
+        filterBooksDrawerRef.current?.closeDrawer();
     }
     const onReset = () => {
         setSeletedGenre([]);
@@ -192,12 +219,14 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     useEffect(() => {
         getBooks(1);
         const unsubscribe = props.navigation.addListener('tabPress', (e) => {
-            context.setOnSubmit(onSearchSubmit);
+            context.setSearchValue(search);
         });
-        context.setOnSubmit(onSearchSubmit);
+        context.setSearchValue(search);
         return unsubscribe;
     }, []);
-
+    useEffect(() => {
+        setSearch(context.searchValue);
+    }, [context.searchValue]);
     return {
         ref: {
             filterBooksDrawerRef,
@@ -220,6 +249,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
             issuers
         },
         event: {
+            onSearchSubmit,
             onReset,
             onFormatsToggle,
             onLanguageExpand,
@@ -256,6 +286,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const [genres, setGenres] = useState<GenreBooksViewModel[]>([]);
     const [issuers, setIssuers] = useState<MultiUserViewModel[]>([]);
 
+    const [search, setSearch] = useState("");
     const [filterStartDate, setfilterStartDate] = useState<Date>();
     const [filterEndDate, setfilterEndDate] = useState<Date>();
     const [seletedFormat, setSeletedFormat] = useState<number>();
@@ -265,7 +296,17 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     const getCampaigns = (page: number) => {
         setLoading(true);
-        appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns.index}?Page=${page}&Size=10`)
+        const query = new URLSearchParams();
+        if (filterStartDate) {
+            query.append("StartDate", filterStartDate.toDateString());
+        }
+        if (filterEndDate) {
+            query.append("EndDate", filterEndDate.toDateString());
+        }
+        query.append("Page", page.toString());
+        query.append("Size", "10");
+
+        appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns.mobile.index}?${query.toString()}`)
             .then(response => {
                 if (response.status == 200) {
                     setCampaigns(response.data.data);
@@ -327,13 +368,12 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     const onFormatsSeletedToggle = (formatId: number) => {
         if (seletedFormat != formatId) {
-            setSeletedFormat(formatId);    
+            setSeletedFormat(formatId);
         }
-        else
-        {
+        else {
             setSeletedFormat(undefined);
         }
-        
+
     }
 
     const onIssuerExpand = () => {
@@ -361,12 +401,16 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     useEffect(() => {
         getCampaigns(1);
         const unsubscribe = props.navigation.addListener('tabPress', (e) => {
-            //context.setOnSubmit(onSearchSubmit);
+            console.log(search);
+            
+            context.setSearchValue(search);
         });
-        //context.setOnSubmit(onSearchSubmit);
+        context.setSearchValue(search);
         return unsubscribe;
     }, []);
-
+    useEffect(() => {
+        setSearch(context.searchValue);
+    }, [context.searchValue]);
     return {
         ref: {
             bookFairsScrollViewRef,

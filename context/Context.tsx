@@ -1,6 +1,6 @@
 import { LocationObject } from "expo-location";
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react"
-import { LoginViewModel } from "../objects/viewmodels/users/LoginViewModel";
+import { LoginViewModel } from "../objects/viewmodels/Users/LoginViewModel";
 
 export interface Store {
     geoPosition: LocationObject | undefined;

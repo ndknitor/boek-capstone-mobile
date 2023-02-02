@@ -8,7 +8,7 @@ import { primaryColor, primaryTint1 } from './utils/color';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Campaigns from './pages/Public/Campaigns/Campaigns';
 import { Icon } from '@rneui/base';
-import { Image } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
 import workHistoryWhite from "./assets/icons/work-history-white.png";
 import useAuth from './libs/hook/useAuth';
@@ -33,12 +33,13 @@ import StaffCampaigns from './pages/Staff/StaffCampaigns/StaffCampaigns';
 import { Role } from './objects/enums/Role';
 import StaffOrders from './pages/Staff/StaffOrders/StaffOrders';
 import StaffCampagin from './pages/Staff/StaffCampagin/StaffCampagin';
+import PageLoader from './component/PageLoader/PageLoader';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function Routers() {
-  useAuthorizeInit();
   useInit();
+  //useAuthorizeInit();
   return (
     <NavigationContainer ref={route}>
       <AxiosInterceptor>
@@ -48,15 +49,18 @@ function Routers() {
   );
 }
 function StackNavigator() {
-  const { authenticated, roles } = useAuth();
+  const { authenticated, roles, initLoading } = useAuth();
   return (
     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
 
       <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() =>
-        roles.find(r => r == Role.staff.toString())?.length == 1 ?
-          <StaffTabNavigator />
+        !initLoading ?
+          roles.find(r => r == Role.staff.toString())?.length == 1 ?
+            <StaffTabNavigator />
+            :
+            <TabNavigator />
           :
-          <TabNavigator />
+          <PageLoader loading />
       }</Stack.Screen>
       {/* Public */}
       <Stack.Screen options={{ title: "So sánh giá" }} name={"PriceComparison"}>{(props) => <PriceComparison {...props} />}</Stack.Screen>

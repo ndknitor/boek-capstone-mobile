@@ -6,13 +6,15 @@ import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
 import useRouter from '../../libs/hook/useRouter';
-import { CampaignViewModel } from '../../objects/viewmodels/campaigns/CampaignViewModel';
+import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
 import moment from 'moment';
 interface BookFairCardProps {
     campagin?: CampaignViewModel
 }
 
 function BookFairCard({ campagin }: BookFairCardProps) {
+    let arr = campagin?.participants || [];
+    arr = [...arr, ...arr]
     const { navigate } = useRouter();
     return (
         <TouchableOpacity
@@ -47,39 +49,23 @@ function BookFairCard({ campagin }: BookFairCardProps) {
             </View>
             <View style={{ width: "100%", flexDirection: "row" }}>
                 <View style={{ width: "100%", flexDirection: "row", alignItems: "center" }}>
-                    <View
-                        style={{
-                            position: "absolute",
-                            borderRadius: 999,
-                            width: 25,
-                            height: 25,
-                            overflow: "hidden"
-                        }}>
-                        <Image source={avatar} style={{ width: "100%", height: "100%" }} />
-                    </View>
-                    <View
-                        style={{
-                            marginLeft: 15,
-                            position: "absolute",
-                            borderRadius: 999,
-                            width: 25,
-                            height: 25,
-                            overflow: "hidden"
-                        }}>
-                        <Image source={image} style={{ width: "100%", height: "100%" }} />
-                    </View>
-                    <View
-                        style={{
-                            marginLeft: 30,
-                            borderRadius: 999,
-                            width: 25,
-                            height: 25,
-                            overflow: "hidden"
-                        }}>
-                        <Image source={avatar} style={{ width: "100%", height: "100%" }} />
-                    </View>
+                    {
+                        campagin?.participants.map((item, index) =>
+                            <View
+                                style={{
+                                    marginLeft: 15 * index,
+                                    position: index == campagin.participants.length - 1 ? "relative" : "absolute",
+                                    borderRadius: 999,
+                                    width: 25,
+                                    height: 25,
+                                    overflow: "hidden"
+                                }}>
+                                <Image source={{ uri: item.issuer.user.imageUrl }} style={{ width: "100%", height: "100%" }} />
+                            </View>
+                        )
+                    }
                     <View style={{ paddingLeft: 5, flex: 1 }}>
-                        <Text >Các nhà phát hành: Tên nhà phát hành, Tên nhà phát hành</Text>
+                        <Text >Các nhà phát hành: {campagin?.participants.map(item => item.issuer.user.name).join(", ")}</Text>
                     </View>
                 </View>
             </View>

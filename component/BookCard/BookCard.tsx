@@ -2,11 +2,10 @@ import React from 'react'
 import { View, Image, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';;
 import useRouter from '../../libs/hook/useRouter';
-import { BookViewModel } from '../../objects/viewmodels/books/BookViewModel';
 import { formatNumber } from '../../utils/format';
+import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 interface BookCardProps {
-  book: BookViewModel;
-  
+  book: MobileBookProductViewModel;
 }
 function BookCard({ book }: BookCardProps) {
   const { navigate } = useRouter();
@@ -56,12 +55,12 @@ function BookCard({ book }: BookCardProps) {
             height: "90%"
           }}>
             <View style={{ height: "30%", paddingLeft: 2 }}>
-              <Text style={{ fontSize: 16, fontWeight: "600" }}>{book.name}</Text>
+              <Text style={{ fontSize: 16, fontWeight: "600" }}>{book.title || ""}</Text>
             </View>
             <View style={{ height: "70%", width: "100%", flexDirection: "row" }}>
               <View style={{ width: "60%", height: "100%", justifyContent: "flex-start", paddingLeft: 2 }}>
-                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(book.coverPrice as number)}đ</Text>
-                <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>{formatNumber(book.coverPrice as number)}đ</Text>
+                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(book.salePrice)}đ</Text>
+                <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>{formatNumber(book.salePrice)}đ</Text>
               </View>
               <View style={{ width: "40%", height: "100%", alignItems: "flex-start", justifyContent: "flex-start" }}>
                 <View style={{

@@ -1,11 +1,10 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { paletteGrayTint4, paletteGrayTint6, paletteGrayTint7, paletteRed, primaryColor, primaryTint6, primaryTint7 } from '../../../utils/color';
+import { ScrollView, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { primaryColor, primaryTint6, } from '../../../utils/color';
 import moment from 'moment';
 import useStaffCampaignsPage from './StaffCampaigns.hook';
 import PageLoader from '../../../component/PageLoader/PageLoader';
 import useRouter from '../../../libs/hook/useRouter';
-import ShowMoreButton from '../../../component/ShowMoreButton/ShowMoreButton';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import Paging from '../../../component/Paging/Paging';
 import { ParamListBase } from '@react-navigation/native';

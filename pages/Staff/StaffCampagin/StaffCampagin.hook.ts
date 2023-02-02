@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
-import { BookViewModel } from "../../../objects/viewmodels/books/BookViewModel";
+import DrawerLayout from "react-native-drawer-layout";
+import { BookViewModel } from "../../../objects/viewmodels/Books/BookViewModel";
 import { mockBooks } from "../../../utils/mock";
 
 export function useStaffBooksPage() {
@@ -46,6 +47,10 @@ export function useStaffBooksPage() {
     }
 }
 export function useStaffCampaignOrderPage() {
+    const campaginsScrollViewRef = useRef<ScrollView>(null);
+    const drawerLayoutRef = useRef<DrawerLayout>(null);
+
+
     const [loading, setLoading] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,10 +58,24 @@ export function useStaffCampaignOrderPage() {
 
     const onPageNavigation = (page: number) => {
         setCurrentPage(page);
+        campaginsScrollViewRef.current?.scrollTo({
+            y: 0,
+            animated: true
+        });
+    }
+    const onOrderDetailPress = () => {
+        drawerLayoutRef.current?.openDrawer();
     }
     return {
+        ref: {
+            campaginsScrollViewRef,
+            drawerLayoutRef,
+        },
+        event: {
+            onOrderDetailPress
+        },
         loading,
-        paging : {
+        paging: {
             currentPage,
             maxPage,
             onPageNavigation

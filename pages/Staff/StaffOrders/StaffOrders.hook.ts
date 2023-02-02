@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
-import { BookViewModel } from "../../../objects/viewmodels/books/BookViewModel";
-import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/campaigns/StaffCampaignMobilesViewModel";
+import DrawerLayout from "react-native-drawer-layout";
+import { BookViewModel } from "../../../objects/viewmodels/Books/BookViewModel";
+import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
 import { mockBooks, mockStaffCampaigns } from "../../../utils/mock";
 
 export default function useStaffOrdersPage() {
     const scrollViewRef = useRef<ScrollView>(null);
+    const drawerLayoutRef = useRef<DrawerLayout>(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -18,8 +20,11 @@ export default function useStaffOrdersPage() {
     const onPageNavigation = (page: number) => {
         setCurrentPage(page);
         scrollViewRef.current?.scrollTo({
-            y : 0
+            y: 0
         });
+    }
+    const onOrderDetailPress = () => {
+        drawerLayoutRef.current?.openDrawer();
     }
 
     useEffect(() => {
@@ -36,13 +41,17 @@ export default function useStaffOrdersPage() {
         //     });
     }, []);
     return {
-        ref :{
-            scrollViewRef
+        ref: {
+            scrollViewRef,
+            drawerLayoutRef
         },
-        paging : {
+        paging: {
             currentPage,
             maxPage,
             onPageNavigation
+        },
+        event: {
+            onOrderDetailPress
         },
         data: {
         },

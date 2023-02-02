@@ -32,14 +32,22 @@ const EndPont =
         books:
         {
             index: "/api/books",
-            genre: "/api/books/genre"
+            genre: "/api/books/genre",
+            mobile: {
+                products: {
+                    index: "/api/books/mobile/products",
+                    unhierarchicalBookProducts: "/api/books/mobile/products/unhierarchical-book-products"
+                }
+            }
         },
         campaigns:
         {
-            index : "/api/campaigns",
+            index: "/api/campaigns",
             mobile:
             {
-                staffs: "/api/campaigns/mobile/staffs"
+                index: "/api/campaigns/mobile",
+                staffs: "/api/campaigns/mobile/staffs",
+                customers: "/api/campaigns/mobile/customers",
             }
         },
         formats: "/api/formats",

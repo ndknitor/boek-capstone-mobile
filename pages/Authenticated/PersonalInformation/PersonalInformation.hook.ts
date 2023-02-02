@@ -9,9 +9,9 @@ import useUpdateEffect from "../../../libs/hook/useUpdateEffect";
 import { Role } from "../../../objects/enums/Role";
 import { UpdateCustomerRequestModel } from "../../../objects/requests/users/UpdateCustomerRequestModel";
 import { UpdateUserRequestModel } from "../../../objects/requests/users/UpdateUserRequestModel";
-import { CustomerUserViewModel } from "../../../objects/viewmodels/users/customers/CustomerUserViewModel";
-import { CustomerViewModel } from "../../../objects/viewmodels/users/customers/CustomerViewModel";
-import { UserViewModel } from "../../../objects/viewmodels/users/UserViewModel";
+import { CustomerUserViewModel } from "../../../objects/viewmodels/Users/customers/CustomerUserViewModel";
+import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
+import { UserViewModel } from "../../../objects/viewmodels/Users/UserViewModel";
 import EndPont from "../../../utils/EndPoint";
 import { maxDate, maxLength, required, validate, ValidationMessages } from "../../../utils/Validators";
 

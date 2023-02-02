@@ -4,9 +4,10 @@ import React, { useReducer } from 'react'
 import { FlatList, Text, View } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
 import { Book } from '../../objects/entities/Book';
+import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
 import BookCard from '../BookCard/BookCard';
 interface TitleFlatBooksProps {
-    data: Book[];
+    data: BookViewModel[];
     title: string;
 }
 function TitleFlatBooks(props: TitleFlatBooksProps) {

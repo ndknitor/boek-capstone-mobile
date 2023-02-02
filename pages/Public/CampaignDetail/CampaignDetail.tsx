@@ -6,12 +6,12 @@ import avatar from "../../../assets/avatar.jpg";
 import useCampaignDetaillPage from './CampaignDetail.hook';
 import verticalAlignTopWhite from "../../../assets/icons/vertical-align-top-white.png";
 import useRouter from '../../../libs/hook/useRouter';
-import { books, t } from '../../../utils/mock';
 import LabeledImage from '../../../component/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../../component/TitleFlatBooks/TitleFlatBooks';
 import ShowMoreButton from '../../../component/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../component/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../../utils/color';
+import { mockBooks, mockIssuer } from '../../../utils/mock';
 function CampaignDetail() {
     const hook = useCampaignDetaillPage();
     const { navigate } = useRouter();
@@ -77,40 +77,40 @@ function CampaignDetail() {
                         <Text style={{ fontSize: 22, fontWeight: "600", }}>Nhà phát hành</Text>
                         <FlatList
                             horizontal
-                            data={t}
+                            data={mockIssuer}
                             renderItem={e =>
-                                <LabeledImage onPress={() => navigate("IssuerDetail")} label={e.item.toString()} source={avatar} />
+                                <LabeledImage onPress={() => navigate("IssuerDetail")} label={e.item.user.name} source={avatar} />
                             } />
 
-                        <TitleFlatBooks data={books} title="Sách giảm giá" />
+                        <TitleFlatBooks data={mockBooks} title="Sách giảm giá" />
                         <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
                         <TitleTabedFlatBooks title="Sách combo" data={[
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                         ]} />
                         <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
                         <TitleTabedFlatBooks title="Thể loại 2" data={[
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                             {
                                 tabLabel: "Thể loại 1",
-                                tabData: books
+                                tabData: mockBooks
                             },
                         ]} />
                         <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
@@ -121,9 +121,9 @@ function CampaignDetail() {
                         <Text style={{ fontSize: 20, fontWeight: "600", marginBottom: 3, marginTop: 10 }}>Tổ chức</Text>
                         <FlatList
                             horizontal
-                            data={t}
+                            data={mockIssuer}
                             renderItem={e =>
-                                <LabeledImage label={e.item.toString()} source={avatar} />
+                                <LabeledImage label={e.item.user.name} source={avatar} />
                             } />
                         <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>

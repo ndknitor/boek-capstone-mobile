@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
-import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/campaigns/StaffCampaignMobilesViewModel";
+import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
 import EndPont from "../../../utils/EndPoint";
 import { mockStaffCampaigns } from "../../../utils/mock";
 

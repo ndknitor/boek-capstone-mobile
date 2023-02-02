@@ -5,7 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import useAsyncEffect from "use-async-effect";
 import useAppContext from "../../../context/Context";
 import { maxDate, maxLength, required, validate, ValidationMessages } from "../../../utils/Validators";
-import { CustomerUserViewModel } from "../../../objects/viewmodels/users/customers/CustomerUserViewModel";
+import { CustomerUserViewModel } from "../../../objects/viewmodels/Users/customers/CustomerUserViewModel";
 import appxios from "../../../component/AxiosInterceptor";
 import EndPont from "../../../utils/EndPoint";
 import { UpdateCustomerRequestModel } from "../../../objects/requests/users/UpdateCustomerRequestModel";

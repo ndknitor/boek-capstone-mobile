@@ -6,7 +6,7 @@ import BookCard from '../../../component/BookCard/BookCard';
 import Paging from '../../../component/Paging/Paging';
 import { primaryTint4 } from '../../../utils/color';
 import { range } from '../../../utils/format';
-import { books } from '../../../utils/mock';
+import { mockBooks } from '../../../utils/mock';
 import useIssuerMoreBookPage from './IssuerMoreBook.hook';
 
 function IssuerMoreBook(props: StackScreenProps<ParamListBase>) {
@@ -36,9 +36,9 @@ function IssuerMoreBook(props: StackScreenProps<ParamListBase>) {
             <ScrollView ref={hook.scrollViewRef} style={{ padding: 10, backgroundColor: "white" }}>
                 <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                     {
-                        books.map(item =>
+                        mockBooks.map(item =>
                             <View key={Math.random()} style={{ width: "50%" }}>
-                                {/* <BookCard book={undefined} /> */}
+                                <BookCard book={item} />
                             </View>
                         )
                     }

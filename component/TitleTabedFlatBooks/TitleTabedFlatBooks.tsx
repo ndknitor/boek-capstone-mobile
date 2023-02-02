@@ -2,8 +2,7 @@ import { Button } from '@rneui/base';
 import React, { useState } from 'react'
 import { FlatList, TouchableOpacity, Text, View } from 'react-native'
 import useRouter from '../../libs/hook/useRouter';
-import { Book } from '../../objects/entities/Book';
-import { BookViewModel } from '../../objects/viewmodels/books/BookViewModel';
+import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
 import { primaryTint4 } from '../../utils/color';
 import { range } from '../../utils/format'
 import BookCard from '../BookCard/BookCard';

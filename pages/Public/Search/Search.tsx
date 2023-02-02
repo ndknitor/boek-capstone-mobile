@@ -1,5 +1,5 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
-import React, { PropsWithChildren, useContext, useState } from 'react';
+import React, { PropsWithChildren, useContext, useEffect, } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import DrawerLayout from 'react-native-drawer-layout';
@@ -21,6 +21,7 @@ import { BookFormat } from '../../../objects/enums/BookFormat';
 import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { CampaignFormat } from '../../../objects/enums/CampaignFormat';
 import { SearchPageContext, SearchPageContextProvider } from '../../../component/SearchContextProvider/SearchContextProvider';
+import useAppContext from '../../../context/Context';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,9 +29,16 @@ export interface SearchProps {
 
 }
 function Search(props: SearchProps) {
-    const context = useContext(SearchPageContext);
     return (
         <SearchPageContextProvider>
+            <Content />
+        </SearchPageContextProvider>
+    )
+}
+function Content() {
+    const context = useContext(SearchPageContext);
+    return (
+        <>
             <HeaderSearchBar onChangeText={context.setSearchValue} value={context.searchValue} />
             <Tab.Navigator screenOptions={{
                 tabBarLabelStyle: {
@@ -47,10 +55,10 @@ function Search(props: SearchProps) {
                 <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
                 <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
             </Tab.Navigator>
-        </SearchPageContextProvider>
-
-    )
+        </>
+    );
 }
+
 function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
     const hook = useBooksPage(props);
     return (
@@ -149,7 +157,9 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                         buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
                                 </View>
                                 <View style={{ width: "50%", padding: 10 }}>
-                                    <Button buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
+                                    <Button
+                                        onPress={hook.event.onSearchSubmit}
+                                        buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
                                 </View>
                             </View>
                         </ScrollView>

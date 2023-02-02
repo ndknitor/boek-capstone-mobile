@@ -15,14 +15,15 @@ function SelectedChip(props: SelectedChipProps) {
         <TouchableOpacity style={{
             backgroundColor: getBackgroundColor(),
             borderRadius: 16,
-            minHeight: 30,
-            minWidth: 60,
-            margin: 5,
+            minHeight: 20,
+            minWidth: 50,
+            marginLeft : 5,
+            marginRight : 5,
             alignItems: "center",
             justifyContent: "center",
-            padding: 8
+            padding: 6
         }} {...props}>
-            <Text style={{ color: getTextColor() }}>{props.label}</Text>
+            <Text style={{ color: getTextColor() , fontSize: 13 }}>{props.label}</Text>
         </TouchableOpacity>
     )
 }

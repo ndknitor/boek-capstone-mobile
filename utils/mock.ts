@@ -1,6 +1,7 @@
 import { Book } from "../objects/entities/Book";
-import { BookViewModel } from "../objects/viewmodels/books/BookViewModel";
-import { StaffCampaignMobilesViewModel } from "../objects/viewmodels/campaigns/StaffCampaignMobilesViewModel";
+import { BookViewModel } from "../objects/viewmodels/Books/BookViewModel";
+import { StaffCampaignMobilesViewModel } from "../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
+import { IssuerViewModel } from "../objects/viewmodels/Users/issuers/IssuerViewModel";
 import { range } from "./format";
 export const t = range(1, 20);
 
@@ -1495,5 +1496,4 @@ export const mockStaffCampaigns: StaffCampaignMobilesViewModel[] = [
         ]
     },
 ]
-
-// export const mockOrders : Order
+export const mockIssuer: IssuerViewModel[] = mockBooks.map(({issuer}) => issuer).slice(0,6);

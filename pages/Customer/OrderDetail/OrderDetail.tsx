@@ -1,10 +1,10 @@
 import React from 'react'
 import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
 import { paletteGray, paletteGrayShade2, paletteGreen, paletteGreenBold } from '../../../utils/color';
-import { books } from '../../../utils/mock';
+import { mockBooks } from '../../../utils/mock';
 
 function OrderDetail() {
-  const orders = books.slice(0, 3);
+  const orders = mockBooks.slice(0, 3);
   return (
     <ScrollView style={{
       backgroundColor: "white",
@@ -34,7 +34,7 @@ function OrderDetail() {
                 justifyContent: "center"
               }}>
                 <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>{item.name}</Text>
-                <Text style={{ marginBottom: 5, color: paletteGrayShade2 }}>{item.issuer.name}</Text>
+                <Text style={{ marginBottom: 5, color: paletteGrayShade2 }}>{item.issuer.user.name}</Text>
                 <Text style={{ marginBottom: 5, }}>Số lượng : 2</Text>
                 <Text style={{ marginBottom: 5 }}>Đơn giá : 69.000 đ</Text>
                 <Text style={{ marginBottom: 5, fontSize: 16, fontWeight: "600" }}>Tổng : 138.000 đ</Text>
@@ -48,7 +48,7 @@ function OrderDetail() {
         padding: 10
       }}>
         <Text style={{ marginBottom: 10, fontSize: 16, fontWeight: "600" }}>Tổng tiền: 69.000.000 đ</Text>
-        <View style={{  marginBottom: 10, width: "50%", height: 40 }}>
+        <View style={{ marginBottom: 10, width: "50%", height: 40 }}>
           <View style={{
             backgroundColor: paletteGreen,
             justifyContent: "center",
