@@ -43,6 +43,7 @@ function Campaigns() {
                                 </View>
                             </Swiper>
                         </View>
+                        
                     </View>
                     <View style={{ width: "100%", padding: 10, paddingTop: 20, }}>
                         <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 5 }}>Hội sách sắp diễn ra</Text>

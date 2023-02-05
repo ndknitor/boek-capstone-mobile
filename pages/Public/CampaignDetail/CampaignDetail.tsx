@@ -12,25 +12,26 @@ import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { paletteGreen, paletteGreenBold, primaryTint1, primaryTint7 } from '../../../utils/color';
 import { mockBooks, mockIssuer } from '../../../utils/mock';
+import FadeTransition from '../../../components/FadeTransition/FadeTransition';
 function CampaignDetail() {
     const hook = useCampaignDetaillPage();
     const { navigate } = useRouter();
     return (
         <>
-            <Animated.View style={{
-                display: hook.scrollToTopButtonShowOpacity.display ? "flex" : "none",
-                opacity: hook.scrollToTopButtonShowOpacity.opacity,
-                backgroundColor: primaryTint1,
-                width: 40,
-                height: 40,
-                borderRadius: 999,
-                position: "absolute",
-                zIndex: 1,
-                bottom: 60,
-                right: 10,
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
+            <FadeTransition
+                showed={hook.scrollToTopShowed}
+                style={{
+                    backgroundColor: primaryTint1,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 999,
+                    position: "absolute",
+                    zIndex: 1,
+                    bottom: 60,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}>
                 <TouchableOpacity
                     onPress={hook.scrollToTop}
                     style={{
@@ -41,7 +42,7 @@ function CampaignDetail() {
                         resizeMode="cover"
                         style={{ width: 24, height: 24 }} />
                 </TouchableOpacity>
-            </Animated.View>
+            </FadeTransition>
 
             <ScrollView
                 onScrollEndDrag={hook.onScrollViewScroll}

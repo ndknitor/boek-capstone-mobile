@@ -10,32 +10,40 @@ import useAskOrganizationsPage from './AskOrganizations.hook'
 function AskOrganizations() {
     const { replace } = useRouter();
     const { searchMessage, onAskOrganizationsSubmit, submitLoader } = useAskOrganizationsPage();
-
+    const mock = [
+        "FPT",
+        "Viettel",
+        "VNPT",
+        "Vinaporn",
+        "Kim Đồng",
+        "Lều báo",
+        "FPT",
+        "Viettel",
+        "VNPT",
+        "Vinaporn",
+        "Kim Đồng",
+        "Lều báo",
+        "FPT",
+        "Viettel",
+        "VNPT",
+        "Vinaporn",
+        "Kim Đồng",
+        "Lều báo",
+    ];
 
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn muốn theo dõi hội sách từ tổ chức nào ?</Text>
-            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
+            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent : "center" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
+                {
+                    mock.map(item =>
+                        <View style={{ margin: 5 }}>
+                            <SelectedChip label={item} />
+                        </View>
+                    )
+                }
 
-                <SelectedChip label="FPT" selected />
-                <SelectedChip label="Viettel" />
-                <SelectedChip label="VNPT" />
-                <SelectedChip label="Vinaporn" />
-                <SelectedChip label="Kim Đồng" />
-                <SelectedChip label="Lều báo" />
-                <SelectedChip label="FPT" selected />
-                <SelectedChip label="Viettel" />
-                <SelectedChip label="VNPT" />
-                <SelectedChip label="Vinaporn" />
-                <SelectedChip label="Kim Đồng" />
-                <SelectedChip label="Lều báo" />
-                <SelectedChip label="FPT" selected />
-                <SelectedChip label="Viettel" />
-                <SelectedChip label="VNPT" />
-                <SelectedChip label="Vinaporn" />
-                <SelectedChip label="Kim Đồng" />
-                <SelectedChip label="Lều báo" />
 
             </ScrollView>
             <Input placeholder="Tìm kiếm tổ chức" />

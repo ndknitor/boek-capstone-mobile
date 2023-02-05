@@ -18,6 +18,7 @@ import { useStaffBooksPage, useStaffCampaignOrderPage } from "./StaffCampagin.ho
 import Header from "../../../components/Header/Header";
 import DrawerLayout from "react-native-drawer-layout";
 import range from "../../../libs/functions/range";
+import OrderDetailDrawerLayout from "../../../components/OrderDetailDrawerLayout/OrderDetailDrawerLayout";
 
 
 const Tab = createBottomTabNavigator();
@@ -127,15 +128,8 @@ function Orders() {
         <>
             <PageLoader loading={hook.loading} />
             <Header title="Tri ân thầy cô 20/11" />
-            <DrawerLayout
-                ref={hook.ref.drawerLayoutRef}
-                drawerWidth={280}
-                drawerPosition={"left"}
-                drawerBackgroundColor={"white"}
-                renderNavigationView={() =>
-                    <ScrollView>
-
-                    </ScrollView>}>
+            <OrderDetailDrawerLayout
+                drawerRef={hook.ref.drawerLayoutRef}>
                 <ScrollView
                     ref={hook.ref.campaginsScrollViewRef}
                     style={{
@@ -320,7 +314,7 @@ function Orders() {
                         <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                     </View>
                 </ScrollView>
-            </DrawerLayout>
+            </OrderDetailDrawerLayout>
         </>
     );
 }

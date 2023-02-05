@@ -13,14 +13,12 @@ export default function PageLoader({ loading }: { loading: boolean }) {
                 height: "100%",
                 alignItems: "center",
                 justifyContent: "center"
-            }}>
-                <ActivityIndicator
-                    size="large" />
-            </View>
+            }} />
             <View style={{
-                backgroundColor: "white",
+                backgroundColor: "transparent",
                 display: loading ? "flex" : "none",
                 zIndex: 999,
+                opacity: 0.6,
                 position: "absolute",
                 width: "100%",
                 height: "100%",

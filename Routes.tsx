@@ -49,13 +49,13 @@ function Routers() {
   );
 }
 function StackNavigator() {
-  const { authenticated, roles, initLoading } = useAuth();
+  const { authenticated, roles, initLoading, isInRole } = useAuth();
   return (
     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
 
       <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() =>
         !initLoading ?
-          roles.find(r => r == Role.staff.toString())?.length == 1 ?
+          isInRole([Role.staff.toString()]) ?
             <StaffTabNavigator />
             :
             <TabNavigator />
@@ -112,7 +112,10 @@ function TabNavigator() {
       <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={17} /> }} name="Campaigns" component={Campaigns} />
       <Tab.Screen options={{ title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={17} /> }} name="Search" component={Search} />
       <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 17 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
-      <Tab.Screen name="Test" options={{ title: "Test" }} component={Index} />
+      {
+        __DEV__ &&
+        <Tab.Screen name="Test" options={{ title: "Test" }} component={Index} />
+      }
     </Tab.Navigator>
   );
 }

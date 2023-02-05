@@ -44,7 +44,7 @@ function Profile(props: ProfileProps) {
                 borderRadius: 9999,
                 overflow: "hidden"
               }}>
-                <Image source={authenticated ? {uri : user?.imageUrl} : accountWhite} style={{
+                <Image source={authenticated ? { uri: user?.imageUrl } : accountWhite} style={{
                   width: "100%",
                   height: "100%"
                 }} resizeMode="cover" />
@@ -83,18 +83,18 @@ function Profile(props: ProfileProps) {
 
         <AuthorizeView roles={[Role.staff.toString()]}>
           <TouchCard label="Thông tin cá nhân" onPress={async () => await hook.event.authorizeNavigate("PersonalInformation")} />
+          <TouchCard label="Đơn hàng" onPress={async () => await hook.event.authorizeNavigate("StaffOrders")} />
         </AuthorizeView>
         <AuthorizeView roles={[Role.customer.toString()]}>
           <TouchCard label="Thông tin cá nhân" onPress={async () => await hook.event.authorizeNavigate("PersonalInformation")} />
           <TouchCard label="Đơn hàng" onPress={async () => await hook.event.authorizeNavigate("Orders")} />
-          {/* <TouchCard label="Sách của tôi"/> */}
           <TouchCard label="Thể loại sách yêu thích" onPress={async () => await hook.event.authorizeNavigate("AskGenres")} />
           <TouchCard label="Tổ chức quan tâm" onPress={async () => await hook.event.authorizeNavigate("Organizations")} />
+          <TouchCard label="Sách của tôi" />
         </AuthorizeView>
         <NonAuthorizeView>
           <TouchCard label="Thông tin cá nhân" onPress={async () => await hook.event.authorizeNavigate("PersonalInformation")} />
           <TouchCard label="Đơn hàng" onPress={async () => await hook.event.authorizeNavigate("Orders")} />
-          {/* <TouchCard label="Sách của tôi"/> */}
           <TouchCard label="Thể loại sách yêu thích" onPress={async () => await hook.event.authorizeNavigate("AskGenres")} />
           <TouchCard label="Tổ chức quan tâm" onPress={async () => await hook.event.authorizeNavigate("Organizations")} />
         </NonAuthorizeView>

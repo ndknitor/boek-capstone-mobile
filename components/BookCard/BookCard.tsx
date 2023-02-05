@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Image, TouchableOpacity, Text, Dimensions } from 'react-native'
 import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';;
 import useRouter from '../../libs/hook/useRouter';
-import { formatNumber } from '../../utils/format';
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
+import formatNumber from '../../libs/functions/formatNumber';
 interface BookCardProps {
   book: MobileBookProductViewModel;
 }
@@ -13,7 +13,7 @@ function BookCard({ book }: BookCardProps) {
     <View
       style={{
         width: 195,
-        height: 260,
+        height: 240,
         alignItems: "center",
         justifyContent: "center"
       }}>
@@ -58,18 +58,28 @@ function BookCard({ book }: BookCardProps) {
               <Text style={{ fontSize: 16, fontWeight: "600" }}>{book.title || ""}</Text>
             </View>
             <View style={{ height: "70%", width: "100%", flexDirection: "row" }}>
-              <View style={{ width: "60%", height: "100%", justifyContent: "flex-start", paddingLeft: 2 }}>
+              <View style={{ width: "60%", height: "100%", justifyContent: "center", paddingLeft: 2 }}>
                 <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(book.salePrice)}đ</Text>
-                <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>{formatNumber(book.salePrice)}đ</Text>
+                {
+                  book.discount ?
+                    <Text style={{ color: paletteGray, fontSize: 16, textDecorationLine: "line-through" }}>{formatNumber(book.book?.coverPrice)}đ</Text>
+                    :
+                    null
+                }
               </View>
               <View style={{ width: "40%", height: "100%", alignItems: "flex-start", justifyContent: "flex-start" }}>
-                <View style={{
-                  width: "90%",
-                  backgroundColor: palettePink,
-                  alignItems: "center"
-                }}>
-                  <Text style={{ color: "white", fontSize: 18, padding: 5 }}>-69%</Text>
-                </View>
+                {
+                  book.discount ?
+                    <View style={{
+                      width: "90%",
+                      backgroundColor: palettePink,
+                      alignItems: "center"
+                    }}>
+                      <Text style={{ color: "white", fontSize: 18, padding: 5 }}>-{book.discount}%</Text>
+                    </View>
+                    :
+                    null
+                }
               </View>
             </View>
 

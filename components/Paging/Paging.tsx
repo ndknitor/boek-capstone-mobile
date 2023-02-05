@@ -4,9 +4,9 @@ import { primaryColor, primaryTint3 } from '../../utils/color';
 import navigateBack from "../../assets/icons/navigate-left-white.png";
 import navigateNext from "../../assets/icons/navigate-right-white.png";
 import usePagingComponent from './Paging.hook';
-import { range } from '../../utils/format';
+import range from '../../libs/functions/range';
 export interface PagingProps {
-    style? : StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
     maxPage: number;
     currentPage: number;
     onPageNavigation?: (page: number) => void | Promise<void>;

@@ -12,36 +12,44 @@ interface AskGenresProps {
 function AskGenres(props: AskGenresProps) {
     const { replace } = useRouter();
     const { searchMessage, onAskGenresSubmit, submitLoader } = useAskGenrePage();
+
+    const mock = [
+        "Tình cảm",
+        "Kinh dị",
+        "Hành động",
+        "Nhập vai",
+        "Văn học",
+        "Trinh thám",
+        "Khiêu dâm",
+        "Hài hước",
+        "Lịch sử",
+        "Khoa học",
+        "Tiểu thuyết",
+        "Triết học",
+        "Viễn tưởng",
+        "Tâm lý",
+        "Châm biếm",
+        "Xã hội",
+        "Luật pháp",
+        "Toán học",
+        "Gia Đình",
+        "Ảo thuật",
+        "Địa lý",
+        "Hóa học",
+        "Kỹ thuật"
+    ];
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn yêu thích thể loại sách nào ?</Text>
-            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
+            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent : "center" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
-
-                <SelectedChip label="Tình cảm" selected />
-                <SelectedChip label="Kinh dị" />
-                <SelectedChip label="Hành động" selected />
-                <SelectedChip label="Nhập vai" />
-                <SelectedChip label="Văn học" />
-                <SelectedChip label="Trinh thám" />
-                <SelectedChip label="Khiêu dâm" selected />
-                <SelectedChip label="Hài hước" />
-                <SelectedChip label="Lịch sử" />
-                <SelectedChip label="Khoa học" />
-                <SelectedChip label="Tiểu thuyết" />
-                <SelectedChip label="Triết học" />
-                <SelectedChip label="Viễn tưởng" />
-                <SelectedChip label="Tâm lý" />
-                <SelectedChip label="Châm biếm" />
-                <SelectedChip label="Xã hội" />
-                <SelectedChip label="Luật pháp" />
-                <SelectedChip label="Toán học" />
-                <SelectedChip label="Gia Đình" />
-                <SelectedChip label="Ảo thuật" />
-                <SelectedChip label="Địa lý" />
-                <SelectedChip label="Hóa học" />
-                <SelectedChip label="Kỹ thuật" />
-
+                {
+                    mock.map(item =>
+                        <View style={{margin : 5}}>
+                            <SelectedChip label={item} />
+                        </View>
+                    )
+                }
             </ScrollView>
             <Input placeholder="Tìm kiếm thể loại" />
             <Text style={{ color: "red", marginBottom: 20 }}>{searchMessage}</Text>

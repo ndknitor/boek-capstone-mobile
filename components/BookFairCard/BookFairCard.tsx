@@ -13,8 +13,6 @@ interface BookFairCardProps {
 }
 
 function BookFairCard({ campagin }: BookFairCardProps) {
-    let arr = campagin?.participants || [];
-    arr = [...arr, ...arr]
     const { navigate } = useRouter();
     return (
         <TouchableOpacity

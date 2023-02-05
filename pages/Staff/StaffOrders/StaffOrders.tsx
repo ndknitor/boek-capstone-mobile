@@ -5,12 +5,12 @@ import useStaffOrdersPage from './StaffOrders.hook';
 import image from "../../../assets/hsxv.webp";
 import addWhite from "../../../assets/icons/add-white.png";
 import Paging from '../../../components/Paging/Paging';
-import { range } from '../../../utils/format';
 import { Button } from '@rneui/base';
-import DrawerLayout from 'react-native-drawer-layout';
 import SelectedChip from '../../../components/SeletedChip/SelectedChip';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import FloatActionButton from '../../../components/FloatActionButton/FloatActionButton';
+import range from '../../../libs/functions/range';
+import OrderDetailDrawerLayout from '../../../components/OrderDetailDrawerLayout/OrderDetailDrawerLayout';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,15 +46,8 @@ function Content() {
   const hook = useStaffOrdersPage();
 
   return (
-    <DrawerLayout
-      ref={hook.ref.drawerLayoutRef}
-      drawerWidth={280}
-      drawerPosition={"left"}
-      drawerBackgroundColor={"white"}
-      renderNavigationView={() =>
-        <ScrollView>
-
-        </ScrollView>}>
+    <OrderDetailDrawerLayout
+      drawerRef={hook.ref.drawerLayoutRef}>
       <ScrollView
         ref={hook.ref.scrollViewRef}
         stickyHeaderHiddenOnScroll
@@ -76,7 +69,7 @@ function Content() {
           horizontal
           data={["Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó",]}
           renderItem={item =>
-            <View style={{ height: "100%", justifyContent: "center" }}>
+            <View style={{ height: "100%", justifyContent: "center", marginRight : 2 }}>
               <SelectedChip label={item.item} />
             </View>
           } />
@@ -285,7 +278,7 @@ function Content() {
         </View>
 
       </ScrollView>
-    </DrawerLayout>
+    </OrderDetailDrawerLayout>
   );
 }
 

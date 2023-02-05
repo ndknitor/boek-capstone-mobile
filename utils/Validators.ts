@@ -85,10 +85,8 @@ export function minDate(target: Date, minDate: Date, message: string) {
     if (target == undefined) {
         return undefined;
     }
-    if (typeof target == "string") {
-        if (target < minDate) {
-            return message;
-        }
-        return undefined
+    if (target < minDate) {
+        return message;
     }
+    return undefined
 }

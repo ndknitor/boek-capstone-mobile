@@ -21,7 +21,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const booksScrollViewRef = useRef<ScrollView>(null);
 
     const context = useContext(SearchPageContext);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [books, setBooks] = useState<MobileBookProductViewModel[]>([]);

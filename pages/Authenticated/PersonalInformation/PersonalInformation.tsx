@@ -107,7 +107,7 @@ function PersonalInformation() {
                 defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
                 ref={hook.ref.inputAddressRef}
                 renderDropdownIcon={() => <></>}
-                buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
+                buttonStyle={{ backgroundColor: "transparent", width: "100%", justifyContent: "flex-end" }}
                 buttonTextStyle={{
                   fontSize: 14,
                   textAlign: "right",

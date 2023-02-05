@@ -24,6 +24,9 @@ function Index() {
       <TouchableOpacity onPress={() => navigate("AskPersonalInformation")}>
         <Text>Ask PersonalInformation</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate("AskGenres")}>
+        <Text>AskGenres</Text>
+      </TouchableOpacity>
 
       <Button onPress={async () => scanQr ? setScanQr(false) : setScanQr(true)} >Scan</Button>
       <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
