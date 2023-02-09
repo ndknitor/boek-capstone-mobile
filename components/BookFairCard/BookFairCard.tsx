@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
-import { paletteGreen, paletteGreenBold, primaryTint4 } from '../../utils/color';
+import { paletteGrayLight, paletteGreen, paletteGreenBold, paletteRed, primaryTint4 } from '../../utils/color';
 import image from "../../assets/hsxv.webp";
 import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
@@ -8,12 +8,40 @@ import calendarBlack from "../../assets/icons/calendar-today-black.png";
 import useRouter from '../../libs/hook/useRouter';
 import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
 import moment from 'moment';
+import { CampaignStatus } from '../../objects/enums/CampaignStatus';
 interface BookFairCardProps {
     campagin?: CampaignViewModel
 }
 
 function BookFairCard({ campagin }: BookFairCardProps) {
     const { navigate } = useRouter();
+    const getColor = () => {
+        switch (campagin?.status) {
+            case CampaignStatus.notStarted:
+                return paletteGrayLight;
+            case CampaignStatus.start:
+                return paletteGreen;
+            case CampaignStatus.end:
+                return paletteGrayLight;
+            case CampaignStatus.postpone:
+                return paletteRed;
+            default: return undefined;
+        };
+    }
+    const getTextColor = () => {
+        switch (campagin?.status) {
+            case CampaignStatus.notStarted:
+                return "black";
+            case CampaignStatus.start:
+                return paletteGreenBold;
+            case CampaignStatus.end:
+                return "black";
+            case CampaignStatus.postpone:
+                return paletteRed;
+            default: return undefined;
+        };
+    }
+
     return (
         <TouchableOpacity
             onPress={() => navigate("CampaignDetail")}
@@ -35,7 +63,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                             <Image source={calendarBlack} style={{ height: 17, width: 25 }} resizeMode="contain" />
                         </View>
 
-                        <Text>{moment(campagin?.startOfflineDate).format("DD/MM/YYYY HH:MM:SS")}</Text>
+                        <Text>{moment(campagin?.startDate).format("DD/MM/YYYY HH:MM:SS")}</Text>
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -67,10 +95,23 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                     </View>
                 </View>
             </View>
-            <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: paletteGreen, alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
-                <Text style={{ color: paletteGreenBold, fontSize: 13, fontWeight: "500" }}>ĐANG DIỄN RA</Text>
+            <View style={{
+                backgroundColor: getColor(),
+                marginTop: 10,
+                marginBottom: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                width: "35%",
+                height: 25,
+                borderRadius: 24
+            }}>
+                <Text style={{
+                    color: getTextColor(),
+                    fontSize: 13,
+                    fontWeight: "500"
+                }}>{campagin?.statusName}</Text>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 

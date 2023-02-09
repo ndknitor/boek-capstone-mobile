@@ -13,8 +13,7 @@ function useUpdateDepsEffect(effect: EffectCallback, deps?: DependencyList) {
         {
             count.current++;
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, deps)
+    }, deps);
 }
 
 export default useUpdateDepsEffect;

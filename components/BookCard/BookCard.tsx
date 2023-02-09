@@ -8,7 +8,7 @@ interface BookCardProps {
   book: MobileBookProductViewModel;
 }
 function BookCard({ book }: BookCardProps) {
-  const { navigate } = useRouter();
+  const { push } = useRouter();
   return (
     <View
       style={{
@@ -18,7 +18,7 @@ function BookCard({ book }: BookCardProps) {
         justifyContent: "center"
       }}>
       <TouchableOpacity
-        onPress={() => navigate("BookDetail")}
+        onPress={() => push("BookDetail", { bookId: book.id })}
         style={{
           borderColor: primaryTint7,
           borderWidth: 1,

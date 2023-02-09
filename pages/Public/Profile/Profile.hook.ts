@@ -25,11 +25,6 @@ export default function useProfilePage(props: ProfileProps) {
         const currentUser = await googleLogin();
         setLoading(true);
         if (!currentUser) {
-            Toast.show({
-                type: "error",
-                text1: "Đăng nhập thất bại",
-                text2: "Quá trình đăng nhập được hủy"
-            });
             setLoading(false);
             return;
         }
@@ -115,7 +110,13 @@ export default function useProfilePage(props: ProfileProps) {
             const credential = await auth().signInWithCredential(googleCredential);
             return credential.user;
         } catch (error) {
-            console.log(error);
+            if (error) {
+                Toast.show({
+                    type: "error",
+                    text1: "Đăng nhập thất bại",
+                    text2: "Quá trình đăng nhập được hủy"
+                });
+            }
             setLoading(false);
         }
     }

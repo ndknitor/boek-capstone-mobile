@@ -19,7 +19,7 @@ export function setAuthorizationBearer(jwt?: string) {
 
 export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
     useEffect(() => {
-        const beforeRequest = (config: AxiosRequestConfig<any>) => {
+        const beforeRequest = (config: any) => {
             return config;
         }
         const requestError = (error: any) => {

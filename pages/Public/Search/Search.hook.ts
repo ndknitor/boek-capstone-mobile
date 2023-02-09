@@ -1,10 +1,9 @@
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { ParamListBase } from "@react-navigation/native";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
 import appxios from "../../../components/AxiosInterceptor";
-import { SearchPageContext } from "../../../components/SearchContextProvider/SearchContextProvider";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { AuthorBooksViewModel } from "../../../objects/viewmodels/Authors/AuthorBooksViewModel";
 import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
@@ -20,7 +19,6 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBooksDrawerRef = useRef<DrawerLayout>(null);
     const booksScrollViewRef = useRef<ScrollView>(null);
 
-    const context = useContext(SearchPageContext);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
@@ -61,12 +59,14 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         if (selectedPublisher.length > 0) {
             selectedPublisher.map(item => query.append("BookProductItems.Book.PublisherIds", item.toString()))
         }
-        if (context.searchValue && context.searchValue != "") {
-            query.append("Title", context.searchValue);
+        if (search && search != "") {
+            query.append("Title", search);
         }
         query.append("Page", page.toString());
         query.append("Size", "30");
         console.log(query.toString());
+
+
         appxios.get<BaseResponsePagingModel<MobileBookProductViewModel>>(`${EndPont.public.books.mobile.products.index}?${query.toString()}`)
             .then(response => {
                 setBooks(response.data.data);
@@ -218,15 +218,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
 
     useEffect(() => {
         getBooks(1);
-        const unsubscribe = props.navigation.addListener('tabPress', (e) => {
-            context.setSearchValue(search);
-        });
-        context.setSearchValue(search);
-        return unsubscribe;
     }, []);
-    useEffect(() => {
-        setSearch(context.searchValue);
-    }, [context.searchValue]);
     return {
         ref: {
             filterBooksDrawerRef,
@@ -239,6 +231,10 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
             seletedIssuer,
             selectedPublisher,
             seletedAuthor,
+            search: {
+                value: search,
+                set: setSearch
+            }
         },
         data: {
             books,
@@ -274,7 +270,6 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
 }
 
 export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>) {
-    const context = useContext(SearchPageContext);
     const bookFairsScrollViewRef = useRef<ScrollView>(null);
     const filterBookFairsDrawerRef = useRef<DrawerLayout>(null);
 
@@ -400,17 +395,8 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     useEffect(() => {
         getCampaigns(1);
-        const unsubscribe = props.navigation.addListener('tabPress', (e) => {
-            console.log(search);
-            
-            context.setSearchValue(search);
-        });
-        context.setSearchValue(search);
-        return unsubscribe;
     }, []);
-    useEffect(() => {
-        setSearch(context.searchValue);
-    }, [context.searchValue]);
+
     return {
         ref: {
             bookFairsScrollViewRef,
@@ -451,6 +437,10 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
             {
                 value: filterEndDate,
                 set: setfilterEndDate
+            },
+            search: {
+                value: search,
+                set: setSearch
             }
         },
         loading,

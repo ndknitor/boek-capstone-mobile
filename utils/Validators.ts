@@ -1,6 +1,7 @@
 export interface ValidationMessages {
     [key: string]: (string | undefined)[];
 }
+
 export function getMessage(validationMessages: ValidationMessages | undefined, key: string) {
     if (!validationMessages) {
         return "";
@@ -11,6 +12,7 @@ export function getMessage(validationMessages: ValidationMessages | undefined, k
     }
     return "";
 }
+
 export function validate(validationMessages: ValidationMessages) {
     let pass = true;
     Object.keys(validationMessages).map(key => {
@@ -20,6 +22,36 @@ export function validate(validationMessages: ValidationMessages) {
         }
     });
     return pass;
+}
+
+export function numberMax(target: number, max: number, message: string) {
+    if (!target) {
+        return undefined;
+    }
+    if (target > max) {
+        return message;
+    }
+    return undefined;
+}
+
+export function numberMin(target: number, min: number, message: string) {
+    if (!target) {
+        return undefined;
+    }
+    if (target > min) {
+        return message;
+    }
+    return undefined;
+}
+
+export function numberRange(target: number, min: number, max: number, message: string) {
+    if (!target) {
+        return undefined;
+    }
+    if (target > max || target < min) {
+        return message;
+    }
+    return undefined;
 }
 
 export function required(target: any, message: string) {
@@ -90,3 +122,24 @@ export function minDate(target: Date, minDate: Date, message: string) {
     }
     return undefined
 }
+
+export function maxFileSize(target: File, maxMB: number, message: string) {
+    if (!target) {
+        return undefined;
+    }
+    if (target.size > maxMB * 1024 * 1024) {
+        return message;
+    }
+    return undefined;
+}
+
+export function minFileSize(target: File, minMB: number, message: string) {
+    if (!target) {
+        return undefined;
+    }
+    if (target.size < minMB * 1024 * 1024) {
+        return message;
+    }
+    return undefined;
+}
+

@@ -40,24 +40,6 @@ function QrCameraFrame(props: QrCameraFrameProps) {
                 <Image source={logo} style={{ width: "90%" }} resizeMode={'contain'} />
             </View>
         </View>
-        // <View style={{ 
-        //     flex: 1,
-        //     overflow : "hidden",
-        //     alignItems: props.scanQr ? "stretch" : "center",
-        //     justifyContent: "center",
-        //     borderRadius: 30,
-        //     backgroundColor: paletteGray }}>
-        //     {
-        //         cameraPermission &&
-        //             props.scanQr ?
-        //             <BarCodeScanner
-        //                 onBarCodeScanned={props.onBarCodeScanned}
-        //                 style={{ height: Dimensions.get("screen").height }} />
-        //             :
-        //             <Image source={logo} style={{ width: "90%" }} resizeMode={'contain'} />
-
-        //     }
-        // </View>
     )
 }
 

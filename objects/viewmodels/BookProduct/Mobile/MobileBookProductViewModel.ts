@@ -4,7 +4,6 @@ import { OtherMobileBookProductsViewModel } from "./OtherMobileBookProductsViewM
 import { UnhierarchicalBookProductsViewModel } from "./UnhierarchicalBookProductsViewModel";
 
 export interface MobileBookProductViewModel {
-
     id: string;
     bookId?: number;
     campaignId?: number;

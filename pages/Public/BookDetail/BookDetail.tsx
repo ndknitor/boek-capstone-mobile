@@ -10,46 +10,54 @@ import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { mockBooks } from '../../../utils/mock';
 import formatNumber from '../../../libs/functions/formatNumber';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { ParamListBase } from '@react-navigation/native';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 
 
-function BookDetail() {
-    const hook = useBookDetailPage();
-    const book = mockBooks[0];
+function BookDetail(props: StackScreenProps<ParamListBase>) {
+    const hook = useBookDetailPage(props);
     const { navigate } = useRouter();
     return (
         <>
+            <PageLoader loading={hook.loading} />
             <ScrollView style={{ backgroundColor: "white" }}>
                 <View style={{ alignItems: "center" }}>
                     <View style={{ width: "70%", height: 400, paddingTop: 20 }}>
                         <View style={{ borderRadius: 24, borderWidth: 1, borderColor: primaryTint5, overflow: "hidden" }}>
                             <Image
                                 style={{ width: "100%", height: "100%" }}
-                                source={{ uri: book.imageUrl }}
+                                source={{ uri: hook.data.book?.imageUrl }}
                                 resizeMode="cover"
                             />
                         </View>
                     </View>
                 </View>
                 <View style={{ padding: 10, paddingTop: 20 }}>
-                    <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{book.book?.name}</Text>
-                    <Text style={{ fontSize: 16 }}>Thể loại: {book.book?.genre.name}</Text>
+                    <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{hook.data.book?.title}</Text>
+                    <Text style={{ fontSize: 16 }}>Thể loại: {hook.data.book?.book?.genre.name}</Text>
 
                     <View style={{ justifyContent: 'flex-start', alignItems: "flex-end", marginBottom: 5 }}>
                         <Text style={{ fontSize: 16 }}>Có <Text style={{ color: primaryColor, fontWeight: "600" }}>69 </Text>giá khác</Text>
                     </View>
                     <View style={{ marginBottom: 20, flexDirection: "row" }}>
                         <View style={{ width: "40%", alignItems: "flex-start", justifyContent: "center" }}>
-                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(book.book?.coverPrice as number)} đ</Text>
-                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(book.book?.coverPrice as number)} đ</Text>
+                            <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(hook.data.book?.salePrice)} đ</Text>
+                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(hook.data.book?.book?.coverPrice)} đ</Text>
                         </View>
 
+
                         <View style={{ width: "30%", alignItems: "center", justifyContent: "center" }}>
-                            <View style={{ alignItems: "flex-start", justifyContent: "flex-start" }}>
-                                <View style={{ width: "90%", backgroundColor: palettePink, alignItems: "center" }}>
-                                    <Text style={{ color: "white", fontSize: 20, padding: 7 }}>-69%</Text>
+                            {
+                                hook.data.book?.discount &&
+                                <View style={{ alignItems: "flex-start", justifyContent: "flex-start" }}>
+                                    <View style={{ width: "90%", backgroundColor: palettePink, alignItems: "center" }}>
+                                        <Text style={{ color: "white", fontSize: 20, padding: 7 }}>-{hook.data.book?.discount}%</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            }
                         </View>
+
 
                         <View style={{ width: "30%", justifyContent: "center" }}>
                             <View>
@@ -125,9 +133,13 @@ function BookDetail() {
                                 zIndex: 1
                             }}>
                         </LinearGradient>
-                        <Text style={{ marginBottom: 10 }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat voluptate, repellendus laborum tempora iure laudantium aperiam saepe veniam ipsam voluptatibus porro molestias corrupti perspiciatis obcaecati unde doloribus eveniet mollitia expedita.</Text>
+                        <Text style={{ marginBottom: 10 }}>{hook.data.book?.description}</Text>
                     </View>
-                    <ShowMoreButton />
+                    {
+                        hook.data.book && hook.data.book?.description.length > 100 &&
+                        <ShowMoreButton />
+                    }
+
                     <View style={{ marginBottom: 30 }} />
                     <TitleTabedFlatBooks title="Có thể bạn quan tâm" data={[
                         {

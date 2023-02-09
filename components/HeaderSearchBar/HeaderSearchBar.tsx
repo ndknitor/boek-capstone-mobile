@@ -1,7 +1,6 @@
-import { NavigationContainerProps } from '@react-navigation/native';
 import { Input } from '@rneui/base';
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { TouchableOpacity, View, Image, TextInput, Animated, Easing, NativeSyntheticEvent, TextInputFocusEventData, SafeAreaView } from 'react-native'
+import React, { PropsWithChildren, useEffect} from 'react'
+import { TouchableOpacity, View, Image, SafeAreaView } from 'react-native'
 import searchWhite from "../../assets/icons/search-white.png";
 import arrowBackWhite from "../../assets/icons/arrow-back-white.png";
 import useRouter from '../../libs/hook/useRouter';
@@ -14,6 +13,9 @@ interface HeaderSearchBarProps extends PropsWithChildren {
 }
 function HeaderSearchBar(props: HeaderSearchBarProps) {
     const { canGoBack, goBack } = useRouter();
+    useEffect(() => {
+        console.log(props.onSubmit);
+    },[props.onSubmit]);
     return (
         <SafeAreaView style={{ backgroundColor: primaryColor }}>
             <View style={{

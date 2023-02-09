@@ -3,15 +3,15 @@
     "name": "Boek",
     "slug": "Boek",
     "plugins": [
-        "@react-native-google-signin/google-signin",
-        [
-            "expo-build-properties",
-            {
-                "ios": {
-                    "useFrameworks": "static"
-                }
-            }
-        ]
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -38,7 +38,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.knguyenzzz.Boek"
+      "package": "com.knguyenzzz.Boek",
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

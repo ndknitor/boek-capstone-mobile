@@ -1,5 +1,5 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
-import React, { PropsWithChildren, useContext, useEffect, } from 'react';
+import React, { useContext } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import DrawerLayout from 'react-native-drawer-layout';
@@ -8,7 +8,6 @@ import { ParamListBase } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import filterBlack from "../../../assets/icons/filter-black.png";
 import sortBlack from "../../../assets/icons/sort-black.png";
-import HeaderSearchBar from '../../../components/HeaderSearchBar/HeaderSearchBar';
 import { paletteRed, primaryColor, primaryTint1, primaryTint10 } from '../../../utils/color';
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import SelectedLabel from '../../../components/SelectedLabel/SelectedLabel';
@@ -20,8 +19,7 @@ import PageLoader from '../../../components/PageLoader/PageLoader';
 import { BookFormat } from '../../../objects/enums/BookFormat';
 import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { CampaignFormat } from '../../../objects/enums/CampaignFormat';
-import { SearchPageContext, SearchPageContextProvider } from '../../../components/SearchContextProvider/SearchContextProvider';
-import useAppContext from '../../../context/Context';
+import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -30,34 +28,24 @@ export interface SearchProps {
 }
 function Search(props: SearchProps) {
     return (
-        <SearchPageContextProvider>
-            <Content />
-        </SearchPageContextProvider>
+        <Tab.Navigator screenOptions={{
+            tabBarLabelStyle: {
+                color: primaryColor,
+                fontWeight: "500"
+            },
+            tabBarIndicatorStyle: {
+                backgroundColor: primaryColor
+            },
+            swipeEnabled: false,
+            lazy: true,
+            lazyPlaceholder: () => <ActivityIndicator size="large" style={{ height: "100%" }} />
+        }}>
+            <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
+            <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
+        </Tab.Navigator>
     )
 }
-function Content() {
-    const context = useContext(SearchPageContext);
-    return (
-        <>
-            <HeaderSearchBar onChangeText={context.setSearchValue} value={context.searchValue} />
-            <Tab.Navigator screenOptions={{
-                tabBarLabelStyle: {
-                    color: primaryColor,
-                    fontWeight: "500"
-                },
-                tabBarIndicatorStyle: {
-                    backgroundColor: primaryColor
-                },
-                swipeEnabled: false,
-                lazy: true,
-                lazyPlaceholder: () => <ActivityIndicator size="large" style={{ height: "100%" }} />
-            }}>
-                <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
-                <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
-            </Tab.Navigator>
-        </>
-    );
-}
+
 
 function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
     const hook = useBooksPage(props);
@@ -165,11 +153,14 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                         </ScrollView>
                 }>
                 <ScrollView
+                    stickyHeaderIndices={[0]}
+                    stickyHeaderHiddenOnScroll
                     ref={hook.ref.booksScrollViewRef}
                     scrollEnabled={!hook.loading}
                     style={{
                         backgroundColor: "white",
                     }}>
+                    <StickyHeaderSearchBar />
                     <View style={{
                         marginBottom: 5,
                         width: "100%",
@@ -190,7 +181,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
                                     <MenuOption onSelect={() => alert(`Save`)}>
-                                        <Text style={{ fontSize: 16 }}>Gần đây nhất</Text>
+                                        <Text style={{ fontSize: 16 }}>Mặc định</Text>
                                     </MenuOption>
                                     <MenuOption onSelect={() => alert(`Not called`)}>
                                         <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
@@ -334,9 +325,11 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                     </ScrollView>
                 }>
                 <ScrollView
+                    stickyHeaderIndices={[0]}
+                    stickyHeaderHiddenOnScroll
                     ref={hook.ref.bookFairsScrollViewRef}
-                    style={{ padding: 7, height: "100%", backgroundColor: "white" }}
-                    contentContainerStyle={{ alignItems: "center" }}>
+                    style={{ height: "100%", backgroundColor: "white" }}>
+                    <StickyHeaderSearchBar />
                     <View style={{
                         marginBottom: 5,
                         width: "100%",
@@ -357,28 +350,24 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
                                     <MenuOption onSelect={() => alert(`Save`)}>
-                                        <Text style={{ fontSize: 16 }}>Gần đây nhất</Text>
+                                        <Text style={{ fontSize: 16 }}>Mới nhất</Text>
                                     </MenuOption>
                                     <MenuOption onSelect={() => alert(`Not called`)}>
-                                        <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
-                                    </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)}>
-                                        <Text style={{ fontSize: 16 }}>Giá thấp nhất</Text>
-                                    </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)} >
-                                        <Text style={{ fontSize: 16 }}>Giá cao nhất</Text>
+                                        <Text style={{ fontSize: 16 }}>A-Z</Text>
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>
                         </View>
                     </View>
-                    {
-                        hook.data.campaigns.map(item =>
-                            <View key={Math.random()} style={{ marginBottom: 10 }}>
-                                <BookFairCard campagin={item} />
-                            </View>
-                        )
-                    }
+                    <View style={{ padding: 7 }}>
+                        {
+                            hook.data.campaigns.map(item =>
+                                <View key={Math.random()} style={{ marginBottom: 10 }}>
+                                    <BookFairCard campagin={item} />
+                                </View>
+                            )
+                        }
+                    </View>
                     <View style={{ marginBottom: 10, width: "100%", height: "100%" }}>
                         <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                     </View>

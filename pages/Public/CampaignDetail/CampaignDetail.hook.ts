@@ -24,14 +24,14 @@ export default function useCampaignDetaillPage() {
 
     const onScrollViewScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         if (e.nativeEvent.contentOffset.y) {
-
-            setScrollToTopShowed(true);
-
+            if (!scrollToTopShowed) {
+                setScrollToTopShowed(true);
+            }
         }
         else {
-
-            setScrollToTopShowed(false);
-
+            if (scrollToTopShowed) {
+                setScrollToTopShowed(false);
+            }
         }
     }
 

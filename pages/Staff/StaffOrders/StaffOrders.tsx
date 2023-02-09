@@ -11,13 +11,16 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import FloatActionButton from '../../../components/FloatActionButton/FloatActionButton';
 import range from '../../../libs/functions/range';
 import OrderDetailDrawerLayout from '../../../components/OrderDetailDrawerLayout/OrderDetailDrawerLayout';
+import pushNotification from '../../../libs/functions/pushNotification';
 
 const Tab = createMaterialTopTabNavigator();
 
 function StaffOrders() {
   return (
     <>
-      <FloatActionButton bottom={70} right={10}>
+      <FloatActionButton bottom={70} right={10} onPress={async () => {
+        await pushNotification("Hello", "Dit me may", {"message" : "co cai con cac"});
+      }}>
         <View style={{ height: "100%", justifyContent: "center", alignItems: "center" }}>
           <Image source={addWhite} style={{ width: "50%", height: "50%" }} />
         </View>
@@ -67,9 +70,9 @@ function Content() {
             paddingLeft: 10
           }}
           horizontal
-          data={["Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó",]}
+          data={["Đơn gì đó", "Đơn gì đó nhưng vì gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó",]}
           renderItem={item =>
-            <View style={{ height: "100%", justifyContent: "center", marginRight : 2 }}>
+            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
               <SelectedChip label={item.item} />
             </View>
           } />

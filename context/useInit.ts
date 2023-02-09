@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location';
 import useAsyncEffect from "use-async-effect";
 import appxios, { setAuthorizationBearer } from '../components/AxiosInterceptor';
 import useAuth from '../libs/hook/useAuth';
@@ -9,10 +8,10 @@ import useAppContext from "./Context";
 import auth from '@react-native-firebase/auth';
 import { BaseResponseModel } from '../objects/responses/BaseResponseModel';
 import EndPont from '../utils/endPoints';
-
+import * as Notifications from 'expo-notifications';
 
 export default function useInit() {
-  const { setGeoPosition, geoPosition, setUser } = useAppContext();
+  const { setUser } = useAppContext();
   const { setAuthorize, initLoading, setInitLoading } = useAuth();
   useAsyncEffect(async () => {
     const userJsonString = await AsyncStorage.getItem(StorageKey.user);
@@ -32,19 +31,12 @@ export default function useInit() {
       setAuthorize([user.role.toString()]);
       setAuthorizationBearer(user.accessToken);
     }
-
-    if (geoPosition) {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Permission to access location was denied');
-        return;
-      }
-      const location = await Location.getCurrentPositionAsync({});
-      setGeoPosition(location);
-      console.log(location);
-    }
     if (initLoading) {
       setInitLoading(false);
     }
+    const onPressNotificationListener = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response.notification.request.content.data);
+    });
+    return onPressNotificationListener;
   }, []);
 }
