@@ -55,7 +55,9 @@ const endPont =
         publishers: "/api/publishers",
         languages: "/api/languages",
         provinces: "/api/provinces",
-        districts: "/api/districts"
+        districts: "/api/districts",
+        groups: "/api/groups",
+        organizations : "/api/organizations"
     },
     lead: {
         districts: "/districts",

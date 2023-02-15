@@ -2,7 +2,7 @@ import { ParamListBase } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Button, CheckBox } from '@rneui/base'
 import React from 'react'
-import { TextInput, TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
+import { TextInput, TouchableOpacity, View, Image, Text, StyleSheet, ScrollView } from 'react-native';
 import DateTimePickerInput from '../../../components/DateTimePickerInput/DateTimePickerInput';
 import { getMessage } from '../../../utils/Validators';
 import editIcon from "../../../assets/icons/edit.png";
@@ -20,7 +20,7 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
     return (
         <>
             <PageLoader loading={hook.loading} />
-            <View style={{ height: "100%", marginTop: 70 }}>
+            <ScrollView style={{ height: "100%", marginTop: 70 }}>
                 <View>
                     <View style={{ alignItems: "center", marginBottom: 30 }}>
                         <Text style={{ fontSize: 16, fontWeight: "500" }}>Hãy nhập thông tin cá nhân của bạn</Text>
@@ -235,7 +235,7 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                         <Button onPress={hook.event.onSubmit} buttonStyle={{ height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3" }}>Xác nhận</Button>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </>
 
     )

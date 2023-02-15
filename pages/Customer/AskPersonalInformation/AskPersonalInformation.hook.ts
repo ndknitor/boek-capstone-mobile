@@ -16,10 +16,13 @@ import { District } from "../../../objects/enums/Districts";
 import { Ward } from "../../../objects/enums/Ward";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import useRouter from "../../../libs/hook/useRouter";
+import { SessionStorage } from "../../../utils/SessionStogare";
+import StorageKey from "../../../utils/storageKey";
+import { GroupViewModel } from "../../../objects/viewmodels/Groups/GroupViewModel";
+import { CreateCustomerRequestModel } from "../../../objects/requests/users/Customers/CreateCustomerRequestModel";
 
 export default function useAskPersonalInformationPage(props: StackScreenProps<ParamListBase>) {
 
-    const { setCreateCustomerRequestModel, createCustomerRequestModel } = useAppContext();
     const { replace } = useRouter();
 
     const [loading, setLoading] = useState(false);
@@ -77,19 +80,20 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
         }
         setValidator(v);
         if (validate(v)) {
-            setCreateCustomerRequestModel({
-                idToken : createCustomerRequestModel?.idToken as string,
-                address : {
+            const request = JSON.parse(SessionStorage.getItem(StorageKey.createCustomerRequest) as string) as CreateCustomerRequestModel;
+            SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify({
+                idToken: request.idToken,
+                address: {
                     districtCode: district?.code as number,
-                    provinceCode : province?.code as number,
-                    wardCode : ward?.code as number,
-                    detail : address
+                    provinceCode: province?.code as number,
+                    wardCode: ward?.code as number,
+                    detail: address
                 },
-                Dob : birth,
-                gender : gender,
-                name : name,
-                phone : phone
-            });
+                Dob: birth,
+                gender: gender,
+                name: name,
+                phone: phone
+            }));
             replace("AskGenresWizard");
         }
     }

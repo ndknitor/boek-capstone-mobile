@@ -1,4 +1,5 @@
 const StorageKey = {
-    user: "user"
+    user: "user",
+    createCustomerRequest : "createCustomerRequest"
 }
 export default StorageKey;

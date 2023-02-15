@@ -5,19 +5,12 @@ import { LoginViewModel } from "../objects/viewmodels/Users/LoginViewModel";
 export interface Store {
     user: LoginViewModel | undefined;
     setUser: Dispatch<SetStateAction<LoginViewModel | undefined>>;
-
-    createCustomerRequestModel: CreateCustomerRequestModel | undefined;
-    setCreateCustomerRequestModel: Dispatch<SetStateAction<CreateCustomerRequestModel | undefined>>;
 }
 export const useProvider: () => Store = () => {
     const [user, setUser] = useState<LoginViewModel>();
-    const [createCustomerRequestModel, setCreateCustomerRequestModel] = useState<CreateCustomerRequestModel>();
     return {
         user,
-        setUser,
-
-        createCustomerRequestModel,
-        setCreateCustomerRequestModel
+        setUser
     };
 }
 export const Context = createContext<Store>({} as Store);

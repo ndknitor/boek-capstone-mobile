@@ -11,7 +11,7 @@ interface AskGenresProps {
 }
 function AskGenres(props: AskGenresProps) {
     const { replace } = useRouter();
-    const { searchMessage, onAskGenresSubmit, submitLoader } = useAskGenrePage();
+    const hook = useAskGenrePage();
 
     const mock = [
         "Tình cảm",
@@ -41,29 +41,32 @@ function AskGenres(props: AskGenresProps) {
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn yêu thích thể loại sách nào ?</Text>
-            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent : "center" }}
+            <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
                 {
-                    mock.map(item =>
-                        <View style={{margin : 5}}>
-                            <SelectedChip label={item} />
+                    hook.data.groupsSelect.map(item =>
+                        <View style={{ margin: 5 }}>
+                            <SelectedChip
+                                label={item.name}
+                                onPress={() => hook.event.onGroupsSelected(item)}
+                                selected={hook.input.selectedGroups.find(g => g == item.id) != undefined} />
                         </View>
                     )
                 }
             </ScrollView>
             <Input placeholder="Tìm kiếm thể loại" />
-            <Text style={{ color: "red", marginBottom: 20 }}>{searchMessage}</Text>
+            <Text style={{ color: "red", marginBottom: 20 }}>{hook.searchMessage}</Text>
 
             <View style={{ flexDirection: "row" }}>
                 {
                     props.skiped &&
-                    <Button onPress={() => replace("AskOrganizations")} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: paletteRed }}>
+                    <Button onPress={() => hook.event.onAskGenresSubmit(true)} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: paletteRed }}>
                         Bỏ qua
                     </Button>
                 }
                 <View style={{ marginLeft: 10, marginRight: 10 }} />
-                <StateLoader loading={submitLoader} style={{ width: 120, height: 50 }}>
-                    <Button onPress={onAskGenresSubmit} buttonStyle={{ borderRadius: 12, height: "100%", backgroundColor: primaryColor }}>
+                <StateLoader loading={hook.loading} style={{ width: 120, height: 50 }}>
+                    <Button onPress={() =>  hook.event.onAskGenresSubmit(false)} buttonStyle={{ borderRadius: 12, height: "100%", backgroundColor: primaryColor }}>
                         Xác nhận
                     </Button>
                 </StateLoader>

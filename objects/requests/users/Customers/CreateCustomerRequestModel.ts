@@ -7,6 +7,6 @@ export interface CreateCustomerRequestModel {
     address?: AddressRequestModel;
     Dob?: Date;
     phone?: string;
-    OrganizationIds?: number[];
+    organizationIds?: number[];
     groupIds?: number[];
 }
