@@ -18,8 +18,9 @@ export default function usePersonalInformationPage() {
     const { user } = useAppContext();
 
     const inputNameRef = useRef<TextInput>(null);
-    const inputAddressRef = useRef<SelectDropdown>(null);
+    const inputAddressRef = useRef<TextInput>(null);
     const inputPhoneRef = useRef<TextInput>(null);
+    const inputCityRef = useRef<SelectDropdown>(null);
 
     const [loading, setLoading] = useState(false);
     const [buttonShowed, setButtonShowed] = useState(false);
@@ -27,6 +28,7 @@ export default function usePersonalInformationPage() {
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
     const [phone, setPhone] = useState("");
     const [birth, setBirth] = useState<Date>(new Date());
     const [gender, setGender] = useState(false);
@@ -50,6 +52,9 @@ export default function usePersonalInformationPage() {
             ],
             phone: [
                 required(phone, "Số điện thoại không được trống")
+            ],
+            city : [
+                required(city, "Thành phố không được trống")
             ]
         }
         setValidator(v);
@@ -137,7 +142,7 @@ export default function usePersonalInformationPage() {
                 setButtonShowed(true);
             }
         }
-    }, [name, gender, address, phone]);
+    }, [name, gender, address, phone, city]);
 
     return {
         buttonShowed,
@@ -146,7 +151,8 @@ export default function usePersonalInformationPage() {
         ref: {
             inputNameRef,
             inputAddressRef,
-            inputPhoneRef
+            inputPhoneRef,
+            inputCityRef
         },
         data: {
             email
@@ -164,6 +170,10 @@ export default function usePersonalInformationPage() {
             address: {
                 value: address,
                 set: setAddress
+            },
+            city: {
+                value: city,
+                set: setCity
             },
             phone: {
                 value: phone,

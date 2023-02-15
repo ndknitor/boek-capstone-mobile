@@ -1,24 +1,26 @@
 import React from 'react'
 import { TouchableOpacity, View, Text, Image } from 'react-native'
-import image from "../../assets/hsxv.webp";
 import LinearGradient from 'react-native-linear-gradient';
 import { primaryTint6 } from '../../utils/color';
 import useRouter from '../../libs/hook/useRouter';
+import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
+import moment from 'moment';
+import { dateTimeFormat } from '../../utils/format';
 interface UpcomingBookFairProps {
-    title: string;
-    location: string;
-    dateTime: string;
-    organizations: string;
-    publishers: string;
+    campaign: CampaignViewModel;
 }
 function UpcomingBookFair(props: UpcomingBookFairProps) {
     const { navigate } = useRouter();
     return (
         <View style={{ height: 220, justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity
-                onPress={() => navigate("CampaignDetail") }
+                onPress={() => navigate("CampaignDetail")}
                 style={{ width: "100%", height: "100%", borderBottomColor: primaryTint6, borderBottomWidth: 1 }}>
-                <Image source={image} style={{ flex: 1, width: "100%", height: "100%" }} resizeMethod="resize" resizeMode="contain" />
+                <Image
+                    source={{ uri: props.campaign.imageUrl }}
+                    style={{ flex: 1, width: "100%", height: "100%" }}
+                    resizeMethod="resize"
+                    resizeMode="stretch" />
                 <LinearGradient
                     start={{ x: 0.5, y: -0.1 }}
                     end={{ x: 0.5, y: 1 }}
@@ -28,18 +30,18 @@ function UpcomingBookFair(props: UpcomingBookFairProps) {
                 <View
                     style={{ position: "absolute", width: "100%", height: "100%", alignItems: "center", justifyContent: "center", zIndex: 1 }}>
                     <View style={{ width: "92%", height: "90%", justifyContent: "flex-end" }}>
-                        <Text style={{ fontSize: 22, fontWeight: "500" }}>{props.title}</Text>
+                        <Text style={{ fontSize: 22, fontWeight: "500" }}>{props.campaign.name}</Text>
                         <View style={{ width: "100%", flexDirection: "row" }}>
                             <View style={{ width: "55%" }}>
-                                <Text style={{ marginLeft: 2 }} >Địa điểm: {props.location}</Text>
+                                <Text style={{ marginLeft: 2 }} >Địa điểm: {props.campaign.address}</Text>
                                 <Text style={{ fontSize: 12, marginLeft: 2 }} >
                                     Thời gian:
-                                    <Text style={{ fontWeight: "500" }}> {props.dateTime}</Text>
+                                    <Text style={{ fontWeight: "500" }}> {moment(props.campaign.startDate).format(dateTimeFormat)}</Text>
                                 </Text>
                             </View>
                             <View style={{ width: "45%" }}>
-                                <Text style={{ textAlign: "right" }} >Tổ chức: {props.organizations}</Text>
-                                <Text style={{ textAlign: "right" }}>NXB: {props.publishers}</Text>
+                                <Text style={{ textAlign: "right" }} >Tổ chức: {props.campaign.campaignOrganizations.map(item => item.organization.name).join(", ")}</Text>
+                                <Text style={{ textAlign: "right" }}>NXB: {props.campaign.participants.map(item => item.issuer.user.name).join(", ")}</Text>
                             </View>
                         </View>
                     </View>

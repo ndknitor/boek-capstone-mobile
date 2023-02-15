@@ -53,7 +53,13 @@ const endPont =
         formats: "/api/formats",
         genres: "/api/genres",
         publishers: "/api/publishers",
-        languages: "api/languages",
+        languages: "/api/languages",
+        provinces: "/api/provinces",
+        districts: "/api/districts"
+    },
+    lead: {
+        districts: "/districts",
+        ward: "/wards"
     }
 }
 export default endPont;

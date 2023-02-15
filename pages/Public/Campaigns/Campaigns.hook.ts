@@ -1,10 +1,47 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import appxios from "../../../components/AxiosInterceptor";
+import { CustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CustomerCampaignMobileViewModel";
+import { UnhierarchicalCustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/UnhierarchicalCustomerCampaignMobileViewModel";
+import endPont from "../../../utils/endPoints";
 
 export default function useCampaignsPage() {
+    const onGoingTitle = "Bắt đầu hội sách";
     const [loading, setLoading] = useState(false);
-    //const [onGoingCampagins, setOnGoingCampagins] = useState(second)
+    const [refreshing, setRefreshing] = useState(false);
+    const [upCampaginsContainer, setUpCampaginsContainer] = useState<CustomerCampaignMobileViewModel>();
 
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        await getCampaigns();
+        setRefreshing(false);
+    }, []);
+
+    const getCampaigns = async () => {
+        setLoading(true);
+        await appxios.get<CustomerCampaignMobileViewModel>(endPont.public.campaigns.mobile.customers)
+            .then(response => {
+                console.log(response.data);
+                setUpCampaginsContainer(response.data);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
+    useEffect(() => {
+        getCampaigns();
+    }, []);
     return {
-        loading
+        loading,
+        scrollViewRefresh: {
+            refreshing,
+            onRefresh
+        },
+        const: {
+            onGoingTitle
+        },
+        data: {
+            upCampaginsContainer
+        }
     }
 }

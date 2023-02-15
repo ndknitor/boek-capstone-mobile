@@ -15,6 +15,7 @@ import { Role } from "../../../objects/enums/Role";
 import { useState } from "react";
 
 export default function useProfilePage(props: ProfileProps) {
+    const { setCreateCustomerRequestModel } = useAppContext();
     const { navigate, replace } = useRouter();
     const { setUser } = useAppContext();
     const { authenticated, setAuthorize } = useAuth();
@@ -64,23 +65,14 @@ export default function useProfilePage(props: ProfileProps) {
             console.log(loginResponse.data);
             return loginResponse.data.data;
         }
-        const createCustomerResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.users.index, request);
-        console.log(createCustomerResponse.data);
-        if (createCustomerResponse.status == 200) {
-            await loginSuccess(createCustomerResponse.data.data);
-            setLoading(false);
+        else {
+            setCreateCustomerRequestModel({idToken : idToken});
             replace("AskPersonalInformation");
-            return loginResponse.data.data;
         }
-        Toast.show({
-            type: "error",
-            text1: "Đăng nhập thất bại",
-            text2: "Không thể đăng nhập cho bạn"
-        });
         setLoading(false);
-        return undefined;
     }
     const loginSuccess = async (user: LoginViewModel) => {
+        setLoading(false);
         setUser(user);
         await AsyncStorage.setItem(StorageKey.user, JSON.stringify(user));
         setAuthorizationBearer(user.accessToken);

@@ -11,14 +11,14 @@ function Header(props: HeaderProps) {
     return (
         <SafeAreaView style={{ backgroundColor: primaryColor }}>
             <View style={{
-                height: 60,
+                height: 65,
                 width: "98%",
                 flexDirection: "row",
             }}>
                 <View
                     style={{
-                        //borderWidth: 1,
-                        width: canGoBack() ? "10%" : 0,
+                        borderWidth: 1,
+                        width: canGoBack() ? "15%" : 0,
                         height: "100%"
                     }}>
                     <TouchableOpacity
@@ -35,7 +35,7 @@ function Header(props: HeaderProps) {
                 <View
                     style={{
                         //borderWidth: 1,
-                        width: "80%",
+                        width: "75%",
                         height: "100%",
                         justifyContent: "center",
                         paddingLeft: 15

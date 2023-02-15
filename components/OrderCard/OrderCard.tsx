@@ -54,9 +54,9 @@ function OrderCard() {
                             width: "45%",
                             justifyContent: "center"
                         }}>
-                            <Text style={{ fontSize: 16, fontWeight: "600" }}>{item.name}</Text>
+                            <Text style={{ fontSize: 16, fontWeight: "600" }}>Thao túng thị trường rau sạch</Text>
                             <Text>Số lượng : 2</Text>
-                            <Text style={{ color: paletteGrayShade2 }}>{item.issuer.user.name}</Text>
+                            <Text style={{ color: paletteGrayShade2 }}>BIZBOOK</Text>
                         </View>
                         <View style={{
                             //borderWidth: 1,

@@ -18,7 +18,7 @@ function StickyHeaderSearchBar(props: StickyHeaderSearchBarProps) {
                     width: "90%",
                     flexDirection: "row",
                 }}>
-                    <View style={{ width: "85%" }}>
+                    <View style={{ width: "90%" }}>
                         <Input
                             onSubmitEditing={props.onSubmit}
                             value={props.value}
@@ -33,9 +33,9 @@ function StickyHeaderSearchBar(props: StickyHeaderSearchBarProps) {
                                 borderBottomColor: "white"
                             }} />
                     </View>
-                    <View style={{ width: "15%", paddingTop: 5 }}>
+                    <View style={{ width: "10%", paddingTop: 5 }}>
                         <TouchableOpacity onPress={props.onSubmit} style={{ height: "100%" }}>
-                            <Image source={searchWhite} style={{ width: 35 }} resizeMode="contain" />
+                            <Image source={searchWhite} style={{ width: 25 }} resizeMode="contain" />
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -102,10 +102,30 @@ function PersonalInformation() {
             <Text>Địa chỉ:</Text>
           </View>
           <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+            <TextInput
+              ref={hook.ref.inputAddressRef}
+              placeholder='Chưa có thông tin'
+              value={hook.input.city.value}
+              onChangeText={hook.input.city.set}
+              style={{ textAlign: "right" }} />
+            <Text style={{ color: "red" }}>{getMessage(hook.validator, "name")}</Text>
+          </View>
+          <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+            <TouchableOpacity onPress={() => hook.ref.inputAddressRef.current?.focus()}>
+              <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+            <Text>Thành phố:</Text>
+          </View>
+          <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
             <View style={{ alignItems: "flex-end" }}>
               <SelectDropdown
                 defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
-                ref={hook.ref.inputAddressRef}
+                ref={hook.ref.inputCityRef}
                 renderDropdownIcon={() => <></>}
                 buttonStyle={{ backgroundColor: "transparent", width: "100%", justifyContent: "flex-end" }}
                 buttonTextStyle={{
@@ -131,7 +151,7 @@ function PersonalInformation() {
             <Text style={{ color: "red" }}>{getMessage(hook.validator, "address")}</Text>
           </View>
           <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => hook.ref.inputAddressRef.current?.openDropdown()}>
+            <TouchableOpacity onPress={() => hook.ref.inputCityRef.current?.openDropdown()}>
               <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
             </TouchableOpacity>
           </View>
@@ -187,6 +207,34 @@ const styles = StyleSheet.create({
     width: 126,
     borderRadius: 9999,
     overflow: "hidden"
+  },
+  label: {
+    borderWidth: 1,
+    width: "30%",
+    height: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    paddingLeft: 10,
+    paddingTop: 5
+  },
+  inputContainer: {
+    //borderWidth: 1,
+    width: "60%",
+    height: "100%",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    paddingRight: 20
+  },
+  imageContainer: {
+    //borderWidth: 1,
+    width: "100%",
+    height: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  validationMessage:
+  {
+    color: "red"
   }
 });
 

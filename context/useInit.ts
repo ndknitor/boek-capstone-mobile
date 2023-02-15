@@ -18,18 +18,23 @@ export default function useInit() {
     if (auth().currentUser) {
       let user: LoginViewModel;
       if (userJsonString) {
+        console.log(userJsonString);
         user = JSON.parse(userJsonString);
       }
       else {
         const request = {
           idToken: await auth().currentUser?.getIdToken()
         };
+        //        console.log(request);
+
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
-        user = loginResponse.data.data;
+        if (loginResponse.status == 200) {
+          user = loginResponse.data.data;
+          setUser(user);
+          setAuthorize([user.role.toString()]);
+          setAuthorizationBearer(user.accessToken);
+        }
       }
-      setUser(user);
-      setAuthorize([user.role.toString()]);
-      setAuthorizationBearer(user.accessToken);
     }
     if (initLoading) {
       setInitLoading(false);

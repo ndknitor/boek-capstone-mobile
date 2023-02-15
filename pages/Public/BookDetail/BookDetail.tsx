@@ -10,10 +10,9 @@ import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { mockBooks } from '../../../utils/mock';
 import formatNumber from '../../../libs/functions/formatNumber';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import {  StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
 import PageLoader from '../../../components/PageLoader/PageLoader';
-
 
 function BookDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useBookDetailPage(props);
@@ -35,26 +34,38 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                 </View>
                 <View style={{ padding: 10, paddingTop: 20 }}>
                     <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{hook.data.book?.title}</Text>
-                    <Text style={{ fontSize: 16 }}>Thể loại: {hook.data.book?.book?.genre.name}</Text>
+                    {
+                        hook.data.book && hook.data.book.book?.genre &&
+                        <Text style={{ fontSize: 16 }}>Thể loại: {hook.data.book?.book?.genre.name}</Text>
+                    }
 
                     <View style={{ justifyContent: 'flex-start', alignItems: "flex-end", marginBottom: 5 }}>
                         <Text style={{ fontSize: 16 }}>Có <Text style={{ color: primaryColor, fontWeight: "600" }}>69 </Text>giá khác</Text>
                     </View>
+
                     <View style={{ marginBottom: 20, flexDirection: "row" }}>
                         <View style={{ width: "40%", alignItems: "flex-start", justifyContent: "center" }}>
                             <Text style={{ color: palettePink, fontSize: 20, fontWeight: "700" }}>{formatNumber(hook.data.book?.salePrice)} đ</Text>
-                            <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(hook.data.book?.book?.coverPrice)} đ</Text>
+                            {
+                                hook.data.book?.book?.coverPrice &&
+                                <Text style={{ color: paletteGray, fontSize: 18, textDecorationLine: "line-through" }}>{formatNumber(hook.data.book?.book?.coverPrice)} đ</Text>
+                            }
                         </View>
 
 
                         <View style={{ width: "30%", alignItems: "center", justifyContent: "center" }}>
                             {
-                                hook.data.book?.discount &&
-                                <View style={{ alignItems: "flex-start", justifyContent: "flex-start" }}>
-                                    <View style={{ width: "90%", backgroundColor: palettePink, alignItems: "center" }}>
-                                        <Text style={{ color: "white", fontSize: 20, padding: 7 }}>-{hook.data.book?.discount}%</Text>
+                                hook.data.book?.discount ?
+                                    <View style={{
+                                        alignItems: "flex-start",
+                                        justifyContent: "flex-start"
+                                    }}>
+                                        <View style={{ width: "90%", backgroundColor: palettePink, alignItems: "center" }}>
+                                            <Text style={{ color: "white", fontSize: 20, padding: 7 }}>-{hook.data.book.discount}%</Text>
+                                        </View>
                                     </View>
-                                </View>
+                                    :
+                                    null
                             }
                         </View>
 
@@ -85,9 +96,12 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                         </View>
                         <View style={{ width: "80%", justifyContent: "center" }}>
                             <Text style={{ fontSize: 18, fontWeight: "600" }}>Tác giả</Text>
+                            <Text style={{ fontSize: 16 }}>{hook.data.book?.book?.bookAuthors.map(item => item.author.name).join(", ")}</Text>
                         </View>
                     </View>
+
                     <Text style={{ marginBottom: 30, fontSize: 22, fontWeight: "600" }}>Thông tin chi tiết</Text>
+
                     <View>
                         <LinearGradient
                             start={{ x: 0.5, y: 0.4 }}
@@ -117,10 +131,13 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                             <Text style={{ fontSize: 16, width: "75%" }}>xxxxxxxxxxxxx</Text>
                         </View>
                     </View>
+
                     <ShowMoreButton />
+
                     <View style={{ marginBottom: 30 }} />
 
                     <Text style={{ marginBottom: 5, fontSize: 22, fontWeight: "600" }}>Mô tả sản phẩm</Text>
+
                     <View>
                         <LinearGradient
                             start={{ x: 0.5, y: 0 }}
@@ -139,7 +156,6 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                         hook.data.book && hook.data.book?.description.length > 100 &&
                         <ShowMoreButton />
                     }
-
                     <View style={{ marginBottom: 30 }} />
                     <TitleTabedFlatBooks title="Có thể bạn quan tâm" data={[
                         {
@@ -155,6 +171,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
             </ScrollView>
             <Button buttonStyle={{ backgroundColor: primaryColor, padding: 12 }}>Chọn mua</Button>
         </>
+
     )
 }
 
