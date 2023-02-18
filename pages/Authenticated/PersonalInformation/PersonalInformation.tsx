@@ -1,5 +1,5 @@
 import { Button, CheckBox } from '@rneui/themed';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import editIcon from "../../../assets/icons/edit.png";
 import usePersonalInformationPage from './PersonalInformation.hook';
 import DateTimePickerInput from "../../../components/DateTimePickerInput/DateTimePickerInput";
@@ -8,9 +8,10 @@ import { Role } from "../../../objects/enums/Role";
 import { getMessage } from '../../../utils/Validators';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import SelectDropdown from 'react-native-select-dropdown';
-import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { paletteGrayShade5 } from '../../../utils/color';
 import useAppContext from '../../../context/Context';
+import { Province } from '../../../objects/enums/Province';
+import { District } from '../../../objects/enums/Districts';
 
 function PersonalInformation() {
   const hook = usePersonalInformationPage();
@@ -19,181 +20,224 @@ function PersonalInformation() {
     <>
       <PageLoader loading={hook.loading} />
       <View>
-        <View style={styles.headerContainer}>
+        <View style={{
+              backgroundColor: "#1E293B",
+              justifyContent: 'center',
+              height: 180
+        }}>
           <View style={styles.avatarWarp}>
             <View style={styles.avatarRing}>
               <Image source={{ uri: user?.imageUrl }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
-
             </View>
           </View>
         </View>
-        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
-          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-            <Text>Email:</Text>
-          </View>
-          <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <Text>{hook.data.email}</Text>
-          </View>
-        </View>
 
-        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
-          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-            <Text>Họ và tên:</Text>
-          </View>
-          <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <TextInput
-              ref={hook.ref.inputNameRef}
-              placeholder='Chưa có thông tin'
-              value={hook.input.name.value}
-              onChangeText={hook.input.name.set}
-              style={{ textAlign: "right" }} />
-            <Text style={{ color: "red" }}>{getMessage(hook.validator, "name")}</Text>
-          </View>
-          <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => hook.ref.inputNameRef.current?.focus()}>
-              <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <ScrollView style={{
+        }}>
 
-        <AuthorizeView roles={[Role.customer.toString()]}>
-          <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 60 }}>
             <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-              <Text>Giới tính:</Text>
+              <Text>Email:</Text>
             </View>
-            <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "flex-end", flexDirection: "row" }}>
-              <CheckBox
-                title="Nữ"
-                checked={!hook.input.gender.value}
-                center
-                checkedIcon="dot-circle-o"
-                onPress={() => hook.input.gender.set(false)}
-                uncheckedIcon="circle-o"
-                containerStyle={{ backgroundColor: "transparent" }} />
-              <CheckBox
-                title="Nam"
-                checked={hook.input.gender.value}
-                center
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
-                onPress={() => hook.input.gender.set(true)}
-                containerStyle={{ backgroundColor: "transparent" }} />
+            <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <Text>{hook.data.email}</Text>
             </View>
           </View>
 
-          <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 60 }}>
             <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-              <Text>Ngày sinh:</Text>
+              <Text>Họ và tên:</Text>
             </View>
-            <View style={{ width: "70%", height: "100%" }}>
-              <DateTimePickerInput
-                value={hook.input.birth.value}
-                onConfirm={hook.input.birth.set}
-                maximumDate={new Date()}
-                icon={() => <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />}
-                hideReset />
-              <Text style={{ color: "red" }}>{getMessage(hook.validator, "dob")}</Text>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <TextInput
+                ref={hook.ref.inputNameRef}
+                placeholder='Chưa có thông tin'
+                value={hook.input.name.value}
+                onChangeText={hook.input.name.set}
+                style={{ textAlign: "right" }} />
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "name")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputNameRef.current?.focus()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
             </View>
           </View>
-        </AuthorizeView>
 
-        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
-          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-            <Text>Địa chỉ:</Text>
-          </View>
-          <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <TextInput
-              ref={hook.ref.inputAddressRef}
-              placeholder='Chưa có thông tin'
-              value={hook.input.city.value}
-              onChangeText={hook.input.city.set}
-              style={{ textAlign: "right" }} />
-            <Text style={{ color: "red" }}>{getMessage(hook.validator, "name")}</Text>
-          </View>
-          <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => hook.ref.inputAddressRef.current?.focus()}>
-              <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
-          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-            <Text>Thành phố:</Text>
-          </View>
-          <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <View style={{ alignItems: "flex-end" }}>
-              <SelectDropdown
-                defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
-                ref={hook.ref.inputCityRef}
-                renderDropdownIcon={() => <></>}
-                buttonStyle={{ backgroundColor: "transparent", width: "100%", justifyContent: "flex-end" }}
-                buttonTextStyle={{
-                  fontSize: 14,
-                  textAlign: "right",
-                  color: hook.input.address.value ? "black" : paletteGrayShade5
-                }}
-                defaultButtonText="Chọn địa điểm"
-                onChangeSearchInputText={() => { console.log("Hello") }}
-                data={Object.values(GeoLocate).filter(l => typeof (l) == "string")}
-                onSelect={(selectedItem, index) => {
-                  hook.input.address.set(selectedItem as string);
-                  console.log(hook.input.address.value);
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  return item
-                }}
-              />
+          <AuthorizeView roles={[Role.customer.toString()]}>
+            <View style={{ flexDirection: "row", maxWidth: "100%", height: 60 }}>
+              <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+                <Text>Giới tính:</Text>
+              </View>
+              <View style={{ width: "70%", height: "100%", alignItems: "flex-end", justifyContent: "flex-end", flexDirection: "row" }}>
+                <CheckBox
+                  title="Nữ"
+                  checked={!hook.input.gender.value}
+                  center
+                  checkedIcon="dot-circle-o"
+                  onPress={() => hook.input.gender.set(false)}
+                  uncheckedIcon="circle-o"
+                  containerStyle={{ backgroundColor: "transparent" }} />
+                <CheckBox
+                  title="Nam"
+                  checked={hook.input.gender.value}
+                  center
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  onPress={() => hook.input.gender.set(true)}
+                  containerStyle={{ backgroundColor: "transparent" }} />
+              </View>
             </View>
-            <Text style={{ color: "red" }}>{getMessage(hook.validator, "address")}</Text>
-          </View>
-          <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => hook.ref.inputCityRef.current?.openDropdown()}>
-              <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 60 }}>
-          <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
-            <Text>Số điện thoại:</Text>
+            <View style={{ flexDirection: "row", maxWidth: "100%", height: 60 }}>
+              <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+                <Text>Ngày sinh:</Text>
+              </View>
+              <View style={{ width: "70%", height: "100%" }}>
+                <DateTimePickerInput
+                  value={hook.input.birth.value}
+                  onConfirm={hook.input.birth.set}
+                  maximumDate={new Date()}
+                  icon={() => <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />}
+                  hideReset />
+                <Text style={{ color: "red" }}>{getMessage(hook.validator, "dob")}</Text>
+              </View>
+            </View>
+          </AuthorizeView>
+
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 70 }}>
+            <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+              <Text>Tỉnh:</Text>
+            </View>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <View style={{ alignItems: "flex-end", height: "55%" }}>
+                <SelectDropdown
+                  ref={hook.ref.inputProvinceRef}
+                  renderDropdownIcon={() => <></>}
+                  buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  defaultButtonText="Chọn địa điểm"
+                  onChangeSearchInputText={() => { console.log("Hello") }}
+                  data={hook.data.provincesSelect}
+                  onSelect={(selectedItem, index) => hook.event.onProvinceSelected(selectedItem)}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return (selectedItem as Province).name
+                  }}
+                  rowTextForSelection={(item, index) => {
+                    return (item as Province).name
+                  }}
+                />
+              </View>
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "province")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputProvinceRef.current?.openDropdown()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
-            <TextInput
-              placeholder="Chưa có thông tin"
-              ref={hook.ref.inputPhoneRef}
-              keyboardType="numeric"
-              value={hook.input.phone.value}
-              onChangeText={hook.input.phone.set}
-              style={{ textAlign: "right" }} />
-            <Text style={{ color: "red" }}>{getMessage(hook.validator, "phone")}</Text>
+
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 70 }}>
+            <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+              <Text>Quận:</Text>
+            </View>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <View style={{ alignItems: "flex-end", height: "55%" }}>
+                <SelectDropdown
+                  onFocus={hook.event.onDistrictSelectedFocus}
+                  ref={hook.ref.inputDistrictRef}
+                  //defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
+                  renderDropdownIcon={() => <></>}
+                  buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  defaultButtonText="Chọn địa điểm"
+                  onChangeSearchInputText={() => { console.log("Hello") }}
+                  data={hook.data.districtSelect}
+                  onSelect={(selectedItem, index) => hook.event.onDistrictSelected(selectedItem)}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return (selectedItem as District).name
+                  }}
+                  rowTextForSelection={(item, index) => {
+                    return (item as District).name
+                  }}
+                />
+              </View>
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "district")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputDistrictRef.current?.openDropdown()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
-            <TouchableOpacity onPress={() => hook.ref.inputPhoneRef.current?.focus()}>
-              <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
-            </TouchableOpacity>
+
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 70 }}>
+            <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+              <Text>Phường:</Text>
+            </View>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <View style={{ alignItems: "flex-end", height: "55%" }}>
+                <SelectDropdown
+                  onFocus={hook.event.onWardSelectedFocus}
+                  ref={hook.ref.inputWardRef}
+                  //defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
+                  renderDropdownIcon={() => <></>}
+                  buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  defaultButtonText="Chọn địa điểm"
+                  onChangeSearchInputText={() => { console.log("Hello") }}
+                  data={hook.data.wardSelect}
+                  onSelect={(selectedItem, index) => hook.event.onWardSelected(selectedItem)}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return (selectedItem as District).name
+                  }}
+                  rowTextForSelection={(item, index) => {
+                    return (item as District).name
+                  }}
+                />
+              </View>
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "ward")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputWardRef.current?.openDropdown()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        {
-          hook.buttonShowed &&
-          <View style={{ alignItems: "center" }}>
-            <Button onPress={hook.event.onSubmit} buttonStyle={{ marginTop: 80, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3" }}>Lưu thay đổi</Button>
+
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 70 }}>
+            <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+              <Text>Số điện thoại:</Text>
+            </View>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <TextInput
+                placeholder="Chưa có thông tin"
+                ref={hook.ref.inputPhoneRef}
+                keyboardType="numeric"
+                value={hook.input.phone.value}
+                onChangeText={hook.input.phone.set}
+                style={{ textAlign: "right" }} />
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "phone")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputPhoneRef.current?.focus()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
+            </View>
           </View>
-        }
+          {
+            hook.buttonShowed &&
+            <View style={{ alignItems: "center" }}>
+              <Button onPress={hook.event.onSubmit} buttonStyle={{ marginTop: 5, height: 40, borderRadius: 24, minWidth: 224, minHeight: 56, backgroundColor: "#3730A3" }}>Lưu thay đổi</Button>
+            </View>
+          }
+        </ScrollView>
       </View>
     </>
 
   )
 }
 const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: "#1E293B",
-    justifyContent: 'center',
-    height: 180
-  },
   avatarWarp: {
     minWidth: "25%",
     flex: 1,

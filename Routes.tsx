@@ -74,7 +74,7 @@ function StackNavigator() {
       <Stack.Screen options={{ title: "Thông tin cá nhân" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
       <Stack.Screen options={{ title: "Đơn hàng" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
       <Stack.Screen options={{ title: "Chi tiết đơn hàng" }} name={"OrderDetail"}>{() => <OrderDetail />}</Stack.Screen>
-      <Stack.Screen options={{ title: "" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Thể loại sách yêu thích" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
       
       <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>

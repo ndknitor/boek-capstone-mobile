@@ -9,6 +9,7 @@ export default function useCampaignsPage() {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [upCampaginsContainer, setUpCampaginsContainer] = useState<CustomerCampaignMobileViewModel>();
+    const [onGoingCampagins, setOnGoingCampagins] = useState<UnhierarchicalCustomerCampaignMobileViewModel>();
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
@@ -20,8 +21,14 @@ export default function useCampaignsPage() {
         setLoading(true);
         await appxios.get<CustomerCampaignMobileViewModel>(endPont.public.campaigns.mobile.customers)
             .then(response => {
-                console.log(response.data);
-                setUpCampaginsContainer(response.data);
+                //console.log(response.data);
+                const data = response.data;
+                const onGoing = data.unhierarchicalCustomerCampaigns.find(c => c.title == "Hội sách diễn ra");
+                if (onGoing) {
+                    setOnGoingCampagins(onGoing);
+                    data.unhierarchicalCustomerCampaigns = data.unhierarchicalCustomerCampaigns.filter(c => c != onGoing);
+                }
+                setUpCampaginsContainer(data);
             })
             .finally(() => {
                 setLoading(false);
@@ -41,6 +48,7 @@ export default function useCampaignsPage() {
             onGoingTitle
         },
         data: {
+            onGoingCampagins,
             upCampaginsContainer
         }
     }

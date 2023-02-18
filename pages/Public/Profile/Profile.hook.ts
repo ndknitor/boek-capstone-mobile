@@ -96,6 +96,7 @@ export default function useProfilePage(props: ProfileProps) {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             await GoogleSignin.signOut();
+            //await auth().signOut();
             let user = {} as User;
             user = await GoogleSignin.signIn();
             const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);

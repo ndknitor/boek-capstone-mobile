@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import { ScrollView, Image } from 'react-native'
 import trackChange from "../../../assets/icons/track-changes-white.png";
 import corporateFlare from "../../../assets/icons/corporate-fare-white.png";
-import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { useTrackedOrganizationsPage, useUnTrackedOrganizationsPage } from './Organizations.hook';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { primaryColor, primaryTint1 } from '../../../utils/color';
 import OrganizationView from '../../../components/OrganizationView/OrganizationView';
 import Paging from '../../../components/Paging/Paging';
+import PageLoader from '../../../components/PageLoader/PageLoader';
+import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,27 +40,6 @@ function Organizations() {
                 }}
                 name="TrackedOrganizations"
                 component={TrackedOrganizations}></Tab.Screen>
-            {/* <TabView
-                swipeEnabled={false}
-                tabBarPosition='bottom'
-                renderTabBar={(props) =>
-                    <TabBar
-                        {...props}
-                        indicatorContainerStyle={{ backgroundColor: primaryColor }}
-                        indicatorStyle={{ backgroundColor: "white" }}
-                        inactiveColor={"white"}
-                        activeColor={"white"}
-                        labelStyle={{ fontSize: 10 }}
-                        renderIcon={(e) => getTabBarIcon(e)}
-                    />}
-                navigationState={{ index, routes }}
-                renderScene={
-                    SceneMap({
-                        0: UnTrackedOrganizations,
-                        1: TrackedOrganizations,
-                    })
-                }
-                onIndexChange={setIndex} /> */}
         </Tab.Navigator>
     )
 }
@@ -68,16 +47,25 @@ function UnTrackedOrganizations() {
     const hook = useUnTrackedOrganizationsPage();
     return (
         <>
-            <ScrollView>
-                <OrganizationView />
-                <OrganizationView tracked />
-                <OrganizationView />
-                <OrganizationView />
-                <OrganizationView />
-                <OrganizationView />
-                <OrganizationView />
-                <OrganizationView />
-                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
+            <PageLoader loading={hook.loading} />
+            <ScrollView
+                ref={hook.ref.scrollViewRef}
+                stickyHeaderHiddenOnScroll
+                stickyHeaderIndices={[0]}>
+                <StickyHeaderSearchBar
+                    onSubmit={() => hook.event.getOrganization(1)}
+                    onChangeText={hook.input.search.set}
+                    value={hook.input.search.value} />
+                {
+                    hook.data.organizations.map((item, index) =>
+                        <OrganizationView
+                            loading={hook.buttonsLoading[index]}
+                            onTrackPress={() => hook.event.onToggleTrackPress(item, index)}
+                            organization={item}
+                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.id) != undefined} />
+                    )
+                }
+                <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
             </ScrollView>
         </>
     )
@@ -86,13 +74,17 @@ function TrackedOrganizations() {
     const hook = useTrackedOrganizationsPage();
     return (
         <>
+            <PageLoader loading={hook.loading} />
             <ScrollView>
-                <OrganizationView tracked />
-                <OrganizationView tracked />
-                <OrganizationView tracked />
-                <OrganizationView tracked />
-                <OrganizationView tracked />
-                <Paging currentPage={hook.currentPage} maxPage={hook.maxPage} onPageNavigation={hook.onPageNavigation} />
+                {
+                    hook.data.organizations.map((item, index) =>
+                        <OrganizationView
+                            onTrackPress={() => hook.event.onTrackPress(item, index)}
+                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.id) != undefined}
+                            loading={hook.buttonsLoading[index]}
+                            organization={item} />
+                    )
+                }
             </ScrollView>
         </>
 

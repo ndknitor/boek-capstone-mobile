@@ -33,6 +33,7 @@ export default function useInit() {
           setUser(user);
           setAuthorize([user.role.toString()]);
           setAuthorizationBearer(user.accessToken);
+          console.log(user.accessToken);
         }
       }
     }

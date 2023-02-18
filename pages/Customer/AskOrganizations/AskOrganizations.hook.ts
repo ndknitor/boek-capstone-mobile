@@ -7,6 +7,8 @@ import useRouter from "../../../libs/hook/useRouter";
 import { CreateCustomerRequestModel } from "../../../objects/requests/users/Customers/CreateCustomerRequestModel";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
+import { CustomerOrganizationViewModel } from "../../../objects/viewmodels/CustomerOrganizations/CustomerOrganizationViewModel";
+import { OwnedCustomerOrganizationViewModel } from "../../../objects/viewmodels/CustomerOrganizations/OwnedCustomerOrganizationViewModel";
 import { OrganizationViewModel } from "../../../objects/viewmodels/Organizations/OrganizationViewModel";
 import { LoginViewModel } from "../../../objects/viewmodels/Users/LoginViewModel";
 import endPont from "../../../utils/endPoints";
@@ -24,6 +26,19 @@ export default function useAskOrganizationsPage() {
 
     const [seletedOrganization, setSeletedOrganization] = useState<number[]>([]);
 
+    const getOrganizations = (name: string) => {
+        setLoading(true);
+        const query = new URLSearchParams();
+        query.append("Name", name);
+        appxios.get<BaseResponsePagingModel<OrganizationViewModel>>(`${endPont.public.organizations.index}`).then(response => {
+            console.log(response);
+            
+            setOrganizationsSelect(response.data.data);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
     const onOrganizationsSeleted = (organization: OrganizationViewModel) => {
         if (seletedOrganization.find(g => g == organization.id)) {
             setSeletedOrganization(seletedOrganization.filter(g => g != organization.id));
@@ -37,8 +52,7 @@ export default function useAskOrganizationsPage() {
         if (!skiped) {
             request.organizationIds = seletedOrganization;
         }
-        console.log(request);
-        
+        setLoading(false);
         appxios.post<BaseResponseModel<LoginViewModel>>(endPont.users.index, request).then(async response => {
             console.log(response);
 
@@ -49,13 +63,13 @@ export default function useAskOrganizationsPage() {
                 setAuthorize([response.data.data.role.toString()]);
                 replace("Index");
             }
+        }).finally(() => {
+            setLoading(true);
         });
     }
 
     useEffect(() => {
-        appxios.get<BaseResponsePagingModel<OrganizationViewModel>>(`${endPont.public.organizations}`).then(response => {
-            setOrganizationsSelect(response.data.data);
-        });
+        getOrganizations("");
     }, []);
     return {
         loading,

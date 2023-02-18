@@ -10,7 +10,7 @@ import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
 import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import { mockBooks } from '../../../utils/mock';
 import formatNumber from '../../../libs/functions/formatNumber';
-import {  StackScreenProps } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 
@@ -79,26 +79,29 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                         </View>
                     </View>
 
-                    <View style={{ marginBottom: 20, flexDirection: "row" }}>
-                        <View style={{ width: "20%", justifyContent: 'center' }}>
-                            <View style={{
-                                borderRadius: 999,
-                                overflow: "hidden",
-                                width: 60,
-                                height: 60
-                            }}>
-                                <Image
-                                    source={avatar}
-                                    resizeMode="cover"
-                                    style={{ width: 60, height: 60 }} />
-                            </View>
+                    {
+                        hook.data.book?.book?.bookAuthors &&
+                        <View style={{ marginBottom: 20, flexDirection: "row" }}>
+                            <View style={{ width: "20%", justifyContent: 'center' }}>
+                                <View style={{
+                                    borderRadius: 999,
+                                    overflow: "hidden",
+                                    width: 60,
+                                    height: 60
+                                }}>
+                                    <Image
+                                        source={avatar}
+                                        resizeMode="cover"
+                                        style={{ width: 60, height: 60 }} />
+                                </View>
 
+                            </View>
+                            <View style={{ width: "80%", justifyContent: "center" }}>
+                                <Text style={{ fontSize: 18, fontWeight: "600" }}>Tác giả</Text>
+                                <Text style={{ fontSize: 16 }}>{hook.data.book?.book?.bookAuthors.map(item => item.author.name).join(", ")}</Text>
+                            </View>
                         </View>
-                        <View style={{ width: "80%", justifyContent: "center" }}>
-                            <Text style={{ fontSize: 18, fontWeight: "600" }}>Tác giả</Text>
-                            <Text style={{ fontSize: 16 }}>{hook.data.book?.book?.bookAuthors.map(item => item.author.name).join(", ")}</Text>
-                        </View>
-                    </View>
+                    }
 
                     <Text style={{ marginBottom: 30, fontSize: 22, fontWeight: "600" }}>Thông tin chi tiết</Text>
 

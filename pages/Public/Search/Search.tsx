@@ -1,5 +1,4 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useContext } from 'react';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import DrawerLayout from 'react-native-drawer-layout';
@@ -45,7 +44,6 @@ function Search(props: SearchProps) {
         </Tab.Navigator>
     )
 }
-
 
 function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
     const hook = useBooksPage(props);
@@ -160,7 +158,10 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                     style={{
                         backgroundColor: "white",
                     }}>
-                    <StickyHeaderSearchBar />
+                    <StickyHeaderSearchBar
+                        onChangeText={hook.input.search.set}
+                        value={hook.input.search.value}
+                        onSubmit={hook.event.onSearchSubmit} />
                     <View style={{
                         marginBottom: 5,
                         width: "100%",

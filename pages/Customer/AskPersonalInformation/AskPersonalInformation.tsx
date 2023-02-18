@@ -135,7 +135,6 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                         </View>
                     </View>
 
-
                     <View style={{ flex: 1, flexDirection: "row", maxWidth: "100%", minHeight: 70 }}>
                         <View style={{ width: "30%", height: "60%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
                             <Text>Phường: <Text style={{ color: "red" }}>*</Text></Text>

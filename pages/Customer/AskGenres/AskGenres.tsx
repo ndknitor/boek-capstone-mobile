@@ -2,42 +2,15 @@ import { Button, Input } from '@rneui/themed'
 import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import SelectedChip from '../../../components/SeletedChip/SelectedChip';
-import StateLoader from '../../../components/StateLoader/StateLoader';
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteRed, primaryColor } from '../../../utils/color';
 import useAskGenrePage from './AskGenres.hook'
-interface AskGenresProps {
+export  interface AskGenresProps {
     skiped?: boolean;
 }
 function AskGenres(props: AskGenresProps) {
     const { replace } = useRouter();
-    const hook = useAskGenrePage();
-
-    const mock = [
-        "Tình cảm",
-        "Kinh dị",
-        "Hành động",
-        "Nhập vai",
-        "Văn học",
-        "Trinh thám",
-        "Khiêu dâm",
-        "Hài hước",
-        "Lịch sử",
-        "Khoa học",
-        "Tiểu thuyết",
-        "Triết học",
-        "Viễn tưởng",
-        "Tâm lý",
-        "Châm biếm",
-        "Xã hội",
-        "Luật pháp",
-        "Toán học",
-        "Gia Đình",
-        "Ảo thuật",
-        "Địa lý",
-        "Hóa học",
-        "Kỹ thuật"
-    ];
+    const hook = useAskGenrePage(props);
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn yêu thích thể loại sách nào ?</Text>
@@ -54,7 +27,7 @@ function AskGenres(props: AskGenresProps) {
                     )
                 }
             </ScrollView>
-            <Input placeholder="Tìm kiếm thể loại" />
+            <Input placeholder="Tìm kiếm thể loại" value={hook.input.search.value} onChangeText={hook.input.search.set} />
             <Text style={{ color: "red", marginBottom: 20 }}>{hook.searchMessage}</Text>
 
             <View style={{ flexDirection: "row" }}>
@@ -65,11 +38,17 @@ function AskGenres(props: AskGenresProps) {
                     </Button>
                 }
                 <View style={{ marginLeft: 10, marginRight: 10 }} />
-                <StateLoader loading={hook.loading} style={{ width: 120, height: 50 }}>
-                    <Button onPress={() =>  hook.event.onAskGenresSubmit(false)} buttonStyle={{ borderRadius: 12, height: "100%", backgroundColor: primaryColor }}>
-                        Xác nhận
-                    </Button>
-                </StateLoader>
+                <Button
+                    loading={hook.loading}
+                    onPress={() => hook.event.onAskGenresSubmit(false)}
+                    buttonStyle={{
+                        width: 120,
+                        height: 50,
+                        borderRadius: 12,
+                        backgroundColor: primaryColor
+                    }}>
+                    Xác nhận
+                </Button>
             </View>
 
         </View>

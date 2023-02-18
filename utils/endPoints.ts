@@ -56,8 +56,14 @@ const endPont =
         languages: "/api/languages",
         provinces: "/api/provinces",
         districts: "/api/districts",
-        groups: "/api/groups",
-        organizations : "/api/organizations"
+        groups: {
+            index: "/api/groups",
+            customer: "/api/groups/customer"
+        },
+        organizations: {
+            index: "/api/organizations",
+            customer : "/api/organizations/customer"
+        }
     },
     lead: {
         districts: "/districts",

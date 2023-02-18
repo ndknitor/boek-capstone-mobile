@@ -7,7 +7,6 @@ import StateLoader from '../../../components/StateLoader/StateLoader';
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteRed, primaryColor } from '../../../utils/color';
 import useAskOrganizationsPage from './AskOrganizations.hook'
-
 function AskOrganizations() {
     const { replace } = useRouter();
     const hook = useAskOrganizationsPage();
@@ -37,7 +36,9 @@ function AskOrganizations() {
                     </Button>
                     <View style={{ marginLeft: 10, marginRight: 10 }} />
 
-                    <Button onPress={() => hook.event.onAskOrganizationsSubmit(false)} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: primaryColor }}>
+                    <Button
+                        loading={hook.loading}
+                        onPress={() => hook.event.onAskOrganizationsSubmit(false)} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: primaryColor }}>
                         Xác nhận
                     </Button>
                 </View>

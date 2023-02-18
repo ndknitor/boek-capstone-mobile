@@ -46,8 +46,6 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
     const [birth, setBirth] = useState<Date>();
     const [gender, setGender] = useState(true);
     const [phone, setPhone] = useState("");
-    const [level, setLevel] = useState(0);
-    const [point, setPoint] = useState(0);
 
     const [validator, setValidator] = useState<ValidationMessages>();
 
@@ -117,8 +115,8 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
             wardInputRef.current?.reset();
             setLoading(true);
             appxios.get<Ward[]>(`${endPont.public.districts}/${seletedDistrict.code}${endPont.lead.ward}`).then(response => {
-                console.log(response);
                 setWardSelect(response.data);
+            }).finally(() => {
                 setLoading(false);
             });
         }

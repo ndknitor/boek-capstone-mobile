@@ -4,9 +4,9 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const appxios = axios.create({
     baseURL: 'https://server.boek.live',
-    timeout: 3000,
     validateStatus : () => true
 });
+appxios.defaults.timeout = 3000;
 export function setAuthorizationBearer(jwt?: string) {
     if (jwt) {
         appxios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
