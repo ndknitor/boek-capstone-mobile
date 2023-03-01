@@ -9,14 +9,42 @@ import auth from '@react-native-firebase/auth';
 import { BaseResponseModel } from '../objects/responses/BaseResponseModel';
 import EndPont from '../utils/endPoints';
 import * as Notifications from 'expo-notifications';
+import useDebounce from '../libs/hook/useDebounce';
+import { useEffect } from 'react';
+import { ProductInCart } from '../objects/models/ProductInCart';
+import useIsFirstRender from '../libs/hook/useIsFirstRender';
 
 export default function useInit() {
-  const { setUser } = useAppContext();
+  const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
   const { setAuthorize, initLoading, setInitLoading } = useAuth();
+  const debounceCart = useDebounce(cart, 900);
+  const isFirstRender = useIsFirstRender();
   useAsyncEffect(async () => {
+    if (!isFirstRender) {
+      await AsyncStorage.setItem(StorageKey.cart, JSON.stringify(cart));
+    }
+  }, [debounceCart]);
+
+  useAsyncEffect(async () => {
+    const jsonString = await AsyncStorage.getItem(StorageKey.cart);
+    let storeCart: ProductInCart[] = [];
+    if (jsonString) {
+      storeCart = JSON.parse(jsonString) as ProductInCart[];
+      if (cart.length == 0) {
+        setCart(storeCart);
+      }
+    }
+
+    if (totalProductQuantity == 0) {
+      let totalQuantity = 0;
+      storeCart.map(item => totalQuantity += item.quantity);
+      setTotalProductQuantity(totalQuantity);
+    }
+
     const userJsonString = await AsyncStorage.getItem(StorageKey.user);
+
     if (auth().currentUser) {
-      let user: LoginViewModel;
+      let user: LoginViewModel = {} as LoginViewModel;
       if (userJsonString) {
         console.log(userJsonString);
         user = JSON.parse(userJsonString);
@@ -26,17 +54,18 @@ export default function useInit() {
           idToken: await auth().currentUser?.getIdToken()
         };
         //        console.log(request);
-
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         if (loginResponse.status == 200) {
           user = loginResponse.data.data;
-          setUser(user);
-          setAuthorize([user.role.toString()]);
-          setAuthorizationBearer(user.accessToken);
           console.log(user.accessToken);
         }
       }
+      setUser(user);
+      setAuthorize([user.role.toString()]);
+      setAuthorizationBearer(user.accessToken);
+      console.log(appxios.defaults.headers.common['Authorization']);
     }
+
     if (initLoading) {
       setInitLoading(false);
     }

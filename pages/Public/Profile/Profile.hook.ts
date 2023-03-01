@@ -56,17 +56,17 @@ export default function useProfilePage(props: ProfileProps) {
             }
             else {
                 if (user.role == Role.staff) {
-                    props.navigation.jumpTo("StaffCampaigns")
+                    props.navigation.jumpTo("StaffCampaigns");
                 }
                 else {
-                    props.navigation.jumpTo("Campaigns");
+                    props.navigation.jumpTo("Campaigns", { reset: Math.random() });
                 }
             }
             console.log(loginResponse.data);
             return loginResponse.data.data;
         }
         else {
-            SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify({idToken : idToken}));
+            SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify({ idToken: idToken }));
             replace("AskPersonalInformation");
         }
         setLoading(false);
@@ -95,7 +95,9 @@ export default function useProfilePage(props: ProfileProps) {
         }
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            await GoogleSignin.signOut();
+            if (await GoogleSignin.isSignedIn()) {
+                await GoogleSignin.signOut();    
+            }
             //await auth().signOut();
             let user = {} as User;
             user = await GoogleSignin.signIn();
@@ -121,7 +123,7 @@ export default function useProfilePage(props: ProfileProps) {
         setUser(undefined);
         await AsyncStorage.removeItem(StorageKey.user);
         if (navigate) {
-            props.navigation.jumpTo("Campaigns");
+            props.navigation.jumpTo("Campaigns", { reset: Math.random() });
         }
     }
 

@@ -85,10 +85,10 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                                     data={hook.data.provincesSelect}
                                     onSelect={(selectedItem, index) => hook.event.onProvinceSelected(selectedItem)}
                                     buttonTextAfterSelection={(selectedItem, index) => {
-                                        return (selectedItem as Province).name
+                                        return (selectedItem as Province).nameWithType
                                     }}
                                     rowTextForSelection={(item, index) => {
-                                        return (item as Province).name
+                                        return (item as Province).nameWithType
                                     }}
                                 />
                             </View>
@@ -119,10 +119,10 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                                     data={hook.data.districtSelect}
                                     onSelect={(selectedItem, index) => hook.event.onDistrictSelected(selectedItem)}
                                     buttonTextAfterSelection={(selectedItem, index) => {
-                                        return (selectedItem as District).name
+                                        return (selectedItem as District).nameWithType
                                     }}
                                     rowTextForSelection={(item, index) => {
-                                        return (item as District).name
+                                        return (item as District).nameWithType
                                     }}
                                 />
                             </View>
@@ -153,10 +153,10 @@ function AskPersonalInformation(props: StackScreenProps<ParamListBase>) {
                                     data={hook.data.wardSelect}
                                     onSelect={(selectedItem, index) => hook.event.onWardSelected(selectedItem)}
                                     buttonTextAfterSelection={(selectedItem, index) => {
-                                        return (selectedItem as District).name
+                                        return (selectedItem as District).nameWithType
                                     }}
                                     rowTextForSelection={(item, index) => {
-                                        return (item as District).name
+                                        return (item as District).nameWithType
                                     }}
                                 />
                             </View>

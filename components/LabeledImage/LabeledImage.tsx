@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity, GestureResponderEvent } from 'react-native'
+import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity, GestureResponderEvent, Pressable } from 'react-native'
 interface LabeledImageProps {
     source: ImageSourcePropType;
     label?: string;
-    onPress?: (event : GestureResponderEvent) => void;
+    touchable?: boolean;
+    onPress?: (event: GestureResponderEvent) => void;
 }
 function LabeledImage(props: LabeledImageProps) {
     return (
@@ -14,7 +15,7 @@ function LabeledImage(props: LabeledImageProps) {
                 alignItems: "center",
                 justifyContent: "center"
             }}>
-            <TouchableOpacity
+            <Pressable
                 onPress={props.onPress}
                 style={{
                     alignItems: "center",
@@ -22,7 +23,6 @@ function LabeledImage(props: LabeledImageProps) {
                 }}>
                 <View
                     style={{
-                        borderWidth: 1,
                         width: 50,
                         height: 50,
                         borderRadius: 999,
@@ -34,7 +34,7 @@ function LabeledImage(props: LabeledImageProps) {
                 <View>
                     <Text style={{ fontSize: 15, fontWeight: "600" }}>{props.label}</Text>
                 </View>
-            </TouchableOpacity>
+            </Pressable>
         </View>
     )
 }

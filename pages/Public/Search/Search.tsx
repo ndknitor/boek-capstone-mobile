@@ -7,7 +7,7 @@ import { ParamListBase } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import filterBlack from "../../../assets/icons/filter-black.png";
 import sortBlack from "../../../assets/icons/sort-black.png";
-import { paletteRed, primaryColor, primaryTint1, primaryTint10 } from '../../../utils/color';
+import { paletteRed, primaryColor, primaryTint1, primaryTint10, primaryTint3 } from '../../../utils/color';
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import SelectedLabel from '../../../components/SelectedLabel/SelectedLabel';
 import BookCard from '../../../components/BookCard/BookCard';
@@ -19,26 +19,34 @@ import { BookFormat } from '../../../objects/enums/BookFormat';
 import { GeoLocate } from '../../../objects/enums/GeoLocate';
 import { CampaignFormat } from '../../../objects/enums/CampaignFormat';
 import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar';
+import FloatActionButton from '../../../components/FloatActionButton/FloatActionButton';
+import ShoppingCart from '../../../assets/SvgComponents/ShoppingCart';
+import useRouter from '../../../libs/hook/useRouter';
+import useAppContext from '../../../context/Context';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 const Tab = createMaterialTopTabNavigator();
 
-export interface SearchProps {
+export interface SearchProps extends BottomTabScreenProps<ParamListBase> {
 
 }
+
 function Search(props: SearchProps) {
     return (
-        <Tab.Navigator screenOptions={{
-            tabBarLabelStyle: {
-                color: primaryColor,
-                fontWeight: "500"
-            },
-            tabBarIndicatorStyle: {
-                backgroundColor: primaryColor
-            },
-            swipeEnabled: false,
-            lazy: true,
-            lazyPlaceholder: () => <ActivityIndicator size="large" style={{ height: "100%" }} />
-        }}>
+        <Tab.Navigator
+            initialRouteName={props.route.params && (props.route.params as { tab: string }).tab || undefined}
+            screenOptions={{
+                tabBarLabelStyle: {
+                    color: primaryColor,
+                    fontWeight: "500"
+                },
+                tabBarIndicatorStyle: {
+                    backgroundColor: primaryColor
+                },
+                swipeEnabled: false,
+                lazy: true,
+                lazyPlaceholder: () => <ActivityIndicator size="large" style={{ height: "100%" }} />
+            }}>
             <Tab.Screen options={{ title: "Sách" }} name="Books" component={Books} />
             <Tab.Screen options={{ title: "Hội sách" }} name="BookFairs" component={BookFairs} />
         </Tab.Navigator>
@@ -46,10 +54,50 @@ function Search(props: SearchProps) {
 }
 
 function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
+    const { navigate } = useRouter();
+    const { totalProductQuantity } = useAppContext();
     const hook = useBooksPage(props);
     return (
         <>
-            <PageLoader loading={hook.loading} />
+            <PageLoader
+                zIndex={1}
+                loading={hook.loading} />
+            <FloatActionButton
+                zIndex={2}
+                onPress={() => navigate("Cart")}
+                bottom={80}
+                right={10}>
+                <View style={{
+                    width: "100%",
+                    height: "100%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    {
+                        totalProductQuantity != 0 &&
+                        <View style={{
+                            backgroundColor: primaryTint3,
+                            position: "absolute",
+                            width: 18,
+                            height: 18,
+                            zIndex: 1,
+                            borderRadius: 999,
+                            top: 8,
+                            right: 8,
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                            <Text style={{
+                                fontSize: 11,
+                                color: "white"
+                            }}>{totalProductQuantity}</Text>
+                        </View>
+                    }
+                    <View style={{ width: "50%", height: "50%" }}>
+                        <ShoppingCart fill={"white"} />
+                    </View>
+                </View>
+            </FloatActionButton>
             <DrawerLayout
                 ref={hook.ref.filterBooksDrawerRef}
                 drawerWidth={280}
@@ -330,7 +378,10 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                     stickyHeaderHiddenOnScroll
                     ref={hook.ref.bookFairsScrollViewRef}
                     style={{ height: "100%", backgroundColor: "white" }}>
-                    <StickyHeaderSearchBar />
+                    <StickyHeaderSearchBar
+                        onChangeText={hook.input.search.set}
+                        value={hook.input.search.value}
+                        onSubmit={hook.event.onSearchSubmit} />
                     <View style={{
                         marginBottom: 5,
                         width: "100%",

@@ -4,6 +4,5 @@ import { UpdateUserRequestModel } from "./UpdateUserRequestModel";
 export interface UpdateCustomerRequestModel {
     dob?: Date;
     gender?: boolean;
-    point?: number;
     user?: UpdateUserRequestModel;
 }

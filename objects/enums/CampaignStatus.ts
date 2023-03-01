@@ -1,4 +1,4 @@
-export const CampaignStatus = {
+const CampaignStatus = {
     notStarted: 1,
     start: 2,
     end: 3,
@@ -19,3 +19,4 @@ export const CampaignStatus = {
         return "";
     }
 }
+export default CampaignStatus;

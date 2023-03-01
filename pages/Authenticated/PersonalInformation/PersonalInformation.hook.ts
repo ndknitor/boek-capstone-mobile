@@ -38,15 +38,13 @@ export default function usePersonalInformationPage() {
     const [wardSelect, setWardSelect] = useState<Ward[]>([]);
 
     const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
     const [phone, setPhone] = useState("");
     const [birth, setBirth] = useState<Date>(new Date());
     const [gender, setGender] = useState(false);
     const [province, setProvince] = useState<Province>();
     const [district, setDistrict] = useState<District>();
     const [ward, setWard] = useState<Ward>();
-    const [point, setPoint] = useState(0);
+    const [address, setAddress] = useState("");
 
     const [validator, setValidator] = useState<ValidationMessages>();
 
@@ -106,10 +104,6 @@ export default function usePersonalInformationPage() {
                 required(name, "Tên không được trống"),
                 maxLength(name, 128, "Tên không vượt quá 128 ký tự")
             ],
-            address: [
-                required(address, "Địa chỉ không được trống"),
-                maxLength(address, 128, "Địa chỉ không vượt quá 128 ký tự")
-            ],
             province: [
                 required(province, "Tỉnh không được trống"),
             ],
@@ -118,6 +112,9 @@ export default function usePersonalInformationPage() {
             ],
             ward: [
                 required(ward, "Phường không được trống"),
+            ],
+            address: [
+                required(address, "Địa chỉ không được trống"),
             ],
             dob: [
                 required(birth, "Ngày sinh không được trống"),
@@ -132,19 +129,25 @@ export default function usePersonalInformationPage() {
             if (user) {
                 if (user.role == Role.customer) {
                     const request: UpdateCustomerRequestModel = {
-                        point: point,
                         dob: birth,
                         gender: gender,
                         user: {
-                            address: address,
+                            addressRequest: {
+                                detail: address,
+                                districtCode: district?.code as number,
+                                provinceCode: province?.code as number,
+                                wardCode: ward?.code as number,
+                            },
                             email: user?.email,
                             id: user?.id,
                             imageUrl: user?.imageUrl,
                             name: name,
                             phone: phone,
-                            role: user?.role
+                            role: user?.role,
+                            status: true
                         }
                     }
+                    console.log(request);
                     appxios.put<CustomerUserViewModel>(EndPont.users.customer, request).then(response => {
                         setButtonShowed(false);
                         Toast.show({
@@ -155,8 +158,13 @@ export default function usePersonalInformationPage() {
                 }
                 if (user.role == Role.staff) {
                     const request: UpdateUserRequestModel = {
+                        addressRequest: {
+                            detail: address,
+                            districtCode: district?.code as number,
+                            provinceCode: province?.code as number,
+                            wardCode: ward?.code as number,
+                        },
                         id: user.id,
-                        address: address,
                         email: user.email,
                         imageUrl: user.imageUrl,
                         name: name,
@@ -177,38 +185,51 @@ export default function usePersonalInformationPage() {
 
     useEffect(() => {
         setLoading(true);
-        appxios.get<Province[]>(endPont.public.provinces).then(response => {
-            setProvincesSelect(response.data);
-        });
-        // if (user && user.role == Role.staff) {
-        //     appxios.get<UserViewModel>(EndPont.users.me).then(response => {
-        //         setEmail(response.data.email);
-        //         setName(response.data.name);
-        //         setAddress(response.data.address);
-        //         setPhone(response.data.phone);
-        //     })
-        //         .finally(() => {
-        //             setLoading(false);
-        //         });
-        // }
-        if (user && user.role == Role.customer) {
-            appxios.get<CustomerViewModel>(EndPont.users.me).then(response => {
-                console.log(response.data);
+        appxios.get<Province[]>(endPont.public.provinces).then(getProvinceResponse => {
+            setProvincesSelect(getProvinceResponse.data);
+            if (user && user.role == Role.customer) {
+                appxios.get<CustomerViewModel>(EndPont.users.me).then(async getUserresponse => {
+                    setEmail(getUserresponse.data.user.email);
+                    setName(getUserresponse.data.user.name);
+                    setPhone(getUserresponse.data.user.phone);
+                    setAddress(getUserresponse.data.user.addressViewModel.detail);
+                    if (getUserresponse.data.dob) {
+                        setBirth(new Date(getUserresponse.data.dob));
+                    }
+                    setGender(getUserresponse.data.gender as boolean);
+                    const districtsResponse = await appxios.get<District[]>(`${endPont.public.provinces}/${getUserresponse.data.user.addressViewModel.provinceCode}${endPont.lead.districts}`);
+                    const wardsResponse = await appxios.get<Ward[]>(`${endPont.public.districts}/${getUserresponse.data.user.addressViewModel.districtCode}${endPont.lead.ward}`);
+                    setDistrictSelect(districtsResponse.data);
+                    setWardSelect(wardsResponse.data);
 
-                setEmail(response.data.user.email);
-                setPoint(response.data.point as number);
-                setName(response.data.user.name);
-                setAddress(response.data.user.address);
-                setPhone(response.data.user.phone);
-                if (response.data.dob) {
-                    setBirth(new Date(response.data.dob));
-                }
-                setGender(response.data.gender as boolean);
-            })
-                .finally(() => {
+                    setProvince(getProvinceResponse.data.find(p => p.code == getUserresponse.data.user.addressViewModel.provinceCode));
+                    setDistrict(districtsResponse.data.find(d => d.code == getUserresponse.data.user.addressViewModel.districtCode));
+                    setWard(wardsResponse.data.find(w => w.code == getUserresponse.data.user.addressViewModel.wardCode));
+
+                }).finally(() => {
                     setLoading(false);
-                });
-        }
+                })
+            }
+            else if (user && user.role == Role.staff) {
+                appxios.get<UserViewModel>(EndPont.users.me).then(async getUserResponse => {
+                    console.log(getUserResponse.data);
+
+                    const districtsResponse = await appxios.get<District[]>(`${endPont.public.provinces}/${getUserResponse.data.addressViewModel.provinceCode}${endPont.lead.districts}`);
+                    const wardsResponse = await appxios.get<Ward[]>(`${endPont.public.districts}/${getUserResponse.data.addressViewModel.districtCode}${endPont.lead.ward}`);
+                    setEmail(getUserResponse.data.email);
+                    setName(getUserResponse.data.name);
+                    setPhone(getUserResponse.data.phone);
+                    setProvince(getProvinceResponse.data.find(p => p.code == getUserResponse.data.addressViewModel.provinceCode));
+                    setDistrict(districtsResponse.data.find(d => d.code == getUserResponse.data.addressViewModel.districtCode));
+                    setWard(wardsResponse.data.find(w => w.code == getUserResponse.data.addressViewModel.wardCode));
+                    setAddress(getUserResponse.data.addressViewModel.detail);
+                })
+                    .finally(() => {
+                        setLoading(false);
+                    });
+            }
+        });
+
     }, []);
 
     useUpdateDepsEffect(() => {
@@ -217,7 +238,7 @@ export default function usePersonalInformationPage() {
                 setButtonShowed(true);
             }
         }
-    }, [name, gender, address, phone, city]);
+    }, [name, gender, province, birth, district, ward, address, phone]);
 
     return {
         buttonShowed,
@@ -253,14 +274,6 @@ export default function usePersonalInformationPage() {
                 value: name,
                 set: setName
             },
-            address: {
-                value: address,
-                set: setAddress
-            },
-            city: {
-                value: city,
-                set: setCity
-            },
             phone: {
                 value: phone,
                 set: setPhone
@@ -268,6 +281,22 @@ export default function usePersonalInformationPage() {
             birth: {
                 value: birth,
                 set: setBirth
+            },
+            province: {
+                value: province,
+                set: setProvince
+            },
+            district: {
+                value: district,
+                set: setDistrict
+            },
+            ward: {
+                value: ward,
+                set: setWard
+            },
+            address: {
+                value: address,
+                set: setAddress
             },
             gender:
             {

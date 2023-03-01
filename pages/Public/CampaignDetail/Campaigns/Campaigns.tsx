@@ -2,12 +2,18 @@ import React, { useEffect } from 'react'
 import { View, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native'
 import Swiper from 'react-native-swiper';
 import useCampaignsPage from './Campaigns.hook';
-import OnGoingBookFair from '../../../components/OnGoingBookFair/OnGoingBookFair';
-import UpcomingBookFair from '../../../components/UpcomingBookFair/UpcomingBookFair';
-import PageLoader from '../../../components/PageLoader/PageLoader';
+import OnGoingBookFair from '../../../../components/OnGoingBookFair/OnGoingBookFair';
+import UpcomingBookFair from '../../../../components/UpcomingBookFair/UpcomingBookFair';
+import PageLoader from '../../../../components/PageLoader/PageLoader';
+import PreLoadTabView from '../../../../components/PreLoadTabView/PreLoadTabView';
+import ShowMoreButton from '../../../../components/ShowMoreButton/ShowMoreButton';
+import { ParamListBase } from '@react-navigation/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+export interface CampaignsProps extends BottomTabScreenProps<ParamListBase> {
 
-function Campaigns() {
-    const hook = useCampaignsPage();
+}
+function Campaigns(props: CampaignsProps) {
+    const hook = useCampaignsPage(props);
     return (
         <>
             <PageLoader loading={hook.loading} />
@@ -69,6 +75,12 @@ function Campaigns() {
                                         )
                                     }
                                 </View>
+                                <View style={{
+                                    marginBottom: 30,
+                                    marginTop: 20
+                                }}>
+                                    <ShowMoreButton onPress={() => { props.navigation.jumpTo("Search", { tab: "BookFairs" }) }} />
+                                </View>
                             </>
                         )
                     }
@@ -79,22 +91,21 @@ function Campaigns() {
                                     <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 5 }}>{item.title}</Text>
                                 </View>
                                 <View style={{
-                                    backgroundColor: "white"  
+                                    backgroundColor: "white"
                                 }}>
-                                    {
-                                        item.subHierarchicalCustomerCampaigns && item.subHierarchicalCustomerCampaigns.map(sub =>
-                                            <>
-                                                <View style={{ width: "100%", padding: 10, paddingTop: 20 }}>
-                                                    <Text style={{ fontSize: 18, fontWeight: "700", marginBottom: 5 }}>{sub.subTitle}</Text>
-                                                </View>
-                                                {
-                                                    sub.campaigns.map(campaign =>
-                                                        <UpcomingBookFair campaign={campaign} />
-                                                    )
-                                                }
-                                            </>
-                                        )
-                                    }
+                                    <PreLoadTabView
+                                        titles={item.subHierarchicalCustomerCampaigns.map(item => item.subTitle)}
+                                        childrens={item.subHierarchicalCustomerCampaigns.map(sub =>
+                                            sub.campaigns.map(c =>
+                                                <UpcomingBookFair campaign={c} />
+                                            )
+                                        )} />
+                                </View>
+                                <View style={{
+                                    marginBottom: 30,
+                                    marginTop: 20
+                                }}>
+                                    <ShowMoreButton onPress={() => { props.navigation.jumpTo("Search", { tab: "BookFairs" }) }} />
                                 </View>
                             </>
                         )

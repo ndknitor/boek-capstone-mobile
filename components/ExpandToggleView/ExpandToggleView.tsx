@@ -9,9 +9,10 @@ interface ExpandToggleViewProps extends PropsWithChildren {
     label: string;
     onExpand?: () => void;
     onCollapse?: () => void;
+    initExpanded?: boolean;
 }
 function ExpandToggleView(props: ExpandToggleViewProps) {
-    const [expanded, toggleExpanded] = useBoolean();
+    const [expanded, toggleExpanded] = useBoolean(props.initExpanded);
     useAsyncEffect(() => {
         if (expanded) {
             props.onExpand && props.onExpand();

@@ -3,8 +3,9 @@ import bookmark from "../../assets/icons/bookmark-border-white.png";
 import bookmarkRemove from "../../assets/icons/bookmark-remove-white.png";
 import { paletteRed, primaryTint1, primaryTint9, } from '../../utils/color';
 import { OrganizationViewModel } from '../../objects/viewmodels/Organizations/OrganizationViewModel';
+import { BasicOrganizationViewModel } from '../../objects/viewmodels/Organizations/BasicOrganizationViewModel';
 export interface OrganizationViewProps {
-    organization: OrganizationViewModel;
+    organization: OrganizationViewModel | BasicOrganizationViewModel;
     tracked?: boolean;
     onTrackPress?: (e: GestureResponderEvent) => void;
     loading: boolean;

@@ -6,6 +6,7 @@ interface FloatActionButtonProps extends PropsWithChildren {
     bottom?: number;
     left?: number;
     right?: number;
+    zIndex?: number;
     onPress?: (event: GestureResponderEvent) => void;
 }
 function FloatActionButton(props: FloatActionButtonProps) {
@@ -21,9 +22,9 @@ function FloatActionButton(props: FloatActionButtonProps) {
                 height: 50,
                 backgroundColor: primaryColor,
                 borderRadius: 999,
-                overflow: "hidden",
+                //overflow: "hidden",
                 position: "absolute",
-                zIndex: 1,
+                zIndex: props.zIndex || 1,
                 shadowColor: "#000",
                 shadowOffset: {
                     width: 0,

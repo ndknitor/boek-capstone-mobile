@@ -4,6 +4,8 @@ interface FadeTransitionProps extends ViewProps {
     duration?: number;
     initShow?: boolean;
     showed: boolean;
+    onHideComplete?: () => void;
+    onShowComplete?: () => void;
 }
 function FadeTransition(props: FadeTransitionProps) {
     const deafultDuration = 600;
@@ -25,10 +27,10 @@ function FadeTransition(props: FadeTransitionProps) {
         if (props.showed) {
             animationHide.stop();
             setDisplay(true);
-            animationShow.start();
+            animationShow.start(() => props.onShowComplete && props.onShowComplete());
         }
         else {
-            animationHide.start(() => setDisplay(false));
+            animationHide.start(() => { setDisplay(false); props.onHideComplete && props.onHideComplete() });
         }
     }, [props.showed]);
 

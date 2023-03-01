@@ -14,7 +14,6 @@ import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserV
 import EndPont from "../../../utils/endPoints";
 import { getMaxPage } from "../../../libs/functions/paging";
 
-
 export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBooksDrawerRef = useRef<DrawerLayout>(null);
     const booksScrollViewRef = useRef<ScrollView>(null);
@@ -72,6 +71,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
                 setBooks(response.data.data);
                 setCurrentPage(page);
                 setMaxPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));
+                console.log(response.data.data[0].imageUrl);
             })
             .finally(() => {
                 setLoading(false);
@@ -313,7 +313,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
             });
     }
     const onSearchSubmit = () => {
-
+        getCampaigns(1);
     }
     const onPageNavigation = (page: number) => {
         setCurrentPage(page);

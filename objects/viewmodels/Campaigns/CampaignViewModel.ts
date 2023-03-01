@@ -1,6 +1,6 @@
 import { CampaignCommissionsViewModel } from "../CampaignCommissions/CampaignCommissionsViewModel";
 import { CampaignGroupsViewModel } from "../CampaignGroups/CampaignGroupsViewModel";
-import { CampaignOrganizationsViewModel } from "../CampaignOrganizations/CampaignOrganizationsViewModel";
+import { CampaignOrganizationsViewModel } from "./CampaignOrganizations/CampaignOrganizationsViewModel";
 import { CampaignParticipationsViewModel } from "../Participants/CampaignParticipationsViewModel";
 
 export interface CampaignViewModel {

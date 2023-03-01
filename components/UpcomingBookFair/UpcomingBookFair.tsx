@@ -6,15 +6,20 @@ import useRouter from '../../libs/hook/useRouter';
 import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
 import moment from 'moment';
 import { dateTimeFormat } from '../../utils/format';
+import locationBlack from "../../assets/icons/location-black.png";
+import calendarTodayBlack from "../../assets/icons/calendar-today-black.png";
+import corporateFareBlack from "../../assets/icons/corporate-fare-black.png";
+import theaterComedyBlack from "../../assets/icons/theater-comedy-black.png";
+
 interface UpcomingBookFairProps {
     campaign: CampaignViewModel;
 }
 function UpcomingBookFair(props: UpcomingBookFairProps) {
-    const { navigate } = useRouter();
+    const { push } = useRouter();
     return (
         <View style={{ height: 220, justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity
-                onPress={() => navigate("CampaignDetail")}
+                onPress={() => push("CampaignDetail", { campaignId: props.campaign.id })}
                 style={{ width: "100%", height: "100%", borderBottomColor: primaryTint6, borderBottomWidth: 1 }}>
                 <Image
                     source={{ uri: props.campaign.imageUrl }}
@@ -33,15 +38,20 @@ function UpcomingBookFair(props: UpcomingBookFairProps) {
                         <Text style={{ fontSize: 22, fontWeight: "500" }}>{props.campaign.name}</Text>
                         <View style={{ width: "100%", flexDirection: "row" }}>
                             <View style={{ width: "55%" }}>
-                                <Text style={{ marginLeft: 2 }} >Địa điểm: {props.campaign.address}</Text>
+                                <Text style={{ marginLeft: 2 }} >
+                                    <Image source={locationBlack} resizeMode="contain" style={{ width: 17, height: 17 }} />
+                                    {props.campaign.address}
+                                </Text>
                                 <Text style={{ fontSize: 12, marginLeft: 2 }} >
-                                    Thời gian:
+                                    <Image source={calendarTodayBlack} resizeMode="contain" style={{ width: 17, height: 17 }} />
                                     <Text style={{ fontWeight: "500" }}> {moment(props.campaign.startDate).format(dateTimeFormat)}</Text>
                                 </Text>
                             </View>
                             <View style={{ width: "45%" }}>
-                                <Text style={{ textAlign: "right" }} >Tổ chức: {props.campaign.campaignOrganizations.map(item => item.organization.name).join(", ")}</Text>
-                                <Text style={{ textAlign: "right" }}>NXB: {props.campaign.participants.map(item => item.issuer.user.name).join(", ")}</Text>
+                                <Text style={{ textAlign: "right" }} >
+                                    <Image source={corporateFareBlack} resizeMode="contain" style={{ width: 17, height: 17 }} /> {props.campaign.campaignOrganizations.map(item => item.organization.name).join(", ")}
+                                </Text>
+                                <Text style={{ textAlign: "right" }}><Image source={theaterComedyBlack} resizeMode="contain" style={{ width: 17, height: 17 }} /> {props.campaign.participants.map(item => item.issuer.user.name).join(", ")}</Text>
                             </View>
                         </View>
                     </View>

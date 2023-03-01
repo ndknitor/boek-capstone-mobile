@@ -31,8 +31,6 @@ export default function useAskOrganizationsPage() {
         const query = new URLSearchParams();
         query.append("Name", name);
         appxios.get<BaseResponsePagingModel<OrganizationViewModel>>(`${endPont.public.organizations.index}`).then(response => {
-            console.log(response);
-            
             setOrganizationsSelect(response.data.data);
         }).finally(() => {
             setLoading(false);
@@ -61,10 +59,10 @@ export default function useAskOrganizationsPage() {
                 await AsyncStorage.setItem(StorageKey.user, JSON.stringify(response.data.data));
                 setAuthorizationBearer(response.data.data.accessToken);
                 setAuthorize([response.data.data.role.toString()]);
-                replace("Index");
             }
         }).finally(() => {
-            setLoading(true);
+            setLoading(false);
+            replace("Index");
         });
     }
 

@@ -1,20 +1,18 @@
 import React from 'react'
 import { View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { paletteGrayLight, paletteGreen, paletteGreenBold, paletteRed, primaryTint4 } from '../../utils/color';
-import image from "../../assets/hsxv.webp";
-import avatar from "../../assets/avatar.jpg";
 import locationBlack from "../../assets/icons/location-black.png";
 import calendarBlack from "../../assets/icons/calendar-today-black.png";
 import useRouter from '../../libs/hook/useRouter';
 import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
 import moment from 'moment';
-import { CampaignStatus } from '../../objects/enums/CampaignStatus';
+import CampaignStatus from '../../objects/enums/CampaignStatus';
 interface BookFairCardProps {
     campagin?: CampaignViewModel
 }
 
 function BookFairCard({ campagin }: BookFairCardProps) {
-    const { navigate } = useRouter();
+    const { push } = useRouter();
     const getColor = () => {
         switch (campagin?.status) {
             case CampaignStatus.notStarted:
@@ -44,7 +42,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
 
     return (
         <TouchableOpacity
-            onPress={() => navigate("CampaignDetail")}
+            onPress={() => push("CampaignDetail", { campaignId: campagin?.id })}
             style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, padding: 10, flexDirection: "row", flexWrap: "wrap" }}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ marginBottom: 5, width: "45%" }}>

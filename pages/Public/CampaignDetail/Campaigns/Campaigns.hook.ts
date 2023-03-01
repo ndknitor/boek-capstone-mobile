@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import appxios from "../../../components/AxiosInterceptor";
-import { CustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CustomerCampaignMobileViewModel";
-import { UnhierarchicalCustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/UnhierarchicalCustomerCampaignMobileViewModel";
-import endPont from "../../../utils/endPoints";
+import appxios from "../../../../components/AxiosInterceptor";
+import { CustomerCampaignMobileViewModel } from "../../../../objects/viewmodels/Campaigns/Mobile/CustomerCampaignMobileViewModel";
+import { UnhierarchicalCustomerCampaignMobileViewModel } from "../../../../objects/viewmodels/Campaigns/Mobile/UnhierarchicalCustomerCampaignMobileViewModel";
+import endPont from "../../../../utils/endPoints";
+import { CampaignsProps } from "./Campaigns";
 
-export default function useCampaignsPage() {
+export default function useCampaignsPage(props : CampaignsProps) {
     const onGoingTitle = "Bắt đầu hội sách";
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -37,7 +38,7 @@ export default function useCampaignsPage() {
 
     useEffect(() => {
         getCampaigns();
-    }, []);
+    }, [props.route.params]);
     return {
         loading,
         scrollViewRefresh: {

@@ -1,3 +1,5 @@
+import { AddressViewModel } from "../ Addresses/AddressViewModel";
+
 export interface BasicCampaignViewModel {
     id?: number;
     code?: string;
@@ -5,19 +7,14 @@ export interface BasicCampaignViewModel {
     description: string;
     imageUrl: string;
     format?: number;
-    privacy?: number;
-    address: string;
-    offlineStatus?: number;
-    startOfflineDate?: Date;
-    endOfflineDate?: Date;
-    onlineStatus: number;
-    startOnlineDate?: Date;
-    endOnlineDate?: Date;
+    address?: string;
+    addressViewModel?: AddressViewModel;
+    startDate?: Date;
+    endDate?: Date;
+    isRecurring?: boolean;
+    status?: number;
     createdDate?: Date;
-    updatedDate: Date;
+    updatedDate?: Date;
     formatName: string;
-    privacyName: string;
-    statusOfflineName: string;
-    statusOnlineName: string;
-    sort: string;
+    statusName: string;
 }

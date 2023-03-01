@@ -4,8 +4,9 @@ import { paletteGray, palettePink, primaryTint7 } from '../../utils/color';;
 import useRouter from '../../libs/hook/useRouter';
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import formatNumber from '../../libs/functions/formatNumber';
+import { MobileBookProductsViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
 interface BookCardProps {
-  book: MobileBookProductViewModel;
+  book: MobileBookProductViewModel | MobileBookProductsViewModel;
 }
 function BookCard({ book }: BookCardProps) {
   const { push } = useRouter();

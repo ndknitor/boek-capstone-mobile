@@ -12,6 +12,7 @@ import { paletteGrayShade5 } from '../../../utils/color';
 import useAppContext from '../../../context/Context';
 import { Province } from '../../../objects/enums/Province';
 import { District } from '../../../objects/enums/Districts';
+import { Ward } from '../../../objects/enums/Ward';
 
 function PersonalInformation() {
   const hook = usePersonalInformationPage();
@@ -21,13 +22,23 @@ function PersonalInformation() {
       <PageLoader loading={hook.loading} />
       <View>
         <View style={{
-              backgroundColor: "#1E293B",
-              justifyContent: 'center',
-              height: 180
+          backgroundColor: "#1E293B",
+          justifyContent: 'center',
+          height: 120
         }}>
-          <View style={styles.avatarWarp}>
-            <View style={styles.avatarRing}>
-              <Image source={{ uri: user?.imageUrl }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+          <View style={{
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <View style={{
+              borderWidth: 2,
+              borderColor: "#064E3B",
+              height: 90,
+              width: 90,
+              borderRadius: 9999,
+              overflow: "hidden"
+            }}>
+              <Image source={{ uri: user?.imageUrl }} style={{ width: "100%", height: "100%" }} resizeMode="contain" />
             </View>
           </View>
         </View>
@@ -112,19 +123,20 @@ function PersonalInformation() {
             <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
               <View style={{ alignItems: "flex-end", height: "55%" }}>
                 <SelectDropdown
+                  defaultValueByIndex={hook.data.provincesSelect.findIndex(p => p.code == hook.input.province.value?.code)}
                   ref={hook.ref.inputProvinceRef}
                   renderDropdownIcon={() => <></>}
                   buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
-                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: "black" }}
                   defaultButtonText="Chọn địa điểm"
                   onChangeSearchInputText={() => { console.log("Hello") }}
                   data={hook.data.provincesSelect}
                   onSelect={(selectedItem, index) => hook.event.onProvinceSelected(selectedItem)}
                   buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem as Province).name
+                    return (selectedItem as Province).nameWithType
                   }}
                   rowTextForSelection={(item, index) => {
-                    return (item as Province).name
+                    return (item as Province).nameWithType
                   }}
                 />
               </View>
@@ -146,19 +158,19 @@ function PersonalInformation() {
                 <SelectDropdown
                   onFocus={hook.event.onDistrictSelectedFocus}
                   ref={hook.ref.inputDistrictRef}
-                  //defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
+                  defaultValue={hook.data.districtSelect.find(p => p.code == hook.input.district.value?.code)}
                   renderDropdownIcon={() => <></>}
                   buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
-                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: "black" }}
                   defaultButtonText="Chọn địa điểm"
                   onChangeSearchInputText={() => { console.log("Hello") }}
                   data={hook.data.districtSelect}
                   onSelect={(selectedItem, index) => hook.event.onDistrictSelected(selectedItem)}
                   buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem as District).name
+                    return (selectedItem as District).nameWithType
                   }}
                   rowTextForSelection={(item, index) => {
-                    return (item as District).name
+                    return (item as District).nameWithType
                   }}
                 />
               </View>
@@ -180,19 +192,19 @@ function PersonalInformation() {
                 <SelectDropdown
                   onFocus={hook.event.onWardSelectedFocus}
                   ref={hook.ref.inputWardRef}
-                  //defaultValueByIndex={Object.values(GeoLocate).filter(l => typeof (l) == "string").indexOf(hook.input.address.value)}
+                  defaultValue={hook.data.wardSelect.find(p => p.code == hook.input.ward.value?.code)}
                   renderDropdownIcon={() => <></>}
                   buttonStyle={{ width: "100%", justifyContent: "flex-end" }}
-                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: hook.input.address.value !== "" ? "black" : paletteGrayShade5 }}
+                  buttonTextStyle={{ fontSize: 14, textAlign: "right", color: "black" }}
                   defaultButtonText="Chọn địa điểm"
                   onChangeSearchInputText={() => { console.log("Hello") }}
                   data={hook.data.wardSelect}
                   onSelect={(selectedItem, index) => hook.event.onWardSelected(selectedItem)}
                   buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem as District).name
+                    return (selectedItem as Ward).nameWithType
                   }}
                   rowTextForSelection={(item, index) => {
-                    return (item as District).name
+                    return (item as Ward).nameWithType
                   }}
                 />
               </View>
@@ -200,6 +212,26 @@ function PersonalInformation() {
             </View>
             <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
               <TouchableOpacity onPress={() => hook.ref.inputWardRef.current?.openDropdown()}>
+                <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={{ flexDirection: "row", maxWidth: "100%", height: 60 }}>
+            <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
+              <Text>Địa chỉ:</Text>
+            </View>
+            <View style={{ width: "60%", height: "100%", alignItems: "flex-end", justifyContent: "center", paddingRight: 20 }}>
+              <TextInput
+                ref={hook.ref.inputAddressRef}
+                placeholder='Chưa có thông tin'
+                value={hook.input.address.value}
+                onChangeText={hook.input.address.set}
+                style={{ textAlign: "right" }} />
+              <Text style={{ color: "red" }}>{getMessage(hook.validator, "address")}</Text>
+            </View>
+            <View style={{ width: "10%", height: "80%", alignItems: "flex-start", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => hook.ref.inputAddressRef.current?.focus()}>
                 <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
               </TouchableOpacity>
             </View>
@@ -238,20 +270,6 @@ function PersonalInformation() {
   )
 }
 const styles = StyleSheet.create({
-  avatarWarp: {
-    minWidth: "25%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  avatarRing: {
-    borderWidth: 2,
-    borderColor: "#064E3B",
-    height: 126,
-    width: 126,
-    borderRadius: 9999,
-    overflow: "hidden"
-  },
   label: {
     borderWidth: 1,
     width: "30%",

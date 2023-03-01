@@ -49,6 +49,9 @@ function UnTrackedOrganizations() {
         <>
             <PageLoader loading={hook.loading} />
             <ScrollView
+                style={{
+                    backgroundColor : "white"
+                }}
                 ref={hook.ref.scrollViewRef}
                 stickyHeaderHiddenOnScroll
                 stickyHeaderIndices={[0]}>
@@ -75,7 +78,7 @@ function TrackedOrganizations() {
     return (
         <>
             <PageLoader loading={hook.loading} />
-            <ScrollView>
+            <ScrollView style={{ backgroundColor: "white" }}>
                 {
                     hook.data.organizations.map((item, index) =>
                         <OrganizationView

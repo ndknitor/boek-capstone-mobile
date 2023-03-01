@@ -1,18 +1,37 @@
+import { ParamListBase } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useEffect, useRef, useState } from "react";
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from "react-native";
-import { useShowOpacityAnimation } from "../../../libs/hook/animation";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-native";
+import appxios from "../../../components/AxiosInterceptor";
+import { CampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CampaignMobileViewModel";
+import { IssuerViewModel } from "../../../objects/viewmodels/Users/issuers/IssuerViewModel";
+import endPont from "../../../utils/endPoints";
 
-export default function useCampaignDetaillPage() {
+
+export default function useCampaignDetaillPage(props: StackScreenProps<ParamListBase>) {
     const scrollViewRef = useRef<ScrollView>(null);
 
-    const [maxPage, setMaxPage] = useState(100);
-    const [currentPage, setCurrentPage] = useState(1);
-
+    const [loading, setLoading] = useState(false);
     const [scrollToTopShowed, setScrollToTopShowed] = useState(false);
+    const [issuerModalVisible, setIssuerModalVisible] = useState(false);
 
-    const onBooksPageNavigation = (page: number) => {
-        setCurrentPage(page);
-    }
+    const [campaign, setCampaign] = useState<CampaignMobileViewModel>();
+    const [issuerDetail, setIssuerDetail] = useState<IssuerViewModel>();
+
+    useEffect(() => {
+        const params = props.route.params as { campaignId: number };
+        //console.log(params);
+        setLoading(true);
+        console.log(params);
+        appxios.get<CampaignMobileViewModel>(`${endPont.public.campaigns.mobile.index}/${params.campaignId}`)
+            .then(response => {
+                setCampaign(response.data);
+                props.navigation.setOptions({ title: response.data.name });
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
 
     const scrollToTop = () => {
 
@@ -35,14 +54,34 @@ export default function useCampaignDetaillPage() {
         }
     }
 
+    const onIssuerDetailPress = (issuer: IssuerViewModel) => {
+        setIssuerDetail(issuer);
+        setIssuerModalVisible(true);
+    }
+
 
     return {
-        scrollViewRef,
-        scrollToTopShowed,
-        scrollToTop,
-        onScrollViewScroll,
-        onBooksPageNavigation,
-        maxPage,
-        currentPage
+        ref: {
+            scrollViewRef,
+        },
+        event: {
+            onScrollViewScroll,
+            onIssuerDetailPress
+        },
+        ui: {
+            loading,
+            issuerModalVisible: {
+                value: issuerModalVisible,
+                set: setIssuerModalVisible
+            }
+        },
+        data: {
+            campaign,
+            issuerDetail
+        },
+        scrollToTop: {
+            scrollToTopShowed,
+            scrollToTop,
+        }
     };
 }

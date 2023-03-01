@@ -1,4 +1,4 @@
-import { BasicOrganizationViewModel } from "../Organizations/BasicOrganizationViewModel";
+import { BasicOrganizationViewModel } from "../../Organizations/BasicOrganizationViewModel";
 
 export interface CampaignOrganizationsViewModel {
     id?: number;

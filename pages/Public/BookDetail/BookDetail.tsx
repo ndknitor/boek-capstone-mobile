@@ -13,13 +13,15 @@ import formatNumber from '../../../libs/functions/formatNumber';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
 import PageLoader from '../../../components/PageLoader/PageLoader';
+import useAppContext from '../../../context/Context';
 
 function BookDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useBookDetailPage(props);
+    const { addToCart } = useAppContext();
     const { navigate } = useRouter();
     return (
         <>
-            <PageLoader loading={hook.loading} />
+            <PageLoader loading={hook.loading} opacity={1} />
             <ScrollView style={{ backgroundColor: "white" }}>
                 <View style={{ alignItems: "center" }}>
                     <View style={{ width: "70%", height: 400, paddingTop: 20 }}>
@@ -156,7 +158,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                         <Text style={{ marginBottom: 10 }}>{hook.data.book?.description}</Text>
                     </View>
                     {
-                        hook.data.book && hook.data.book?.description.length > 100 &&
+                        hook.data.book && hook.data.book.description && hook.data.book?.description.length > 100 &&
                         <ShowMoreButton />
                     }
                     <View style={{ marginBottom: 30 }} />
@@ -172,7 +174,12 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                     ]} />
                 </View>
             </ScrollView>
-            <Button buttonStyle={{ backgroundColor: primaryColor, padding: 12 }}>Chọn mua</Button>
+            <Button
+                onPress={() => addToCart(hook.data.book!, 1)}
+                buttonStyle={{
+                    backgroundColor: primaryColor,
+                    padding: 12
+                }}>Chọn mua</Button>
         </>
 
     )

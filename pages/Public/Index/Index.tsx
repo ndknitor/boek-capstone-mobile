@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, Image, ActivityIndicator, SafeAreaView } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, Image, ActivityIndicator, SafeAreaView, Pressable, Modal, Alert } from 'react-native';
 import { Button, Icon } from '@rneui/base';
 import PDFView from 'react-native-view-pdf';
 import useRouter from '../../../libs/hook/useRouter';
 import QrCameraFrame from '../../../components/QrCameraFrame/QrCameraFrame';
+import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 
 function Index() {
   const { navigate } = useRouter();
   const [scanQr, setScanQr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* <PDFView
@@ -27,6 +29,16 @@ function Index() {
       <TouchableOpacity onPress={() => navigate("AskGenres")}>
         <Text>AskGenres</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Text>Modal</Text>
+      </TouchableOpacity>
+      <LayoutModal
+        visible={modalVisible}
+        onClose={() => { setModalVisible(false) }}>
+        <TouchableOpacity onPress={() => { setModalVisible(false) }}>
+          <Text>dit me may</Text>
+        </TouchableOpacity>
+      </LayoutModal>
 
       <Button onPress={async () => scanQr ? setScanQr(false) : setScanQr(true)} >Scan</Button>
       <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
