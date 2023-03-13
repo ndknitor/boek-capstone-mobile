@@ -7,7 +7,7 @@ import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
 import { primaryTint4 } from '../../utils/color';
 import BookCard from '../BookCard/BookCard';
 interface TitleTabedFlatBooks {
-    title: string;
+    title?: string;
     data: { tabLabel: string, tabData: MobileBookProductViewModel[] }[];
 }
 function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
@@ -15,7 +15,10 @@ function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
     const [index, setIndex] = useState(0);
     return (
         <>
-            <Text style={{ fontSize: 22, fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
+            {
+                props.title &&
+                <Text style={{ fontSize: 22, fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
+            }
             <FlatList
                 style={{ marginBottom: 10 }}
                 horizontal

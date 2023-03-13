@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { View, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native'
 import Swiper from 'react-native-swiper';
 import useCampaignsPage from './Campaigns.hook';
-import OnGoingBookFair from '../../../../components/OnGoingBookFair/OnGoingBookFair';
-import UpcomingBookFair from '../../../../components/UpcomingBookFair/UpcomingBookFair';
-import PageLoader from '../../../../components/PageLoader/PageLoader';
-import PreLoadTabView from '../../../../components/PreLoadTabView/PreLoadTabView';
-import ShowMoreButton from '../../../../components/ShowMoreButton/ShowMoreButton';
+import OnGoingBookFair from '../../../components/OnGoingBookFair/OnGoingBookFair';
+import UpcomingBookFair from '../../../components/UpcomingBookFair/UpcomingBookFair';
+import PageLoader from '../../../components/PageLoader/PageLoader';
+import PreLoadTabView from '../../../components/PreLoadTabView/PreLoadTabView';
+import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
 import { ParamListBase } from '@react-navigation/native';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 export interface CampaignsProps extends BottomTabScreenProps<ParamListBase> {

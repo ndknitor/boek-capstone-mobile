@@ -229,16 +229,16 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
-                                    <MenuOption onSelect={() => alert(`Save`)}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("")}>
                                         <Text style={{ fontSize: 16 }}>Mặc định</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("")}>
                                         <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("")}>
                                         <Text style={{ fontSize: 16 }}>Giá thấp dần</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)} >
+                                    <MenuOption onSelect={() => hook.input.sort.set("")} >
                                         <Text>
                                             <Text style={{ fontSize: 16 }}>Giá cao dần</Text>
                                         </Text>

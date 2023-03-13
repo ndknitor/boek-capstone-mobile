@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import appxios from "../../../../components/AxiosInterceptor";
-import { CustomerCampaignMobileViewModel } from "../../../../objects/viewmodels/Campaigns/Mobile/CustomerCampaignMobileViewModel";
-import { UnhierarchicalCustomerCampaignMobileViewModel } from "../../../../objects/viewmodels/Campaigns/Mobile/UnhierarchicalCustomerCampaignMobileViewModel";
-import endPont from "../../../../utils/endPoints";
+import appxios from "../../../components/AxiosInterceptor";
+import { CustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CustomerCampaignMobileViewModel";
+import { UnhierarchicalCustomerCampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/UnhierarchicalCustomerCampaignMobileViewModel";
+import endPont from "../../../utils/endPoints";
 import { CampaignsProps } from "./Campaigns";
 
 export default function useCampaignsPage(props : CampaignsProps) {

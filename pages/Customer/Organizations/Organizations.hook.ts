@@ -43,11 +43,11 @@ export function useUnTrackedOrganizationsPage() {
             true,
             ...buttonsLoading.slice(index + 1)
         ]);
-        console.log(organization.id);
+        //console.log(organization.id);
 
         if (trackedOrganizationIds.find(o => o == organization.id)) {
             appxios.delete(`${endPont.public.organizations.customer}/${organization.id}`).then(response => {
-                console.log(response)
+                //console.log(response);
                 //console.log(response);
                 if (response.status == 200) {
                     setTrackedOrganizationIds(trackedOrganizationIds.filter(o => o != organization.id));
@@ -62,7 +62,7 @@ export function useUnTrackedOrganizationsPage() {
         }
         else {
             appxios.post(`${endPont.public.organizations.customer}`, { organizationId: organization.id }).then(response => {
-                console.log(response);
+                //console.log(response);
                 if (response.status == 200) {
                     setTrackedOrganizationIds([...trackedOrganizationIds, organization.id as number]);
                 }
@@ -138,7 +138,7 @@ export function useTrackedOrganizationsPage() {
             true,
             ...buttonsLoading.slice(index + 1)
         ]);
-        console.log(organization.id);
+        //console.log(organization.id);
 
         if (trackedOrganizationIds.find(o => o == organization.id)) {
             appxios.delete(`${endPont.public.organizations.customer}/${organization.id}`).then(response => {
@@ -156,7 +156,7 @@ export function useTrackedOrganizationsPage() {
         }
         else {
             appxios.post(`${endPont.public.organizations.customer}`, { organizationId: organization.id }).then(response => {
-                console.log(response);
+                //console.log(response);
                 if (response.status == 200) {
                     setTrackedOrganizationIds([...trackedOrganizationIds, organization.id as number]);
                 }

@@ -6,13 +6,12 @@ import React from 'react';
 import { route } from './libs/hook/useRouter';
 import { primaryColor, primaryTint1 } from './utils/color';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Campaigns from './pages/Public/CampaignDetail/Campaigns/Campaigns';
+import Campaigns from './pages/Public/Campaigns/Campaigns';
 import { Icon } from '@rneui/base';
-import { ActivityIndicator, Image, View } from 'react-native';
+import { Image } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
 import workHistoryWhite from "./assets/icons/work-history-white.png";
 import useAuth from './libs/hook/useAuth';
-import useAuthorizeInit from './libs/hook/useAuthorizeInit';
 import useInit from './context/useInit';
 import Organizations from './pages/Customer/Organizations/Organizations';
 import PriceComparison from './pages/Public/PriceComparison/PriceComparison';
@@ -35,6 +34,10 @@ import StaffOrders from './pages/Staff/StaffOrders/StaffOrders';
 import StaffCampagin from './pages/Staff/StaffCampagin/StaffCampagin';
 import PageLoader from './components/PageLoader/PageLoader';
 import Cart from './pages/Public/Cart/Cart';
+import RecurringCampaign from './pages/Public/RecurringCampaign/RecurringCampaign';
+import PdfShower from './pages/Public/PdfShower/PdfShower';
+import BookItems from './pages/Public/BookItems/BookItems';
+import BookItemDetail from './pages/Public/BookItemDetail/BookItemDetail';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,7 +53,7 @@ function Routers() {
   );
 }
 function StackNavigator() {
-  const { authenticated, roles, initLoading, isInRole } = useAuth();
+  const { initLoading, isInRole } = useAuth();
   return (
     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
 
@@ -69,15 +72,19 @@ function StackNavigator() {
       <Stack.Screen options={{ title: "" }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
       <Stack.Screen options={{ title: "Chi tiết" }} name={"IssuerDetail"}>{(props) => <IssuerDetail {...props} />}</Stack.Screen>
       <Stack.Screen options={{ title: "" }} name={"CampaignDetail"}>{(props) => <CampaignDetail {...props} />}</Stack.Screen>
-      <Stack.Screen options={{title : "" }} name={"BookDetail"} component={BookDetail} />
+      <Stack.Screen options={{ title: "" }} name={"BookDetail"} component={BookDetail} />
+      <Stack.Screen options={{ title: "Địa điểm" }} name={"RecurringCampaign"} component={RecurringCampaign} />
+      <Stack.Screen options={{ title: "" }} name={"PdfShower"} component={PdfShower} />
+      <Stack.Screen options={{ title: "" }} name={"BookItems"} component={BookItems} />
+      <Stack.Screen options={{ title: "" }} name={"BookItemDetail"} component={BookItemDetail} />
 
       {/* Customer */}
       <Stack.Screen options={{ title: "Tổ chức" }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
       <Stack.Screen options={{ title: "Thông tin cá nhân" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
       <Stack.Screen options={{ title: "Đơn hàng" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
-    <Stack.Screen options={{ title: "Chi tiết đơn hàng" }} name={"OrderDetail"}>{() => <OrderDetail />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Chi tiết đơn hàng" }} name={"OrderDetail"}>{() => <OrderDetail />}</Stack.Screen>
       <Stack.Screen options={{ title: "Thể loại sách yêu thích" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
-      
+
       <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{(props) => <AskPersonalInformation  {...props} />}</Stack.Screen>
@@ -113,7 +120,7 @@ function TabNavigator() {
         lazy: true
       }}>
       <Tab.Screen options={{ title: "Hội sách", tabBarIcon: () => <Icon name='book' color={"white"} size={17} /> }} name="Campaigns" component={Campaigns} />
-      <Tab.Screen options={{ unmountOnBlur : true,title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={17} /> }} name="Search" component={Search} />
+      <Tab.Screen options={{ unmountOnBlur: true, title: "Tìm kiếm", tabBarIcon: () => <Icon name='book' type='entypo' color={"white"} size={17} /> }} name="Search" component={Search} />
       <Tab.Screen options={{ title: "Cá nhân", tabBarIcon: () => <Image source={accountWhite} style={{ height: 17 }} resizeMode={"contain"} /> }} name="Profile" component={Profile} />
       {
         __DEV__ &&

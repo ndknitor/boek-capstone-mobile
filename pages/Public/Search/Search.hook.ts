@@ -30,6 +30,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const [publishers, setPublishers] = useState<PublisherViewModel[]>([]);
 
     const [search, setSearch] = useState("");
+    const [sort, setSort] = useState("");
     const [seletedGenre, setSeletedGenre] = useState<number[]>([]);
     const [selectedFormats, setSelectedFormats] = useState<number[]>([]);
     const [selectedLanguage, setSelectedLanguage] = useState<string[]>([]);
@@ -60,6 +61,9 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         }
         if (search && search != "") {
             query.append("Title", search);
+        }
+        if (sort && sort != "") {
+            query.append("Sort", sort);
         }
         query.append("Page", page.toString());
         query.append("Size", "30");
@@ -234,6 +238,10 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
             search: {
                 value: search,
                 set: setSearch
+            },
+            sort: {
+                value: sort,
+                set: setSort
             }
         },
         data: {
@@ -282,6 +290,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const [issuers, setIssuers] = useState<MultiUserViewModel[]>([]);
 
     const [search, setSearch] = useState("");
+    const [sort, setSort] = useState("");
     const [filterStartDate, setfilterStartDate] = useState<Date>();
     const [filterEndDate, setfilterEndDate] = useState<Date>();
     const [seletedFormat, setSeletedFormat] = useState<number>();
@@ -298,8 +307,12 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
         if (filterEndDate) {
             query.append("EndDate", filterEndDate.toDateString());
         }
+        if (sort && sort != "") {
+            query.append("Sort", sort);
+        }
         query.append("Page", page.toString());
         query.append("Size", "10");
+        console.log(query.toString());
 
         appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns.mobile.index}?${query.toString()}`)
             .then(response => {
@@ -441,6 +454,10 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
             search: {
                 value: search,
                 set: setSearch
+            },
+            sort: {
+                value: sort,
+                set: setSort
             }
         },
         loading,

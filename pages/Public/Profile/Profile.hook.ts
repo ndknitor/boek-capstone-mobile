@@ -12,15 +12,20 @@ import { LoginViewModel } from "../../../objects/viewmodels/Users/LoginViewModel
 import EndPont from "../../../utils/endPoints";
 import StorageKey from "../../../utils/storageKey";
 import { Role } from "../../../objects/enums/Role";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SessionStorage } from "../../../utils/SessionStogare";
+import endPont from "../../../utils/endPoints";
+import useAsyncEffect from "use-async-effect";
+import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
 
 export default function useProfilePage(props: ProfileProps) {
     const { navigate, replace } = useRouter();
-    const { setUser } = useAppContext();
+    const { setUser, user } = useAppContext();
     const { authenticated, setAuthorize } = useAuth();
 
     const [loading, setLoading] = useState(false);
+
+    const [customer, setCustomer] = useState<CustomerViewModel>();
 
     const onLogin = async () => {
         const currentUser = await googleLogin();
@@ -55,6 +60,10 @@ export default function useProfilePage(props: ProfileProps) {
                 replace("AskPersonalInformation");
             }
             else {
+                props.navigation.reset({
+                    index: 0,
+                    routes: [],
+                });
                 if (user.role == Role.staff) {
                     props.navigation.jumpTo("StaffCampaigns");
                 }
@@ -96,7 +105,7 @@ export default function useProfilePage(props: ProfileProps) {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             if (await GoogleSignin.isSignedIn()) {
-                await GoogleSignin.signOut();    
+                await GoogleSignin.signOut();
             }
             //await auth().signOut();
             let user = {} as User;
@@ -122,10 +131,22 @@ export default function useProfilePage(props: ProfileProps) {
         setAuthorizationBearer();
         setUser(undefined);
         await AsyncStorage.removeItem(StorageKey.user);
+        props.navigation.reset({
+            index: 0,
+            routes: [],
+        });
         if (navigate) {
             props.navigation.jumpTo("Campaigns", { reset: Math.random() });
         }
     }
+
+    useAsyncEffect(async () => {
+        if (user && user.role == Role.customer) {
+            appxios.get<CustomerViewModel>(endPont.users.me).then(response => {
+                setCustomer(response.data);
+            });
+        }
+    }, []);
 
     return {
         loading,
@@ -134,6 +155,9 @@ export default function useProfilePage(props: ProfileProps) {
             authorizeNavigate,
             logout,
             onLogin
+        },
+        data: {
+            customer
         }
 
     };

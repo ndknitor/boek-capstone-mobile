@@ -46,8 +46,7 @@ export const useProvider: () => Store = () => {
     }
     const removeFromCart = (productId: string) => {
         const removeProductInCart = cart.find(p => p.id == productId);
-        if(removeProductInCart)
-        {
+        if (removeProductInCart) {
             setTotalProductQuantity(totalProductQuantity - removeProductInCart.quantity);
             setCart(cart.filter(p => p.id != productId));
         }

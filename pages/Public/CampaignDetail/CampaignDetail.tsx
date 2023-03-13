@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated } from 'react-native'
+import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated, SafeAreaView } from 'react-native'
 import img1 from "../../../assets/wtd.webp";
 import locationBlack from "../../../assets/icons/location-black.png";
 import calendarBlack from "../../../assets/icons/calendar-today-black.png";
@@ -10,7 +10,7 @@ import useRouter from '../../../libs/hook/useRouter';
 import LabeledImage from '../../../components/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
-import { paletteGray, paletteGrayTint9, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint2, primaryTint7 } from '../../../utils/color';
+import { paletteGray, paletteGrayTint9, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint9 } from '../../../utils/color';
 import FadeTransition from '../../../components/FadeTransition/FadeTransition';
 import eventBusyBlack from "../../../assets/icons/event-busy-black.png";
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
@@ -25,7 +25,7 @@ import { Button } from '@rneui/base';
 
 function CampaignDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useCampaignDetaillPage(props);
-    const { navigate } = useRouter();
+    const { push } = useRouter();
     return (
         <>
             <PageLoader loading={hook.ui.loading} opacity={1} />
@@ -76,10 +76,10 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             width: "70%",
                             justifyContent: "center"
                         }}>
-                            <Text style={{ fontSize: 16, margin: 5 }}>Tên: {hook.data.issuerDetail?.user.name}</Text>
-                            <Text style={{ fontSize: 16, margin: 5 }}>SDT: {hook.data.issuerDetail?.user.phone}</Text>
-                            <Text style={{ fontSize: 16, margin: 5 }}>Địa chỉ: {hook.data.issuerDetail?.user.address}</Text>
-                            <Text style={{ fontSize: 16, margin: 5 }}>Email: {hook.data.issuerDetail?.user.email}</Text>
+                            <Text style={{ fontSize: 16, margin: 5 }}><Text style={{ fontWeight: "600" }}>Tên: </Text>{hook.data.issuerDetail?.user.name}</Text>
+                            <Text style={{ fontSize: 16, margin: 5 }}><Text style={{ fontWeight: "600" }}>SĐT: </Text>{hook.data.issuerDetail?.user.phone}</Text>
+                            <Text style={{ fontSize: 16, margin: 5 }}><Text style={{ fontWeight: "600" }}>Địa chỉ: </Text>{hook.data.issuerDetail?.user.address}</Text>
+                            <Text style={{ fontSize: 16, margin: 5 }}><Text style={{ fontWeight: "600" }}>Email: </Text>{hook.data.issuerDetail?.user.email}</Text>
                         </View>
                     </View>
 
@@ -152,24 +152,28 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                     </View>
 
                     <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-                        <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                            <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
-                                <Image style={{ height: 20, width: 20 }} source={locationBlack} />
+
+                        <View style={{ width: "95%" }}>
+                            <View style={{ flexDirection: "row", marginBottom: 5 }}>
+                                <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
+                                    <Image style={{ height: 20, width: 20 }} source={locationBlack} />
+                                </View>
+                                <Text>{hook.data.campaign?.address}</Text>
                             </View>
-                            <Text>Diễn ra tại : {hook.data.campaign?.address}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                            <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
-                                <Image style={{ height: 20, width: 20, marginRight: 2 }} source={calendarBlack} />
+                            <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
+                                    <Image style={{ height: 20, width: 20, marginRight: 2 }} source={calendarBlack} />
+                                </View>
+                                <Text >Bắt đầu : {moment(hook.data.campaign?.startDate).format(dateTimeFormat)}</Text>
                             </View>
-                            <Text >Bắt đầu : {moment(hook.data.campaign?.startDate).format(dateTimeFormat)}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                            <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
-                                <Image style={{ height: 20, width: 20, marginRight: 2 }} source={eventBusyBlack} />
+                            <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
+                                    <Image style={{ height: 20, width: 20, marginRight: 2 }} source={eventBusyBlack} />
+                                </View>
+                                <Text >Kết thúc : {moment(hook.data.campaign?.endDate).format(dateTimeFormat)}</Text>
                             </View>
-                            <Text >Kết thúc : {moment(hook.data.campaign?.endDate).format(dateTimeFormat)}</Text>
                         </View>
+
                         <Text style={{ marginTop: 10, marginBottom: 10, fontSize: 22, fontWeight: "600", }}>Nhà phát hành</Text>
                         {
                             hook.data.campaign?.issuers?.length == 0 || !hook.data.campaign?.issuers ?
@@ -188,20 +192,20 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                 </>
                         }
                         {
+                            hook.data.campaign?.unhierarchicalBookProducts?.map(item =>
+                                <TitleFlatBooks
+                                    title={item.title}
+                                    data={item.bookProducts as any} />
+                            )
+                        }
+                        {
                             hook.data.campaign?.hierarchicalBookProducts?.map(item =>
                                 <>
                                     <TitleTabedFlatBooks
                                         title={item.title}
                                         data={item.subHierarchicalBookProducts?.map(product => ({ tabLabel: product.subTitle, tabData: product.bookProducts })) as any} />
-                                    <ShowMoreButton onPress={() => navigate("IssuerMoreBook")} />
+                                    <ShowMoreButton onPress={() => push("IssuerMoreBook")} />
                                 </>
-                            )
-                        }
-                        {
-                            hook.data.campaign?.unhierarchicalBookProducts?.map(item =>
-                                <TitleFlatBooks
-                                    title={item.title}
-                                    data={item.bookProducts as any} />
                             )
                         }
                         <View style={{ marginTop: 10, marginBottom: 10 }}>
@@ -215,8 +219,8 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             {
                                 hook.data.campaign?.isRecurring &&
                                 <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
-                                    <Button buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 35, height: 35 }}>
-                                        <Image source={navigateRightWhite} style={{ width: "100%", height: 30 }} resizeMode="contain" />
+                                    <Button onPress={() => push("RecurringCampaign", { data: hook.data.campaign })} buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 30, height: 30 }}>
+                                        <Image source={navigateRightWhite} style={{ width: 25, height: 25 }} resizeMode="contain" />
                                     </Button>
                                 </View>
                             }

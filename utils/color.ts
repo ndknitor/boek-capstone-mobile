@@ -42,3 +42,4 @@ export const paletteRed = "#CF0012";
 export const paletteGrayLight = "#c7cfd6";
 export const paletteGreen = "rgb(220,252,221)";
 export const paletteGreenBold = "rgb(22,101,52)";
+export const paletteGreenShade1 = "#70AD47";

@@ -1,17 +1,21 @@
+import { ParamListBase } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
-import { PriceComparisonProps } from "./PriceComparison";
 
-export default function usePriceComparisonPage(props: PriceComparisonProps) {
+export default function useBookItemsPage(props: StackScreenProps<ParamListBase>) {
     const [bookProduct, setBookProduct] = useState<MobileBookProductViewModel>();
     useEffect(() => {
-        console.log(props.route.params);
         const params = props.route.params as { data: MobileBookProductViewModel };
-        setBookProduct(params.data);
+        setBookProduct(params.data);        
+        props.navigation.setOptions({
+            title: params.data.title
+        });
     }, []);
+
     return {
         data: {
             bookProduct
         }
-    };
+    }
 }

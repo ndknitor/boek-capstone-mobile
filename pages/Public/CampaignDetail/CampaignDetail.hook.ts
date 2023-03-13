@@ -1,8 +1,9 @@
 import { ParamListBase } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import { useEffect, useRef, useState } from "react";
+import { createElement, useEffect, useRef, useState } from "react";
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-native";
 import appxios from "../../../components/AxiosInterceptor";
+import CardHeader from "../../../components/CartHeader/CardHeader";
 import { CampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CampaignMobileViewModel";
 import { IssuerViewModel } from "../../../objects/viewmodels/Users/issuers/IssuerViewModel";
 import endPont from "../../../utils/endPoints";
@@ -19,12 +20,14 @@ export default function useCampaignDetaillPage(props: StackScreenProps<ParamList
     const [issuerDetail, setIssuerDetail] = useState<IssuerViewModel>();
 
     useEffect(() => {
+        props.navigation.setOptions({ headerRight: (props) => createElement(CardHeader) });
         const params = props.route.params as { campaignId: number };
         //console.log(params);
         setLoading(true);
         console.log(params);
         appxios.get<CampaignMobileViewModel>(`${endPont.public.campaigns.mobile.index}/${params.campaignId}`)
             .then(response => {
+                console.log(response.status);
                 setCampaign(response.data);
                 props.navigation.setOptions({ title: response.data.name });
             })

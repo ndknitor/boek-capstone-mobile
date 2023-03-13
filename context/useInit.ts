@@ -13,9 +13,12 @@ import useDebounce from '../libs/hook/useDebounce';
 import { useEffect } from 'react';
 import { ProductInCart } from '../objects/models/ProductInCart';
 import useIsFirstRender from '../libs/hook/useIsFirstRender';
+import { Role } from '../objects/enums/Role';
+import { CustomerViewModel } from '../objects/viewmodels/Users/customers/CustomerViewModel';
+import endPont from '../utils/endPoints';
 
 export default function useInit() {
-  const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
+const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
   const { setAuthorize, initLoading, setInitLoading } = useAuth();
   const debounceCart = useDebounce(cart, 900);
   const isFirstRender = useIsFirstRender();
@@ -53,11 +56,9 @@ export default function useInit() {
         const request = {
           idToken: await auth().currentUser?.getIdToken()
         };
-        //        console.log(request);
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         if (loginResponse.status == 200) {
           user = loginResponse.data.data;
-          console.log(user.accessToken);
         }
       }
       setUser(user);

@@ -4,6 +4,7 @@ import { ButtonProps, GestureResponderEvent, View } from 'react-native'
 import { primaryTint1 } from '../../utils/color';
 interface ShowMoreButtonProps {
     onPress?: (event: GestureResponderEvent) => void;
+    expanded?: boolean;
 }
 function ShowMoreButton(props: ShowMoreButtonProps) {
     return (
@@ -15,7 +16,7 @@ function ShowMoreButton(props: ShowMoreButtonProps) {
                     alignItems: "center",
                     borderRadius: 8,
                     backgroundColor: primaryTint1
-                }}>Xem thêm</Button>
+                }}>{props.expanded ? "Thu gọn" : "Xem thêm"}</Button>
         </View>
     )
 }

@@ -63,8 +63,8 @@ function Profile(props: ProfileProps) {
                   <Text style={{ color: "white" }}>{user?.email}</Text>
                   <View style={{ marginTop: 10 }}></View>
                   <AuthorizeView roles={[Role.customer.toString()]}>
-                    <Text style={{ color: "white", fontWeight: "600" }}>Level : 1</Text>
-                    <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : 69</Text>
+                    <Text style={{ color: "white", fontWeight: "600" }}>Level : {hook.data.customer?.level.name}</Text>
+                    <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : {hook.data.customer?.point}</Text>
                   </AuthorizeView>
                   <AuthorizeView roles={[Role.staff.toString()]}>
 
