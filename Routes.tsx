@@ -38,6 +38,7 @@ import RecurringCampaign from './pages/Public/RecurringCampaign/RecurringCampaig
 import PdfShower from './pages/Public/PdfShower/PdfShower';
 import BookItems from './pages/Public/BookItems/BookItems';
 import BookItemDetail from './pages/Public/BookItemDetail/BookItemDetail';
+import TrackOrder from './pages/Customer/TrackOrder/TrackOrder';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,9 +82,11 @@ function StackNavigator() {
       {/* Customer */}
       <Stack.Screen options={{ title: "Tổ chức" }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
       <Stack.Screen options={{ title: "Thông tin cá nhân" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
-      <Stack.Screen options={{ title: "Đơn hàng" }} name={"Orders"}>{() => <Orders />}</Stack.Screen>
-      <Stack.Screen options={{ title: "Chi tiết đơn hàng" }} name={"OrderDetail"}>{() => <OrderDetail />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Đơn hàng của tôi" }} name={"Orders"} component={Orders} />
+      <Stack.Screen options={{ title: "Đơn hàng", headerTitleAlign: "center" }} name={"OrderDetail"} component={OrderDetail} />
       <Stack.Screen options={{ title: "Thể loại sách yêu thích" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Theo dõi đơn hàng" }} name={"TrackOrder"}>{() => <TrackOrder />}</Stack.Screen>
+
 
       <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name={"AskOrganizations"}>{() => <AskOrganizations />}</Stack.Screen>

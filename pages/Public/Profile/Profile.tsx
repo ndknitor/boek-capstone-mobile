@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import useProfilePage from './Profile.hook';
 import { Button } from '@rneui/base';
 import accountWhite from "../../../assets/icons/account-circle-white.png";
@@ -13,6 +13,7 @@ import { primaryTint1 } from '../../../utils/color';
 import { Role } from '../../../objects/enums/Role';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import useAppContext from '../../../context/Context';
+import Info from '../../../assets/SvgComponents/Info';
 export interface ProfileProps extends BottomTabScreenProps<ParamListBase> {
 
 }
@@ -63,8 +64,23 @@ function Profile(props: ProfileProps) {
                   <Text style={{ color: "white" }}>{user?.email}</Text>
                   <View style={{ marginTop: 10 }}></View>
                   <AuthorizeView roles={[Role.customer.toString()]}>
-                    <Text style={{ color: "white", fontWeight: "600" }}>Level : {hook.data.customer?.level.name}</Text>
-                    <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : {hook.data.customer?.point}</Text>
+                    <View style={{
+                      //borderWidth: 1,
+                      flexDirection: "row"
+                    }}>
+                      <View style={{
+
+                        width: "60%"
+                      }}>
+                        <Text style={{ color: "white", fontWeight: "600" }}>Level : {hook.data.customer?.level.name}</Text>
+                        <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : {hook.data.customer?.point}</Text>
+                      </View>
+                      <View style={{ justifyContent: "center" }}>
+                        <TouchableOpacity>
+                          <Info fill={"white"} />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </AuthorizeView>
                   <AuthorizeView roles={[Role.staff.toString()]}>
 
