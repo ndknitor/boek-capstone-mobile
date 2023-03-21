@@ -1,5 +1,6 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
+import { ScrollView, View, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { Text } from "@react-native-material/core";
 import { paletteGray, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
 import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
@@ -170,34 +171,32 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
                 </View>
               </View>
             </>
-            <>
-              <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
+            <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
+            <View style={{
+              flexDirection: "row",
+              marginBottom: 20
+            }}>
               <View style={{
-                flexDirection: "row",
-                marginBottom: 20
+                borderWidth: 1,
+                borderColor: primaryTint1,
+                width: "20%",
+                height: 100,
+                borderRadius: 8
               }}>
-                <View style={{
-                  borderWidth: 1,
-                  borderColor: primaryTint1,
-                  width: "20%",
-                  height: 100,
-                  borderRadius: 8
-                }}>
-                  <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
-                </View>
-                <View style={{
-                  width: "50%",
-                  paddingLeft: 10,
-                  justifyContent: "center"
-                }}>
-                  <Text style={{ fontSize: 16 }}>Tên sách</Text>
-                  <Text>Số lượng: x1</Text>
-                </View>
-                <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
-                  <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
-                </View>
+                <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
               </View>
-            </>
+              <View style={{
+                width: "50%",
+                paddingLeft: 10,
+                justifyContent: "center"
+              }}>
+                <Text style={{ fontSize: 16 }}>Tên sách</Text>
+                <Text>Số lượng: x1</Text>
+              </View>
+              <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
+                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
+              </View>
+            </View>
           </View>
         </ExpandToggleView>
         <View style={{

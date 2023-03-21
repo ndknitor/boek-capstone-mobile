@@ -18,7 +18,7 @@ import { CustomerViewModel } from '../objects/viewmodels/Users/customers/Custome
 import endPont from '../utils/endPoints';
 
 export default function useInit() {
-const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
+  const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
   const { setAuthorize, initLoading, setInitLoading } = useAuth();
   const debounceCart = useDebounce(cart, 900);
   const isFirstRender = useIsFirstRender();
@@ -49,7 +49,7 @@ const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } 
     if (auth().currentUser) {
       let user: LoginViewModel = {} as LoginViewModel;
       if (userJsonString) {
-        console.log(userJsonString);
+        //console.log(userJsonString);
         user = JSON.parse(userJsonString);
       }
       else {

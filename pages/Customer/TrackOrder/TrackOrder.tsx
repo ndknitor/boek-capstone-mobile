@@ -1,6 +1,7 @@
 import { color } from '@rneui/base'
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native';
+import { Text } from "@react-native-material/core";
 import VerticalSlider from '../../../components/VerticalSlider/VerticalSlider'
 import { paletteGray, paletteGrayShade2, paletteGrayShade4, paletteGreen, paletteGreenBold, palettePink, paletteRed } from '../../../utils/color'
 

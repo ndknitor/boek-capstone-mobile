@@ -2,9 +2,9 @@ import { ParamListBase } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Button } from '@rneui/base'
 import React from 'react'
-import { ScrollView, View, Image, Text } from 'react-native'
+import { ScrollView, View, Image } from 'react-native';
+import { Text } from "@react-native-material/core";
 import LinearGradient from 'react-native-linear-gradient'
-import LibraryBooks from '../../../assets/SvgComponents/LibraryBooks'
 import AudioPlayer from '../../../components/AudioPlayer/AudioPlayer'
 import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton'
 import formatNumber from '../../../libs/functions/formatNumber'

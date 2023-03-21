@@ -6,6 +6,7 @@ import useRouter from '../../../libs/hook/useRouter'
 import { primaryTint7 } from '../../../utils/color'
 import useBookItemsPage from './BookItems.hook';
 import { Ionicons } from '@expo/vector-icons';
+import truncateString from '../../../libs/functions/truncateString'
 
 
 function BookItems(props: StackScreenProps<ParamListBase>) {
@@ -63,9 +64,9 @@ function BookItems(props: StackScreenProps<ParamListBase>) {
                                     height: "90%"
                                 }}>
                                     <View style={{ height: "40%", paddingLeft: 2 }}>
-                                        <Text style={{ fontSize: 16, fontWeight: "600" }}>{item.book?.name || ""}</Text>
+                                        <Text style={{ fontSize: 16, fontWeight: "600" }}>{item.book && item.book?.name.length > 20 ? truncateString(item.book?.name, 5) : item.book?.name}</Text>
                                     </View>
-                                    <View style={{ height: "70%", width: "100%", flexDirection: "row", columnGap: 5 }} >
+                                    <View style={{ height: "60%", width: "100%", flexDirection: "row", columnGap: 5 }} >
                                         {
                                             item.withPdf &&
                                             <Ionicons name="document-text" size={30} />

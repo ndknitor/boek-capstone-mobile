@@ -1,6 +1,7 @@
 import { Button } from '@rneui/base';
-import React from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React from 'react';
+import { Text } from "@react-native-material/core";
+import { View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useBookDetailPage from './BookDetail.hook';
 import avatar from "../../../assets/avatar.jpg";
 import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
@@ -17,9 +18,9 @@ import useAppContext from '../../../context/Context';
 import { MobileBookProductViewModel } from '../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import truncateString from '../../../libs/functions/truncateString';
 import LibraryBooks from '../../../assets/SvgComponents/LibraryBooks';
-import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 import AudioPlayer from '../../../components/AudioPlayer/AudioPlayer';
-import { Ionicons } from '@expo/vector-icons';
+import { MobileBookProductsViewModel } from '../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
+import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 
 
 function BookDetail(props: StackScreenProps<ParamListBase>) {
@@ -42,7 +43,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                     </View>
                 </View>
                 <View style={{ padding: 10, paddingTop: 20 }}>
-                    <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: "600" }}>{hook.data.book?.title}</Text>
+                    <Text variant='h6' style={{ marginBottom: 10 }}>{hook.data.book?.title}</Text>
                     {
                         hook.data.book && hook.data.book.book?.genre &&
                         <View style={{
@@ -194,13 +195,13 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
 
                             </View>
                             <View style={{ width: "80%", justifyContent: "center" }}>
-                                <Text style={{ fontSize: 18, fontWeight: "600" }}>Tác giả</Text>
+                                <Text variant='h6'>Tác giả</Text>
                                 <Text style={{ fontSize: 16 }}>{hook.data.book?.book?.bookAuthors.map(item => item.author.name).join(", ")}</Text>
                             </View>
                         </View>
                     }
 
-                    <Text style={{ marginBottom: 30, fontSize: 22, fontWeight: "600" }}>Thông tin chi tiết</Text>
+                    <Text variant='h6' style={{ marginBottom: 30 }}>Thông tin chi tiết</Text>
 
                     {
                         hook.data.book?.book ?
@@ -455,7 +456,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
 
                     <View style={{ marginBottom: 30 }} />
 
-                    <Text style={{ marginBottom: 5, fontSize: 22, fontWeight: "600" }}>Mô tả sản phẩm</Text>
+                    <Text variant='h6' style={{ marginBottom: 5 }}>Mô tả sản phẩm</Text>
 
                     <View>
                         {
@@ -487,21 +488,13 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                             onPress={() => hook.ui.setDescriptionExpanded(!hook.ui.descriptionExpanded)} />
                     }
                     <View style={{ marginBottom: 30 }} />
-                    <Text style={{ marginBottom: 5, fontSize: 22, fontWeight: "600" }}>Có thể bạn quan tâm</Text>
+                    <Text variant='h6' style={{ marginBottom: 5 }}>Có thể bạn quan tâm</Text>
                     {
-                        hook.data.book?.unhierarchicalBookProducts?.at(0) &&
-                        hook.data.book?.unhierarchicalBookProducts?.at(1) &&
-                        <TitleTabedFlatBooks
-                            data={[
-                                {
-                                    tabLabel: hook.data.book?.unhierarchicalBookProducts?.at(0)?.title as string,
-                                    tabData: hook.data.book?.unhierarchicalBookProducts?.at(0)?.bookProducts as MobileBookProductViewModel[]
-                                },
-                                {
-                                    tabLabel: hook.data.book?.unhierarchicalBookProducts?.at(1)?.title as string,
-                                    tabData: hook.data.book?.unhierarchicalBookProducts?.at(1)?.bookProducts as MobileBookProductViewModel[]
-                                }
-                            ]} />
+                        hook.data.book?.unhierarchicalBookProducts && hook.data.book?.unhierarchicalBookProducts?.map(item =>
+                            item.bookProducts.length > 0 &&
+                            <TitleFlatBooks
+                                title={item.title}
+                                data={item.bookProducts as MobileBookProductViewModel[]} />)
                     }
                 </View>
             </ScrollView>

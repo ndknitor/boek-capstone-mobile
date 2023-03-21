@@ -27,6 +27,7 @@ export function AxiosInterceptor({ children }: PropsWithChildren<{}>) {
             return Promise.reject(error);
         }
         const onResponse = (response: AxiosResponse<any, any>) => {
+            console.log(`Path: ${response.config.url}; Method:${response.config.method}; Body:${response.config.data}; Status: ${response.status}` );
             return response;
         }
         const onResponseError = (error: AxiosError) => {

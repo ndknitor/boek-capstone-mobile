@@ -1,4 +1,5 @@
-import { View, Text, Image, Dimensions, FlatList, TouchableOpacity, ScrollView, Animated, SafeAreaView } from 'react-native'
+import { View, Image, Dimensions, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import { Text } from "@react-native-material/core";
 import img1 from "../../../assets/wtd.webp";
 import locationBlack from "../../../assets/icons/location-black.png";
 import calendarBlack from "../../../assets/icons/calendar-today-black.png";
@@ -119,7 +120,7 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                 ref={hook.ref.scrollViewRef}>
                 <View style={{ backgroundColor: "white" }}>
                     <View style={{ width: "100%", padding: 10 }}>
-                        <Text style={{ fontSize: 24, fontWeight: "600" }}>{hook.data.campaign?.name}</Text>
+                        <Text variant="h5" >{hook.data.campaign?.name}</Text>
                     </View>
                     <View style={{ width: "100%", paddingLeft: 10 }}>
                         {
@@ -174,7 +175,7 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             </View>
                         </View>
 
-                        <Text style={{ marginTop: 10, marginBottom: 10, fontSize: 22, fontWeight: "600", }}>Nhà phát hành</Text>
+                        <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Nhà phát hành</Text>
                         {
                             hook.data.campaign?.issuers?.length == 0 || !hook.data.campaign?.issuers ?
                                 <View>
@@ -209,17 +210,19 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             )
                         }
                         <View style={{ marginTop: 10, marginBottom: 10 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "600", }}>Mô tả</Text>
+                            <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Mô tả</Text>
                             <Text>{hook.data.campaign?.description}</Text>
                         </View>
                         <View style={{ width: "100%", flexDirection: "row" }}>
                             <View style={{ width: "85%" }}>
-                                <Text style={{ fontSize: 20, fontWeight: "600", marginBottom: 3, marginTop: 10 }}>Tổ chức</Text>
+                                <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Tổ chức</Text>
                             </View>
                             {
                                 hook.data.campaign?.isRecurring &&
                                 <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
-                                    <Button onPress={() => push("RecurringCampaign", { data: hook.data.campaign })} buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 30, height: 30 }}>
+                                    <Button
+                                        onPress={() => push("RecurringCampaign", { data: hook.data.campaign })}
+                                        buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 30, height: 30 }}>
                                         <Image source={navigateRightWhite} style={{ width: 25, height: 25 }} resizeMode="contain" />
                                     </Button>
                                 </View>
@@ -229,7 +232,9 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             horizontal
                             data={hook.data.campaign?.organizations}
                             renderItem={e =>
-                                <LabeledImage label={e.item?.name} source={{ uri: e.item.imageUrl }} />
+                                <View style={{ marginRight: 20 }}>
+                                    <LabeledImage label={e.item?.name} source={{ uri: e.item.imageUrl }} />
+                                </View>
                             } />
                         <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>

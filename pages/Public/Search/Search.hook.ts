@@ -67,7 +67,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         }
         query.append("Page", page.toString());
         query.append("Size", "30");
-        console.log(query.toString());
+        //console.log(query.toString());
 
 
         appxios.get<BaseResponsePagingModel<MobileBookProductViewModel>>(`${EndPont.public.books.mobile.products.index}?${query.toString()}`)
@@ -75,7 +75,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
                 setBooks(response.data.data);
                 setCurrentPage(page);
                 setMaxPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));
-                console.log(response.data.data[0].imageUrl);
+                //console.log(response.data.data[0].imageUrl);
             })
             .finally(() => {
                 setLoading(false);
@@ -312,7 +312,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
         }
         query.append("Page", page.toString());
         query.append("Size", "10");
-        console.log(query.toString());
+        //console.log(query.toString());
 
         appxios.get<BaseResponsePagingModel<CampaignViewModel>>(`${EndPont.public.campaigns.mobile.index}?${query.toString()}`)
             .then(response => {

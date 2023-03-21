@@ -1,6 +1,7 @@
 import { Button } from '@rneui/base';
 import React, { useState } from 'react'
-import { FlatList, TouchableOpacity, Text, View } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native'
+import { Text } from "@react-native-material/core";
 import useRouter from '../../libs/hook/useRouter';
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
@@ -17,7 +18,7 @@ function TitleTabedFlatBooks(props: TitleTabedFlatBooks) {
         <>
             {
                 props.title &&
-                <Text style={{ fontSize: 22, fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
+                <Text variant='h6' style={{ fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
             }
             <FlatList
                 style={{ marginBottom: 10 }}

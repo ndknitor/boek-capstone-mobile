@@ -1,16 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PDFView from 'react-native-view-pdf';
 import useRouter from '../../../libs/hook/useRouter';
-import { View } from 'react-native';
-import Sound from 'react-native-sound';
+import { View, Text } from 'react-native';
 import AudioPlayer from '../../../components/AudioPlayer/AudioPlayer';
+import Shadow from '../../../components/Shadow/Shadow';
 function Index() {
   const { navigate } = useRouter();
   const [scanQr, setScanQr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <>
-      <AudioPlayer audioUri='http://10.0.2.2:6969/Starting%20Line-SLwboaO8POs.mp3' />
+    <View style={{
+      backgroundColor: "white",
+      height: "100%"
+    }}>
+      {/* <AudioPlayer audioUri='http://10.10.2.106:6969/Starting%20Line-SLwboaO8POs.mp3' /> */}
+      <Shadow style={{
+        backgroundColor: "white",
+        elevation : 12
+      }}>
+        <View style={{
+          backgroundColor: "white"
+        }}>
+          <Text>hello</Text>
+        </View>
+      </Shadow>
+
       {/* <View style={{
         padding: 10
       }}>
@@ -52,7 +66,7 @@ function Index() {
           <QrCameraFrame onBarCodeScanned={(e) => { alert(e.data); setScanQr(false) }} scanQr={scanQr} onCameraPermissionError={() => setScanQr(false)} />
         </View>
       </View> */}
-    </>
+    </View>
   )
 }
 export default Index;

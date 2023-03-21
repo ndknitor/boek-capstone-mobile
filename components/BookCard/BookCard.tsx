@@ -36,12 +36,14 @@ function BookCard({ book }: BookCardProps) {
           <View
             style={{
               height: "95%",
-              width: "95%"
+              width: "95%",
+              alignItems : "center",
+              justifyContent : "center"
             }}>
             <Image
               source={{ uri: book.imageUrl }}
               resizeMode="cover"
-              style={{ height: "100%", width: "100%" }} />
+              style={{ height: "90%", width: "90%" }} />
           </View>
         </View>
         <View

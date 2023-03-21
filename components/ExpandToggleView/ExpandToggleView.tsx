@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
+import { Text } from "@react-native-material/core";
 import useBoolean from '../../libs/hook/useBoolean'
 import { primaryTint4 } from '../../utils/color';
 import expandMoreBlack from "../../assets/icons/expand-more-black.png";

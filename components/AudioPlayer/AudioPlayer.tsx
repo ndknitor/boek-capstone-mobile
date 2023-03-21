@@ -124,7 +124,7 @@ const AudioPlayer = forwardRef<AudioPlayerRefProps, AudioPlayerProps>((props, re
             }
             : undefined;
 
-    }, [sound]);
+    }, [sound, props.audioUri]);
 
     return (
         <View style={{

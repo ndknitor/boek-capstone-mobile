@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { View, Image, ScrollView, Text, FlatList, ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
+import React from 'react'
+import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Text } from "@react-native-material/core";
 import logo from "../../assets/logo.png";
 import Paging from '../../../components/Paging/Paging';
 import range from '../../../libs/functions/range';
@@ -11,11 +12,7 @@ import { Button } from '@rneui/base';
 import useRouter from '../../../libs/hook/useRouter';
 import { ParamListBase } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import Info from '../../../assets/SvgComponents/Info';
 import useOrdersPage from './Orders.hook';
-import LayoutModal from '../../../components/LayoutModal/LayoutModal';
-import Filber from '../../../assets/SvgComponents/Filber';
-import Close from '../../../assets/SvgComponents/Close';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -266,7 +263,7 @@ function CounterOrders() {
                                 <View style={{ width: "60%", alignItems: "flex-end", justifyContent: "center" }}>
                                     <Button
                                         onPress={hook.event.onOrderSubmit}
-                                        buttonStyle={{ backgroundColor: paletteRed }}>Thanh toán</Button>
+                                        buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
                                 </View>
                             </View>
 

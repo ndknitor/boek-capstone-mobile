@@ -72,8 +72,8 @@ function Profile(props: ProfileProps) {
 
                         width: "60%"
                       }}>
-                        <Text style={{ color: "white", fontWeight: "600" }}>Level : {hook.data.customer?.level.name}</Text>
-                        <Text style={{ color: "white", fontWeight: "600" }}>Số điểm : {hook.data.customer?.point}</Text>
+                        <Text style={{ color: "white", fontWeight: "600" }}>Cấp độ: {hook.data.customer && hook.data.customer?.level.name}</Text>
+                        <Text style={{ color: "white", fontWeight: "600" }}>Số điểm: {hook.data.customer && hook.data.customer?.point}</Text>
                       </View>
                       <View style={{ justifyContent: "center" }}>
                         <TouchableOpacity>

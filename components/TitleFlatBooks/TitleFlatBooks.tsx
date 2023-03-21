@@ -1,7 +1,8 @@
 import { useRoute } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import React, { useReducer } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, } from 'react-native'
+import { Text } from "@react-native-material/core";
 import useRouter from '../../libs/hook/useRouter';
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import { BookViewModel } from '../../objects/viewmodels/Books/BookViewModel';
@@ -14,7 +15,7 @@ function TitleFlatBooks(props: TitleFlatBooksProps) {
     const { navigate } = useRouter();
     return (
         <>
-            <Text style={{ fontSize: 22, fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
+            <Text variant='h6' style={{ fontWeight: "600", marginBottom: 10, marginTop: 10 }}>{props.title}</Text>
             <FlatList
                 horizontal
                 data={props.data}

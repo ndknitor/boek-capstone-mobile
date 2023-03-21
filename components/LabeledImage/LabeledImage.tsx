@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, ImageSourcePropType, Image, Dimensions, TouchableOpacity, GestureResponderEvent, Pressable } from 'react-native'
+import { paletteGrayLight } from '../../utils/color';
 interface LabeledImageProps {
     source: ImageSourcePropType;
     label?: string;
@@ -10,7 +11,7 @@ function LabeledImage(props: LabeledImageProps) {
     return (
         <View
             style={{
-                width: 100,
+
                 height: 90,
                 alignItems: "center",
                 justifyContent: "center"
@@ -23,6 +24,8 @@ function LabeledImage(props: LabeledImageProps) {
                 }}>
                 <View
                     style={{
+                        borderWidth: 1,
+                        borderColor: paletteGrayLight,
                         width: 50,
                         height: 50,
                         borderRadius: 999,
