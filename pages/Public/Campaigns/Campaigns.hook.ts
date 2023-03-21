@@ -20,7 +20,7 @@ export default function useCampaignsPage(props : CampaignsProps) {
 
     const getCampaigns = async () => {
         setLoading(true);
-        await appxios.get<CustomerCampaignMobileViewModel>(endPont.public.campaigns.mobile.customers)
+        await appxios.get<CustomerCampaignMobileViewModel>(endPont.public.campaigns.customer.homePage)
             .then(response => {
                 //console.log(response.data);
                 const data = response.data;

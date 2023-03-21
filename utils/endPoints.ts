@@ -43,11 +43,9 @@ const endPont =
         campaigns:
         {
             index: "/api/campaigns",
-            mobile:
-            {
-                index: "/api/campaigns/mobile",
-                staffs: "/api/campaigns/mobile/staffs",
-                customers: "/api/campaigns/mobile/customers",
+            customer: {
+                index: "/api/campaigns/customer",
+                homePage: "/api/campaigns/customer/home-page"
             }
         },
         formats: "/api/formats",
@@ -62,7 +60,7 @@ const endPont =
         },
         organizations: {
             index: "/api/organizations",
-            customer : "/api/organizations/customer"
+            customer: "/api/organizations/customer"
         }
     },
     lead: {
