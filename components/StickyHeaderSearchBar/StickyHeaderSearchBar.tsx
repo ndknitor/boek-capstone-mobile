@@ -5,6 +5,7 @@ import { paletteGray, paletteGrayLight, paletteGrayTint8 } from '../../utils/col
 import searchWhite from "../../assets/icons/search-black.png";
 
 interface StickyHeaderSearchBarProps {
+    placeHolder?: string;
     value?: string;
     onChangeText?: (e: string) => void;
     onSubmit?: () => void;
@@ -46,7 +47,7 @@ function StickyHeaderSearchBar(props: StickyHeaderSearchBarProps) {
                                 value={props.value}
                                 onChangeText={props.onChangeText}
                                 placeholderTextColor={paletteGray}
-                                placeholder="Tìm kiếm"
+                                placeholder={props.placeHolder || "Tìm kiếm"}
                                 style={{
                                     //borderWidth: 1,
                                     color: "black",

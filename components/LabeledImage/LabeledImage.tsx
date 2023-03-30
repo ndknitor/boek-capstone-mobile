@@ -11,7 +11,6 @@ function LabeledImage(props: LabeledImageProps) {
     return (
         <View
             style={{
-
                 height: 90,
                 alignItems: "center",
                 justifyContent: "center"

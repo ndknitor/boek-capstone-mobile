@@ -1,6 +1,7 @@
 import React from 'react'
-import { ScrollView, View, Image, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
-import { paletteGray, paletteGrayLight, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint4, primaryTint7 } from '../../../utils/color'
+import { ScrollView, View, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { Text } from '@react-native-material/core'
+import { paletteGray, paletteGrayLight, paletteGrayShade2, paletteGreen, paletteGreenBold, paletteGreenShade1, palettePink, primaryTint1, primaryTint4, primaryTint7 } from '../../../utils/color'
 import useStaffOrdersPage from './StaffOrders.hook';
 import image from "../../../assets/hsxv.webp";
 import addWhite from "../../../assets/icons/add-white.png";
@@ -10,255 +11,166 @@ import SelectedChip from '../../../components/SeletedChip/SelectedChip';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import FloatActionButton from '../../../components/FloatActionButton/FloatActionButton';
 import range from '../../../libs/functions/range';
-import OrderDetailDrawerLayout from '../../../components/OrderDetailDrawerLayout/OrderDetailDrawerLayout';
-import pushNotification from '../../../libs/functions/pushNotification';
+import useRouter from '../../../libs/hook/useRouter';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 const Tab = createMaterialTopTabNavigator();
 
 function StaffOrders() {
   const hook = useStaffOrdersPage();
+  const { push } = useRouter();
   return (
     <>
-      <OrderDetailDrawerLayout
-        drawerRef={hook.ref.drawerLayoutRef}>
-        <FloatActionButton bottom={70} right={10} onPress={async () => {
-          await pushNotification("Hello", "Dit me may", { "message": "co cai con cac" });
-        }}>
-          <View style={{ height: "100%", justifyContent: "center", alignItems: "center" }}>
-            <Image source={addWhite} style={{ width: "50%", height: "50%" }} />
-          </View>
-        </FloatActionButton>
-        <ScrollView
-          ref={hook.ref.scrollViewRef}
-          stickyHeaderHiddenOnScroll
-          stickyHeaderIndices={[0]}
-          style={{
-            backgroundColor: "white",
-            width: "100%",
-            height: "100%",
-          }}>
-          <FlatList
-            style={{
-              height: 50,
-              backgroundColor: "white",
-              borderBottomWidth: 1,
-              borderBottomColor: paletteGray,
+      <FloatActionButton bottom={70} right={10}>
+        <Menu>
+          <MenuTrigger>
+            <View style={{
+              height: "100%",
               justifyContent: "center",
-              paddingLeft: 10
-            }}
-            horizontal
-            data={["Đơn gì đó", "Đơn gì đó nhưng vì gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó", "Đơn gì đó",]}
-            renderItem={item =>
-              <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                <SelectedChip label={item.item} />
-              </View>
-            } />
-          <View style={{ padding: 5 }}>
-            {
-              range(0, 10).map(item =>
-                <View style={{
-                  borderWidth: 1.5,
-                  borderRadius: 8,
-                  borderColor: primaryTint4,
-                  marginTop: 20,
-                  overflow: "hidden"
+              alignItems: "center"
+            }}>
+              <Image source={addWhite} style={{ width: "50%", height: "50%" }} />
+            </View>
+          </MenuTrigger>
+          <MenuOptions customStyles={{ optionsContainer: { width: "55%" } }} optionsContainerStyle={{ padding: 10 }}>
+            <MenuOption
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: paletteGray,
+                padding: 10
+              }}
+              //onSelect={() => push("CreateChooseCampaignOrder")}
+              >
+              <Text style={{ fontSize: 17 }}>Quét mã QR đơn hàng</Text>
+            </MenuOption>
+            <MenuOption
+              style={{
+                padding: 10
+              }}
+              onSelect={() => push("CreateChooseCampaignOrder")}>
+              <Text style={{ fontSize: 17 }}>Tạo đơn hàng</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+      </FloatActionButton>
+      <ScrollView
+        ref={hook.ref.scrollViewRef}
+        stickyHeaderHiddenOnScroll
+        stickyHeaderIndices={[0]}
+        style={{
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        }}>
+        <FlatList
+          style={{
+            height: 50,
+            backgroundColor: "white",
+            borderBottomWidth: 1,
+            borderBottomColor: paletteGray,
+            justifyContent: "center",
+            paddingLeft: 10
+          }}
+          horizontal
+          data={["Tất cả", "Đang xử lý", "Chờ nhận hàng", "Đã nhận", "Hủy"]}
+          renderItem={item =>
+            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+              <SelectedChip label={item.item} />
+            </View>
+          } />
+        <View style={{ padding: 5 }}>
+          {
+            range(0, 10).map(item =>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderBottomWidth: 1,
+                  borderColor: paletteGray,
+                  padding: 10
                 }}>
-                  <View style={{
-                    //borderWidth: 1,
-                    height: 120,
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: primaryTint7,
-                    alignItems: "center"
-                  }}>
-                    <View style={{
-                      //borderWidth: 1,
-                      width: "40%",
-                      height: "100%"
-                    }}>
-                      <Image source={image} style={{ height: "100%", width: "100%" }} resizeMode="contain" />
-                    </View>
-
-                    <View style={{
-                      //borderWidth: 1,
-                      width: "60%",
-                      padding: 5,
-                      paddingLeft: 15
-                    }}>
-                      <Text style={{
-                        fontSize: 18,
-                        fontWeight: "600",
-                        marginBottom: 6
-                      }}>Tri ân thầy cô 20/11</Text>
-                      <Text style={{ marginBottom: 2 }}>Ngày bất đầu: 11/11/1111</Text>
-                      <Text style={{ marginBottom: 2 }}>Ngày kết thúc: 11/11/1111</Text>
-                    </View>
+                <View style={{ height: 40, flexDirection: "row" }}>
+                  <View style={{ width: "60%", justifyContent: "center" }}>
+                    <Text style={{ fontSize: 15 }}>{"Mã đơn hàng"}</Text>
                   </View>
-
-                  <View style={{
-                    //borderWidth: 1,
-                    flexDirection: "row",
-                    borderBottomWidth: 2,
-                    borderBottomColor: primaryTint7
-                  }}>
+                  <View style={{ width: "40%" }}>
                     <View style={{
-                      //borderWidth: 1,
-                      width: "100%",
-                      height: "100%",
-
+                      height: "90%",
+                      backgroundColor: paletteGreenShade1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 12,
+                      },
+                      shadowOpacity: 0.58,
+                      shadowRadius: 16.00,
+                      elevation: 8
                     }}>
-                      <View style={{ padding: 10 }}>
-                        <Text style={{
-                          fontSize: 18,
-                          fontWeight: "600",
-                          marginBottom: 6
-                        }}>Thông tin khách hàng</Text>
-                      </View>
-
-                      <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                        <View style={{ width: "50%" }}>
-                          <Text >Email:</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                          <Text >ndkn@gmail.com</Text>
-                        </View>
-                      </View>
-
-                      <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                        <View style={{ width: "50%" }}>
-                          <Text >Họ và tên:</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                          <Text >Ngô Đình Khôi Nguyên</Text>
-                        </View>
-                      </View>
-
-                      <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                        <View style={{ width: "50%" }}>
-                          <Text >Địa chỉ:</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                          <Text >122 ASDhu skdbjhsd</Text>
-                        </View>
-                      </View>
-
-                      <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                        <View style={{ width: "50%" }}>
-                          <Text >Số điện thoại:</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                          <Text >069696969</Text>
-                        </View>
-                      </View>
-
-                    </View>
-                  </View>
-
-                  <View style={{
-                    //borderWidth: 1,
-                    height: 200
-                  }}>
-                    <View style={{
-                      //borderWidth: 1,
-                      padding: 10,
-                      height: "30%"
-                    }}>
-                      <Text style={{
-                        fontSize: 18,
-                        fontWeight: "600",
-                        marginBottom: 6
-                      }}>Thông tin đơn hàng</Text>
-                    </View>
-
-
-                    <View style={{
-                      height: "60%",
-                      flexDirection: "row"
-                    }}>
-                      <View style={{
-                        //borderWidth: 1,
-                        width: "100%",
-                        justifyContent: "center"
-                      }}>
-
-                        <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                          <View style={{ width: "50%" }}>
-                            <Text >Tổng cộng:</Text>
-                          </View>
-                          <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text >69.000 đ</Text>
-                          </View>
-                        </View>
-
-                        <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                          <View style={{ width: "50%" }}>
-                            <Text >Phí vận chuyển:</Text>
-                          </View>
-                          <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text >69.000 đ</Text>
-                          </View>
-                        </View>
-
-                        <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                          <View style={{ width: "50%" }}>
-                            <Text >Giảm giá:</Text>
-                          </View>
-                          <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text >69.000 đ</Text>
-                          </View>
-                        </View>
-
-                        <View style={{ padding: 8, flexDirection: "row", borderColor: paletteGrayLight, borderTopWidth: 1, width: "100%" }}>
-                          <View style={{ width: "50%" }}>
-                            <Text style={{ fontSize: 16, fontWeight: "600" }}>Thành tiền:</Text>
-                          </View>
-                          <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text style={{ fontSize: 16, fontWeight: "600" }} >69.000 đ</Text>
-                          </View>
-                        </View>
-
-                      </View>
-                    </View>
-                  </View>
-
-                  <View style={{
-                    overflow: "hidden",
-                    backgroundColor: paletteGreen,
-                    width: "100%",
-                    padding: 5,
-                    paddingLeft: 15,
-                    height: 60,
-                    flexDirection: "row"
-                  }}>
-                    <View style={{
-                      width: "65%",
-                      justifyContent: "center"
-                    }}>
-                      <Text style={{
-                        color: paletteGreenBold,
-                        fontSize: 15,
-                        fontWeight: "500"
-                      }}>Giao hàng thành công</Text>
-                    </View>
-                    <View style={{ width: "35%", padding: 5 }}>
-                      <Button
-                        onPress={hook.event.onOrderDetailPress}
-                        buttonStyle={{
-                          height: "100%",
-                          backgroundColor: primaryTint1
-                        }}>Xem chi tiết</Button>
+                      <Text style={{ fontSize: 15, color: "white" }}>{"Giao thành công"}</Text>
                     </View>
                   </View>
                 </View>
-              )
-            }
-          </View>
-          <View style={{ marginBottom: 20 }}>
-            <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
-          </View>
+                <TouchableOpacity
+                  //onPress={() => push("OrderDetail")}
+                  >
+                  <Text style={{ fontSize: 14, color: paletteGray }}>{"Ngày đặt hàng"}</Text>
+                  <View style={{
+                    //borderWidth: 1,
+                    height: 130,
+                    padding: 5,
+                    flexDirection: "row"
+                  }}>
+                    <View style={{
+                      //borderWidth: 1,
+                      height: "100%",
+                      width: "25%",
+                      flexDirection: "row"
+                    }}>
+                      <Image
+                        source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }}
+                        resizeMode="contain"
+                        style={{ width: "100%" }} />
+                    </View>
+                    <View style={{
+                      //borderWidth: 1,
+                      width: "45%",
+                      justifyContent: "center"
+                    }}>
+                      <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>BIZBOOK</Text>
+                      <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>Thao túng thị trường rau sạch</Text>
+                      <Text>SL : x2</Text>
+                    </View>
+                    <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
+                      <Text style={{ fontSize: 18, color: palettePink }}>69.000đ</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
 
-        </ScrollView>
-      </OrderDetailDrawerLayout>
+                <View style={{
+                  //borderWidth: 1,
+                  height: 60,
+                  padding: 7,
+                  flexDirection: "row"
+                }}>
+                  <View style={{ width: "40%" }}>
+                    <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>Tên hội sách</Text>
+                  </View>
+                  <View style={{ width: "60%", alignItems: "flex-end", justifyContent: "center" }}>
+                    <Button
+                      //onPress={hook.event.onOrderSubmit}
+                      buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
+                  </View>
+                </View>
+
+              </View>
+            )
+          }
+        </View>
+        <View style={{ marginBottom: 20 }}>
+          <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
+        </View>
+      </ScrollView>
     </>
   )
 }

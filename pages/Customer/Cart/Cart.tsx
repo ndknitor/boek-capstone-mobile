@@ -13,10 +13,12 @@ import { paletteGray, paletteGrayTint9, palettePink, paletteRed, primaryTint1, p
 import useCartPage from './Cart.hook'
 import Shadow from '../../../components/Shadow/Shadow'
 import truncateString from '../../../libs/functions/truncateString'
+import useRouter from '../../../libs/hook/useRouter'
 
 function Cart(props: StackScreenProps<ParamListBase>) {
     const hook = useCartPage();
-    const { cart, addToCart, removeFromCart } = useAppContext();
+    const { push } = useRouter();
+    const { cart, removeFromCart } = useAppContext();
     return (
         <>
             <View style={{
@@ -207,11 +209,13 @@ function Cart(props: StackScreenProps<ParamListBase>) {
                     alignItems: "center",
                     justifyContent: "center",
                 }}>
-                    <Button buttonStyle={{
-                        display: cart.length == 0 ? "none" : "flex",
-                        backgroundColor: primaryTint1,
-                        width: 130
-                    }} >Mua hàng</Button>
+                    <Button
+                        onPress={() => push("OrderType")}
+                        buttonStyle={{
+                            display: cart.length == 0 ? "none" : "flex",
+                            backgroundColor: primaryTint1,
+                            width: 130
+                        }} >Mua hàng</Button>
                     {/* <Button buttonStyle={{
                         backgroundColor: paletteGrayShade1,
                         width: 130

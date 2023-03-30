@@ -19,7 +19,6 @@ import useAsyncEffect from "use-async-effect";
 import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
 
 export default function useProfilePage(props: ProfileProps) {
-    const { navigate, replace } = useRouter();
     const { setUser, user } = useAppContext();
     const { authenticated, setAuthorize } = useAuth();
 
@@ -27,106 +26,14 @@ export default function useProfilePage(props: ProfileProps) {
 
     const [customer, setCustomer] = useState<CustomerViewModel>();
 
-    const onLogin = async () => {
-        const currentUser = await googleLogin();
-        setLoading(true);
-        if (!currentUser) {
-            setLoading(false);
-            return;
-        }
-        const idToken = await currentUser.getIdToken();
-        console.log(idToken);
-        const request = {
-            idToken: idToken
-        };
-        const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
-        if (loginResponse.status == 200) {
-            if (loginResponse.data.data.role != Role.customer && loginResponse.data.data.role != Role.staff) {
-                Toast.show({
-                    type: "error",
-                    text1: "Đăng nhập thất bại",
-                    text2: "Tài khoản của bạn không được phép đăng nhập"
-                });
-                await logout();
-                setLoading(false);
-                return;
-            }
-            await loginSuccess(loginResponse.data.data);
-            const user = loginResponse.data.data;
-            if (
-                !user.address ||
-                !user.name ||
-                !user.phone) {
-                replace("AskPersonalInformation");
-            }
-            else {
-                props.navigation.reset({
-                    index: 0,
-                    routes: [],
-                });
-                if (user.role == Role.staff) {
-                    props.navigation.jumpTo("StaffCampaigns");
-                }
-                else {
-                    props.navigation.jumpTo("Campaigns", { reset: Math.random() });
-                }
-            }
-            console.log(loginResponse.data);
-            return loginResponse.data.data;
-        }
-        else {
-            SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify({ idToken: idToken }));
-            replace("AskPersonalInformation");
-        }
-        setLoading(false);
-    }
-    const loginSuccess = async (user: LoginViewModel) => {
-        setLoading(false);
-        setUser(user);
-        await AsyncStorage.setItem(StorageKey.user, JSON.stringify(user));
-        setAuthorizationBearer(user.accessToken);
-        setAuthorize([user.role.toString()]);
-    }
-    const authorizeNavigate = async (page: string) => {
-        if (authenticated) {
-            navigate(page);
-        }
-        else {
-            const user = await onLogin();
-            if (user && user.role.toString() == Role.customer.toString()) {
-                navigate(page);
-            }
-        }
-    }
-    const googleLogin = async () => {
-        if (auth().currentUser) {
-            return auth().currentUser;
-        }
-        try {
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            if (await GoogleSignin.isSignedIn()) {
-                await GoogleSignin.signOut();
-            }
-            //await auth().signOut();
-            let user = {} as User;
-            user = await GoogleSignin.signIn();
-            const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
-            const credential = await auth().signInWithCredential(googleCredential);
-            return credential.user;
-        } catch (error) {
-            if (error) {
-                Toast.show({
-                    type: "error",
-                    text1: "Đăng nhập thất bại",
-                    text2: "Quá trình đăng nhập được hủy"
-                });
-            }
-            setLoading(false);
-        }
-    }
+
     const logout = async (navigate?: boolean) => {
-        await GoogleSignin.signOut();
-        await auth().signOut();
+        if (await GoogleSignin.getCurrentUser()) {
+            await GoogleSignin.signOut();
+        }
+        if (auth().currentUser) {
+            await auth().signOut();
+        }
         setAuthorize(false);
         setAuthorizationBearer();
         setUser(undefined);
@@ -152,9 +59,7 @@ export default function useProfilePage(props: ProfileProps) {
         loading,
         event:
         {
-            authorizeNavigate,
             logout,
-            onLogin
         },
         data: {
             customer

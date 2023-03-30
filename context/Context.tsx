@@ -10,6 +10,9 @@ export interface Store {
     totalProductQuantity: number;
     setTotalProductQuantity: Dispatch<SetStateAction<number>>;
 
+    staffCart: ProductInCart[];
+    setStaffCart: Dispatch<SetStateAction<ProductInCart[]>>;
+
     cart: ProductInCart[];
     setCart: Dispatch<SetStateAction<ProductInCart[]>>;
     addToCart: (product: MobileBookProductViewModel, quantity: number) => void;
@@ -19,6 +22,7 @@ export const useProvider: () => Store = () => {
     const [user, setUser] = useState<LoginViewModel>();
     const [totalProductQuantity, setTotalProductQuantity] = useState(0);
     const [cart, setCart] = useState<ProductInCart[]>([]);
+    const [staffCart, setStaffCart] = useState<ProductInCart[]>([]);
 
     const addToCart = (product: MobileBookProductViewModel, quantity: number) => {
         const productInCart = cart.find(p => p.id == product.id);
@@ -58,6 +62,9 @@ export const useProvider: () => Store = () => {
 
         totalProductQuantity,
         setTotalProductQuantity,
+
+        staffCart,
+        setStaffCart,
 
         cart,
         setCart,

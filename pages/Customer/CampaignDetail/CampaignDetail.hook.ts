@@ -25,7 +25,7 @@ export default function useCampaignDetaillPage(props: StackScreenProps<ParamList
         //console.log(params);
         setLoading(true);
         console.log(params);
-        appxios.get<CampaignMobileViewModel>(`${endPont.public.campaigns.mobile.index}/${params.campaignId}`)
+        appxios.get<CampaignMobileViewModel>(`${endPont.public.campaigns.customer.index}/${params.campaignId}`)
             .then(response => {
                 console.log(response.status);
                 setCampaign(response.data);

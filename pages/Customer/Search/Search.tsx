@@ -223,7 +223,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                             <Text>Lọc</Text>
                         </TouchableOpacity>
                         <View style={{ width: "50%" }}>
-                            <Menu >
+                            <Menu>
                                 <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
                                     <Image source={sortBlack} resizeMode="center" style={{ width: 16 }} />
                                     <Text>Sắp xếp</Text>
@@ -249,8 +249,8 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                     </View>
                     <View style={{ padding: 10, flexDirection: "row", flexWrap: "wrap" }}>
                         {
-                            hook.data.books.map(item =>
-                                <View key={Math.random()}>
+                            hook.data.books && hook.data.books.map(item =>
+                                <View>
                                     <BookCard book={item} />
                                 </View>
                             )

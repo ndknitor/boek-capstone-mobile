@@ -6,7 +6,6 @@ import React from 'react';
 import { route } from './libs/hook/useRouter';
 import { primaryColor, primaryTint1 } from './utils/color';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Campaigns from './pages/Public/Campaigns/Campaigns';
 import { Icon } from '@rneui/base';
 import { Image } from 'react-native';
 import accountWhite from "./assets/icons/account-circle-white.png";
@@ -14,31 +13,40 @@ import workHistoryWhite from "./assets/icons/work-history-white.png";
 import useAuth from './libs/hook/useAuth';
 import useInit from './context/useInit';
 import Organizations from './pages/Customer/Organizations/Organizations';
-import PriceComparison from './pages/Public/PriceComparison/PriceComparison';
 import PersonalInformation from './pages/Authenticated/PersonalInformation/PersonalInformation';
 import Orders from './pages/Customer/Orders/Orders';
 import OrderDetail from './pages/Customer/OrderDetail/OrderDetail';
-import IssuerMoreBook from './pages/Public/IssuerMoreBook/IssuerMoreBook';
 import AskGenres from './pages/Customer/AskGenres/AskGenres';
-import IssuerDetail from './pages/Public/IssuerDetail/IssuerDetail';
-import BookDetail from './pages/Public/BookDetail/BookDetail';
-import CampaignDetail from './pages/Public/CampaignDetail/CampaignDetail';
+import BookDetail from './pages/Customer/BookDetail/BookDetail';
 import AskOrganizations from './pages/Customer/AskOrganizations/AskOrganizations';
-import Index from './pages/Public/Index/Index';
 import AskPersonalInformation from './pages/Customer/AskPersonalInformation/AskPersonalInformation';
-import Search from './pages/Public/Search/Search';
-import Profile from './pages/Public/Profile/Profile';
 import StaffCampaigns from './pages/Staff/StaffCampaigns/StaffCampaigns';
 import { Role } from './objects/enums/Role';
 import StaffOrders from './pages/Staff/StaffOrders/StaffOrders';
 import StaffCampagin from './pages/Staff/StaffCampagin/StaffCampagin';
 import PageLoader from './components/PageLoader/PageLoader';
-import Cart from './pages/Public/Cart/Cart';
-import RecurringCampaign from './pages/Public/RecurringCampaign/RecurringCampaign';
-import PdfShower from './pages/Public/PdfShower/PdfShower';
-import BookItems from './pages/Public/BookItems/BookItems';
-import BookItemDetail from './pages/Public/BookItemDetail/BookItemDetail';
+import PdfShower from './pages/Customer/PdfShower/PdfShower';
 import TrackOrder from './pages/Customer/TrackOrder/TrackOrder';
+import OrderType from './pages/Customer/OrderType/OrderType';
+import OrderConfirm from './pages/Customer/OrderConfirm/OrderConfirm';
+import CreateChooseCampaignOrder from './pages/Staff/CreateChooseCampaignOrder/CreateChooseCampaignOrder';
+import CreateChooseHaveAccountOrder from './pages/Staff/CreateChooseHaveAccountOrder/CreateChooseHaveAccountOrder';
+import CreateChooseCustomerOrder from './pages/Staff/CreateChooseCustomerOrder/CreateChooseCustomerOrder';
+import CreateChooseProductsOrder from './pages/Staff/CreateChooseProductsOrder/CreateChooseProductsOrder';
+import CreateConfirmOrder from './pages/Staff/CreateConfirmOrder/CreateConfirmOrder';
+import Cart from './pages/Customer/Cart/Cart';
+import IssuerMoreBook from './pages/Customer/IssuerMoreBook/IssuerMoreBook';
+import PriceComparison from './pages/Customer/PriceComparison/PriceComparison';
+import CampaignDetail from './pages/Customer/CampaignDetail/CampaignDetail';
+import IssuerDetail from './pages/Customer/IssuerDetail/IssuerDetail';
+import RecurringCampaign from './pages/Customer/RecurringCampaign/RecurringCampaign';
+import BookItems from './pages/Customer/BookItems/BookItems';
+import BookItemDetail from './pages/Customer/BookItemDetail/BookItemDetail';
+import Index from './pages/Customer/Index/Index';
+import Campaigns from './pages/Customer/Campaigns/Campaigns';
+import Search from './pages/Customer/Search/Search';
+import Profile from './pages/Customer/Profile/Profile';
+import Login from './pages/Public/Login/Login';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,20 +62,26 @@ function Routers() {
   );
 }
 function StackNavigator() {
-  const { initLoading, isInRole } = useAuth();
+  const { initLoading, isInRole, authenticated } = useAuth();
   return (
     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: primaryColor }, headerTitleStyle: { color: "white" }, headerTintColor: "white" }}>
-
-      <Stack.Screen options={{ headerShown: false }} name={"Index"}>{() =>
+      <Stack.Screen options={{ headerShown: false }} name={"Index"}>{(props) =>
         !initLoading ?
-          isInRole([Role.staff.toString()]) ?
-            <StaffTabNavigator />
+          authenticated ?
+            isInRole([Role.staff.toString()]) ?
+              <StaffTabNavigator />
+              :
+              <TabNavigator />
             :
-            <TabNavigator />
+            <Login {...props} />
           :
           <PageLoader loading />
       }</Stack.Screen>
+
       {/* Public */}
+      {/* <Stack.Screen options={{ title: "" }} name={"Login"} component={Login} /> */}
+
+      {/* Customer */}
       <Stack.Screen options={{ title: "Giỏ hàng" }} name={"Cart"}>{(props) => <Cart {...props} />}</Stack.Screen>
       <Stack.Screen options={{ title: "So sánh giá" }} name={"PriceComparison"}>{(props) => <PriceComparison {...props} />}</Stack.Screen>
       <Stack.Screen options={{ title: "" }} name={"IssuerMoreBook"}>{(props) => <IssuerMoreBook {...props} />}</Stack.Screen>
@@ -78,14 +92,14 @@ function StackNavigator() {
       <Stack.Screen options={{ title: "" }} name={"PdfShower"} component={PdfShower} />
       <Stack.Screen options={{ title: "" }} name={"BookItems"} component={BookItems} />
       <Stack.Screen options={{ title: "" }} name={"BookItemDetail"} component={BookItemDetail} />
-
-      {/* Customer */}
       <Stack.Screen options={{ title: "Tổ chức" }} name={"Organizations"}>{() => <Organizations />}</Stack.Screen>
       <Stack.Screen options={{ title: "Thông tin cá nhân" }} name={"PersonalInformation"}>{() => <PersonalInformation />}</Stack.Screen>
       <Stack.Screen options={{ title: "Đơn hàng của tôi" }} name={"Orders"} component={Orders} />
       <Stack.Screen options={{ title: "Đơn hàng", headerTitleAlign: "center" }} name={"OrderDetail"} component={OrderDetail} />
       <Stack.Screen options={{ title: "Thể loại sách yêu thích" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
       <Stack.Screen options={{ title: "Theo dõi đơn hàng" }} name={"TrackOrder"}>{() => <TrackOrder />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Thanh toán" }} name="OrderType" component={OrderType} />
+      <Stack.Screen options={{ title: "Xác nhận đơn hàng" }} name="OrderConfirm" component={OrderConfirm} />
 
 
       <Stack.Screen options={{ headerShown: false }} name={"AskGenresWizard"}>{() => <AskGenres skiped />}</Stack.Screen>
@@ -94,6 +108,11 @@ function StackNavigator() {
 
       {/* Staff */}
       <Stack.Screen options={{ headerShown: false }} name={"StaffCampagin"}>{(props) => <StaffCampagin />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseCampaignOrder" component={CreateChooseCampaignOrder} />
+      <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseHaveAccountOrder" component={CreateChooseHaveAccountOrder} />
+      <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseCustomerOrder" component={CreateChooseCustomerOrder} />
+      <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseProductsOrder" component={CreateChooseProductsOrder} />
+      <Stack.Screen options={{ title: "Xác nhận hơn hàng" }} name="CreateConfirmOrder" component={CreateConfirmOrder} />
 
       <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
     </Stack.Navigator>

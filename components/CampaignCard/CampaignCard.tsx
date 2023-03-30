@@ -52,7 +52,7 @@ function CampaignCard(props: CampaignCardProps) {
                 }}>
                     <View style={{
                         //borderWidth: 1,
-                        height: "60%",
+                        height: "40%",
                         alignItems: "flex-end"
                     }}>
                         <Shadow style={{
@@ -73,13 +73,14 @@ function CampaignCard(props: CampaignCardProps) {
                     </View>
                     <View style={{
                         //borderWidth: 1,
-                        height: "40%"
+                        height: "60%",
+                        justifyContent : "flex-end"
                     }}>
                         <Text style={{
                             color: "white",
                             fontSize: 22,
                             fontWeight: "500"
-                        }}>{props.campaign.name.length > 20 ? truncateString(props.campaign.name, 6) : props.campaign.name}</Text>
+                        }}>{truncateString(props.campaign.name, 6)}</Text>
                         <View style={{
                             //borderWidth : 1,
                             width: "100%",

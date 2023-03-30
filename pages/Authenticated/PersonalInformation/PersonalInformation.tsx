@@ -1,5 +1,5 @@
 import { Button, CheckBox } from '@rneui/themed';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import editIcon from "../../../assets/icons/edit.png";
 import usePersonalInformationPage from './PersonalInformation.hook';
 import DateTimePickerInput from "../../../components/DateTimePickerInput/DateTimePickerInput";
@@ -8,7 +8,6 @@ import { Role } from "../../../objects/enums/Role";
 import { getMessage } from '../../../utils/Validators';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import SelectDropdown from 'react-native-select-dropdown';
-import { paletteGrayShade5 } from '../../../utils/color';
 import useAppContext from '../../../context/Context';
 import { Province } from '../../../objects/enums/Province';
 import { District } from '../../../objects/enums/Districts';
@@ -19,7 +18,7 @@ function PersonalInformation() {
   const { user } = useAppContext();
   return (
     <>
-      <PageLoader loading={hook.loading} />
+      <PageLoader loading={hook.loading} opacity={1} />
       <View>
         <View style={{
           backgroundColor: "#1E293B",

@@ -31,6 +31,9 @@ const endPont =
         author: "/api/authors",
         books:
         {
+            customer: {
+                products: "/api/books/customer/products"
+            },
             index: "/api/books",
             genre: "/api/books/genre",
             mobile: {

@@ -68,7 +68,6 @@ export default function usePersonalInformationPage() {
             inputWardRef.current?.reset();
             setLoading(true);
             appxios.get<Ward[]>(`${endPont.public.districts}/${seletedDistrict.code}${endPont.lead.ward}`).then(response => {
-                console.log(response);
                 setWardSelect(response.data);
                 setLoading(false);
             });
@@ -147,7 +146,6 @@ export default function usePersonalInformationPage() {
                             status: true
                         }
                     }
-                    console.log(request);
                     appxios.put<CustomerUserViewModel>(EndPont.users.customer, request).then(response => {
                         setButtonShowed(false);
                         Toast.show({
@@ -212,8 +210,6 @@ export default function usePersonalInformationPage() {
             }
             else if (user && user.role == Role.staff) {
                 appxios.get<UserViewModel>(EndPont.users.me).then(async getUserResponse => {
-                    console.log(getUserResponse.data);
-
                     const districtsResponse = await appxios.get<District[]>(`${endPont.public.provinces}/${getUserResponse.data.addressViewModel.provinceCode}${endPont.lead.districts}`);
                     const wardsResponse = await appxios.get<Ward[]>(`${endPont.public.districts}/${getUserResponse.data.addressViewModel.districtCode}${endPont.lead.ward}`);
                     setEmail(getUserResponse.data.email);

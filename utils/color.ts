@@ -37,6 +37,16 @@ export const paletteGrayShade9 = "#111113";
 
 
 export const palettePink = "#EE3F78";
+export const palettePinkTint1 = "#f05286";
+export const palettePinkTint2 = "#f16593";
+export const palettePinkTint3 = "#f379a1";
+export const palettePinkTint4 = "#f58cae";
+export const palettePinkTint5 = "#f79fbc";
+export const palettePinkTint6 = "#f8b2c9";
+export const palettePinkTint7 = "#fac5d7";
+export const palettePinkTint8 = "#fcd9e4";
+export const palettePinkTint9 = "#fdecf2";
+
 export const paletteRed = "#CF0012";
 
 export const paletteGrayLight = "#c7cfd6";

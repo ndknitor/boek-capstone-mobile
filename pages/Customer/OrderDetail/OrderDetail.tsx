@@ -1,15 +1,14 @@
 import React from 'react'
 import { ScrollView, View, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
-import { Text } from "@react-native-material/core";
+import { Text, Button } from "@react-native-material/core";
 import { paletteGray, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
-import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import formatNumber from '../../../libs/functions/formatNumber';
 import BarCode from '../../../assets/SvgComponents/BarCode';
 import packageBlack from "../../../assets/icons/package-black.png";
+import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
 import Place from '../../../assets/SvgComponents/Place';
 import useRouter from '../../../libs/hook/useRouter';
-import { Button } from '@rneui/base';
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
@@ -27,7 +26,8 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
             width: "100%",
             height: "100%",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.6)"
           }}>
           <View style={{
             backgroundColor: "white",
@@ -65,9 +65,10 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
           </View>
         </Pressable>
       </LayoutModal>
-      <ScrollView style={{
-        backgroundColor: "white",
-      }}>
+      <ScrollView
+        style={{
+          backgroundColor: "white",
+        }}>
         <View style={{
           borderBottomColor: primaryTint4,
           borderBottomWidth: 1,
@@ -199,6 +200,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
             </View>
           </View>
         </ExpandToggleView>
+
         <View style={{
           borderBottomColor: primaryTint4,
           borderBottomWidth: 1,
@@ -208,6 +210,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
           <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
           <Text style={{ color: paletteGray }}>Tiền mặt</Text>
         </View>
+
         <View style={{
           rowGap: 5,
           padding: 10
@@ -228,14 +231,6 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
             </View>
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
-            <View style={{ width: "50%" }}>
-              <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
-            </View>
-            <View style={{ width: "50%", alignItems: "flex-end" }}>
-              <Text style={{ fontSize: 16, color: paletteGreenBold }}>{formatNumber(100000)}đ</Text>
-            </View>
-          </View>
           <View style={{ flexDirection: "row" }}>
             <View style={{ width: "50%" }}>
               <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
@@ -244,14 +239,31 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text>
             </View>
           </View>
-          <View style={{ width: "100%", alignItems: "center" }}>
-            <Button
-              onPress={hook.event.onOrderSubmit}
-              buttonStyle={{ marginTop: 10, width: 120, backgroundColor: palettePink }}>Thanh toán</Button>
-          </View>
-
         </View>
       </ScrollView>
+      <View style={{
+        backgroundColor: "white",
+        padding: 10
+      }}>
+        <View style={{ flexDirection: "row", marginBottom: 20 }}>
+          <View style={{
+            width: "60%",
+            rowGap: 10
+          }}>
+            <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
+            <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(100000)}đ</Text>
+          </View>
+          <View style={{
+            width: "40%",
+            alignItems: "flex-end"
+          }}>
+            <Button
+              title="Thanh toán"
+              //onPress={hook.event.onOrderSubmit}
+              style={{ marginTop: 10, width: 140, backgroundColor: palettePink }} />
+          </View>
+        </View>
+      </View>
     </>
 
   )
