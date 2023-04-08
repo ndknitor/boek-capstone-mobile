@@ -64,7 +64,7 @@ function BookItems(props: StackScreenProps<ParamListBase>) {
                                     height: "90%"
                                 }}>
                                     <View style={{ height: "40%", paddingLeft: 2 }}>
-                                        <Text style={{ fontSize: 16, fontWeight: "600" }}>{item.book && item.book?.name.length > 20 ? truncateString(item.book?.name, 5) : item.book?.name}</Text>
+                                        <Text style={{ fontSize: 16, fontWeight: "600" }}>{truncateString(item.book?.name, 3)}</Text>
                                     </View>
                                     <View style={{ height: "60%", width: "100%", flexDirection: "row", columnGap: 5 }} >
                                         {

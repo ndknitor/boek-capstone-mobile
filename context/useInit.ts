@@ -16,6 +16,8 @@ import useIsFirstRender from '../libs/hook/useIsFirstRender';
 import { Role } from '../objects/enums/Role';
 import { CustomerViewModel } from '../objects/viewmodels/Users/customers/CustomerViewModel';
 import endPont from '../utils/endPoints';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { CampaignInCart } from '../objects/models/CampaignInCart';
 
 export default function useInit() {
   const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
@@ -24,27 +26,38 @@ export default function useInit() {
   const isFirstRender = useIsFirstRender();
   useAsyncEffect(async () => {
     if (!isFirstRender) {
-      await AsyncStorage.setItem(StorageKey.cart, JSON.stringify(cart));
+      //await AsyncStorage.setItem(StorageKey.cart, JSON.stringify(cart));
     }
   }, [debounceCart]);
 
   useAsyncEffect(async () => {
+    AsyncStorage.removeItem(StorageKey.cart);
     const jsonString = await AsyncStorage.getItem(StorageKey.cart);
-    let storeCart: ProductInCart[] = [];
-    if (jsonString) {
-      storeCart = JSON.parse(jsonString) as ProductInCart[];
+    console.log(jsonString);
+    
+    let storeCart: CampaignInCart[] = [];
+    
+    if (jsonString != null) {
+      storeCart = JSON.parse(jsonString) as CampaignInCart[];
       if (cart.length == 0) {
         setCart(storeCart);
       }
     }
+    //console.log("asd");
+    
 
-    if (totalProductQuantity == 0) {
+    if (storeCart.length > 0) {
       let totalQuantity = 0;
-      storeCart.map(item => totalQuantity += item.quantity);
+      storeCart.map(c => c.issuersInCart.map(i => i.productsInCart.map(p =>
+        totalQuantity += p.quantity
+      )));
       setTotalProductQuantity(totalQuantity);
     }
 
     const userJsonString = await AsyncStorage.getItem(StorageKey.user);
+
+    //await auth().signOut();
+    //await GoogleSignin.signOut();
 
     if (auth().currentUser) {
       let user: LoginViewModel = {} as LoginViewModel;
@@ -59,6 +72,10 @@ export default function useInit() {
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         if (loginResponse.status == 200) {
           user = loginResponse.data.data;
+        }
+        else {
+          await auth().signOut();
+          await GoogleSignin.signOut();
         }
       }
       setUser(user);

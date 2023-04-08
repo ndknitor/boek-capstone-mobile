@@ -41,7 +41,7 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
         });
         const params = props.route.params as { bookId: string };
         setLoading(true);
-        appxios.get<MobileBookProductViewModel>(`${endPont.public.books.mobile.products.index}/${params.bookId}`)
+        appxios.get<MobileBookProductViewModel>(`${endPont.public.books.customer.products}/${params.bookId}`)
             .then(response => {
                 //console.log(response.data.unhierarchicalBookProducts?.length);
                 setBook(response.data);

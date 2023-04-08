@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import appxios, { setAuthorizationBearer } from "../../../components/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
 import useAuth from "../../../libs/hook/useAuth";
 import useRouter from "../../../libs/hook/useRouter";
-import { CreateCustomerRequestModel } from "../../../objects/requests/users/Customers/CreateCustomerRequestModel";
+import { CreateCustomerRequestModel } from "../../../objects/requests/Users/Customers/CreateCustomerRequestModel";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { CustomerOrganizationViewModel } from "../../../objects/viewmodels/CustomerOrganizations/CustomerOrganizationViewModel";
@@ -47,13 +47,10 @@ export default function useAskOrganizationsPage() {
     }
     const onAskOrganizationsSubmit = (skiped: boolean) => {
         const request = JSON.parse(SessionStorage.getItem(StorageKey.createCustomerRequest) as string) as CreateCustomerRequestModel;
-        if (!skiped) {
-            request.organizationIds = seletedOrganization;
-        }
-        setLoading(false);
+        request.organizationIds = seletedOrganization;
+        setLoading(true);
         appxios.post<BaseResponseModel<LoginViewModel>>(endPont.users.index, request).then(async response => {
             console.log(response);
-
             if (response.status == 200) {
                 setUser(response.data.data);
                 await AsyncStorage.setItem(StorageKey.user, JSON.stringify(response.data.data));

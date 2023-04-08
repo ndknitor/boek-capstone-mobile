@@ -100,8 +100,8 @@ function Profile(props: ProfileProps) {
         </View>
 
         <AuthorizeView roles={[Role.staff.toString()]}>
-          <TouchCard label="Thông tin cá nhân" onPress={async () => navigate("PersonalInformation")} />
-          <TouchCard label="Đơn hàng" onPress={async () => navigate("StaffOrders")} />
+          <TouchCard label="Thông tin cá nhân" onPress={async () => navigate("StaffPersonalInformation")} />
+          {/* <TouchCard label="Đơn hàng" onPress={async () => navigate("StaffOrders")} /> */}
         </AuthorizeView>
         <AuthorizeView roles={[Role.customer.toString()]}>
           <TouchCard label="Thông tin cá nhân" onPress={async () => navigate("PersonalInformation")} />

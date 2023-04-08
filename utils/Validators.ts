@@ -6,9 +6,12 @@ export function getMessage(validationMessages: ValidationMessages | undefined, k
     if (!validationMessages) {
         return "";
     }
-    const messages = validationMessages[key].filter(v => v != undefined);
-    if (messages.length > 0) {
-        return messages[0];
+    const messageObject = validationMessages[key];
+    if (messageObject) {
+        const messages = messageObject.filter(v => v != undefined);    
+        if (messages.length > 0) {
+            return messages[0];
+        }
     }
     return "";
 }

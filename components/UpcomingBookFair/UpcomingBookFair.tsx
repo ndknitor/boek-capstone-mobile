@@ -22,15 +22,12 @@ interface UpcomingBookFairProps {
 function UpcomingBookFair(props: UpcomingBookFairProps) {
     const { push } = useRouter();
     return (
-        <>
-            <View style={{
-                height: 225,
-                marginBottom: 15
-            }}>
-                <CampaignCard campaign={props.campaign} />
-            </View>
-            <DelimiterLine />
-        </>
+        <View style={{
+            height: 225,
+            marginBottom: 15
+        }}>
+            <CampaignCard campaign={props.campaign} />
+        </View>
     )
 }
 

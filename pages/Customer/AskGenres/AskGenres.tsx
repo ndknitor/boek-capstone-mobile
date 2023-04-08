@@ -13,7 +13,7 @@ function AskGenres(props: AskGenresProps) {
     const hook = useAskGenrePage(props);
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-            <Text style={{ marginBottom: 10 }}>Bạn yêu thích thể loại sách nào ?</Text>
+            <Text style={{ marginBottom: 10 }}>Bạn muốn tham gia nhóm nào ?</Text>
             <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
                 {
@@ -27,7 +27,7 @@ function AskGenres(props: AskGenresProps) {
                     )
                 }
             </ScrollView>
-            <Input placeholder="Tìm kiếm thể loại" value={hook.input.search.value} onChangeText={hook.input.search.set} />
+            <Input placeholder="Tìm kiếm nhóm" value={hook.input.search.value} onChangeText={hook.input.search.set} />
             <Text style={{ color: "red", marginBottom: 20 }}>{hook.searchMessage}</Text>
 
             <View style={{ flexDirection: "row" }}>

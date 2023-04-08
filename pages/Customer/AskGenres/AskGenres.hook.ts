@@ -3,7 +3,7 @@ import appxios from "../../../components/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
 import useDebounce from "../../../libs/hook/useDebounce";
 import useRouter from "../../../libs/hook/useRouter";
-import { CreateCustomerRequestModel } from "../../../objects/requests/users/Customers/CreateCustomerRequestModel";
+import { CreateCustomerRequestModel } from "../../../objects/requests/Users/Customers/CreateCustomerRequestModel";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { OwnedCustomerGroupViewModel } from "../../../objects/viewmodels/CustomerGroups/OwnedCustomerGroupViewModel";
 import { GroupViewModel } from "../../../objects/viewmodels/Groups/GroupViewModel";
@@ -53,9 +53,7 @@ export default function useAskGenrePage(props: AskGenresProps) {
         }
         else {
             const request = JSON.parse(SessionStorage.getItem(StorageKey.createCustomerRequest) as string) as CreateCustomerRequestModel;
-            if (!skiped) {
-                request.groupIds = selectedGroups;
-            }
+            request.groupIds = selectedGroups;
             SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify(request));
             replace("AskOrganizations");
         }
@@ -66,16 +64,19 @@ export default function useAskGenrePage(props: AskGenresProps) {
             setLoading(true);
             if (selectedGroups.find(g => g == group.id)) {
                 appxios.delete(`${endPont.public.groups.customer}/${group.id}`).then(response => {
-                    //console.log(response);
-                    setSelectedGroups(selectedGroups.filter(g => g != group.id));
+                    if (response.status == 200) {
+                        setSelectedGroups(selectedGroups.filter(g => g != group.id));
+                    }
                 }).finally(() => {
                     setLoading(false);
                 });
             }
             else {
                 appxios.post(`${endPont.public.groups.customer}`, { groupId: group.id }).then(response => {
-                    //console.log(response);
-                    setSelectedGroups([...selectedGroups, group.id]);
+                    //console.log(response.data);
+                    if (response.status == 200) {
+                        setSelectedGroups([...selectedGroups, group.id]);
+                    }
                 }).finally(() => {
                     setLoading(false);
                 });
@@ -96,8 +97,9 @@ export default function useAskGenrePage(props: AskGenresProps) {
         if (!props.skiped) {
             setLoading(true);
             appxios.get<OwnedCustomerGroupViewModel>(endPont.public.groups.customer).then(response => {
+                //console.log(response.data);
                 if (response.data.groups) {
-                    setSelectedGroups(response.data.groups.map(item => item.id as number));
+                    setSelectedGroups(response.data.groups.map(item => item.group.id as number));
                 }
             }).finally(() => {
                 setLoading(false);

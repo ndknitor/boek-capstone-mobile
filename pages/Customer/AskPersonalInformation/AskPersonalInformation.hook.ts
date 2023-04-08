@@ -4,11 +4,11 @@ import { TextInput } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import useAsyncEffect from "use-async-effect";
 import useAppContext from "../../../context/Context";
-import { maxDate, maxLength, required, validate, ValidationMessages } from "../../../utils/Validators";
+import { maxDate, maxLength, minDate, required, validate, ValidationMessages } from "../../../utils/Validators";
 import { CustomerUserViewModel } from "../../../objects/viewmodels/Users/customers/CustomerUserViewModel";
 import appxios from "../../../components/AxiosInterceptor";
 import EndPont from "../../../utils/endPoints";
-import { UpdateCustomerRequestModel } from "../../../objects/requests/users/UpdateCustomerRequestModel";
+import { UpdateCustomerRequestModel } from "../../../objects/requests/Users/UpdateCustomerRequestModel";
 import SelectDropdown from "react-native-select-dropdown";
 import endPont from "../../../utils/endPoints";
 import { Province } from "../../../objects/enums/Province";
@@ -19,7 +19,7 @@ import useRouter from "../../../libs/hook/useRouter";
 import { SessionStorage } from "../../../utils/SessionStogare";
 import StorageKey from "../../../utils/storageKey";
 import { GroupViewModel } from "../../../objects/viewmodels/Groups/GroupViewModel";
-import { CreateCustomerRequestModel } from "../../../objects/requests/users/Customers/CreateCustomerRequestModel";
+import { CreateCustomerRequestModel } from "../../../objects/requests/Users/Customers/CreateCustomerRequestModel";
 
 export default function useAskPersonalInformationPage(props: StackScreenProps<ParamListBase>) {
 
@@ -50,6 +50,9 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
     const [validator, setValidator] = useState<ValidationMessages>();
 
     const onSubmit = async () => {
+        const date = new Date();
+        const minBirth = new Date();
+        minBirth.setFullYear(date.getFullYear() - 13);
         const v = {
             name: [
                 required(name, "Tên không được trống"),
@@ -70,7 +73,7 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
             ],
             dob: [
                 required(birth, "Ngày sinh không được trống"),
-                maxDate(birth as Date, new Date(), "Ngày sinh không vượt quá hôm nay")
+                maxDate(birth as Date, minBirth, "Bạn phải từ 13 tuổi trở lên"),
             ],
             phone: [
                 required(phone, "Số điện thoại không được trống")

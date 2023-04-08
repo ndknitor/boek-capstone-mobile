@@ -18,7 +18,7 @@ function PersonalInformation() {
   const { user } = useAppContext();
   return (
     <>
-      <PageLoader loading={hook.loading} opacity={1} />
+      <PageLoader loading={hook.loading} opacity={hook.opacity} />
       <View>
         <View style={{
           backgroundColor: "#1E293B",
@@ -103,14 +103,16 @@ function PersonalInformation() {
               <View style={{ width: "30%", height: "100%", alignItems: "flex-start", justifyContent: "center", paddingLeft: 10 }}>
                 <Text>Ngày sinh:</Text>
               </View>
-              <View style={{ width: "70%", height: "100%" }}>
+              <View style={{ width: "70%", height: "70%" }}>
                 <DateTimePickerInput
                   value={hook.input.birth.value}
                   onConfirm={hook.input.birth.set}
                   maximumDate={new Date()}
                   icon={() => <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />}
                   hideReset />
-                <Text style={{ color: "red" }}>{getMessage(hook.validator, "dob")}</Text>
+                <View style={{ width: "80%", alignItems: "flex-end" }}>
+                  <Text style={{ color: "red" }}>{getMessage(hook.validator, "dob")}</Text>
+                </View>
               </View>
             </View>
           </AuthorizeView>

@@ -49,6 +49,7 @@ export default function useLoginPage(props: StackScreenProps<ParamListBase>) {
             return;
         }
         const idToken = await currentUser.getIdToken();
+        console.log(currentUser.photoURL);
         console.log(idToken);
         const request = {
             idToken: idToken
@@ -130,6 +131,9 @@ export default function useLoginPage(props: StackScreenProps<ParamListBase>) {
     }
 
     return {
+        ui: {
+            loading
+        },
         event: {
             onLogin
         }

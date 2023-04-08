@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
 import { Text } from "@react-native-material/core";
 import logo from "../../assets/logo.png";
 import Paging from '../../../components/Paging/Paging';
@@ -12,15 +12,24 @@ import { Button } from '@rneui/base';
 import useRouter from '../../../libs/hook/useRouter';
 import { ParamListBase } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import useOrdersPage from './Orders.hook';
+import { useCounterOrdersPage, useDeliveryOrdersPage } from './Orders.hook';
+import Shadow from '../../../components/Shadow/Shadow';
+import PageLoader from '../../../components/PageLoader/PageLoader';
+import moment from 'moment';
+import { dateFormat, dateTimeFormat } from '../../../utils/format';
+import formatNumber from '../../../libs/functions/formatNumber';
+import { OrderStatus } from '../../../objects/enums/OrderStatus';
+import truncateString from '../../../libs/functions/truncateString';
 
 const Tab = createMaterialTopTabNavigator();
 
 function Orders(props: StackScreenProps<ParamListBase>) {
+    const params = props.route.params as { name: string };
     return (
         <>
 
             <Tab.Navigator
+                initialRouteName={params && params.name || "DeliveryOrders"}
                 screenOptions={{
                     tabBarLabelStyle: {
                         color: primaryColor,
@@ -41,129 +50,15 @@ function Orders(props: StackScreenProps<ParamListBase>) {
 }
 
 function DeliveryOrders() {
-    const hook = useOrdersPage();
+    const hook = useDeliveryOrdersPage();
     const { push } = useRouter();
-    return (
-        <ScrollView
-            ref={hook.ref.ordersScrollViewRef}
-            stickyHeaderIndices={[0]}
-            stickyHeaderHiddenOnScroll>
-            <FlatList
-                style={{
-                    height: 50,
-                    backgroundColor: "white",
-                    borderBottomWidth: 1,
-                    borderBottomColor: paletteGray,
-                    justifyContent: "center",
-                    paddingLeft: 10
-                }}
-                horizontal
-                data={["Tất cả", "Đang xử lý", "Đang giao", "Đã giao", "Hủy"]}
-                renderItem={item =>
-                    <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                        <SelectedChip label={item.item} />
-                    </View>
-                } />
-            <View>
-                {
-                    range(0, 2).map(item =>
-                        <View
-                            style={{
-                                backgroundColor: "white",
-                                borderBottomWidth: 1,
-                                borderColor: paletteGray,
-                                padding: 10
-                            }}>
-                            <View style={{ height: 40, flexDirection: "row" }}>
-                                <View style={{ width: "60%", justifyContent: "center" }}>
-                                    <Text style={{ fontSize: 15 }}>{"Mã đơn hàng"}</Text>
-                                </View>
-                                <View style={{ width: "40%" }}>
-                                    <View style={{
-                                        height: "90%",
-                                        backgroundColor: paletteGreenShade1,
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        shadowColor: "#000",
-                                        shadowOffset: {
-                                            width: 0,
-                                            height: 12,
-                                        },
-                                        shadowOpacity: 0.58,
-                                        shadowRadius: 16.00,
-                                        elevation: 8
-                                    }}>
-                                        <Text style={{ fontSize: 15, color: "white" }}>{"Giao thành công"}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <Text style={{ fontSize: 14, color: paletteGray }}>{"Ngày đặt hàng"}</Text>
-
-                            <TouchableOpacity
-                                onPress={() => push("OrderDetail")}>
-                                <View style={{
-                                    //borderWidth: 1,
-                                    height: 130,
-                                    padding: 5,
-                                    flexDirection: "row"
-                                }}>
-                                    <View style={{
-                                        //borderWidth: 1,
-                                        height: "100%",
-                                        width: "25%",
-                                        flexDirection: "row"
-                                    }}>
-                                        <Image
-                                            source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }}
-                                            resizeMode="contain"
-                                            style={{ width: "100%" }} />
-                                    </View>
-                                    <View style={{
-                                        //borderWidth: 1,
-                                        width: "45%",
-                                        justifyContent: "center"
-                                    }}>
-                                        <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>BIZBOOK</Text>
-                                        <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>Thao túng thị trường rau sạch</Text>
-                                        <Text>SL : x2</Text>
-                                    </View>
-                                    <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
-                                        <Text style={{ fontSize: 18, color: palettePink }}>69.000đ</Text>
-                                    </View>
-                                </View>
-
-                                <View style={{
-                                    //borderWidth: 1,
-                                    height: 40,
-                                    padding: 7,
-                                    flexDirection: "row"
-                                }}>
-                                    <View style={{ width: "90%" }}>
-                                        <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>Tên hội sách</Text>
-                                    </View>
-                                    <View style={{ width: "10%", alignItems: "flex-end", justifyContent: "center" }}>
-                                        <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-                        </View>
-                    )
-                }
-            </View>
-            <View style={{ marginBottom: 20 }}>
-                <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
-            </View>
-        </ScrollView>
-    );
-}
-
-function CounterOrders() {
-    const { push } = useRouter();
-    const hook = useOrdersPage();
     return (
         <>
+            <PageLoader loading={hook.ui.loading} />
             <ScrollView
+                style={{
+                    backgroundColor: "white"
+                }}
                 ref={hook.ref.ordersScrollViewRef}
                 stickyHeaderIndices={[0]}
                 stickyHeaderHiddenOnScroll>
@@ -177,101 +72,346 @@ function CounterOrders() {
                         paddingLeft: 10
                     }}
                     horizontal
-                    data={["Tất cả", "Đang xử lý", "Chờ nhận hàng", "Đã nhận", "Hủy"]}
+                    data={[
+                        {
+                            label: "Tất cả",
+                            input: 0
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Processing),
+                            input: OrderStatus.Processing
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Shipping),
+                            input: OrderStatus.Shipping
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Shipped),
+                            input: OrderStatus.Shipped
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                            input: OrderStatus.Cancelled
+                        }
+                    ]}
                     renderItem={item =>
                         <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                            <SelectedChip label={item.item} />
+                            <SelectedChip
+                                onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                selected={hook.input.orderStatus.value == item.item.input}
+                                label={item.item.label} />
                         </View>
                     } />
-
-                {
-                    range(0, 2).map(item =>
-                        <View
-                            style={{
-                                backgroundColor: "white",
-                                borderBottomWidth: 1,
-                                borderColor: paletteGray,
-                                padding: 10
-                            }}>
-                            <View style={{ height: 40, flexDirection: "row" }}>
-                                <View style={{ width: "60%", justifyContent: "center" }}>
-                                    <Text style={{ fontSize: 15 }}>{"Mã đơn hàng"}</Text>
-                                </View>
-                                <View style={{ width: "40%" }}>
-                                    <View style={{
-                                        height: "90%",
-                                        backgroundColor: paletteGreenShade1,
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        shadowColor: "#000",
-                                        shadowOffset: {
-                                            width: 0,
-                                            height: 12,
-                                        },
-                                        shadowOpacity: 0.58,
-                                        shadowRadius: 16.00,
-                                        elevation: 8
+                <View>
+                    <View style={{
+                        alignItems: "center"
+                    }}>
+                        {
+                            hook.data.orders.map(item =>
+                                item.orderDetails && item.orderDetails[0] &&
+                                <Shadow
+                                    style={{
+                                        elevation: 4,
+                                        marginTop: 20,
+                                        backgroundColor: "white",
+                                        //borderWidth: 1,
+                                        borderRadius: 12,
+                                        padding: 15,
+                                        width: "90%",
+                                        //borderColor: paletteGray,
+                                        //borderBottomWidth: 1
                                     }}>
-                                        <Text style={{ fontSize: 15, color: "white" }}>{"Giao thành công"}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <TouchableOpacity
-                                onPress={() => push("OrderDetail")}>
-                                <Text style={{ fontSize: 14, color: paletteGray }}>{"Ngày đặt hàng"}</Text>
-                                <View style={{
+                                    <Pressable
+                                        onPress={() => push("OrderDetail", { order: item })}>
+                                        {/* <View style={{ height: 40, flexDirection: "row" }}>
+                                            <View style={{ width: "60%", justifyContent: "center" }}>
+                                                <Text style={{ fontSize: 15 }}>{item.id}</Text>
+                                            </View>
+                                            <View style={{ width: "40%" }}>
+                                                <View style={{
+                                                    height: "90%",
+                                                    backgroundColor: hook.ui.getStatusBackgrundColor(item.status as number),
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    shadowColor: "#000",
+                                                    borderRadius : 8,
+                                                    shadowOffset: {
+                                                        width: 0,
+                                                        height: 12,
+                                                    },
+                                                    shadowOpacity: 0.58,
+                                                    shadowRadius: 16.00,
+                                                    elevation: 8
+                                                }}>
+                                                    <Text style={{ fontSize: 15, color: "white" }}>{item.statusName}</Text>
+                                                </View>
+                                            </View>
+                                        </View> */}
+                                        <View>
+                                            <View style={{
+                                                height: 40,
+                                                width: 140,
+                                                position: "absolute",
+                                                top: 0,
+                                                right: 0
+                                            }}>
+                                                <View style={{
+                                                    height: "90%",
+                                                    backgroundColor: hook.ui.getStatusBackgrundColor(item.status as number),
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    shadowColor: "#000",
+                                                    borderRadius: 8,
+                                                    shadowOffset: {
+                                                        width: 0,
+                                                        height: 12,
+                                                    },
+                                                    shadowOpacity: 0.58,
+                                                    shadowRadius: 16.00,
+                                                    elevation: 8
+                                                }}>
+                                                    <Text style={{ fontSize: 15, color: "white" }}>{item.statusName}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{
+                                                //borderWidth: 1,
+                                                height: 130,
+                                                padding: 5,
+                                                flexDirection: "row"
+                                            }}>
+                                                <View style={{
+                                                    //borderWidth: 1,
+                                                    height: "100%",
+                                                    width: "25%",
+                                                    flexDirection: "row"
+                                                }}>
+                                                    <Image
+                                                        source={{ uri: item.orderDetails[0].bookProduct?.imageUrl }}
+                                                        resizeMode="contain"
+                                                        style={{ width: "100%" }} />
+                                                </View>
+                                                <View style={{
+                                                    //borderWidth: 1,
+                                                    width: "45%",
+                                                    justifyContent: "center",
+                                                    padding: 10
+                                                }}>
+                                                    <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>{item.orderDetails[0].bookProduct?.issuer.user.name}</Text>
+                                                    <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>{truncateString(item.orderDetails[0].bookProduct?.title, 6)}</Text>
+                                                    <Text>SL : x1</Text>
+                                                </View>
+                                                <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
+                                                    <Text style={{ fontSize: 18, color: palettePink }}>{formatNumber(item.orderDetails[0].total)}đ</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={{
+                                                //borderWidth: 1,
+                                                height: 60,
+                                                padding: 7,
+                                                flexDirection: "row"
+                                            }}>
+                                                <View style={{ width: "90%", rowGap: 10 }}>
+                                                    <Text style={{ fontSize: 14, color: paletteGray }}>Ngày đặt hàng: {moment(item.orderDate).format(dateTimeFormat)}</Text>
+                                                    <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>{truncateString(item.campaign?.name, 3)}</Text>
+                                                </View>
+                                                <View style={{ width: "10%", alignItems: "flex-end", justifyContent: "center" }}>
+                                                    <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </Pressable>
+                                </Shadow>
+                            )
+                        }
+                    </View>
+                </View>
+                <View style={{ marginBottom: 20, marginTop: 20 }}>
+                    <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
+                </View>
+            </ScrollView>
+        </>
+    );
+}
+
+function CounterOrders() {
+    const { push } = useRouter();
+    const hook = useCounterOrdersPage();
+    return (
+        <>
+            <PageLoader loading={hook.ui.loading} />
+            <ScrollView
+                style={{
+                    backgroundColor: "white"
+                }}
+                ref={hook.ref.ordersScrollViewRef}
+                stickyHeaderIndices={[0]}
+                stickyHeaderHiddenOnScroll>
+                <FlatList
+                    style={{
+                        height: 50,
+                        backgroundColor: "white",
+                        borderBottomWidth: 1,
+                        borderBottomColor: paletteGray,
+                        justifyContent: "center",
+                        paddingLeft: 10
+                    }}
+                    horizontal
+                    data={[
+                        {
+                            label: "Tất cả",
+                            input: 0
+                        },
+                        // {
+                        //     label: OrderStatus.getLabel(OrderStatus.Processing),
+                        //     input: OrderStatus.Processing
+                        // },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
+                            input: OrderStatus.PickUpAvailable
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Received),
+                            input: OrderStatus.Received
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                            input: OrderStatus.Cancelled
+                        }]}
+                    renderItem={item =>
+                        <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                            <SelectedChip
+                                onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                selected={hook.input.orderStatus.value == item.item.input}
+                                label={item.item.label} />
+                        </View>
+                    } />
+                <View style={{
+                    alignItems: "center"
+                }}>
+                    {
+
+                        hook.data.orders.map(item =>
+                            item.orderDetails && item.orderDetails[0] &&
+
+                            <Shadow
+                                style={{
+                                    elevation: 4,
+                                    marginTop: 20,
+                                    backgroundColor: "white",
                                     //borderWidth: 1,
-                                    height: 130,
-                                    padding: 5,
-                                    flexDirection: "row"
+                                    borderRadius: 12,
+                                    padding: 15,
+                                    width: "90%",
+                                    //borderColor: paletteGray,
+                                    //borderBottomWidth: 1
                                 }}>
+                                <Pressable
+                                    onPress={() => push("OrderDetail", { order: item })}>
+                                    {/* <View style={{ height: 40, flexDirection: "row" }}>
+                                        <View style={{ width: "60%", justifyContent: "center" }}>
+                                            <Text style={{ fontSize: 15 }}>{"Mã đơn hàng"}</Text>
+                                        </View>
+                                        <View style={{ width: "40%" }}>
+                                            <View style={{
+                                                height: "90%",
+                                                backgroundColor: hook.ui.getStatusBackgrundColor(item.status as number),
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                shadowColor: "#000",
+                                                shadowOffset: {
+                                                    width: 0,
+                                                    height: 12,
+                                                },
+                                                shadowOpacity: 0.58,
+                                                shadowRadius: 16.00,
+                                                elevation: 8
+                                            }}>
+                                                <Text style={{ fontSize: 15, color: "white" }}>{item.statusName}</Text>
+                                            </View>
+                                        </View>
+                                    </View> */}
+                                    <View>
+                                        <View style={{
+                                            height: 40,
+                                            width: 140,
+                                            position: "absolute",
+                                            top: 0,
+                                            right: 0
+                                        }}>
+                                            <View style={{
+                                                height: "90%",
+                                                backgroundColor: hook.ui.getStatusBackgrundColor(item.status as number),
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                shadowColor: "#000",
+                                                borderRadius: 8,
+                                                shadowOffset: {
+                                                    width: 0,
+                                                    height: 12,
+                                                },
+                                                shadowOpacity: 0.58,
+                                                shadowRadius: 16.00,
+                                                elevation: 8
+                                            }}>
+                                                <Text style={{ fontSize: 15, color: "white" }}>{item.statusName}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{
+                                            //borderWidth: 1,
+                                            height: 130,
+                                            padding: 5,
+                                            flexDirection: "row"
+                                        }}>
+                                            <View style={{
+                                                //borderWidth: 1,
+                                                height: "100%",
+                                                width: "25%",
+                                                flexDirection: "row"
+                                            }}>
+                                                <Image
+                                                    source={{ uri: item.orderDetails[0].bookProduct?.imageUrl }}
+                                                    resizeMode="contain"
+                                                    style={{ width: "100%" }} />
+                                            </View>
+                                            <View style={{
+                                                //borderWidth: 1,
+                                                width: "45%",
+                                                justifyContent: "center"
+                                            }}>
+                                                <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>{item.orderDetails[0].bookProduct?.issuer.user.name}</Text>
+                                                <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>{item.orderDetails[0].bookProduct?.title}</Text>
+                                                <Text>SL : x2</Text>
+                                            </View>
+                                            <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
+                                                <Text style={{ fontSize: 18, color: palettePink }}>{formatNumber(item.orderDetails[0].price)}đ</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+
                                     <View style={{
                                         //borderWidth: 1,
-                                        height: "100%",
-                                        width: "25%",
+                                        height: 90,
+                                        padding: 7,
                                         flexDirection: "row"
                                     }}>
-                                        <Image
-                                            source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }}
-                                            resizeMode="contain"
-                                            style={{ width: "100%" }} />
+                                        <View style={{ width: "60%", rowGap: 10 }}>
+                                            <Text style={{ fontSize: 14, color: paletteGray }}>Ngày đặt hàng: {moment(item.orderDate).format(dateTimeFormat)}</Text>
+                                            <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>{truncateString(item.campaign?.name, 3)}</Text>
+                                        </View>
+                                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                            <Button
+                                                onPress={hook.event.onOrderSubmit}
+                                                buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
+                                        </View>
                                     </View>
-                                    <View style={{
-                                        //borderWidth: 1,
-                                        width: "45%",
-                                        justifyContent: "center"
-                                    }}>
-                                        <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>BIZBOOK</Text>
-                                        <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>Thao túng thị trường rau sạch</Text>
-                                        <Text>SL : x2</Text>
-                                    </View>
-                                    <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
-                                        <Text style={{ fontSize: 18, color: palettePink }}>69.000đ</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
+                                </Pressable>
+                            </Shadow>
+                        )
+                    }
+                </View>
 
-                            <View style={{
-                                //borderWidth: 1,
-                                height: 60,
-                                padding: 7,
-                                flexDirection: "row"
-                            }}>
-                                <View style={{ width: "40%" }}>
-                                    <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>Tên hội sách</Text>
-                                </View>
-                                <View style={{ width: "60%", alignItems: "flex-end", justifyContent: "center" }}>
-                                    <Button
-                                        onPress={hook.event.onOrderSubmit}
-                                        buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
-                                </View>
-                            </View>
-
-                        </View>
-                    )
-                }
-
-                <View style={{ marginBottom: 20 }}>
+                <View style={{ marginTop: 20, marginBottom: 20 }}>
                     <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                 </View>
             </ScrollView>

@@ -82,10 +82,10 @@ function TrackedOrganizations() {
                 {
                     hook.data.organizations.map((item, index) =>
                         <OrganizationView
-                            onTrackPress={() => hook.event.onTrackPress(item, index)}
-                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.id) != undefined}
+                            onTrackPress={() => hook.event.onTrackPress(item.organization, index)}
+                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.organization.id) != undefined}
                             loading={hook.buttonsLoading[index]}
-                            organization={item} />
+                            organization={item.organization} />
                     )
                 }
             </ScrollView>

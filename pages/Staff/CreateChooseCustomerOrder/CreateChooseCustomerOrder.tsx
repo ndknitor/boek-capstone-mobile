@@ -11,8 +11,12 @@ import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/Sti
 import Paging from '../../../components/Paging/Paging';
 import { Button } from '@rneui/base';
 import useRouter from '../../../libs/hook/useRouter';
+import { StackScreenProps } from '@react-navigation/stack';
+import { ParamListBase } from '@react-navigation/native';
+import { StaffCampaignMobilesViewModel } from '../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel';
 
-function CreateChooseCustomerOrder() {
+function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
+    const params = props.route.params as { campaign: StaffCampaignMobilesViewModel, customer: {} };
     const { push } = useRouter();
     const hook = useCreateChooseCustomerOrderPage();
     return (

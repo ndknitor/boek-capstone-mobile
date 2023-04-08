@@ -5,22 +5,27 @@ import LayoutModal from '../../../components/LayoutModal/LayoutModal'
 import { StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
 import useOrderConfirmPage from './OrderConfirm.hook';
-import BarCode from '../../../assets/SvgComponents/BarCode';
-import { paletteGray, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
-import LocalShipping from '../../../assets/SvgComponents/LocalShipping';
+import { paletteGrayShade4, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
 import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import formatNumber from '../../../libs/functions/formatNumber';
 import { CheckBox } from '@rneui/base';
+import localShippingBlack from "../../../assets/icons/local-shipping-black.png"
+import packageBlack from "../../../assets/icons/package-black.png"
+import useAppContext from '../../../context/Context';
 import Shadow from '../../../components/Shadow/Shadow';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import PageLoader from '../../../components/PageLoader/PageLoader';
+import { OrderType } from '../../../objects/enums/OrderType';
+import { OrderPayment } from '../../../objects/enums/OrderPayment';
 
 
 function OrderConfirm(props: StackScreenProps<ParamListBase>) {
-    const cashPaymentMethod = 0;
-    const zaloPayPaymentMethod = 1;
+    const { cart, user } = useAppContext();
     const hook = useOrderConfirmPage(props);
     return (
         <>
+            <PageLoader loading={hook.ui.loading} />
             <LayoutModal visible={hook.ui.infoModalVisible} onClose={() => hook.ui.setInfoModalVisible(!hook.ui.infoModalVisible)}>
                 <Pressable
                     onPress={() => hook.ui.setInfoModalVisible(false)}
@@ -48,174 +53,206 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                         rowGap: 15,
                         justifyContent: "center"
                     }}>
-                        <Text style={{ fontSize: 16 }}>
-                            • NPH sẽ phụ trách giao hàng đến địa chỉ của
-                            bạn.
-                        </Text>
-                        <Text style={{ fontSize: 16 }}>
-                            • Phí vận chuyển của đơn phụ thuộc vào nội
-                            thành hay ngoại thành đối với các nơi hội
-                            sách đang tổ chức {"\n"}
-                            o Nội thành: 15,000 đ {"\n"}
-                            o Ngoại thành: 30,000 đ
-                        </Text>
-                        <Text style={{ fontSize: 16 }}>
-                            • Lưu ý: Boek không chịu trách nhiệm về đơn
-                            đổi trả của khách hàng. Xin liên hệ NPH về
-                            vấn đề này.
-                        </Text>
+                        {
+                            hook.data.orderType == OrderType.PickUp &&
+                            <>
+                                <Text style={{ fontSize: 16 }}>
+                                    • NPH sẽ phụ trách thông báo địa điểm của
+                                    đơn nhận tại quầy cho bạn khi đơn hàng
+                                    sẵn sàng.
+                                </Text>
+                                <Text style={{ fontSize: 16 }}>
+                                    • Nếu bạn không nhận hàng tại quầy trong
+                                    thời gian hội sách diễn ra, thì đơn hàng sẽ
+                                    bị hủy.
+                                </Text>
+                                <Text style={{ fontSize: 16 }}>
+                                    • Lưu ý: Boek không chịu trách nhiệm về đơn
+                                    đổi trả của khách hàng. Xin liên hệ NPH về
+                                    vấn đề này.
+                                </Text>
+                            </>
+                        }
+                        {
+                            hook.data.orderType == OrderType.Shipping &&
+                            <>
+                                <Text style={{ fontSize: 16 }}>
+                                    • NPH sẽ phụ trách giao hàng đến địa chỉ của
+                                    bạn.
+                                </Text>
+                                <Text style={{ fontSize: 16 }}>
+                                    • Phí vận chuyển của đơn phụ thuộc vào nội
+                                    thành hay ngoại thành đối với các nơi hội
+                                    sách đang tổ chức {"\n"}
+                                    o Nội thành: 15,000 đ {"\n"}
+                                    o Ngoại thành: 30,000 đ
+                                </Text>
+                                <Text style={{ fontSize: 16 }}>
+                                    • Lưu ý: Boek không chịu trách nhiệm về đơn
+                                    đổi trả của khách hàng. Xin liên hệ NPH về
+                                    vấn đề này.
+                                </Text>
+                            </>
+                        }
+
                     </View>
                 </Pressable>
             </LayoutModal>
 
             <ScrollView style={{
                 backgroundColor: "white",
-                padding: 10
+                //alignItems : "center"
             }}>
                 <View style={{
-                    borderBottomColor: primaryTint1,
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    paddingBottom: 10
+                    alignItems: "center",
+                    marginTop: 20,
+                    marginBottom: 70,
+                    marginLeft: 20,
+                    marginRight: 20
                 }}>
-                    <View style={{
-                        //borderWidth: 1,
-                        width: "10%",
-                        alignItems: "center"
+                    <Shadow style={{
+                        elevation: 10,
+                        backgroundColor: "white",
+                        borderRadius: 8
                     }}>
-                        <LocalShipping />
-                    </View>
-                    <View style={{
-                        //borderWidth: 1,
-                        width: "80%",
-                        rowGap: 7
-                    }}>
-                        <Text>Tên: </Text>
-                        <Text>SĐT: </Text>
-                        <Text>Địa chỉ: </Text>
-                    </View>
-                    <View style={{
-                        //borderWidth: 1,
-                        width: "10%",
-                        alignItems: "center",
-                        justifyContent: "center"
-                    }}>
-                        <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
-                    </View>
-                </View>
-
-                <ExpandToggleView initExpanded={false} label='Tên hội sách'>
-                    <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: primaryTint4 }}>
-                        <>
-                            <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
-                            <View style={{
-                                flexDirection: "row",
-                                marginBottom: 20
-                            }}>
-                                <View style={{
-                                    borderWidth: 1,
-                                    borderColor: primaryTint1,
-                                    width: "20%",
-                                    height: 100,
-                                    borderRadius: 8
-                                }}>
-                                    <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
-                                </View>
-                                <View style={{
-                                    width: "50%",
-                                    paddingLeft: 10,
-                                    justifyContent: "center"
-                                }}>
-                                    <Text style={{ fontSize: 16 }}>Tên sách</Text>
-                                    <Text>Số lượng: x1</Text>
-                                </View>
-                                <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
-                                    <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
-                                </View>
-                            </View>
-                        </>
-                        <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
                         <View style={{
+                            borderBottomColor: primaryTint1,
+                            borderBottomWidth: 1,
                             flexDirection: "row",
-                            marginBottom: 20
+                            paddingBottom: 10
                         }}>
                             <View style={{
-                                borderWidth: 1,
-                                borderColor: primaryTint1,
-                                width: "20%",
-                                height: 100,
-                                borderRadius: 8
-                            }}>
-                                <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
-                            </View>
-                            <View style={{
-                                width: "50%",
-                                paddingLeft: 10,
+                                //borderWidth: 1,
+                                width: "15%",
+                                alignItems: "center",
                                 justifyContent: "center"
                             }}>
-                                <Text style={{ fontSize: 16 }}>Tên sách</Text>
-                                <Text>Số lượng: x1</Text>
+                                <Image source={hook.data.orderType == OrderType.Shipping ? localShippingBlack : packageBlack} resizeMode="contain" style={{ height: 25 }} />
                             </View>
-                            <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
-                                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
+                            <View style={{
+                                //borderWidth: 1,
+                                width: "75%",
+                                rowGap: 7,
+                                marginTop: 10,
+                            }}>
+                                <Text style={{ fontSize: 14 }}>Tên: {user?.name}</Text>
+                                <Text style={{ fontSize: 14 }}>SĐT: {user?.phone}</Text>
+                                <Text style={{ fontSize: 14 }}>Địa chỉ: {user?.address}</Text>
+                            </View>
+                            <View style={{
+                                //borderWidth: 1,
+                                width: "10%",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
                             </View>
                         </View>
-                    </View>
-                </ExpandToggleView>
 
-                <View style={{
-                    borderBottomColor: primaryTint4,
-                    borderBottomWidth: 1,
-                    rowGap: 5,
-                    padding: 10
-                }}>
-                    <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
-                    <CheckBox
-                        title="Tiền mặt"
-                        checked={hook.input.paymentMethod.value == cashPaymentMethod}
-                        center
-                        checkedIcon="dot-circle-o"
-                        onPress={() => hook.input.paymentMethod.set(cashPaymentMethod)}
-                        uncheckedIcon="circle-o"
-                        containerStyle={{ backgroundColor: "transparent", alignItems: "flex-start" }} />
-                    <CheckBox
-                        title="ZaloPay"
-                        checked={hook.input.paymentMethod.value == zaloPayPaymentMethod}
-                        center
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        onPress={() => hook.input.paymentMethod.set(zaloPayPaymentMethod)}
-                        containerStyle={{ backgroundColor: "transparent", alignItems: "flex-start" }} />
-                </View>
+                        <ExpandToggleView initExpanded label={hook.data.seltedCampaign?.campaign.name || ""}>
+                            <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: primaryTint4 }}>
 
-                <View style={{
-                    rowGap: 5,
-                    padding: 10
-                }}>
-                    <View style={{ flexDirection: "row" }}>
-                        <View style={{ width: "50%" }}>
-                            <Text style={{ fontSize: 16 }}>Tạm tính</Text>
+                                {
+                                    hook.data.seltedCampaign?.issuersInCart.map(issuer =>
+                                        <>
+                                            <Text style={{ fontSize: 16, marginBottom: 10, color: paletteGrayShade4 }}>{issuer.issuer.user.name}</Text>
+
+                                            {
+                                                issuer.productsInCart.map(product =>
+                                                    <View style={{
+                                                        flexDirection: "row",
+                                                        marginBottom: 20
+                                                    }}>
+                                                        <View style={{
+                                                            borderWidth: 1,
+                                                            borderColor: primaryTint1,
+                                                            width: "15%",
+                                                            height: 85,
+                                                            overflow: "hidden",
+                                                            borderRadius: 8
+                                                        }}>
+                                                            <Image resizeMode='contain' style={{ height: "100%" }} source={{ uri: product.imageUrl }} />
+                                                        </View>
+                                                        <View style={{
+                                                            width: "50%",
+                                                            paddingLeft: 10,
+                                                            justifyContent: "center"
+                                                        }}>
+                                                            <Text style={{ fontSize: 16 }}>{product.title}</Text>
+                                                            <Text>Số lượng: x{product.quantity}</Text>
+                                                        </View>
+                                                        <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
+                                                            <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(hook.getProductFinalPrice(product))}đ</Text>
+                                                        </View>
+                                                    </View>
+                                                )
+                                            }
+
+                                        </>
+                                    )
+                                }
+                            </View>
+                        </ExpandToggleView>
+
+                        <View style={{
+                            borderBottomColor: primaryTint4,
+                            borderBottomWidth: 1,
+                            rowGap: 15,
+                            padding: 10
+                        }}>
+                            <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
+
+                            <BouncyCheckbox
+                                isChecked={hook.input.paymentMethod.value == OrderPayment.Cash}
+                                onPress={() => hook.input.paymentMethod.set(OrderPayment.Cash)}
+                                disableBuiltInState
+                                size={20}
+                                fillColor={primaryTint1}
+                                text="Tiền mặt" textStyle={{ textDecorationLine: "none" }} />
+
+                            <BouncyCheckbox
+                                isChecked={hook.input.paymentMethod.value == OrderPayment.ZaloPay}
+                                onPress={() => hook.input.paymentMethod.set(OrderPayment.ZaloPay)}
+                                disableBuiltInState
+                                size={20}
+                                fillColor={primaryTint1}
+                                text="ZaloPay" textStyle={{ textDecorationLine: "none" }} />
                         </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+
+                        <View style={{
+                            rowGap: 7,
+                            padding: 10
+                        }}>
+                            <View style={{ flexDirection: "row" }}>
+                                <View style={{ width: "50%" }}>
+                                    <Text style={{ fontSize: 16 }}>Tạm tính</Text>
+                                </View>
+                                <View style={{ width: "50%", alignItems: "flex-end" }}>
+                                    <Text style={{ fontSize: 16 }}>{formatNumber(hook.data.calculation?.subTotal)}đ</Text>
+                                </View>
+                            </View>
+                            {
+                                hook.data.orderType == OrderType.Shipping &&
+                                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                    <View style={{ width: "50%" }}>
+                                        <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
+                                    </View>
+                                    <View style={{ width: "50%", alignItems: "flex-end" }}>
+                                        <Text style={{ fontSize: 16 }}>{formatNumber(hook.data.calculation?.freight)}đ</Text>
+                                    </View>
+                                </View>
+                            }
+
+                            <View style={{ flexDirection: "row" }}>
+                                <View style={{ width: "50%" }}>
+                                    <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
+                                </View>
+                                <View style={{ width: "50%", alignItems: "flex-end" }}>
+                                    <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(0)}</Text>
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <View style={{ width: "50%" }}>
-                            <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                        <View style={{ width: "50%" }}>
-                            <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
-                        </View>
-                        <View style={{ width: "50%", alignItems: "flex-end" }}>
-                            <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text>
-                        </View>
-                    </View>
+                    </Shadow>
                 </View>
             </ScrollView>
 
@@ -229,16 +266,18 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                         rowGap: 10
                     }}>
                         <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
-                        <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(100000)}đ</Text>
+                        <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(hook.data.calculation?.total)}đ</Text>
                     </View>
                     <View style={{
                         width: "40%",
                         alignItems: "flex-end"
                     }}>
                         <Button
+                            onPress={hook.event.onSumbit}
                             title="Thanh toán"
                             //onPress={hook.event.onOrderSubmit}
-                            style={{ marginTop: 10, width: 140, backgroundColor: palettePink }} />
+
+                            style={{ alignItems: "center", justifyContent: "center", width: 140, height: 50, backgroundColor: palettePink }} />
                     </View>
                 </View>
             </View>

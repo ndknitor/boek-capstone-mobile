@@ -3,7 +3,6 @@ import React from 'react'
 import { TouchableOpacity, View, Image, StyleSheet, Text, Dimensions } from 'react-native';
 import googleLogo from '../../assets/icons/google.png';
 import { primaryTint9 } from '../../utils/color';
-import useGoogleLoginButtonComponent from './GoogleLoginButton.hook';
 export interface GoogleLoginButtonProps {
     onPress?: () => void;
 }

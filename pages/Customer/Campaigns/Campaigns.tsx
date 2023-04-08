@@ -35,10 +35,10 @@ function Campaigns(props: CampaignsProps) {
                         onRefresh={hook.scrollViewRefresh.onRefresh} />}>
                 <SafeAreaView
                     style={{
-                        padding: 10,
+                        padding: 15,
                         backgroundColor: primaryTint10
                     }}>
-                    {
+                    {/* {
                         hook.data.onGoingCampagins &&
                         <View style={{
                             borderRadius: 8,
@@ -69,18 +69,16 @@ function Campaigns(props: CampaignsProps) {
                                 </Swiper>
                             </View>
                         </View>
-                    }
-
-                    <View style={{ borderWidth: 0.8, borderColor: paletteGray, marginBottom: 15 }}></View>
+                    } */}
+                    {/* <View style={{ borderWidth: 0.8, borderColor: paletteGray, marginBottom: 15 }}></View> */}
 
                     {
                         hook.data.upCampaginsContainer?.unhierarchicalCustomerCampaigns.map(item =>
                             <>
-                                <View style={{ width: "100%", padding: 10, paddingTop: 20, }}>
-                                    <Text variant='h6'>{item.title}</Text>
-                                </View>
                                 <View style={{
                                     backgroundColor: "white",
+                                    padding: 12,
+                                    borderRadius: 12,
                                     shadowColor: "#000",
                                     shadowOffset: {
                                         width: 0,
@@ -90,15 +88,24 @@ function Campaigns(props: CampaignsProps) {
                                     shadowRadius: 16.00,
                                     elevation: 6
                                 }}>
+                                    <View style={{ width: "100%", marginBottom: 15 }}>
+                                        <Text variant='h6'>{item.title}</Text>
+                                    </View>
                                     {
-                                        item.campaigns && item.campaigns.map(c =>
-                                            <UpcomingBookFair campaign={c} />
+                                        item.campaigns.map((c, index) =>
+                                            <>
+                                                <UpcomingBookFair campaign={c} />
+                                                {
+                                                    index + 1 < item.campaigns.length &&
+                                                    <DelimiterLine />
+                                                }
+                                            </>
                                         )
                                     }
+
                                 </View>
                                 <View style={{
-                                    marginBottom: 30,
-                                    marginTop: 20
+                                    marginBottom: 20
                                 }}>
                                     <ShowMoreButton onPress={() => { props.navigation.jumpTo("Search", { tab: "BookFairs" }) }} />
                                 </View>
@@ -127,8 +134,14 @@ function Campaigns(props: CampaignsProps) {
                                     <PreLoadTabView
                                         titles={item.subHierarchicalCustomerCampaigns.map(item => item.subTitle)}
                                         childrens={item.subHierarchicalCustomerCampaigns.map(sub =>
-                                            sub.campaigns.map(c =>
-                                                <UpcomingBookFair campaign={c} />
+                                            sub.campaigns.map((c,index) =>
+                                                <>
+                                                    <UpcomingBookFair campaign={c} />
+                                                    {
+                                                        index + 1 < sub.campaigns.length &&
+                                                        <DelimiterLine />
+                                                    }
+                                                </>
                                             )
                                         )} />
                                 </View>

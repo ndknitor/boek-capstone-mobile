@@ -1,4 +1,4 @@
-import { AddressRequestModel } from "../address/AddressRequestModel";
+import { AddressRequestModel } from "../Address/AddressRequestModel";
 
 export interface UpdateUserRequestModel {
     id: string;
@@ -6,7 +6,7 @@ export interface UpdateUserRequestModel {
     email: string;
     phone: string;
     addressRequest : AddressRequestModel;
-    imageUrl: string;
+    imageUrl?: string;
     role?: number;
     status?: boolean;
 }

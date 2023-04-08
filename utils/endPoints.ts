@@ -19,6 +19,10 @@ const endPont =
         },
         formats: "/api/issuers/formats"
     },
+    staff: {
+        campaigns: "/api/staff/campaigns",
+        orders: "/api/staff/orders"
+    },
     users: {
         index: "/api/users",
         me: "/api/users/me",
@@ -64,6 +68,18 @@ const endPont =
         organizations: {
             index: "/api/organizations",
             customer: "/api/organizations/customer"
+        }
+    },
+    orders: {
+        index: "/api/orders",
+        customer: {
+            pickUp: "/api/orders/customer/pick-up",
+            shipping: "/api/orders/customer/shipping"
+
+        },
+        calculation: {
+            pickUp: "/api/orders/calculation/pick-up",
+            shipping: "/api/orders/calculation/shipping"
         }
     },
     lead: {

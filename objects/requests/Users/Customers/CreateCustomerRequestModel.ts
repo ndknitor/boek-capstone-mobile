@@ -1,4 +1,4 @@
-import { AddressRequestModel } from "../../address/AddressRequestModel";
+import { AddressRequestModel } from "../../Address/AddressRequestModel";
 
 export interface CreateCustomerRequestModel {
     idToken: string;

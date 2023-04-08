@@ -4,10 +4,13 @@ import useRouter from '../../../libs/hook/useRouter';
 import { View, Text } from 'react-native';
 import AudioPlayer from '../../../components/AudioPlayer/AudioPlayer';
 import Shadow from '../../../components/Shadow/Shadow';
+import { Button } from '@rneui/base';
+import useAppContext from '../../../context/Context';
 function Index() {
   const { navigate } = useRouter();
   const [scanQr, setScanQr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const { resetCart } = useAppContext();
   return (
     <View style={{
       backgroundColor: "white",
@@ -16,7 +19,7 @@ function Index() {
       {/* <AudioPlayer audioUri='http://10.10.2.106:6969/Starting%20Line-SLwboaO8POs.mp3' /> */}
       <Shadow style={{
         backgroundColor: "white",
-        elevation : 12
+        elevation: 12
       }}>
         <View style={{
           backgroundColor: "white"
@@ -24,6 +27,7 @@ function Index() {
           <Text>hello</Text>
         </View>
       </Shadow>
+      <Button onPress={() => resetCart()}>Reset card</Button>
 
       {/* <View style={{
         padding: 10

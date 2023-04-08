@@ -9,8 +9,9 @@ import localShippingBlack from "../../../assets/icons/local-shipping-black.png";
 import localShippingWhite from "../../../assets/icons/local-shipping-white.png";
 import packageBlack from "../../../assets/icons/package-black.png";
 import packageOutlineWhite from "../../../assets/icons/package-outline-white.png";
-import { primaryColor, primaryTint1 } from '../../../utils/color';
+import { paletteGray, paletteGrayLight, primaryColor, primaryTint1 } from '../../../utils/color';
 import useRouter from '../../../libs/hook/useRouter';
+import { CampaignFormat } from '../../../objects/enums/CampaignFormat';
 function OrderType(props: StackScreenProps<ParamListBase>) {
     const localShippingOrder = 1;
     const packageOrder = 2;
@@ -69,19 +70,21 @@ function OrderType(props: StackScreenProps<ParamListBase>) {
 
                 <View>
                     <Shadow style={{
-                        backgroundColor: hook.input.orderType.value == packageOrder ? primaryColor : "white",
+                        backgroundColor:
+                            hook.data.campaign?.campaign.format == CampaignFormat.online ? paletteGray :
+                                hook.input.orderType.value == packageOrder ? primaryColor : "white",
                         width: 120,
                         height: 120,
                         borderRadius: 24,
-
                     }}>
                         <TouchableOpacity
+                            disabled={hook.data.campaign?.campaign.format == CampaignFormat.online}
                             onPress={() => hook.input.orderType.set(packageOrder)}
                             style={{
                                 alignItems: "center",
                                 justifyContent: "center",
                                 width: "100%",
-                                height: "100%"
+                                height: "100%",
                             }}>
                             <Image source={hook.input.orderType.value == packageOrder ? packageOutlineWhite : packageBlack} style={{
                                 width: "50%",
@@ -142,7 +145,7 @@ function OrderType(props: StackScreenProps<ParamListBase>) {
                     justifyContent: "center"
                 }}>
                     <Button
-                        onPress={() => push("OrderConfirm")}
+                        onPress={() => push("OrderConfirm", { orderType: hook.input.orderType.value, selectedCampaignId: hook.data.params.seletedCampaignId })}
                         title="Tiếp theo"
                         style={{ backgroundColor: primaryTint1, width: 160 }} />
                 </View>

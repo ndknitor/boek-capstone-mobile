@@ -11,7 +11,7 @@ import useRouter from '../../../libs/hook/useRouter';
 import LabeledImage from '../../../components/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
-import { paletteGray, paletteGrayTint9, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint9 } from '../../../utils/color';
+import { paletteGray, paletteGrayTint9, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint8, primaryTint9 } from '../../../utils/color';
 import FadeTransition from '../../../components/FadeTransition/FadeTransition';
 import eventBusyBlack from "../../../assets/icons/event-busy-black.png";
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
@@ -23,6 +23,7 @@ import moment from 'moment';
 import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTabedFlatBooks';
 import CampaignStatus from '../../../objects/enums/CampaignStatus';
 import { Button } from '@rneui/base';
+import Shadow from '../../../components/Shadow/Shadow';
 
 function CampaignDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useCampaignDetaillPage(props);
@@ -40,7 +41,8 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                     width: "100%",
                     height: "100%",
                     alignItems: "center",
-                    paddingTop: "20%"
+                    justifyContent: "center",
+                    backgroundColor: "rgba(0,0,0,0.5)"
                 }}>
                     <View
                         style={{
@@ -118,11 +120,13 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                 onScrollEndDrag={hook.event.onScrollViewScroll}
                 onMomentumScrollEnd={hook.event.onScrollViewScroll}
                 ref={hook.ref.scrollViewRef}>
-                <View style={{ backgroundColor: "white" }}>
-                    <View style={{ width: "100%", padding: 10 }}>
+                <View style={{ backgroundColor: "white", padding: 15 }}>
+                    <Shadow style={{
+                        backgroundColor: "white",
+                        borderRadius: 8,
+                        padding: 10
+                    }}>
                         <Text variant="h5" >{hook.data.campaign?.name}</Text>
-                    </View>
-                    <View style={{ width: "100%", paddingLeft: 10 }}>
                         {
                             hook.data.campaign?.status == CampaignStatus.notStarted &&
                             <View style={{ marginTop: 4, backgroundColor: "yellow", alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
@@ -147,20 +151,19 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                 <Text style={{ fontSize: 13, fontWeight: "500" }}>{hook.data.campaign?.statusName}</Text>
                             </View>
                         }
-                    </View>
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Image source={{ uri: hook.data.campaign?.imageUrl }} style={{ marginTop: 20, marginBottom: 20, width: "90%", height: Dimensions.get("window").width / 16 * 9 }} resizeMethod="resize" resizeMode="contain" />
-                    </View>
-
-                    <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-
+                        <View style={{ width: "100%", alignItems: "center" }}>
+                            <Image source={{ uri: hook.data.campaign?.imageUrl }} style={{ marginTop: 20, marginBottom: 20, width: "90%", height: Dimensions.get("window").width / 16 * 9 }} resizeMethod="resize" resizeMode="contain" />
+                        </View>
                         <View style={{ width: "95%" }}>
-                            <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                                <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
-                                    <Image style={{ height: 20, width: 20 }} source={locationBlack} />
+                            {
+                                hook.data.campaign?.address &&
+                                <View style={{ flexDirection: "row", marginBottom: 5 }}>
+                                    <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
+                                        <Image style={{ height: 20, width: 20 }} source={locationBlack} />
+                                    </View>
+                                    <Text>{hook.data.campaign?.address}</Text>
                                 </View>
-                                <Text>{hook.data.campaign?.address}</Text>
-                            </View>
+                            }
                             <View style={{ flexDirection: "row", marginBottom: 10 }}>
                                 <View style={{ alignItems: "center", justifyContent: "center", marginRight: 5 }}>
                                     <Image style={{ height: 20, width: 20, marginRight: 2 }} source={calendarBlack} />
@@ -175,6 +178,14 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                             </View>
                         </View>
 
+                    </Shadow>
+
+                    <Shadow style={{
+                        backgroundColor: "white",
+                        marginTop: 20,
+                        borderRadius: 8,
+                        padding: 10
+                    }}>
                         <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Nhà phát hành</Text>
                         {
                             hook.data.campaign?.issuers?.length == 0 || !hook.data.campaign?.issuers ?
@@ -187,11 +198,17 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                         horizontal
                                         data={hook.data.campaign?.issuers}
                                         renderItem={e =>
-                                            <LabeledImage
-                                                onPress={() => hook.event.onIssuerDetailPress(e.item)}
-                                                label={e.item?.user.name} source={{ uri: e.item.user.imageUrl }} />} />
+                                            <View style={{ marginRight: 20 }}>
+                                                <LabeledImage
+                                                    onPress={() => hook.event.onIssuerDetailPress(e.item)}
+                                                    label={e.item?.user.name} source={{ uri: e.item.user.imageUrl }} />
+                                            </View>
+                                        } />
                                 </>
                         }
+                    </Shadow>
+
+                    <View style={{ marginTop: 20 }}>
                         {
                             hook.data.campaign?.unhierarchicalBookProducts?.map(item =>
                                 <TitleFlatBooks
@@ -209,10 +226,27 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                 </>
                             )
                         }
-                        <View style={{ marginTop: 10, marginBottom: 10 }}>
+                    </View>
+
+                    <Shadow style={{
+                        marginTop: 20,
+                        borderRadius: 8,
+                        padding: 10,
+                        backgroundColor: "white"
+                    }}>
+                        <View style={{}}>
                             <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Mô tả</Text>
                             <Text>{hook.data.campaign?.description}</Text>
                         </View>
+                    </Shadow>
+
+                    <Shadow style={{
+                        elevation: 1,
+                        marginTop: 20,
+                        backgroundColor: "white",
+                        padding: 10,
+                        borderRadius: 8
+                    }}>
                         <View style={{ width: "100%", flexDirection: "row" }}>
                             <View style={{ width: "85%" }}>
                                 <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Tổ chức</Text>
@@ -236,13 +270,15 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                     <LabeledImage label={e.item?.name} source={{ uri: e.item.imageUrl }} />
                                 </View>
                             } />
-                        <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 10, marginBottom: 10 }}>
-                            <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>
-                            <Text style={{ fontSize: 13, }}>Boek không chịu trách nhiệm về việc đơn hàng đổi trả sách của khách hàng. Xin liên hệ về các nhà phát hành nếu liên quan về đổi trả sách.</Text>
-                        </View>
+                    </Shadow>
 
+                    <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 20, marginBottom: 10 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>
+                        <Text style={{ fontSize: 13, }}>Boek không chịu trách nhiệm về việc đơn hàng đổi trả sách của khách hàng. Xin liên hệ về các nhà phát hành nếu liên quan về đổi trả sách.</Text>
                     </View>
+
                 </View>
+
             </ScrollView>
         </>
     );

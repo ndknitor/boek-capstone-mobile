@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import DrawerLayout from "react-native-drawer-layout";
+import appxios from "../../../components/AxiosInterceptor";
+import { getMaxPage } from "../../../libs/functions/paging";
+import { OrderStatus } from "../../../objects/enums/OrderStatus";
+import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { BookViewModel } from "../../../objects/viewmodels/Books/BookViewModel";
 import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
+import { OrderViewModel } from "../../../objects/viewmodels/Orders/OrderViewModel";
+import { paletteGrayShade5, paletteGreenShade1, paletteRed, primaryTint2 } from "../../../utils/color";
+import endPont from "../../../utils/endPoints";
 import { mockBooks, mockStaffCampaigns } from "../../../utils/mock";
 
 export default function useStaffOrdersPage() {
@@ -12,13 +19,17 @@ export default function useStaffOrdersPage() {
     const [loading, setLoading] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(100);
+    const [maxPage, setMaxPage] = useState(0);
 
     const [search, setSearch] = useState("");
-    const [orders, setOrders] = useState("");
+    const [orders, setOrders] = useState<OrderViewModel[]>([]);
+    const [orderStatus, setOrderStatus] = useState(0);
+
+
+
 
     const onPageNavigation = (page: number) => {
-        setCurrentPage(page);
+        getOrders(page);
         scrollViewRef.current?.scrollTo({
             y: 0
         });
@@ -26,20 +37,25 @@ export default function useStaffOrdersPage() {
     const onOrderDetailPress = () => {
         drawerLayoutRef.current?.openDrawer();
     }
+    const getOrders = (page: number) => {
+        const query = new URLSearchParams();
+        query.append("Page", page.toString());
+        query.append("Size", "30");
+        if (orderStatus != 0) {
+            query.append("Status", orderStatus.toString());
+        }
+        setLoading(true);
+        appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders}?${query.toString()}`).then(response => {
+            setOrders(response.data.data);
+            setCurrentPage(page);
+            setMaxPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));
+        }).finally(() =>
+            setLoading(false));
+    }
 
     useEffect(() => {
-        // setLoading(true);
-        // appxios.get(EndPont.public.campaigns.mobile.staffs)
-        //     .then(resposne => {
-        //         console.log(resposne.data);
-
-        //         //setupComingCampagins(resposne.data[0].campaigns);
-        //     })
-        //     .finally(() =>
-        //     {
-        //         setLoading(false);
-        //     });
-    }, []);
+        getOrders(1);
+    }, [orderStatus]);
     return {
         ref: {
             scrollViewRef,
@@ -50,16 +66,24 @@ export default function useStaffOrdersPage() {
             maxPage,
             onPageNavigation
         },
+        ui: {
+            loading,
+        },
         event: {
             onOrderDetailPress
         },
         data: {
+            orders
         },
         input: {
             search:
             {
                 value: search,
                 set: setSearch
+            },
+            orderStatus: {
+                value: orderStatus,
+                set: setOrderStatus
             }
         }
     }

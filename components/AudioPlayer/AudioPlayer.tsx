@@ -10,6 +10,7 @@ interface AudioPlayerProps {
 export interface AudioPlayerRefProps {
     play(): Promise<void>;
     pause(): Promise<void>;
+    stop(): Promise<void>;
 }
 
 const AudioPlayer = forwardRef<AudioPlayerRefProps, AudioPlayerProps>((props, ref) => {
@@ -34,6 +35,13 @@ const AudioPlayer = forwardRef<AudioPlayerRefProps, AudioPlayerProps>((props, re
     const pauseSound = async () => {
         if (isPlaying && sound) {
             await sound.pauseAsync();
+            setIsPlaying(false);
+        }
+    };
+
+    const stopSound = async () => {
+        if (isPlaying && sound) {
+            await sound.stopAsync();
             setIsPlaying(false);
         }
     };
@@ -100,6 +108,9 @@ const AudioPlayer = forwardRef<AudioPlayerRefProps, AudioPlayerProps>((props, re
             },
             async pause() {
                 await pauseSound();
+            },
+            async stop() {
+                await stopSound();
             }
         }));
 

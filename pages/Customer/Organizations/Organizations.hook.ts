@@ -5,6 +5,7 @@ import { getMaxPage } from "../../../libs/functions/paging";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { OwnedCustomerOrganizationViewModel } from "../../../objects/viewmodels/CustomerOrganizations/OwnedCustomerOrganizationViewModel";
 import { BasicOrganizationViewModel } from "../../../objects/viewmodels/Organizations/BasicOrganizationViewModel";
+import { CustomerOrganizationsViewModel } from "../../../objects/viewmodels/Organizations/Mobile/CustomerOrganizationsViewModel";
 import { OrganizationViewModel } from "../../../objects/viewmodels/Organizations/OrganizationViewModel";
 import endPont from "../../../utils/endPoints";
 
@@ -14,7 +15,7 @@ export function useUnTrackedOrganizationsPage() {
     const [loading, setLoading] = useState(false);
     const [buttonsLoading, setButtonsLoading] = useState<boolean[]>([]);
 
-    const [maxPage, setMaxPage] = useState(100);
+    const [maxPage, setMaxPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [organizations, setOrganizations] = useState<OrganizationViewModel[]>([]);
 
@@ -80,7 +81,7 @@ export function useUnTrackedOrganizationsPage() {
         getOrganization(1);
         appxios.get<OwnedCustomerOrganizationViewModel>(`${endPont.public.organizations.customer}`).then(response => {
             if (response.data.organizations) {
-                setTrackedOrganizationIds(response.data.organizations.map(item => item.id as number));
+                setTrackedOrganizationIds(response.data.organizations.map(item => item.organization.id as number));
             }
         });
     }, []);
@@ -116,7 +117,7 @@ export function useTrackedOrganizationsPage() {
     const [buttonsLoading, setButtonsLoading] = useState<boolean[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const [organizations, setOrganizations] = useState<BasicOrganizationViewModel[]>([]);
+    const [organizations, setOrganizations] = useState<CustomerOrganizationsViewModel[]>([]);
 
     const [trackedOrganizationIds, setTrackedOrganizationIds] = useState<number[]>([]);
 
@@ -126,7 +127,7 @@ export function useTrackedOrganizationsPage() {
 
             if (response.data.organizations) {
                 setOrganizations(response.data.organizations);
-                setTrackedOrganizationIds(response.data.organizations.map(item => item.id as number));
+                setTrackedOrganizationIds(response.data.organizations.map(item => item.organization.id as number));
             }
         }).finally(() => {
             setLoading(false);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, View, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import { Text, Button } from "@react-native-material/core";
-import { paletteGray, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
+import { paletteGray, paletteGrayShade1, paletteGrayShade2, paletteGrayShade3, paletteGreenBold, paletteOrange, palettePink, primaryTint1, primaryTint4 } from '../../../utils/color';
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import formatNumber from '../../../libs/functions/formatNumber';
 import BarCode from '../../../assets/SvgComponents/BarCode';
@@ -13,6 +13,9 @@ import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ParamListBase } from '@react-navigation/native';
 import useOrderDetailPage from './OrderDetail.hook';
+import Shadow from '../../../components/Shadow/Shadow';
+import DelimiterLine from '../../../components/DelimiterLine/DelimiterLine';
+import { OrderType } from '../../../objects/enums/OrderType';
 
 function OrderDetail(props: StackScreenProps<ParamListBase>) {
   const { push } = useRouter();
@@ -65,190 +68,191 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
           </View>
         </Pressable>
       </LayoutModal>
-      <ScrollView
-        style={{
+      <View style={{
+        height: "90%",
+        backgroundColor: "white",
+        padding : 15
+      }}>
+        <Shadow style={{
           backgroundColor: "white",
+          borderRadius: 12,
+          overflow: "hidden",
         }}>
-        <View style={{
-          borderBottomColor: primaryTint4,
-          borderBottomWidth: 1,
-          flexDirection: "row"
-        }}>
-          <View style={{
-            //borderWidth: 1,
-            width: "15%",
-            alignItems: "center",
-            paddingTop: 2
-          }}>
-            <BarCode width={30} height={30} />
-          </View>
-          <View style={{
-            rowGap: 5,
-            padding: 10
-          }}>
-            <Text style={{ fontSize: 16 }}>Mã đơn hàng</Text>
-            <Text style={{ fontSize: 16, color: paletteGray }}>Giao hàng</Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          onPress={() => push("TrackOrder")}
-          style={{
-            borderBottomColor: primaryTint4,
-            borderBottomWidth: 1,
-            padding: 10,
-            flexDirection: "row"
-          }}>
-          <View style={{
-            //borderWidth: 1,
-            width: "15%",
-          }}>
-            <Image source={packageBlack} style={{ width: 35, height: 35 }} />
-          </View>
-          <View style={{
-            //borderWidth: 1,
-            width: "75%"
-          }}>
-            <Text style={{ fontSize: 16, marginBottom: 5 }}>Theo dõi đơn hàng</Text>
-            <Text style={{ color: paletteGreenBold }}>Trạng thái đơn hàng</Text>
-            <Text style={{ color: paletteGray }}>Ngày của trạng thái</Text>
-          </View>
-          <View style={{
-            //borderWidth: 1,
-            width: "10%",
-            alignItems: "center",
-            justifyContent: "flex-start"
-          }}>
-            <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
-          </View>
-        </TouchableOpacity>
-        <View style={{
-          borderBottomColor: primaryTint4,
-          borderBottomWidth: 1,
-          padding: 10,
-          flexDirection: "row"
-        }}>
-          <View style={{
-            width: "15%"
-          }}>
-            <Place width={50} height={50} />
-          </View>
-          <View style={{
-            //borderWidth: 1,
-            width: "75%",
-            rowGap: 5
-          }}>
-            <Text style={{ fontSize: 16 }}>Tên khách hàng</Text>
-            <Text style={{ fontSize: 16, color: paletteGray }}>SĐT: 0000000000</Text>
-            <Text style={{ fontSize: 16, color: paletteGray }}>Địa chỉ: kjesbfs</Text>
-          </View>
-        </View>
-        <ExpandToggleView initExpanded={false} label='Tên hội sách'>
-          <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: primaryTint4 }}>
-            <>
-              <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
-              <View style={{
-                flexDirection: "row",
-                marginBottom: 20
-              }}>
-                <View style={{
-                  borderWidth: 1,
-                  borderColor: primaryTint1,
-                  width: "20%",
-                  height: 100,
-                  borderRadius: 8
-                }}>
-                  <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
-                </View>
-                <View style={{
-                  width: "50%",
-                  paddingLeft: 10,
-                  justifyContent: "center"
-                }}>
-                  <Text style={{ fontSize: 16 }}>Tên sách</Text>
-                  <Text>Số lượng: x1</Text>
-                </View>
-                <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
-                  <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
-                </View>
-              </View>
-            </>
-            <Text style={{ fontSize: 16, marginBottom: 10 }}>Tên nhà phát hành</Text>
+          <ScrollView
+            style={{
+              backgroundColor: "white",
+              padding: 15
+            }}>
             <View style={{
-              flexDirection: "row",
-              marginBottom: 20
+              flexDirection: "row"
             }}>
               <View style={{
-                borderWidth: 1,
-                borderColor: primaryTint1,
-                width: "20%",
-                height: 100,
-                borderRadius: 8
+                //borderWidth: 1,
+                width: "15%",
+                alignItems: "center",
+                paddingTop: 2
               }}>
-                <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: "https://salt.tikicdn.com/cache/280x280/ts/product/8a/c3/a9/733444596bdb38042ee6c28634624ee5.jpg" }} />
+                <BarCode width={30} height={30} />
               </View>
               <View style={{
-                width: "50%",
-                paddingLeft: 10,
-                justifyContent: "center"
+                rowGap: 5,
+                padding: 10
               }}>
-                <Text style={{ fontSize: 16 }}>Tên sách</Text>
-                <Text>Số lượng: x1</Text>
-              </View>
-              <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
-                <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(100000)}đ</Text>
+                <Text style={{ fontSize: 16 }}>{hook.data.order.code}</Text>
+                <Text style={{ fontSize: 16, color: paletteGray }}>Giao hàng</Text>
               </View>
             </View>
-          </View>
-        </ExpandToggleView>
-
-        <View style={{
-          borderBottomColor: primaryTint4,
-          borderBottomWidth: 1,
-          rowGap: 5,
-          padding: 10
-        }}>
-          <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
-          <Text style={{ color: paletteGray }}>Tiền mặt</Text>
-        </View>
-
-        <View style={{
-          rowGap: 5,
-          padding: 10
-        }}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "50%" }}>
-              <Text style={{ fontSize: 16 }}>Tạm tính</Text>
+            <DelimiterLine />
+            <TouchableOpacity
+              onPress={() => push("TrackOrder")}
+              style={{
+                padding: 10,
+                flexDirection: "row"
+              }}>
+              <View style={{
+                //borderWidth: 1,
+                width: "15%",
+              }}>
+                <Image source={packageBlack} style={{ width: 35, height: 35 }} />
+              </View>
+              <View style={{
+                //borderWidth: 1,
+                width: "75%",
+                rowGap: 7
+              }}>
+                <Text style={{ fontSize: 16 }}>Theo dõi đơn hàng</Text>
+                <Text style={{ color: hook.ui.getStatusColor() }}>{hook.data.order.statusName}</Text>
+                <Text style={{ color: paletteGray }}>Ngày của trạng thái</Text>
+              </View>
+              <View style={{
+                //borderWidth: 1,
+                width: "10%",
+                alignItems: "center",
+                justifyContent: "flex-start"
+              }}>
+                <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
+              </View>
+            </TouchableOpacity>
+            <DelimiterLine />
+            <View style={{
+              padding: 10,
+              flexDirection: "row"
+            }}>
+              <View style={{
+                width: "15%"
+              }}>
+                <Place width={50} height={50} />
+              </View>
+              <View style={{
+                //borderWidth: 1,
+                width: "75%",
+                rowGap: 5
+              }}>
+                <Text style={{ fontSize: 16 }}>{hook.data.order.customerName}</Text>
+                <Text style={{ fontSize: 16, color: paletteGrayShade3 }}>SĐT: {hook.data.order.customerPhone}</Text>
+                <Text style={{ fontSize: 16, color: paletteGrayShade3 }}>Địa chỉ: {hook.data.order.address}</Text>
+              </View>
             </View>
-            <View style={{ width: "50%", alignItems: "flex-end" }}>
-              <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+            <DelimiterLine />
+            <View style={{
+              borderColor: primaryTint4,
+              backgroundColor: "white",
+              borderRadius: 8,
+              overflow: "hidden",
+              borderWidth: 2
+            }}>
+              <ExpandToggleView label={hook.data.order.campaign?.name as string}>
+                <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: primaryTint4 }}>
+                  {
+                    hook.data.order.orderDetails?.map(item =>
+                      <>
+                        <Text style={{ fontSize: 16, marginBottom: 10, color: paletteGrayShade2 }}>{item.bookProduct?.issuer.user.name}</Text>
+                        <View style={{
+                          flexDirection: "row",
+                          marginBottom: 20
+                        }}>
+                          <View style={{
+                            borderWidth: 1,
+                            borderColor: primaryTint1,
+                            width: "20%",
+                            height: 100,
+                            borderRadius: 8
+                          }}>
+                            <Image resizeMode='contain' style={{ width: "100%", height: "100%" }} source={{ uri: item.bookProduct?.imageUrl }} />
+                          </View>
+                          <View style={{
+                            width: "50%",
+                            paddingLeft: 10,
+                            justifyContent: "center"
+                          }}>
+                            <Text style={{ fontSize: 16 }}>{item.bookProduct?.title}</Text>
+                            <Text>Số lượng: x{item.quantity}</Text>
+                          </View>
+                          <View style={{ width: "30%", alignItems: "flex-end", justifyContent: "center" }}>
+                            <Text style={{ color: palettePink, fontSize: 18, fontWeight: "700" }}>{formatNumber(item.price)}đ</Text>
+                          </View>
+                        </View>
+                      </>
+                    )
+                  }
+                </View>
+              </ExpandToggleView>
             </View>
-          </View>
-          <View style={{ flexDirection: "row", marginBottom: 10 }}>
-            <View style={{ width: "50%" }}>
-              <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
+            <View style={{ marginTop: 20 }}>
+              <DelimiterLine />
             </View>
-            <View style={{ width: "50%", alignItems: "flex-end" }}>
-              <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+            <View style={{
+              rowGap: 5,
+              padding: 10
+            }}>
+              <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
+              <Text style={{ color: paletteGray }}>Tiền mặt</Text>
             </View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "50%" }}>
-              <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
+            <DelimiterLine />
+            <View style={{
+              rowGap: 5,
+              padding: 10,
+              marginBottom: 10
+            }}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "50%" }}>
+                  <Text style={{ fontSize: 16 }}>Tạm tính</Text>
+                </View>
+                <View style={{ width: "50%", alignItems: "flex-end" }}>
+                  <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                <View style={{ width: "50%" }}>
+                  <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
+                </View>
+                <View style={{ width: "50%", alignItems: "flex-end" }}>
+                  <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "50%" }}>
+                  <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
+                </View>
+                <View style={{ width: "50%", alignItems: "flex-end" }}>
+                  {/* <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text> */}
+                </View>
+              </View>
             </View>
-            <View style={{ width: "50%", alignItems: "flex-end" }}>
-              <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
+          </ScrollView>
+        </Shadow>
+      </View>
       <View style={{
         backgroundColor: "white",
-        padding: 10
+        padding: 10,
+        height: "10%"
       }}>
         <View style={{ flexDirection: "row", marginBottom: 20 }}>
           <View style={{
+            //borderWidth : 1,
             width: "60%",
-            rowGap: 10
+            rowGap: 10,
+            paddingLeft: 10
           }}>
             <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
             <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(100000)}đ</Text>
@@ -257,10 +261,13 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
             width: "40%",
             alignItems: "flex-end"
           }}>
-            <Button
-              title="Thanh toán"
-              //onPress={hook.event.onOrderSubmit}
-              style={{ marginTop: 10, width: 140, backgroundColor: palettePink }} />
+            {/* {
+              hook.data.order.type == OrderType.PickUp &&
+              <Button
+                title="Thanh toán"
+                //onPress={hook.event.onOrderSubmit}
+                style={{ marginTop: 10, width: 140, backgroundColor: palettePink }} />
+            } */}
           </View>
         </View>
       </View>

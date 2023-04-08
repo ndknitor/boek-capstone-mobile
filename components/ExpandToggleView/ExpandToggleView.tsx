@@ -27,7 +27,7 @@ function ExpandToggleView(props: ExpandToggleViewProps) {
             style={{
                 borderColor: primaryTint4,
                 backgroundColor: "white",
-                borderBottomWidth: 1
+                //borderBottomWidth: 1
             }}>
             <TouchableOpacity
                 onPress={() => toggleExpanded()}

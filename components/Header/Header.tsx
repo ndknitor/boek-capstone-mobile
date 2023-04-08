@@ -9,46 +9,49 @@ interface HeaderProps {
 function Header(props: HeaderProps) {
     const { canGoBack, goBack } = useRouter();
     return (
-        <SafeAreaView style={{ backgroundColor: primaryColor }}>
-            <View style={{
-                height: 65,
-                width: "98%",
-                flexDirection: "row",
-            }}>
-                <View
-                    style={{
-                        borderWidth: 1,
-                        width: canGoBack() ? "15%" : 0,
-                        height: "100%"
-                    }}>
-                    <TouchableOpacity
+        <>
+            <SafeAreaView style={{ width: "100%", backgroundColor: primaryColor, zIndex: 999, position: "absolute" }}>
+                <View style={{
+                    height: 65,
+                    width: "98%",
+                    flexDirection: "row",
+                }}>
+                    <View
                         style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "100%",
+                            //borderWidth: 1,
+                            width: canGoBack() ? "15%" : 0,
                             height: "100%"
-                        }}
-                        onPress={goBack}>
-                        <Image source={arrowBackWhite} resizeMode="contain" style={{ width: "100%", height: "40%" }} />
-                    </TouchableOpacity>
-                </View>
-                <View
-                    style={{
-                        //borderWidth: 1,
-                        width: "75%",
-                        height: "100%",
-                        justifyContent: "center",
-                        paddingLeft: 15
-                    }}>
-                    <Text
+                        }}>
+                        <TouchableOpacity
+                            style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "100%",
+                                height: "100%"
+                            }}
+                            onPress={goBack}>
+                            <Image source={arrowBackWhite} resizeMode="contain" style={{ width: "100%", height: "40%" }} />
+                        </TouchableOpacity>
+                    </View>
+                    <View
                         style={{
-                            fontSize: 20,
-                            fontWeight: "500",
-                            color: "white"
-                        }}>{props.title}</Text>
+                            //borderWidth: 1,
+                            width: "75%",
+                            height: "100%",
+                            justifyContent: "center",
+                            paddingLeft: 15
+                        }}>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                fontWeight: "500",
+                                color: "white"
+                            }}>{props.title}</Text>
+                    </View>
                 </View>
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+            <View style={{ height: 65 }} />
+        </>
     )
 }
 

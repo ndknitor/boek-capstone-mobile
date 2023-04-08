@@ -1,4 +1,4 @@
-import { Button, CheckBox } from '@rneui/base'
+import { Button } from '@rneui/base'
 import React from 'react'
 import { Pressable, ScrollView, TouchableOpacity, View, Image } from 'react-native'
 import { Text } from '@react-native-material/core'
@@ -14,6 +14,7 @@ import { ParamListBase } from '@react-navigation/native'
 import useCreateConfirmOrderPage from './CreateConfirmOrder.hook'
 import packageBlack from "../../../assets/icons/package-black.png";
 import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 function CreateConfirmOrder(props: StackScreenProps<ParamListBase>) {
     const { push } = useRouter();
@@ -160,22 +161,20 @@ function CreateConfirmOrder(props: StackScreenProps<ParamListBase>) {
                     padding: 10
                 }}>
                     <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
-                    <CheckBox
-                        title="Tiền mặt"
-                        checked
-                        center
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        //onPress={() => hook.input.gender.set(true)}
-                        containerStyle={{ backgroundColor: "transparent", alignItems: "flex-start" }} />
-                    <CheckBox
-                        title="ZaloPay"
-                        checked
-                        center
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        //onPress={() => hook.input.gender.set(true)}
-                        containerStyle={{ backgroundColor: "transparent", alignItems: "flex-start" }} />
+                    <BouncyCheckbox
+                        //isChecked={hook.input.paymentMethod.value == OrderPayment.Cash}
+                        //onPress={() => hook.input.paymentMethod.set(OrderPayment.Cash)}
+                        disableBuiltInState
+                        size={20}
+                        fillColor={primaryTint1}
+                        text="Tiền mặt" textStyle={{ textDecorationLine: "none" }} />
+                    <BouncyCheckbox
+                        //isChecked={hook.input.paymentMethod.value == OrderPayment.Cash}
+                        //onPress={() => hook.input.paymentMethod.set(OrderPayment.Cash)}
+                        disableBuiltInState
+                        size={20}
+                        fillColor={primaryTint1}
+                        text="Tiền mặt" textStyle={{ textDecorationLine: "none" }} />
                 </View>
 
                 <View style={{
