@@ -10,14 +10,10 @@ import { BaseResponseModel } from '../objects/responses/BaseResponseModel';
 import EndPont from '../utils/endPoints';
 import * as Notifications from 'expo-notifications';
 import useDebounce from '../libs/hook/useDebounce';
-import { useEffect } from 'react';
-import { ProductInCart } from '../objects/models/ProductInCart';
 import useIsFirstRender from '../libs/hook/useIsFirstRender';
-import { Role } from '../objects/enums/Role';
-import { CustomerViewModel } from '../objects/viewmodels/Users/customers/CustomerViewModel';
-import endPont from '../utils/endPoints';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { CampaignInCart } from '../objects/models/CampaignInCart';
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export default function useInit() {
   const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
@@ -34,9 +30,9 @@ export default function useInit() {
     AsyncStorage.removeItem(StorageKey.cart);
     const jsonString = await AsyncStorage.getItem(StorageKey.cart);
     console.log(jsonString);
-    
+
     let storeCart: CampaignInCart[] = [];
-    
+
     if (jsonString != null) {
       storeCart = JSON.parse(jsonString) as CampaignInCart[];
       if (cart.length == 0) {
@@ -44,7 +40,7 @@ export default function useInit() {
       }
     }
     //console.log("asd");
-    
+
 
     if (storeCart.length > 0) {
       let totalQuantity = 0;
@@ -83,6 +79,11 @@ export default function useInit() {
       setAuthorizationBearer(user.accessToken);
       console.log(appxios.defaults.headers.common['Authorization']);
     }
+    // console.log(appxios.defaults.baseURL);
+
+    // const signalr = new HubConnectionBuilder()
+    //   .withUrl(`${appxios.defaults.baseURL as string}`)
+    //   .build();
 
     if (initLoading) {
       setInitLoading(false);

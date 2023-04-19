@@ -56,6 +56,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
     const [calculation, setCalculation] = useState<OrderCalculationViewModel>();
     const [customer, setCustomer] = useState<CustomerViewModel>();
 
+
     const onProvinceSelected = (selectedProvince: Province) => {
         if (!province || province && province.code != selectedProvince.code) {
             setProvince(selectedProvince);
@@ -158,7 +159,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                 });
             }
             else if (paymentMethod == OrderPayment.ZaloPay) {
-                const redirectUrl = (await Linking.getInitialURL()) as string;
+                const redirectUrl = "exp+boek://kn.com";
                 console.log(redirectUrl);
                 const request: CreateZaloPayOrderRequestModel = {
                     type: orderType,
@@ -172,9 +173,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                     payment: OrderPayment.ZaloPay,
                     redirectUrl: redirectUrl
                 };
-                //console.log(request);
                 appxios.post<ZaloPayOrderResponseModel>(endPont.orders.zaloPay, request).then(async response => {
-                    //console.log(response.data);
                     await Linking.openURL(response.data.order_url).catch(err => console.error("Couldn't load page", err));
                 }).finally(() => {
                     setLoading(false);
@@ -318,7 +317,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
             calculation,
             provincesSelect,
             districtSelect,
-            wardSelect
+            wardSelect,
         },
         input: {
             paymentMethod: {

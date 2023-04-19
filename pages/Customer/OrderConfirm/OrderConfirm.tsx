@@ -24,6 +24,7 @@ import { Province } from '../../../objects/enums/Province';
 import { getMessage } from '../../../utils/Validators';
 import { District } from '../../../objects/enums/Districts';
 import { Ward } from '../../../objects/enums/Ward';
+import WebView from 'react-native-webview';
 
 
 function OrderConfirm(props: StackScreenProps<ParamListBase>) {
@@ -104,7 +105,6 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                     </View>
                 </Pressable>
             </LayoutModal>
-
             <ScrollView style={{
                 backgroundColor: "white",
                 //alignItems : "center"
@@ -423,10 +423,10 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                     </Shadow>
                 </View>
             </ScrollView>
-
             <View style={{
                 backgroundColor: "white",
-                padding: 10
+                padding: 10,
+                height: "15%"
             }}>
                 <View style={{ flexDirection: "row" }}>
                     <View style={{
