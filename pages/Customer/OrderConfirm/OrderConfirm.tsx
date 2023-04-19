@@ -24,7 +24,6 @@ import { Province } from '../../../objects/enums/Province';
 import { getMessage } from '../../../utils/Validators';
 import { District } from '../../../objects/enums/Districts';
 import { Ward } from '../../../objects/enums/Ward';
-import WebView from 'react-native-webview';
 
 
 function OrderConfirm(props: StackScreenProps<ParamListBase>) {
