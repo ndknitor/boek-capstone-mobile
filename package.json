@@ -9,6 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@microsoft/signalr": "^7.0.5",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-firebase/app": "^17.3.1",
@@ -44,6 +45,7 @@
     "react-native-numeric-input": "^1.9.1",
     "react-native-pager-view": "^6.1.4",
     "react-native-popup-menu": "^0.16.1",
+    "react-native-qrcode-svg": "^6.2.0",
     "react-native-safe-area-context": "^4.5.0",
     "react-native-screens": "^3.20.0",
     "react-native-select-dropdown": "^3.3.0",

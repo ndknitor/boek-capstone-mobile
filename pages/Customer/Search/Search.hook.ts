@@ -222,7 +222,7 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
 
     useEffect(() => {
         getBooks(1);
-    }, []);
+    }, [sort]);
     return {
         ref: {
             filterBooksDrawerRef,
@@ -290,7 +290,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const [issuers, setIssuers] = useState<MultiUserViewModel[]>([]);
 
     const [search, setSearch] = useState("");
-    const [sort, setSort] = useState("");
+    const [sort, setSort] = useState("CreatedDate desc");
     const [filterStartDate, setfilterStartDate] = useState<Date>();
     const [filterEndDate, setfilterEndDate] = useState<Date>();
     const [seletedFormat, setSeletedFormat] = useState<number>();
@@ -408,7 +408,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
 
     useEffect(() => {
         getCampaigns(1);
-    }, []);
+    }, [sort]);
 
     return {
         ref: {

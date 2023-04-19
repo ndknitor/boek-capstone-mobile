@@ -25,9 +25,6 @@ export default function useStaffOrdersPage() {
     const [orders, setOrders] = useState<OrderViewModel[]>([]);
     const [orderStatus, setOrderStatus] = useState(0);
 
-
-
-
     const onPageNavigation = (page: number) => {
         getOrders(page);
         scrollViewRef.current?.scrollTo({
@@ -45,7 +42,7 @@ export default function useStaffOrdersPage() {
             query.append("Status", orderStatus.toString());
         }
         setLoading(true);
-        appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders}?${query.toString()}`).then(response => {
+        appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders.index}?${query.toString()}`).then(response => {
             setOrders(response.data.data);
             setCurrentPage(page);
             setMaxPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));

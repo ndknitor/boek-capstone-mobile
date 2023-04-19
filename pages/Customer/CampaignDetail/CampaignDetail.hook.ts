@@ -4,8 +4,10 @@ import { createElement, useEffect, useRef, useState } from "react";
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-native";
 import appxios from "../../../components/AxiosInterceptor";
 import CardHeader from "../../../components/CartHeader/CardHeader";
+import CampaignStatus from "../../../objects/enums/CampaignStatus";
 import { CampaignMobileViewModel } from "../../../objects/viewmodels/Campaigns/Mobile/CampaignMobileViewModel";
 import { IssuerViewModel } from "../../../objects/viewmodels/Users/issuers/IssuerViewModel";
+import { paletteGrayLight, paletteGreen, paletteGreenBold, paletteRed } from "../../../utils/color";
 import endPont from "../../../utils/endPoints";
 
 
@@ -18,6 +20,33 @@ export default function useCampaignDetaillPage(props: StackScreenProps<ParamList
 
     const [campaign, setCampaign] = useState<CampaignMobileViewModel>();
     const [issuerDetail, setIssuerDetail] = useState<IssuerViewModel>();
+
+    const getColor = () => {
+        switch (campaign?.status) {
+            case CampaignStatus.notStarted:
+                return paletteGrayLight;
+            case CampaignStatus.start:
+                return paletteGreen;
+            case CampaignStatus.end:
+                return paletteGrayLight;
+            case CampaignStatus.postpone:
+                return paletteRed;
+            default: return undefined;
+        };
+    }
+    const getTextColor = () => {
+        switch (campaign?.status) {
+            case CampaignStatus.notStarted:
+                return "black";
+            case CampaignStatus.start:
+                return paletteGreenBold;
+            case CampaignStatus.end:
+                return "black";
+            case CampaignStatus.postpone:
+                return paletteRed;
+            default: return undefined;
+        };
+    }
 
     useEffect(() => {
         props.navigation.setOptions({ headerRight: (props) => createElement(CardHeader) });
@@ -73,6 +102,8 @@ export default function useCampaignDetaillPage(props: StackScreenProps<ParamList
         },
         ui: {
             loading,
+            getColor,
+            getTextColor,
             issuerModalVisible: {
                 value: issuerModalVisible,
                 set: setIssuerModalVisible

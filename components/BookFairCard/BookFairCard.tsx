@@ -43,7 +43,14 @@ function BookFairCard({ campagin }: BookFairCardProps) {
     return (
         <TouchableOpacity
             onPress={() => push("CampaignDetail", { campaignId: campagin?.id })}
-            style={{ borderWidth: 1, borderColor: primaryTint4, borderRadius: 8, padding: 10, flexDirection: "row", flexWrap: "wrap" }}>
+            style={{
+                //borderWidth: 1,
+                //borderColor: primaryTint4,
+                //borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+                flexWrap: "wrap"
+            }}>
             <View style={{ flexDirection: "row" }}>
                 <View style={{ marginBottom: 5, width: "45%" }}>
                     <Image
@@ -99,7 +106,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                 marginBottom: 10,
                 alignItems: "center",
                 justifyContent: "center",
-                width: "35%",
+                width: "40%",
                 height: 25,
                 borderRadius: 24
             }}>

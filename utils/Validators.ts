@@ -8,7 +8,7 @@ export function getMessage(validationMessages: ValidationMessages | undefined, k
     }
     const messageObject = validationMessages[key];
     if (messageObject) {
-        const messages = messageObject.filter(v => v != undefined);    
+        const messages = messageObject.filter(v => v != undefined);
         if (messages.length > 0) {
             return messages[0];
         }
@@ -144,5 +144,27 @@ export function minFileSize(target: File, minMB: number, message: string) {
         return message;
     }
     return undefined;
+}
+
+export function emailAddress(email: string, message: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        return undefined;
+    }
+    if (emailRegex.test(email)) {
+        return undefined;
+    }
+    return message;
+}
+
+export function numberString(str: string, message: string) {
+    if (!str) {
+        return undefined;
+    }
+    const numberRegex = /^\d+$/;
+    if (numberRegex.test(str)) {
+        return undefined;
+    }
+    return message;
 }
 

@@ -158,7 +158,7 @@ function Orders(props: StackScreenProps<ParamListBase>) {
                                 borderBottomColor: paletteGray,
                                 padding: 10
                             }}
-                        //onSelect={() => push("CreateChooseCampaignOrder")}
+                            onSelect={() => push("CreateOrderScanQr")}
                         >
                             <Text style={{ fontSize: 17 }}>Quét mã QR đơn hàng</Text>
                         </MenuOption>
@@ -174,74 +174,71 @@ function Orders(props: StackScreenProps<ParamListBase>) {
             </FloatActionButton>
             <PageLoader loading={hook.ui.loading} />
             <Header title={params.campaign.name} />
-            <OrderDetailDrawerLayout
-                drawerRef={hook.ref.drawerLayoutRef}>
-                <ScrollView
-                    ref={hook.ref.campaginsScrollViewRef}
-                    stickyHeaderHiddenOnScroll
-                    stickyHeaderIndices={[0]}
+            <ScrollView
+                ref={hook.ref.campaginsScrollViewRef}
+                stickyHeaderHiddenOnScroll
+                stickyHeaderIndices={[0]}
+                style={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    height: "100%",
+                }}>
+                <FlatList
                     style={{
+                        height: 50,
                         backgroundColor: "white",
-                        width: "100%",
-                        height: "100%",
-                    }}>
-                    <FlatList
-                        style={{
-                            height: 50,
-                            backgroundColor: "white",
-                            borderBottomWidth: 1,
-                            borderBottomColor: paletteGray,
-                            paddingLeft: 10
-                        }}
-                        horizontal
-                        data={[
-                            {
-                                label: "Tất cả",
-                                input: 0
-                            },
-                            {
-                                label: OrderStatus.getLabel(OrderStatus.Processing),
-                                input: OrderStatus.Processing
-                            },
-                            {
-                                label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
-                                input: OrderStatus.PickUpAvailable
-                            },
-                            {
-                                label: OrderStatus.getLabel(OrderStatus.Received),
-                                input: OrderStatus.Received
-                            },
-                            {
-                                label: OrderStatus.getLabel(OrderStatus.Cancelled),
-                                input: OrderStatus.Cancelled
-                            }]}
-                        renderItem={item =>
-                            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                                <SelectedChip
-                                    onPress={() => hook.input.orderStatus.set(item.item.input)}
-                                    selected={hook.input.orderStatus.value == item.item.input}
-                                    label={item.item.label} />
-                            </View>
-                        } />
-
-                    <View style={{ padding: 5, alignItems: "center" }}>
+                        borderBottomWidth: 1,
+                        borderBottomColor: paletteGray,
+                        paddingLeft: 10
+                    }}
+                    horizontal
+                    data={[
                         {
-                            hook.data.orders?.map(item =>
-                                item.orderDetails && item.orderDetails[0] &&
-                                <StaffOrderCard order={item} />
-                            )
-                        }
+                            label: "Tất cả",
+                            input: 0
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Processing),
+                            input: OrderStatus.Processing
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
+                            input: OrderStatus.PickUpAvailable
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Received),
+                            input: OrderStatus.Received
+                        },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                            input: OrderStatus.Cancelled
+                        }]}
+                    renderItem={item =>
+                        <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                            <SelectedChip
+                                onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                selected={hook.input.orderStatus.value == item.item.input}
+                                label={item.item.label} />
+                        </View>
+                    } />
 
-                    </View>
-                    <View
-                        style={{
-                            marginTop: 10,
-                            marginBottom: 10
-                        }}>
-                        <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
-                    </View>
-                </ScrollView>
-            </OrderDetailDrawerLayout>
+                <View style={{ padding: 5, alignItems: "center" }}>
+                    {
+                        hook.data.orders?.map(item =>
+                            item.orderDetails && item.orderDetails[0] &&
+                            <StaffOrderCard order={item} />
+                        )
+                    }
+
+                </View>
+                <View
+                    style={{
+                        marginTop: 10,
+                        marginBottom: 10
+                    }}>
+                    <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
+                </View>
+            </ScrollView>
         </>
     );
 }

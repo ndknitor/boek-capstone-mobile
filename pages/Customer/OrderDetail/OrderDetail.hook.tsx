@@ -2,27 +2,47 @@ import { ParamListBase } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { Alert, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message";
 import Info from "../../../assets/SvgComponents/Info";
+import appxios from "../../../components/AxiosInterceptor";
+import useAuth from "../../../libs/hook/useAuth";
+import useRouter from "../../../libs/hook/useRouter";
 import { OrderStatus } from "../../../objects/enums/OrderStatus";
+import { Role } from "../../../objects/enums/Role";
 import { OrderViewModel } from "../../../objects/viewmodels/Orders/OrderViewModel";
 import { paletteGray, paletteGreenShade1, paletteRed, primaryTint2 } from "../../../utils/color";
+import endPont from "../../../utils/endPoints";
 
 export default function useOrderDetailPage(props: StackScreenProps<ParamListBase>) {
     const params = props.route.params as { order: OrderViewModel };
     const [infoModalVisible, setInfoModalVisible] = useState(false);
     const [order, setOrder] = useState(params.order);
+    const [loading, setLoading] = useState(false);
+    const { goBack } = useRouter();
+    const { isInRole } = useAuth();
     const onOrderSubmit = () => {
-        Alert.alert('Xác nhận', 'Bạn có muốn thanh toán tất cả đơn hàng cùng hội sách?', [
+        setLoading(true);
+        appxios.put(endPont.staff.orders.received,
             {
-                text: 'Không',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            {
-                text: 'Có',
-                onPress: () => console.log('OK Pressed')
-            },
-        ]);
+                id: order.id,
+                note: ""
+            }).then(response => {
+                if (response.status == 200) {
+                    Toast.show({
+                        text1: "Thông báo",
+                        text2: "Thanh toán đơn hàng thành công"
+                    });
+                }
+                else {
+                    Toast.show({
+                        text1: "Thông báo",
+                        text2: "Thanh toán đơn hàng thất bại"
+                    });
+                }
+                goBack();
+            }).finally(() => {
+                setLoading(false);
+            });
     }
     const getStatusColor = () => {
         if (order.status == OrderStatus.Cancelled) {
@@ -41,18 +61,21 @@ export default function useOrderDetailPage(props: StackScreenProps<ParamListBase
     }
 
     useEffect(() => {
-        props.navigation.setOptions({
-            headerRight: () =>
-                <View style={{ justifyContent: "center", alignItems: "center" }}>
-                    <TouchableOpacity onPress={() => setInfoModalVisible(true)}>
-                        <Info scale={60} fill="white" />
-                    </TouchableOpacity>
-                </View>
-        });
+        if (isInRole([Role.customer.toString()])) {
+            props.navigation.setOptions({
+                headerRight: () =>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                        <TouchableOpacity onPress={() => setInfoModalVisible(true)}>
+                            <Info scale={60} fill="white" />
+                        </TouchableOpacity>
+                    </View>
+            });
+        }
     }, []);
 
     return {
         ui: {
+            loading,
             getStatusColor,
             infoModalVisible,
             setInfoModalVisible

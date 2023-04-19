@@ -48,6 +48,18 @@ export default function usePagingComponent(props: PagingProps) {
             }
             return;
         }
+        if (props.currentPage == 3 || props.currentPage == 4) {
+            setEndPage(props.maxPage);
+            setStartPage(1);
+            setShowStartDot(false);
+            if (props.maxPage - props.currentPage > 2) {
+                setShowEndDot(true);
+            }
+            else {
+                setShowEndDot(false);
+            }
+            return;
+        }
         else {
             setEndPage(props.maxPage);
             setStartPage(props.currentPage - 4);

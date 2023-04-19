@@ -12,10 +12,13 @@ import helpBlack from "../../../assets/icons/help-black.png";
 import helpWhite from "../../../assets/icons/help-white.png";
 import { Button } from '@rneui/base'
 import useRouter from '../../../libs/hook/useRouter'
+import useKeyboardVisibility from '../../../libs/hook/useKeyboardVisibility'
+import { getMessage } from '../../../utils/Validators'
 
 function CreateChooseHaveAccountOrder(props: StackScreenProps<ParamListBase>) {
     const { push } = useRouter();
     const hook = useCreateChooseHaveAccountOrderPage(props);
+    const keyboardVisible = useKeyboardVisibility();
     return (
         <View style={{
             width: "100%",
@@ -24,15 +27,18 @@ function CreateChooseHaveAccountOrder(props: StackScreenProps<ParamListBase>) {
         }}>
             <View style={{
                 //borderWidth: 1,
-                height: "15%",
+                display: keyboardVisible ? "none" : "flex",
+                height: keyboardVisible ? "0%" : "15%",
                 alignItems: "center",
                 justifyContent: "center"
             }}>
                 <Text variant='h5' style={{ textAlign: "center" }}>Khách hàng đã có tài khoản chưa?</Text>
             </View>
+
             <View style={{
                 //borderWidth: 1,
-                height: "30%",
+                height: keyboardVisible ? "0%" : "25%",
+                display: keyboardVisible ? "none" : "flex",
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "center",
@@ -100,9 +106,10 @@ function CreateChooseHaveAccountOrder(props: StackScreenProps<ParamListBase>) {
                 </View>
 
             </View>
+
             <View style={{
                 //borderWidth: 1,
-                height: "45%"
+                height: keyboardVisible ? "90%" : "50%"
             }}>
                 <ScrollView
                     contentContainerStyle={{
@@ -116,23 +123,34 @@ function CreateChooseHaveAccountOrder(props: StackScreenProps<ParamListBase>) {
                     <View style={{ width: "90%" }}>
                         <Text style={{ fontSize: 16 }}>Họ và tên <Text style={{ color: "red" }}>*</Text></Text>
                         <TextInput
+                            value={hook.input.name.value}
+                            onChangeText={hook.input.name.set}
                             placeholder='Nguyễn Văn A'
                             inputContainerStyle={{ backgroundColor: "transparent" }} />
+                        <Text style={{ color: "red" }}>{getMessage(hook.ui.validationMessages, "name")}</Text>
                     </View>
                     <View style={{ width: "90%" }}>
                         <Text style={{ fontSize: 16 }}>SĐT <Text style={{ color: "red" }}>*</Text></Text>
                         <TextInput
+                            keyboardType='number-pad'
+                            value={hook.input.phone.value}
+                            onChangeText={hook.input.phone.set}
                             placeholder='0908xxxxxx'
                             inputContainerStyle={{ backgroundColor: "transparent" }} />
+                        <Text style={{ color: "red" }}>{getMessage(hook.ui.validationMessages, "phone")}</Text>
                     </View>
                     <View style={{ width: "90%" }}>
                         <Text style={{ fontSize: 16 }}>Email <Text style={{ color: "red" }}>*</Text></Text>
                         <TextInput
+                            value={hook.input.email.value}
+                            onChangeText={hook.input.email.set}
                             placeholder='nguyenvana123@gmail.com'
                             inputContainerStyle={{ backgroundColor: "transparent" }} />
+                        <Text style={{ color: "red" }}>{getMessage(hook.ui.validationMessages, "email")}</Text>
                     </View>
                 </ScrollView>
             </View>
+
             <View style={{
                 height: "10%",
                 alignItems: "center",
@@ -149,7 +167,7 @@ function CreateChooseHaveAccountOrder(props: StackScreenProps<ParamListBase>) {
                 <View style={{ width: "20%" }} />
                 <Button
                     disabled={hook.input.haveAccount.value == undefined}
-                    onPress={hook.event.next}
+                    onPress={hook.event.onSubmit}
                     title="Tiếp theo"
                     buttonStyle={{ backgroundColor: primaryTint1, width: 160 }} />
             </View>

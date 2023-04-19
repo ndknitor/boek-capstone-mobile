@@ -16,12 +16,16 @@ import useOrderDetailPage from './OrderDetail.hook';
 import Shadow from '../../../components/Shadow/Shadow';
 import DelimiterLine from '../../../components/DelimiterLine/DelimiterLine';
 import { OrderType } from '../../../objects/enums/OrderType';
+import AuthorizeView from '../../../libs/AuthorizeView';
+import { Role } from '../../../objects/enums/Role';
+import PageLoader from '../../../components/PageLoader/PageLoader';
 
 function OrderDetail(props: StackScreenProps<ParamListBase>) {
   const { push } = useRouter();
   const hook = useOrderDetailPage(props);
   return (
     <>
+      <PageLoader loading={hook.ui.loading} />
       <LayoutModal visible={hook.ui.infoModalVisible} onClose={() => hook.ui.setInfoModalVisible(!hook.ui.infoModalVisible)}>
         <Pressable
           onPress={() => hook.ui.setInfoModalVisible(false)}
@@ -69,9 +73,9 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
         </Pressable>
       </LayoutModal>
       <View style={{
-        height: "90%",
+        height: "85%",
         backgroundColor: "white",
-        padding : 15
+        padding: 15
       }}>
         <Shadow style={{
           backgroundColor: "white",
@@ -161,7 +165,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               overflow: "hidden",
               borderWidth: 2
             }}>
-              <ExpandToggleView label={hook.data.order.campaign?.name as string}>
+              <ExpandToggleView initExpanded label={hook.data.order.campaign?.name as string}>
                 <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: primaryTint4 }}>
                   {
                     hook.data.order.orderDetails?.map(item =>
@@ -206,38 +210,40 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               padding: 10
             }}>
               <Text style={{ fontSize: 16 }}>Phương thức thanh toán</Text>
-              <Text style={{ color: paletteGray }}>Tiền mặt</Text>
+              <Text style={{ color: paletteGray }}>{hook.data.order.paymentName}</Text>
             </View>
             <DelimiterLine />
             <View style={{
-              rowGap: 5,
               padding: 10,
               marginBottom: 10
             }}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", marginBottom: 10 }}>
                 <View style={{ width: "50%" }}>
                   <Text style={{ fontSize: 16 }}>Tạm tính</Text>
                 </View>
                 <View style={{ width: "50%", alignItems: "flex-end" }}>
-                  <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
+                  <Text style={{ fontSize: 16 }}>{formatNumber(hook.data.order.total)}đ</Text>
                 </View>
               </View>
-              <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                <View style={{ width: "50%" }}>
-                  <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
+              {
+                hook.data.order.freight != 0 &&
+                <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                  <View style={{ width: "50%" }}>
+                    <Text style={{ fontSize: 16 }}>Phí vận chuyển</Text>
+                  </View>
+                  <View style={{ width: "50%", alignItems: "flex-end" }}>
+                    <Text style={{ fontSize: 16 }}>{formatNumber(hook.data.order.freight)}đ</Text>
+                  </View>
                 </View>
-                <View style={{ width: "50%", alignItems: "flex-end" }}>
-                  <Text style={{ fontSize: 16 }}>{formatNumber(100000)}đ</Text>
-                </View>
-              </View>
-              <View style={{ flexDirection: "row" }}>
+              }
+              {/* <View style={{ flexDirection: "row" ,  marginBottom: 10 }}>
                 <View style={{ width: "50%" }}>
                   <Text style={{ fontSize: 16, color: palettePink }}>Tích điểm</Text>
                 </View>
                 <View style={{ width: "50%", alignItems: "flex-end" }}>
-                  {/* <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text> */}
+                  <Text style={{ fontSize: 16, color: paletteOrange }}>{formatNumber(100000)}đ</Text>
                 </View>
-              </View>
+              </View> */}
             </View>
           </ScrollView>
         </Shadow>
@@ -245,30 +251,42 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
       <View style={{
         backgroundColor: "white",
         padding: 10,
-        height: "10%"
+        height: "15%",
+        //borderWidth: 1
       }}>
-        <View style={{ flexDirection: "row", marginBottom: 20 }}>
+        <View style={{
+          //borderWidth: 1,
+          height: "100%",
+          flexDirection: "row"
+        }}>
           <View style={{
             //borderWidth : 1,
             width: "60%",
+            justifyContent: "center",
             rowGap: 10,
             paddingLeft: 10
           }}>
             <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
-            <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(100000)}đ</Text>
+            <Text style={{ fontSize: 16 }}>(Giá đã bao gồm VAT)</Text>
+            <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(hook.data.order.subTotal)}đ</Text>
           </View>
-          <View style={{
-            width: "40%",
-            alignItems: "flex-end"
-          }}>
-            {/* {
-              hook.data.order.type == OrderType.PickUp &&
-              <Button
-                title="Thanh toán"
-                //onPress={hook.event.onOrderSubmit}
-                style={{ marginTop: 10, width: 140, backgroundColor: palettePink }} />
-            } */}
-          </View>
+          {
+            <AuthorizeView roles={[Role.staff.toString()]}>
+              <View style={{
+                width: "40%",
+                alignItems: "flex-end",
+                justifyContent: "center",
+              }}>
+                {
+                  hook.data.order.type == OrderType.PickUp &&
+                  <Button
+                    title="Thanh toán"
+                    onPress={hook.event.onOrderSubmit}
+                    style={{ marginTop: 10, height: 50, alignItems: "center", justifyContent: "center", backgroundColor: palettePink }} />
+                }
+              </View>
+            </AuthorizeView>
+          }
         </View>
       </View>
     </>

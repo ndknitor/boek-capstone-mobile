@@ -42,6 +42,7 @@ function BookCard({ book }: BookCardProps) {
         justifyContent: "center"
       }}>
       <Shadow style={{
+        display : book.status == BookProductStatus.Sale ? "none" : "flex",
         backgroundColor: getStatusBackgrundColor(book.status as number),
         position: "absolute",
         borderRadius: 8,

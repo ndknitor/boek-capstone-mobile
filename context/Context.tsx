@@ -53,7 +53,8 @@ export const useProvider: () => Store = () => {
                                     pdfChecked: false,
                                     audioChecked: false,
                                     audioExtraPrice: product.audioExtraPrice as number,
-                                    pdfExtraPrice: product.pdfExtraPrice as number
+                                    pdfExtraPrice: product.pdfExtraPrice as number,
+                                    saleQuantity: product.saleQuantity
                                 }
                             ]
                         }
@@ -97,38 +98,6 @@ export const useProvider: () => Store = () => {
         }
         setCart(cloneCart);
     }
-
-    // const addToCart = (product: MobileBookProductViewModel, quantity: number) => {
-    //     const productInCart = cart.find(p => p.id == product.id);
-    //     let cartProduct: MobileBookProductViewModel = product;
-    //     let cartQuantity = 0;
-    //     let addTotalQuantity = 0;
-
-    //     cartQuantity += quantity;
-    //     addTotalQuantity += quantity;
-
-    //     if (productInCart) {
-    //         cartProduct = productInCart.product;
-    //         cartQuantity = productInCart.quantity + quantity;
-    //         const index = cart.indexOf(productInCart);
-    //         setCart([
-    //             ...cart.slice(0, index),
-    //             { id: cartProduct.id, product: cartProduct, quantity: cartQuantity, checked: false },
-    //             ...cart.slice(index + 1)
-    //         ]);
-    //     }
-    //     else {
-    //         setCart([...cart, { id: cartProduct.id, product: cartProduct, quantity: cartQuantity, checked: false }]);
-    //     }
-    //     setTotalProductQuantity(totalProductQuantity + addTotalQuantity);
-    // }
-    // const removeFromCart = (productId: string) => {
-    //     const removeProductInCart = cart.find(p => p.id == productId);
-    //     if (removeProductInCart) {
-    //         setTotalProductQuantity(totalProductQuantity - removeProductInCart.quantity);
-    //         setCart(cart.filter(p => p.id != productId));
-    //     }
-    // }
 
 
     return {

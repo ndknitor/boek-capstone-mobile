@@ -8,8 +8,9 @@ import GoogleLoginButton from '../../../components/GoogleLoginButton/GoogleLogin
 import Shadow from '../../../components/Shadow/Shadow'
 import useLoginPage from './Login.hook'
 import background from "../../../assets/background.jpg";
-import logo from "../../../assets/6888606.jpg";
+import logo from "../../../assets/logo.png";
 import PageLoader from '../../../components/PageLoader/PageLoader'
+import { paletteGray, paletteGrayTint7, paletteGrayTint8, paletteGrayTint9 } from '../../../utils/color'
 
 function Login(props: StackScreenProps<ParamListBase>) {
     const hook = useLoginPage(props);

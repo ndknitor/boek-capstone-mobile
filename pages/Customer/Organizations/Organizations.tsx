@@ -1,7 +1,7 @@
-import { ScrollView, Image } from 'react-native'
+import { ScrollView, Image, View } from 'react-native'
 import trackChange from "../../../assets/icons/track-changes-white.png";
 import corporateFlare from "../../../assets/icons/corporate-fare-white.png";
-import { useTrackedOrganizationsPage, useUnTrackedOrganizationsPage } from './Organizations.hook';
+import { useUnTrackedOrganizationsPage } from './Organizations.hook';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { primaryColor, primaryTint1 } from '../../../utils/color';
 import OrganizationView from '../../../components/OrganizationView/OrganizationView';
@@ -12,45 +12,13 @@ import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/Sti
 const Tab = createBottomTabNavigator();
 
 function Organizations() {
-    return (
-        <Tab.Navigator screenOptions={{
-            tabBarInactiveBackgroundColor: primaryColor,
-            tabBarActiveBackgroundColor: primaryTint1,
-            tabBarStyle: {
-                height: 60
-            },
-            headerShown: false,
-            tabBarLabelStyle:
-            {
-                fontSize: 13,
-                color: "white",
-                marginBottom: "6%"
-            }
-        }}>
-            <Tab.Screen options={{
-                tabBarLabel: "Tổ chức",
-                tabBarIcon: () => <Image source={corporateFlare} style={{ height: 20 }} resizeMode="contain" />
-            }}
-                name="UnTrackedOrganizations"
-                component={UnTrackedOrganizations}></Tab.Screen>
-            <Tab.Screen
-                options={{
-                    tabBarLabel: "Đã theo dõi",
-                    tabBarIcon: () => <Image source={trackChange} style={{ height: 20 }} resizeMode="contain" />
-                }}
-                name="TrackedOrganizations"
-                component={TrackedOrganizations}></Tab.Screen>
-        </Tab.Navigator>
-    )
-}
-function UnTrackedOrganizations() {
     const hook = useUnTrackedOrganizationsPage();
     return (
         <>
             <PageLoader loading={hook.loading} />
             <ScrollView
                 style={{
-                    backgroundColor : "white"
+                    backgroundColor: "white"
                 }}
                 ref={hook.ref.scrollViewRef}
                 stickyHeaderHiddenOnScroll
@@ -59,39 +27,22 @@ function UnTrackedOrganizations() {
                     onSubmit={() => hook.event.getOrganization(1)}
                     onChangeText={hook.input.search.set}
                     value={hook.input.search.value} />
-                {
-                    hook.data.organizations.map((item, index) =>
-                        <OrganizationView
-                            loading={hook.buttonsLoading[index]}
-                            onTrackPress={() => hook.event.onToggleTrackPress(item, index)}
-                            organization={item}
-                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.id) != undefined} />
-                    )
-                }
+                <View style={{
+                    padding: 20
+                }}>
+                    {
+                        hook.data.organizations.map((item, index) =>
+                            <OrganizationView
+                                tracked={hook.input.trackedOrganizationIds.find(id => id == item.id) != undefined}
+                                organization={item} />
+                        )
+                    }
+                </View>
+
                 <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
             </ScrollView>
         </>
     )
-}
-function TrackedOrganizations() {
-    const hook = useTrackedOrganizationsPage();
-    return (
-        <>
-            <PageLoader loading={hook.loading} />
-            <ScrollView style={{ backgroundColor: "white" }}>
-                {
-                    hook.data.organizations.map((item, index) =>
-                        <OrganizationView
-                            onTrackPress={() => hook.event.onTrackPress(item.organization, index)}
-                            tracked={hook.input.trackedOrganizationIds.find(o => o == item.organization.id) != undefined}
-                            loading={hook.buttonsLoading[index]}
-                            organization={item.organization} />
-                    )
-                }
-            </ScrollView>
-        </>
-
-    );
 }
 
 export default Organizations

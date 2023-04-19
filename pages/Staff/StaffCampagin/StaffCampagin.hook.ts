@@ -107,7 +107,7 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
             query.append("Status", orderStatus.toString());
         }
         setLoading(true);
-        appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders}?${query.toString()}`).then(response => {
+        appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders.index}?${query.toString()}`).then(response => {
             setOrders(response.data.data);
             setCurrentPage(page);
             setMaxPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));

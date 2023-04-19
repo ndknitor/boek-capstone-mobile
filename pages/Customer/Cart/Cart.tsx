@@ -2,7 +2,7 @@ import { ParamListBase } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Button, CheckBox } from '@rneui/base'
 import React from 'react'
-import { ScrollView, View, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Image, TouchableOpacity, Pressable } from 'react-native'
 import { Text } from "@react-native-material/core";
 import NumericInput from 'react-native-numeric-input'
 import Close from '../../../assets/SvgComponents/Close'
@@ -16,11 +16,13 @@ import truncateString from '../../../libs/functions/truncateString'
 import useRouter from '../../../libs/hook/useRouter'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import CartExpand from '../../../components/CartExpand/CartExpand'
+import LayoutModal from '../../../components/LayoutModal/LayoutModal'
+import QRCode from 'react-native-qrcode-svg'
 
 function Cart(props: StackScreenProps<ParamListBase>) {
     const hook = useCartPage();
     const { push } = useRouter();
-    const { cart, removeFromCart } = useAppContext();
+    const { cart } = useAppContext();
     return (
         <>
             <View style={{

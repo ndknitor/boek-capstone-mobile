@@ -21,16 +21,49 @@ import truncateString from '../../../libs/functions/truncateString';
 import { dateTimeFormat } from '../../../utils/format';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import StaffOrderCard from '../../../components/StaffOrderCard/StaffOrderCard';
+import { ParamListBase } from '@react-navigation/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 const Tab = createMaterialTopTabNavigator();
 
-function StaffOrders() {
+function StaffOrders(props: BottomTabScreenProps<ParamListBase>) {
   const hook = useStaffOrdersPage();
   const { push } = useRouter();
 
   return (
     <>
       <PageLoader loading={hook.ui.loading} />
+      <FloatActionButton bottom={70} right={10}>
+        <Menu>
+          <MenuTrigger>
+            <View style={{
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <Image source={addWhite} style={{ width: "50%", height: "50%" }} />
+            </View>
+          </MenuTrigger>
+          <MenuOptions customStyles={{ optionsContainer: { width: "55%" } }} optionsContainerStyle={{ padding: 10 }}>
+            <MenuOption
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: paletteGray,
+                padding: 10
+              }}
+              onSelect={() => push("CreateOrderScanQr")}>
+              <Text style={{ fontSize: 17 }}>Quét mã QR đơn hàng</Text>
+            </MenuOption>
+            <MenuOption
+              style={{
+                padding: 10
+              }}
+              onSelect={() => props.navigation.jumpTo("StaffCampaigns")}>
+              <Text style={{ fontSize: 17 }}>Tạo đơn hàng</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+      </FloatActionButton>
       <ScrollView
         ref={hook.ref.scrollViewRef}
         stickyHeaderHiddenOnScroll

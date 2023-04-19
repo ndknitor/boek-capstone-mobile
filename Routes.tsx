@@ -48,6 +48,7 @@ import Search from './pages/Customer/Search/Search';
 import Profile from './pages/Customer/Profile/Profile';
 import Login from './pages/Public/Login/Login';
 import StaffPersonalInformation from './pages/Staff/StaffPersonalInformation/StaffPersonalInformation';
+import CreateOrderScanQr from './pages/Staff/CreateOrderScanQr/CreateOrderScanQr';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -108,13 +109,14 @@ function StackNavigator() {
       <Stack.Screen options={{ headerShown: false }} name={"AskPersonalInformation"}>{(props) => <AskPersonalInformation  {...props} />}</Stack.Screen>
 
       {/* Staff */}
-      <Stack.Screen options={{ title: "" , headerShown : false}} name="StaffCampagin" component={StaffCampagin} />
+      <Stack.Screen options={{ title: "", headerShown: false }} name="StaffCampagin" component={StaffCampagin} />
       <Stack.Screen options={{ title: "Thông tin cá nhân" }} name="StaffPersonalInformation" component={StaffPersonalInformation} />
       <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseCampaignOrder" component={CreateChooseCampaignOrder} />
       <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseHaveAccountOrder" component={CreateChooseHaveAccountOrder} />
       <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseCustomerOrder" component={CreateChooseCustomerOrder} />
       <Stack.Screen options={{ title: "Tạo đơn hàng" }} name="CreateChooseProductsOrder" component={CreateChooseProductsOrder} />
       <Stack.Screen options={{ title: "Xác nhận hơn hàng" }} name="CreateConfirmOrder" component={CreateConfirmOrder} />
+      <Stack.Screen options={{ title: "Xác nhận hơn hàng" }} name="CreateOrderScanQr" component={CreateOrderScanQr} />
 
       <Stack.Screen name={"Forbidden"}>{() => <Forbidden />}</Stack.Screen>
     </Stack.Navigator>

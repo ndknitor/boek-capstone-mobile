@@ -1,7 +1,3 @@
-import { MobileBookProductViewModel } from "../viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
-import { BasicCampaignViewModel } from "../viewmodels/Campaigns/BasicCampaignViewModel";
-import { IssuerViewModel } from "../viewmodels/Users/issuers/IssuerViewModel";
-
 export interface ProductInCart {
     id: string;
     quantity: number;
@@ -16,4 +12,5 @@ export interface ProductInCart {
     audioExtraPrice: number;
     coverPrice?: number;
     discount?: number;
+    saleQuantity: number;
 }

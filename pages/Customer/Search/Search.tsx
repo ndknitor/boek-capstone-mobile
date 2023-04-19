@@ -24,6 +24,7 @@ import ShoppingCart from '../../../assets/SvgComponents/ShoppingCart';
 import useRouter from '../../../libs/hook/useRouter';
 import useAppContext from '../../../context/Context';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import Shadow from '../../../components/Shadow/Shadow';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -232,13 +233,13 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     <MenuOption onSelect={() => hook.input.sort.set("")}>
                                         <Text style={{ fontSize: 16 }}>Mặc định</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => hook.input.sort.set("")}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("Discount desc")}>
                                         <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => hook.input.sort.set("")}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("SalePrice desc")}>
                                         <Text style={{ fontSize: 16 }}>Giá thấp dần</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => hook.input.sort.set("")} >
+                                    <MenuOption onSelect={() => hook.input.sort.set("SalePrice asc")}>
                                         <Text>
                                             <Text style={{ fontSize: 16 }}>Giá cao dần</Text>
                                         </Text>
@@ -401,22 +402,27 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                                     <Text>Sắp xếp</Text>
                                 </MenuTrigger>
                                 <MenuOptions optionsContainerStyle={{ padding: 7 }}>
-                                    <MenuOption onSelect={() => alert(`Save`)}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("CreatedDate desc")}>
                                         <Text style={{ fontSize: 16 }}>Mới nhất</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={() => alert(`Not called`)}>
+                                    <MenuOption onSelect={() => hook.input.sort.set("Name asc")}>
                                         <Text style={{ fontSize: 16 }}>A-Z</Text>
                                     </MenuOption>
                                 </MenuOptions>
                             </Menu>
                         </View>
                     </View>
-                    <View style={{ padding: 7 }}>
+                    <View style={{ padding: 15 }}>
                         {
                             hook.data.campaigns.map(item =>
-                                <View key={Math.random()} style={{ marginBottom: 10 }}>
+                                <Shadow key={Math.random()} style={{
+                                    borderRadius: 8,
+                                    backgroundColor: "white",
+                                    //borderWidth: 1,
+                                    marginBottom: 20
+                                }}>
                                     <BookFairCard campagin={item} />
-                                </View>
+                                </Shadow>
                             )
                         }
                     </View>

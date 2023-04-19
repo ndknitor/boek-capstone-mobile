@@ -1,12 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import appxios from "../../../components/AxiosInterceptor";
+import appxios, { setAuthorizationBearer } from "../../../components/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
 import useDebounce from "../../../libs/hook/useDebounce";
 import useRouter from "../../../libs/hook/useRouter";
 import { CreateCustomerRequestModel } from "../../../objects/requests/Users/Customers/CreateCustomerRequestModel";
+import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { OwnedCustomerGroupViewModel } from "../../../objects/viewmodels/CustomerGroups/OwnedCustomerGroupViewModel";
 import { GroupViewModel } from "../../../objects/viewmodels/Groups/GroupViewModel";
+import { LoginViewModel } from "../../../objects/viewmodels/Users/LoginViewModel";
 import endPont from "../../../utils/endPoints";
 import { SessionStorage } from "../../../utils/SessionStogare";
 import StorageKey from "../../../utils/storageKey";
@@ -14,6 +17,7 @@ import { AskGenresProps } from "./AskGenres";
 
 
 export default function useAskGenrePage(props: AskGenresProps) {
+    const { setUser } = useAppContext();
     const { replace, goBack, canGoBack } = useRouter();
     const { } = useAppContext();
 
@@ -54,8 +58,18 @@ export default function useAskGenrePage(props: AskGenresProps) {
         else {
             const request = JSON.parse(SessionStorage.getItem(StorageKey.createCustomerRequest) as string) as CreateCustomerRequestModel;
             request.groupIds = selectedGroups;
-            SessionStorage.setItem(StorageKey.createCustomerRequest, JSON.stringify(request));
-            replace("AskOrganizations");
+            appxios.post<BaseResponseModel<LoginViewModel>>(endPont.users.index, request).then(async response => {
+                console.log(response);
+                if (response.status == 200) {
+                    setUser(response.data.data);
+                    await AsyncStorage.setItem(StorageKey.user, JSON.stringify(response.data.data));
+                    setAuthorizationBearer(response.data.data.accessToken);
+                    setAuthorize([response.data.data.role.toString()]);
+                }
+            }).finally(() => {
+                setLoading(false);
+                replace("Index");
+            });
         }
     }
 
@@ -129,4 +143,8 @@ export default function useAskGenrePage(props: AskGenresProps) {
             onGroupsSelected
         }
     };
+}
+
+function setAuthorize(arg0: string[]) {
+    throw new Error("Function not implemented.");
 }

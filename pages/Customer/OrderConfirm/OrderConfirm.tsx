@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pressable, ScrollView, View, Image } from 'react-native'
+import { Pressable, ScrollView, View, Image, TouchableOpacity } from 'react-native'
 import { Button, Text } from '@react-native-material/core';
 import LayoutModal from '../../../components/LayoutModal/LayoutModal'
 import { StackScreenProps } from '@react-navigation/stack';
@@ -9,15 +9,21 @@ import { paletteGrayShade4, paletteGreenBold, paletteOrange, palettePink, primar
 import navigateRightBlack from "../../../assets/icons/navigate-right-black.png";
 import ExpandToggleView from '../../../components/ExpandToggleView/ExpandToggleView';
 import formatNumber from '../../../libs/functions/formatNumber';
-import { CheckBox } from '@rneui/base';
+import { CheckBox, Input } from '@rneui/base';
 import localShippingBlack from "../../../assets/icons/local-shipping-black.png"
 import packageBlack from "../../../assets/icons/package-black.png"
+import editIcon from "../../../assets/icons/edit.png";
 import useAppContext from '../../../context/Context';
 import Shadow from '../../../components/Shadow/Shadow';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import { OrderType } from '../../../objects/enums/OrderType';
 import { OrderPayment } from '../../../objects/enums/OrderPayment';
+import SelectDropdown from 'react-native-select-dropdown';
+import { Province } from '../../../objects/enums/Province';
+import { getMessage } from '../../../utils/Validators';
+import { District } from '../../../objects/enums/Districts';
+import { Ward } from '../../../objects/enums/Ward';
 
 
 function OrderConfirm(props: StackScreenProps<ParamListBase>) {
@@ -25,7 +31,7 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
     const hook = useOrderConfirmPage(props);
     return (
         <>
-            <PageLoader loading={hook.ui.loading} />
+            <PageLoader loading={hook.ui.loading} opacity={hook.ui.opacity} />
             <LayoutModal visible={hook.ui.infoModalVisible} onClose={() => hook.ui.setInfoModalVisible(!hook.ui.infoModalVisible)}>
                 <Pressable
                     onPress={() => hook.ui.setInfoModalVisible(false)}
@@ -124,28 +130,190 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                             <View style={{
                                 //borderWidth: 1,
                                 width: "15%",
+                                //height : "100%",
+                                paddingTop: "5%",
                                 alignItems: "center",
-                                justifyContent: "center"
+                                // justifyContent: "center"
                             }}>
-                                <Image source={hook.data.orderType == OrderType.Shipping ? localShippingBlack : packageBlack} resizeMode="contain" style={{ height: 25 }} />
+                                <Image source={hook.data.orderType == OrderType.Shipping ? localShippingBlack : packageBlack} resizeMode="contain" style={{ height: 25, width: 25 }} />
                             </View>
                             <View style={{
                                 //borderWidth: 1,
-                                width: "75%",
+                                width: "85%",
                                 rowGap: 7,
                                 marginTop: 10,
                             }}>
                                 <Text style={{ fontSize: 14 }}>Tên: {user?.name}</Text>
                                 <Text style={{ fontSize: 14 }}>SĐT: {user?.phone}</Text>
-                                <Text style={{ fontSize: 14 }}>Địa chỉ: {user?.address}</Text>
-                            </View>
-                            <View style={{
-                                //borderWidth: 1,
-                                width: "10%",
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <Image source={navigateRightBlack} style={{ width: 25, height: 25 }} resizeMode="contain" />
+                                {
+                                    hook.data.orderType == OrderType.Shipping &&
+                                    <>
+                                        <Text style={{ marginTop: 10, marginBottom: 10, fontSize: 14, fontWeight: "600" }}>Nơi giao hàng:</Text>
+                                        <View style={{ flexDirection: "row" }}>
+                                            <View style={{
+                                                width: "20%",
+                                                justifyContent: "center",
+                                            }}>
+                                                <Text style={{ fontSize: 14 }}>Tỉnh:</Text>
+                                            </View>
+                                            <View style={{
+                                                width: "65%"
+                                            }}>
+                                                <SelectDropdown
+                                                    defaultValueByIndex={hook.data.provincesSelect.findIndex(p => p.code == hook.input.province.value?.code)}
+                                                    ref={hook.ref.inputProvinceRef}
+                                                    renderDropdownIcon={() => <></>}
+                                                    buttonStyle={{
+                                                        width: "100%",
+                                                        //alignItems: "center",
+                                                        //justifyContent: "center",
+                                                        backgroundColor: "white"
+                                                    }}
+                                                    buttonTextStyle={{ fontSize: 14, textAlign: "left", color: "black" }}
+                                                    defaultButtonText="Chọn địa điểm"
+                                                    onChangeSearchInputText={() => { console.log("Hello") }}
+                                                    data={hook.data.provincesSelect}
+                                                    onSelect={(selectedItem, index) => hook.event.onProvinceSelected(selectedItem)}
+                                                    buttonTextAfterSelection={(selectedItem, index) => {
+                                                        return (selectedItem as Province).nameWithType
+                                                    }}
+                                                    rowTextForSelection={(item, index) => {
+                                                        return (item as Province).nameWithType
+                                                    }}
+                                                />
+                                            </View>
+                                            <View style={{
+                                                width: "15%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}>
+                                                <TouchableOpacity onPress={() => hook.ref.inputProvinceRef.current?.openDropdown()}>
+                                                    <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+                                        <View style={{ flexDirection: "row" }}>
+                                            <View style={{
+                                                width: "20%",
+                                                justifyContent: "center",
+                                            }}>
+                                                <Text style={{ fontSize: 14 }}>Quận:</Text>
+                                            </View>
+                                            <View style={{
+                                                width: "65%"
+                                            }}>
+                                                <SelectDropdown
+                                                    onFocus={hook.event.onDistrictSelectedFocus}
+                                                    ref={hook.ref.inputDistrictRef}
+                                                    defaultValue={hook.data.districtSelect.find(p => p.code == hook.input.district.value?.code)}
+                                                    renderDropdownIcon={() => <></>}
+                                                    buttonStyle={{
+                                                        width: "100%",
+                                                        //alignItems: "center",
+                                                        //justifyContent: "center",
+                                                        backgroundColor: "white"
+                                                    }}
+                                                    buttonTextStyle={{ fontSize: 14, textAlign: "left", color: "black" }}
+                                                    defaultButtonText="Chọn địa điểm"
+                                                    onChangeSearchInputText={() => { console.log("Hello") }}
+                                                    data={hook.data.districtSelect}
+                                                    onSelect={(selectedItem, index) => hook.event.onDistrictSelected(selectedItem)}
+                                                    buttonTextAfterSelection={(selectedItem, index) => {
+                                                        return (selectedItem as District).nameWithType
+                                                    }}
+                                                    rowTextForSelection={(item, index) => {
+                                                        return (item as District).nameWithType
+                                                    }}
+                                                />
+                                            </View>
+                                            <View style={{
+                                                width: "15%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}>
+                                                <TouchableOpacity onPress={() => hook.ref.inputDistrictRef.current?.openDropdown()}>
+                                                    <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+                                        <View style={{ flexDirection: "row" }}>
+                                            <View style={{
+                                                width: "20%",
+                                                justifyContent: "center",
+                                            }}>
+                                                <Text style={{ fontSize: 14 }}>Huyện:</Text>
+                                            </View>
+                                            <View style={{
+                                                width: "65%"
+                                            }}>
+                                                <SelectDropdown
+                                                    onFocus={hook.event.onWardSelectedFocus}
+                                                    ref={hook.ref.inputWardRef}
+                                                    defaultValue={hook.data.wardSelect.find(p => p.code == hook.input.ward.value?.code)}
+                                                    renderDropdownIcon={() => <></>}
+                                                    buttonStyle={{
+                                                        width: "100%",
+                                                        //alignItems: "center",
+                                                        //justifyContent: "center",
+                                                        backgroundColor: "white"
+                                                    }}
+                                                    buttonTextStyle={{ fontSize: 14, textAlign: "left", color: "black" }}
+                                                    defaultButtonText="Chọn địa điểm"
+                                                    onChangeSearchInputText={() => { console.log("Hello") }}
+                                                    data={hook.data.wardSelect}
+                                                    onSelect={(selectedItem, index) => hook.event.onWardSelected(selectedItem)}
+                                                    buttonTextAfterSelection={(selectedItem, index) => {
+                                                        return (selectedItem as Ward).nameWithType
+                                                    }}
+                                                    rowTextForSelection={(item, index) => {
+                                                        return (item as Ward).nameWithType
+                                                    }}
+                                                />
+                                            </View>
+                                            <View style={{
+                                                width: "15%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}>
+                                                <TouchableOpacity onPress={() => hook.ref.inputWardRef.current?.openDropdown()}>
+                                                    <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+                                        <View style={{ flexDirection: "row" }}>
+                                            <View style={{
+                                                width: "20%",
+                                                justifyContent: "center",
+                                            }}>
+                                                <Text style={{ fontSize: 14 }}>Địa chỉ:</Text>
+                                            </View>
+                                            <View style={{
+                                                width: "65%"
+                                            }}>
+                                                <Input
+                                                    style={{ fontSize: 14 }}
+                                                    value={hook.input.address.value}
+                                                    onChangeText={hook.input.address.set} />
+                                            </View>
+                                            <View style={{
+                                                width: "15%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}>
+                                                <TouchableOpacity onPress={() => hook.ref.inputAddressRef.current?.focus()}>
+                                                    <Image source={editIcon} style={{ maxHeight: 25, maxWidth: 25 }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </>
+                                }
+                                {
+                                    hook.data.orderType == OrderType.PickUp &&
+                                    <Text style={{ fontSize: 14 }}>Địa chỉ nhận hàng: {hook.data.seltedCampaign?.campaign.address}</Text>
+                                }
                             </View>
                         </View>
 
@@ -260,24 +428,25 @@ function OrderConfirm(props: StackScreenProps<ParamListBase>) {
                 backgroundColor: "white",
                 padding: 10
             }}>
-                <View style={{ flexDirection: "row", marginBottom: 20 }}>
+                <View style={{ flexDirection: "row" }}>
                     <View style={{
                         width: "60%",
-                        rowGap: 10
+                        rowGap: 7,
                     }}>
                         <Text style={{ fontSize: 16, color: palettePink }}>Tổng tiền</Text>
+                        <Text style={{ fontSize: 16 }}>(Giá đã bao gồm VAT)</Text>
                         <Text style={{ fontSize: 20, color: paletteGreenBold }}>{formatNumber(hook.data.calculation?.total)}đ</Text>
                     </View>
                     <View style={{
                         width: "40%",
-                        alignItems: "flex-end"
+                        alignItems: "flex-end",
+                        justifyContent: "center"
                     }}>
                         <Button
                             onPress={hook.event.onSumbit}
                             title="Thanh toán"
                             //onPress={hook.event.onOrderSubmit}
-
-                            style={{ alignItems: "center", justifyContent: "center", width: 140, height: 50, backgroundColor: palettePink }} />
+                            style={{ alignItems: "center", justifyContent: "center", width: "100%", height: 50, backgroundColor: palettePink }} />
                     </View>
                 </View>
             </View>

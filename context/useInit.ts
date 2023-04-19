@@ -26,7 +26,7 @@ export default function useInit() {
   const isFirstRender = useIsFirstRender();
   useAsyncEffect(async () => {
     if (!isFirstRender) {
-      //await AsyncStorage.setItem(StorageKey.cart, JSON.stringify(cart));
+      await AsyncStorage.setItem(StorageKey.cart, JSON.stringify(cart));
     }
   }, [debounceCart]);
 

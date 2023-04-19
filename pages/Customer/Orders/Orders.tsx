@@ -20,6 +20,8 @@ import { dateFormat, dateTimeFormat } from '../../../utils/format';
 import formatNumber from '../../../libs/functions/formatNumber';
 import { OrderStatus } from '../../../objects/enums/OrderStatus';
 import truncateString from '../../../libs/functions/truncateString';
+import LayoutModal from '../../../components/LayoutModal/LayoutModal';
+import QRCode from 'react-native-qrcode-svg';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -240,6 +242,33 @@ function CounterOrders() {
     return (
         <>
             <PageLoader loading={hook.ui.loading} />
+            <LayoutModal visible={hook.ui.qrModalVisible} onClose={() => hook.ui.setQrModalVisible(!hook.ui.qrModalVisible)}>
+                <Pressable
+                    onPress={() => hook.ui.setQrModalVisible(false)}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgba(0,0,0,0.6)"
+                    }}>
+                    <View style={{
+                        backgroundColor: "white",
+                        width: 320,
+                        height: 320,
+                        padding: 10,
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                        <QRCode
+                            size={200}
+                            backgroundColor="white"
+                            color="black"
+                            value={hook.data.qrString} />
+                        <Text style={{ fontSize: 16, textAlign: "center", marginTop : 10 }}>Đưa mã thanh toán này cho nhân viên</Text>
+                    </View>
+                </Pressable>
+            </LayoutModal>
             <ScrollView
                 style={{
                     backgroundColor: "white"
@@ -262,10 +291,10 @@ function CounterOrders() {
                             label: "Tất cả",
                             input: 0
                         },
-                        // {
-                        //     label: OrderStatus.getLabel(OrderStatus.Processing),
-                        //     input: OrderStatus.Processing
-                        // },
+                        {
+                            label: OrderStatus.getLabel(OrderStatus.Processing),
+                            input: OrderStatus.Processing
+                        },
                         {
                             label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
                             input: OrderStatus.PickUpAvailable
@@ -308,29 +337,6 @@ function CounterOrders() {
                                 }}>
                                 <Pressable
                                     onPress={() => push("OrderDetail", { order: item })}>
-                                    {/* <View style={{ height: 40, flexDirection: "row" }}>
-                                        <View style={{ width: "60%", justifyContent: "center" }}>
-                                            <Text style={{ fontSize: 15 }}>{"Mã đơn hàng"}</Text>
-                                        </View>
-                                        <View style={{ width: "40%" }}>
-                                            <View style={{
-                                                height: "90%",
-                                                backgroundColor: hook.ui.getStatusBackgrundColor(item.status as number),
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                shadowColor: "#000",
-                                                shadowOffset: {
-                                                    width: 0,
-                                                    height: 12,
-                                                },
-                                                shadowOpacity: 0.58,
-                                                shadowRadius: 16.00,
-                                                elevation: 8
-                                            }}>
-                                                <Text style={{ fontSize: 15, color: "white" }}>{item.statusName}</Text>
-                                            </View>
-                                        </View>
-                                    </View> */}
                                     <View>
                                         <View style={{
                                             height: 40,
@@ -376,6 +382,7 @@ function CounterOrders() {
                                             </View>
                                             <View style={{
                                                 //borderWidth: 1,
+                                                padding: 10,
                                                 width: "45%",
                                                 justifyContent: "center"
                                             }}>
@@ -399,9 +406,14 @@ function CounterOrders() {
                                             <Text style={{ fontSize: 14, color: paletteGray }}>Ngày đặt hàng: {moment(item.orderDate).format(dateTimeFormat)}</Text>
                                             <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>{truncateString(item.campaign?.name, 3)}</Text>
                                         </View>
-                                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                        <View style={{
+                                            display: item.status == OrderStatus.PickUpAvailable ? "flex" : "none",
+                                            width: "40%",
+                                            alignItems: "flex-end",
+                                            justifyContent: "center"
+                                        }}>
                                             <Button
-                                                onPress={hook.event.onOrderSubmit}
+                                                onPress={() => hook.event.onShowQrPress(item.id as string)}
                                                 buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
                                         </View>
                                     </View>

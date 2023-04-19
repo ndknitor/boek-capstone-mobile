@@ -1,8 +1,13 @@
 import { useState } from "react";
 import useAppContext from "../../../context/Context";
+import { OrderPayment } from "../../../objects/enums/OrderPayment";
+import { CampaignInCart } from "../../../objects/models/CampaignInCart";
+import { CreateOrderDetailsRequestModel } from "../../../objects/requests/OrderDetails/CreateOrderDetailsRequestModel";
+import { CreateCustomerPickUpOrderRequestModel } from "../../../objects/requests/Orders/CreateCustomerPickUpOrderRequestModel";
+import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
 
 export default function useCartPage() {
-    const { cart } = useAppContext();
+    const { cart, totalProductQuantity, setTotalProductQuantity, setCart } = useAppContext();
     const [seletedCampaignId, setSeletedCampaignId] = useState(0);
     const getTotalPrice = () => {
         let totalPrice = 0;
@@ -19,6 +24,8 @@ export default function useCartPage() {
         }));
         return totalPrice;
     }
+
+
     return {
         getTotalPrice,
         input: {

@@ -11,7 +11,7 @@ import useRouter from '../../../libs/hook/useRouter';
 import LabeledImage from '../../../components/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
-import { paletteGray, paletteGrayTint9, paletteGreen, paletteGreenBold, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint8, primaryTint9 } from '../../../utils/color';
+import { paletteGray, paletteGrayLight, paletteGrayTint9, paletteGreen, paletteGreenBold, paletteRed, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint8, primaryTint9 } from '../../../utils/color';
 import FadeTransition from '../../../components/FadeTransition/FadeTransition';
 import eventBusyBlack from "../../../assets/icons/event-busy-black.png";
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
@@ -24,10 +24,14 @@ import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTa
 import CampaignStatus from '../../../objects/enums/CampaignStatus';
 import { Button } from '@rneui/base';
 import Shadow from '../../../components/Shadow/Shadow';
+import { CampaignMobileViewModel } from '../../../objects/viewmodels/Campaigns/Mobile/CampaignMobileViewModel';
 
 function CampaignDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useCampaignDetaillPage(props);
     const { push } = useRouter();
+
+
+
     return (
         <>
             <PageLoader loading={hook.ui.loading} opacity={1} />
@@ -126,35 +130,14 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                         borderRadius: 8,
                         padding: 10
                     }}>
-                        <Text variant="h5" >{hook.data.campaign?.name}</Text>
-                        {
-                            hook.data.campaign?.status == CampaignStatus.notStarted &&
-                            <View style={{ marginTop: 4, backgroundColor: "yellow", alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
-                                <Text style={{ color: "white", fontSize: 13, fontWeight: "500" }}>{hook.data.campaign?.statusName}</Text>
-                            </View>
-                        }
-                        {
-                            hook.data.campaign?.status == CampaignStatus.start &&
-                            <View style={{ marginTop: 4, backgroundColor: paletteGreen, alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
-                                <Text style={{ color: paletteGreenBold, fontSize: 13, fontWeight: "500" }}>{hook.data.campaign?.statusName}</Text>
-                            </View>
-                        }
-                        {
-                            hook.data.campaign?.status == CampaignStatus.end &&
-                            <View style={{ marginTop: 4, backgroundColor: paletteGray, alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
-                                <Text style={{ color: "white", fontSize: 13, fontWeight: "500" }}>{hook.data.campaign?.statusName}</Text>
-                            </View>
-                        }
-                        {
-                            hook.data.campaign?.status == CampaignStatus.postpone &&
-                            <View style={{ marginTop: 4, backgroundColor: "red", alignItems: "center", justifyContent: "center", width: "30%", height: 25, borderRadius: 24 }}>
-                                <Text style={{ fontSize: 13, fontWeight: "500" }}>{hook.data.campaign?.statusName}</Text>
-                            </View>
-                        }
+                        <Text variant="h5" style={{ marginBottom: 10 }} >{hook.data.campaign?.name}</Text>
+                        <View style={{ marginTop: 4, backgroundColor: hook.ui.getColor(), alignItems: "center", justifyContent: "center", width: "40%", height: 25, borderRadius: 24 }}>
+                            <Text style={{ fontSize: 13, fontWeight: "500", color: hook.ui.getTextColor() }}>{hook.data.campaign?.statusName}</Text>
+                        </View>
                         <View style={{ width: "100%", alignItems: "center" }}>
                             <Image source={{ uri: hook.data.campaign?.imageUrl }} style={{ marginTop: 20, marginBottom: 20, width: "90%", height: Dimensions.get("window").width / 16 * 9 }} resizeMethod="resize" resizeMode="contain" />
                         </View>
-                        <View style={{ width: "95%" }}>
+                        <View style={{ width: "95%", rowGap: 7 }}>
                             {
                                 hook.data.campaign?.address &&
                                 <View style={{ flexDirection: "row", marginBottom: 5 }}>

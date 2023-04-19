@@ -22,14 +22,15 @@ function StaffOrderCard(props: StaffOrderCardProps) {
         if (statusId == OrderStatus.Processing) {
             return paletteGrayShade5;
         }
-        if (statusId == OrderStatus.Shipping) {
+        if (statusId == OrderStatus.PickUpAvailable) {
             return primaryTint2;
         }
-        if (statusId == OrderStatus.Shipped) {
+        if (statusId == OrderStatus.Received) {
             return paletteGreenShade1;
         }
         return "blue";
     }
+
     return (
         <Shadow
             style={{
@@ -96,10 +97,10 @@ function StaffOrderCard(props: StaffOrderCardProps) {
                         }}>
                             <Text style={{ marginBottom: "2%", color: paletteGrayShade2 }}>{props.order.orderDetails && props.order.orderDetails[0].bookProduct?.issuer.user.name}</Text>
                             <Text style={{ marginBottom: "2%", fontSize: 16, fontWeight: "600" }}>{props.order.orderDetails && props.order.orderDetails[0].bookProduct?.title}</Text>
-                            <Text>SL : x2</Text>
+                            <Text>SL : x{props.order.orderDetails && props.order.orderDetails[0] && props.order.orderDetails[0].quantity}</Text>
                         </View>
                         <View style={{ width: "30%", justifyContent: "center", alignItems: "flex-end" }}>
-                            <Text style={{ fontSize: 18, color: palettePink }}>{formatNumber(props.order.orderDetails && props.order.orderDetails[0].price)}đ</Text>
+                            <Text style={{ fontSize: 18, color: palettePink }}>{formatNumber(props.order.subTotal)}đ</Text>
                         </View>
                     </View>
                 </View>
@@ -112,13 +113,16 @@ function StaffOrderCard(props: StaffOrderCardProps) {
                 }}>
                     <View style={{ width: "60%", rowGap: 10 }}>
                         <Text style={{ fontSize: 14, color: paletteGray }}>Ngày đặt hàng: {moment(props.order.orderDate).format(dateTimeFormat)}</Text>
-                        <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>Hội sách {truncateString(props.order.campaign?.name, 3)}</Text>
+                        <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>{truncateString(props.order.campaign?.name, 3)}</Text>
                     </View>
-                    <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
-                        <Button
-                            //onPress={hook.event.onOrderSubmit}
-                            buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
-                    </View>
+                    {/* {
+                        props.order.status == OrderStatus.PickUpAvailable &&
+                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                            <Button
+                                //onPress={hook.event.onOrderSubmit}
+                                buttonStyle={{ backgroundColor: palettePink }}>Thanh toán</Button>
+                        </View>
+                    } */}
                 </View>
             </Pressable>
         </Shadow>

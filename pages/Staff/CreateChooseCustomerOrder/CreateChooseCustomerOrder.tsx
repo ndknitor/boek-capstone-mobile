@@ -18,7 +18,7 @@ import { StaffCampaignMobilesViewModel } from '../../../objects/viewmodels/Campa
 function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
     const params = props.route.params as { campaign: StaffCampaignMobilesViewModel, customer: {} };
     const { push } = useRouter();
-    const hook = useCreateChooseCustomerOrderPage();
+    const hook = useCreateChooseCustomerOrderPage(props);
     return (
         <>
             <PageLoader loading={hook.ui.loading} />
@@ -36,14 +36,14 @@ function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
                     height: "100%"
                 }}>
                     {
-                        range(1, 10).map(item =>
+                        hook.data.customers.map(item =>
                             <TouchableOpacity
-                                onPress={() => hook.input.seletedCustomerId.set(item)}
+                                onPress={() => hook.input.seletedCustomer.set(item)}
                                 style={{
                                     //borderWidth: 1,
                                     width: "90%",
                                     borderRadius: 12,
-                                    backgroundColor: item == hook.input.seletedCustomerId.value ? primaryTint9 : paletteGrayTint9,
+                                    backgroundColor: item.id == hook.input.seletedCustomer.value?.id ? primaryTint9 : paletteGrayTint9,
                                     flexDirection: "row",
                                     marginBottom: 20,
 
@@ -63,7 +63,7 @@ function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
                                     justifyContent: "center",
                                     elevation: 2
                                 }}>
-                                    <Image source={avatar} resizeMode="contain" style={{ width: 50, height: 50, borderRadius: 999 }} />
+                                    <Image source={{ uri: item.imageUrl }} resizeMode="contain" style={{ width: 50, height: 50, borderRadius: 999 }} />
                                 </Shadow>
                                 <View style={{
                                     //borderWidth: 1,
@@ -71,9 +71,9 @@ function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
                                     rowGap: 5,
                                     padding: 10
                                 }}>
-                                    <Text style={{ fontWeight: "500" }}>Tên khách hàng</Text>
-                                    <Text style={{ color: paletteGrayShade5 }}>SĐT</Text>
-                                    <Text style={{ color: paletteGrayShade5 }}>Địa chỉ</Text>
+                                    <Text style={{ fontWeight: "500" }}>Tên: {item.name}</Text>
+                                    <Text style={{ color: paletteGrayShade5 }}>SĐT: {item.phone}</Text>
+                                    <Text style={{ color: paletteGrayShade5 }}>Địa chỉ: {item.address}</Text>
                                 </View>
                             </TouchableOpacity>
                         )
@@ -85,14 +85,22 @@ function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
                 </View>
             </ScrollView>
             <Shadow style={{
-                display: hook.input.seletedCustomerId.value && hook.input.seletedCustomerId.value != 0 ? "flex" : "none",
+                display: hook.input.seletedCustomer.value && hook.input.seletedCustomer.value.id != "" ? "flex" : "none",
                 backgroundColor: "white",
                 height: "10%",
                 alignItems: "center",
                 justifyContent: "center"
             }}>
                 <Button
-                    onPress={() => push("CreateChooseProductsOrder")}
+                    onPress={() => push("CreateChooseProductsOrder", {
+                        campaign: params.campaign,
+                        customer: {
+                            id: hook.input.seletedCustomer.value?.id,
+                            name: hook.input.seletedCustomer.value?.name,
+                            phone: hook.input.seletedCustomer.value?.phone,
+                            email: hook.input.seletedCustomer.value?.email
+                        }
+                    })}
                     buttonStyle={{
                         backgroundColor: primaryTint1,
                         width: 150,

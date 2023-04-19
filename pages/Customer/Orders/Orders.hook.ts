@@ -3,6 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { useEffect, useRef, useState } from "react";
 import { Alert, ScrollView } from "react-native";
 import appxios from "../../../components/AxiosInterceptor";
+import useAppContext from "../../../context/Context";
 import { getMaxPage } from "../../../libs/functions/paging";
 import { OrderStatus } from "../../../objects/enums/OrderStatus";
 import { OrderType } from "../../../objects/enums/OrderType";
@@ -83,7 +84,7 @@ export function useDeliveryOrdersPage() {
             getStatusBackgrundColor,
             loading,
             confirmOrderSubmitModalVisible,
-            setConfirmOrderSubmitModalVisible
+            setConfirmOrderSubmitModalVisible,
         },
         data: {
             orders
@@ -107,12 +108,16 @@ export function useDeliveryOrdersPage() {
 export function useCounterOrdersPage() {
     const ordersScrollViewRef = useRef<ScrollView>(null);
 
+    const { user } = useAppContext();
+
     const [loading, setLoading] = useState(false);
     const [confirmOrderSubmitModalVisible, setConfirmOrderSubmitModalVisible] = useState(false);
+    const [qrModalVisible, setQrModalVisible] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [orderStatus, setOrderStatus] = useState(0);
+    const [qrString, setQrString] = useState("");
 
     const [orders, setOrders] = useState<OrderViewModel[]>([]);
 
@@ -160,8 +165,12 @@ export function useCounterOrdersPage() {
         });
     }
 
-    const onOrderSubmit = () => {
-
+    const onShowQrPress = (orderId: string) => {
+        setQrString(JSON.stringify({
+            customerId: user?.id,
+            orderId: orderId
+        }));
+        setQrModalVisible(true);
     }
 
     useEffect(() => {
@@ -176,10 +185,13 @@ export function useCounterOrdersPage() {
             getStatusBackgrundColor,
             loading,
             confirmOrderSubmitModalVisible,
-            setConfirmOrderSubmitModalVisible
+            setConfirmOrderSubmitModalVisible,
+            qrModalVisible,
+            setQrModalVisible
         },
         data: {
-            orders
+            orders,
+            qrString
         },
         input: {
             orderStatus: {
@@ -188,7 +200,7 @@ export function useCounterOrdersPage() {
             }
         },
         event: {
-            onOrderSubmit
+            onShowQrPress
         },
         paging: {
             currentPage,

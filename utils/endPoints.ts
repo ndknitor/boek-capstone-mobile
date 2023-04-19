@@ -21,7 +21,10 @@ const endPont =
     },
     staff: {
         campaigns: "/api/staff/campaigns",
-        orders: "/api/staff/orders"
+        orders: {
+            index: "/api/staff/orders",
+            received: "/api/staff/orders/received"
+        }
     },
     users: {
         index: "/api/users",
@@ -72,6 +75,7 @@ const endPont =
     },
     orders: {
         index: "/api/orders",
+        zaloPay : "/api/orders/zalopay",
         customer: {
             pickUp: "/api/orders/customer/pick-up",
             shipping: "/api/orders/customer/shipping"

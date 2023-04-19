@@ -10,13 +10,14 @@ import expandMore from "../../assets/icons/expand-more-black.png";
 import expandLess from "../../assets/icons/expand-less-black.png";
 import { ProductInCart } from '../../objects/models/ProductInCart'
 import truncateString from '../../libs/functions/truncateString'
-import NumericInput from 'react-native-numeric-input'
 import Close from '../../assets/SvgComponents/Close'
 import useAppContext from '../../context/Context'
 import useCartExpandComponent from './CartExpand.hook'
 import formatNumber from '../../libs/functions/formatNumber'
 import { CampaignInCart } from '../../objects/models/CampaignInCart'
 import CampaignStatus from '../../objects/enums/CampaignStatus'
+import { Button } from '@rneui/base'
+import NumericInput from 'react-native-numeric-input'
 interface CartExpandProps {
     campaignInCart: CampaignInCart;
     selected: boolean;
@@ -34,12 +35,12 @@ function CartExpand(props: CartExpandProps) {
             backgroundColor: props.campaignInCart.campaign.status == CampaignStatus.start ? "white" : paletteGrayTint5,
             overflow: "hidden"
         }}>
-
             <View style={{
                 padding: 10,
                 marginBottom: 10,
                 borderBottomWidth: 1,
-                borderBottomColor: paletteGrayLight
+                borderBottomColor: paletteGrayLight,
+                flexDirection: "row"
             }}>
                 <BouncyCheckbox
                     disabled={props.campaignInCart.campaign.status != CampaignStatus.start}
@@ -47,7 +48,7 @@ function CartExpand(props: CartExpandProps) {
                     onPress={props.onSelectedChange}
                     disableBuiltInState
                     fillColor={primaryTint1}
-                    text={truncateString(props.campaignInCart.campaign.name, 6)} textStyle={{ textDecorationLine: "none" }} />
+                    text={truncateString(props.campaignInCart.campaign.name, 4)} textStyle={{ textDecorationLine: "none" }} />
             </View>
             {
                 props.campaignInCart.issuersInCart.map((issuer, issuerIndex) =>
@@ -97,7 +98,7 @@ function CartExpand(props: CartExpandProps) {
                                         height: 220,
                                         borderColor: paletteGray,
                                         //borderWidth: 1,
-                                        padding : 10
+                                        padding: 10
                                     }}>
                                         <View style={{
                                             height: "70%",
@@ -130,11 +131,13 @@ function CartExpand(props: CartExpandProps) {
 
                                                 <View style={{
                                                     flexDirection: "row",
-                                                    height: 20,
+                                                    height: 40,
                                                     paddingTop: 2
                                                 }}>
+
                                                     <NumericInput
                                                         minValue={1}
+                                                        maxValue={product.saleQuantity}
                                                         totalWidth={90}
                                                         value={product.quantity}
                                                         onChange={(value) => hook.event.onQuantityChange(props.campaignInCart.campaign.id as number, issuer.issuer.id as string, product.id, value)}

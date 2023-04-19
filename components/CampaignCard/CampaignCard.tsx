@@ -74,7 +74,7 @@ function CampaignCard(props: CampaignCardProps) {
                     <View style={{
                         //borderWidth: 1,
                         height: "60%",
-                        justifyContent : "flex-end"
+                        justifyContent: "flex-end"
                     }}>
                         <Text style={{
                             color: "white",
@@ -87,7 +87,10 @@ function CampaignCard(props: CampaignCardProps) {
                             flexDirection: "row"
                         }}>
                             <View style={{ width: "100%" }}>
-                                <Text style={{ color: "white", marginLeft: 2 }}><Image source={locationWhite} resizeMode="contain" style={{ width: 17, height: 17 }} /> {props.campaign.address && props.campaign.address.length > 20 ? truncateString(props.campaign.address, 7) : props.campaign.address}</Text>
+                                {
+                                    props.campaign.address &&
+                                    <Text style={{ color: "white", marginLeft: 2 }}><Image source={locationWhite} resizeMode="contain" style={{ width: 17, height: 17 }} /> {props.campaign.address && props.campaign.address.length > 20 ? truncateString(props.campaign.address, 7) : props.campaign.address}</Text>
+                                }
                                 <Text style={{ color: "white", fontSize: 12, marginLeft: 2 }}>
                                     <Image source={eventBusyWhite} resizeMode="contain" style={{ width: 17, height: 17 }} />
                                     <Text style={{ color: "white", fontWeight: "500" }}> {moment(props.campaign.endDate).format(dateTimeFormat)}</Text>

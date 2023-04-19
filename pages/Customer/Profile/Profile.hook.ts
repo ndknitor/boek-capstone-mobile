@@ -34,16 +34,18 @@ export default function useProfilePage(props: ProfileProps) {
         if (auth().currentUser) {
             await auth().signOut();
         }
-        setAuthorize(false);
-        setAuthorizationBearer();
-        setUser(undefined);
-        await AsyncStorage.removeItem(StorageKey.user);
-        props.navigation.reset({
-            index: 0,
-            routes: [],
-        });
-        if (navigate) {
-            props.navigation.jumpTo("Campaigns", { reset: Math.random() });
+        if (!auth().currentUser) {
+            setAuthorize(false);
+            setAuthorizationBearer();
+            setUser(undefined);
+            await AsyncStorage.removeItem(StorageKey.user);
+            props.navigation.reset({
+                index: 0,
+                routes: [],
+            });
+            if (navigate) {
+                props.navigation.jumpTo("Campaigns", { reset: Math.random() });
+            }
         }
     }
 

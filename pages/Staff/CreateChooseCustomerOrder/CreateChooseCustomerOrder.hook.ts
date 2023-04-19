@@ -1,21 +1,53 @@
-import { useState } from "react";
-import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
+import { ParamListBase } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
+import { useEffect, useState } from "react";
+import appxios from "../../../components/AxiosInterceptor";
+import { getMaxPage } from "../../../libs/functions/paging";
+import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
+import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
+import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserViewModel";
+import endPont from "../../../utils/endPoints";
 
-export default function useCreateChooseCustomerOrderPage() {
+export default function useCreateChooseCustomerOrderPage(props: StackScreenProps<ParamListBase>) {
+    const params = props.route.params as { campaign: StaffCampaignMobilesViewModel };
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(100);
-    const [seletedCustomerId, setSeletedCustomerId] = useState<number>();
+    const [maxPage, setMaxPage] = useState(0);
+    const [seletedCustomer, setSeletedCustomer] = useState<MultiUserViewModel>();
+    const [customers, setCustomers] = useState<MultiUserViewModel[]>([]);
 
     const onPageNavigation = (page: number) => {
-        setCurrentPage(page);
+        getCustomer(page);
     };
+    const getCustomer = (page: number) => {
+        const query = new URLSearchParams();
+        query.append("Role", "4");
+        query.append("Status", "true");
+        query.append("Page", page.toString());
+        query.append("Size", "30");
+        setLoading(true);
+        appxios.get<BaseResponsePagingModel<MultiUserViewModel>>(`${endPont.users.index}?${query.toString()}`).then(response => {
+            setCustomers(response.data.data);
+            setCurrentPage(getMaxPage(response.data.metadata.size, response.data.metadata.total));
+            setLoading(false);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+    useEffect(() => {
+        console.log(params);
+        getCustomer(1);
+    }, []);
     return {
         input: {
-            seletedCustomerId: {
-                value: seletedCustomerId,
-                set: setSeletedCustomerId
+            seletedCustomer: {
+                value: seletedCustomer,
+                set: setSeletedCustomer
             },
+        },
+        data: {
+            customers,
+            params
         },
         paging: {
             currentPage,

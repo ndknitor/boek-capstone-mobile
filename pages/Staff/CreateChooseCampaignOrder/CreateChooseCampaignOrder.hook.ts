@@ -1,17 +1,15 @@
+import { ParamListBase } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import appxios from "../../../components/AxiosInterceptor";
 import useRouter from "../../../libs/hook/useRouter";
-import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { HierarchicalStaffCampaignsViewModel } from "../../../objects/viewmodels/Campaigns/HierarchicalStaffCampaignsViewModel";
 import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
-import { OrderViewModel } from "../../../objects/viewmodels/Orders/OrderViewModel";
 import { SchedulesViewModel } from "../../../objects/viewmodels/Schedules/SchedulesViewModel";
 import endPont from "../../../utils/endPoints";
-import EndPont from "../../../utils/endPoints";
-import { mockStaffCampaigns } from "../../../utils/mock";
 
-export default function useStaffCampaignsPage() {
+export default function useCreateChooseCampaignOrderPage(props: StackScreenProps<ParamListBase>) {
     const { navigate } = useRouter();
     const scrollViewRef = useRef<ScrollView>(null);
 
@@ -41,7 +39,6 @@ export default function useStaffCampaignsPage() {
         setSelectedCampaign({ ...selectedCampaign as StaffCampaignMobilesViewModel, selectedSchedule: undefined });
     }
 
-
     const getCampaigns = () => {
         setLoading(true);
         appxios.get<HierarchicalStaffCampaignsViewModel[]>(endPont.staff.campaigns).then(response => {
@@ -50,33 +47,30 @@ export default function useStaffCampaignsPage() {
             setLoading(false);
         });
     }
-
     useEffect(() => {
         getCampaigns();
     }, []);
-    
     return {
         ref: {
             scrollViewRef
         },
-        event: {
-            onCampaignPress,
-            onChooseSchedueModalVisibleClose
-        },
         ui: {
             loading,
-            chooseSchedueModalVisible,
-            setChooseSchedueModalVisible
-        },
-        input: {
-            selectedCampaign:{
-                value : selectedCampaign,
-                set: setSelectedCampaign
-            }
+            chooseSchedueModalVisible
         },
         data: {
             campagins,
             schedueSelect
-        }
+        },
+        event: {
+            onChooseSchedueModalVisibleClose,
+            onCampaignPress
+        },
+        input: {
+            selectedCampaign: {
+                value: selectedCampaign,
+                set: setSelectedCampaign
+            }
+        },
     };
 }
