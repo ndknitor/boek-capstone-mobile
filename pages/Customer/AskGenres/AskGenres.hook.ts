@@ -2,8 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import appxios, { setAuthorizationBearer } from "../../../components/AxiosInterceptor";
 import useAppContext from "../../../context/Context";
+import useAuth from "../../../libs/hook/useAuth";
 import useDebounce from "../../../libs/hook/useDebounce";
 import useRouter from "../../../libs/hook/useRouter";
+import { Role } from "../../../objects/enums/Role";
 import { CreateCustomerRequestModel } from "../../../objects/requests/Users/Customers/CreateCustomerRequestModel";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
@@ -19,7 +21,6 @@ import { AskGenresProps } from "./AskGenres";
 export default function useAskGenrePage(props: AskGenresProps) {
     const { setUser } = useAppContext();
     const { replace, goBack, canGoBack } = useRouter();
-    const { } = useAppContext();
 
     const [search, setSearch] = useState("");
     const searchDebounce = useDebounce(search, 600);
@@ -30,6 +31,7 @@ export default function useAskGenrePage(props: AskGenresProps) {
     const [groupsSelect, setGroupsSelect] = useState<GroupViewModel[]>([]);
 
     const [selectedGroups, setSelectedGroups] = useState<number[]>([]);
+    const { setAuthorize } = useAuth();
 
     const getGroups = (name: string) => {
         setLoading(true);
@@ -59,16 +61,16 @@ export default function useAskGenrePage(props: AskGenresProps) {
             const request = JSON.parse(SessionStorage.getItem(StorageKey.createCustomerRequest) as string) as CreateCustomerRequestModel;
             request.groupIds = selectedGroups;
             appxios.post<BaseResponseModel<LoginViewModel>>(endPont.users.index, request).then(async response => {
-                console.log(response);
+                console.log(response.status);
                 if (response.status == 200) {
-                    setUser(response.data.data);
                     await AsyncStorage.setItem(StorageKey.user, JSON.stringify(response.data.data));
-                    setAuthorizationBearer(response.data.data.accessToken);
                     setAuthorize([response.data.data.role.toString()]);
+                    setUser(response.data.data);
+                    setAuthorizationBearer(response.data.data.accessToken);
+                    replace("Index");
                 }
             }).finally(() => {
                 setLoading(false);
-                replace("Index");
             });
         }
     }
@@ -143,8 +145,4 @@ export default function useAskGenrePage(props: AskGenresProps) {
             onGroupsSelected
         }
     };
-}
-
-function setAuthorize(arg0: string[]) {
-    throw new Error("Function not implemented.");
 }

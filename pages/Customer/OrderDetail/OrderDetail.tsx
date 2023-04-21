@@ -108,7 +108,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
             </View>
             <DelimiterLine />
             <TouchableOpacity
-              onPress={() => push("TrackOrder")}
+              onPress={() => push("TrackOrder", { order: hook.data.order })}
               style={{
                 padding: 10,
                 flexDirection: "row"
@@ -126,7 +126,6 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               }}>
                 <Text style={{ fontSize: 16 }}>Theo dõi đơn hàng</Text>
                 <Text style={{ color: hook.ui.getStatusColor() }}>{hook.data.order.statusName}</Text>
-                <Text style={{ color: paletteGray }}>Ngày của trạng thái</Text>
               </View>
               <View style={{
                 //borderWidth: 1,

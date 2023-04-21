@@ -28,6 +28,7 @@ export const useProvider: () => Store = () => {
     const [totalProductQuantity, setTotalProductQuantity] = useState(0);
     const [cart, setCart] = useState<CampaignInCart[]>([]);
     const [staffCart, setStaffCart] = useState<StaffProductInCart[]>([]);
+    
     const addToCart = (product: MobileBookProductViewModel, quantity: number) => {
         let totalQuantity = totalProductQuantity + quantity;
         const campaign = cart.find(c => c.campaign.id == product.campaignId);
@@ -70,7 +71,7 @@ export const useProvider: () => Store = () => {
                 const productInCart = issuer.productsInCart.find(p => p.id == product.id);
                 if (productInCart) {
                     productInCart.quantity++;
-                    console.log(campaign.issuersInCart[0].productsInCart);
+                    //console.log(campaign.issuersInCart[0].productsInCart);
                     setTotalProductQuantity(totalQuantity);
                 }
             }

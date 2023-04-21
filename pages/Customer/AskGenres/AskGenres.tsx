@@ -31,12 +31,12 @@ function AskGenres(props: AskGenresProps) {
             <Text style={{ color: "red", marginBottom: 20 }}>{hook.searchMessage}</Text>
 
             <View style={{ flexDirection: "row" }}>
-                {
+                {/* {
                     props.skiped &&
                     <Button onPress={() => hook.event.onAskGenresSubmit(true)} buttonStyle={{ borderRadius: 12, width: 120, height: 50, backgroundColor: paletteRed }}>
                         Bỏ qua
                     </Button>
-                }
+                } */}
                 <View style={{ marginLeft: 10, marginRight: 10 }} />
                 <Button
                     loading={hook.loading}

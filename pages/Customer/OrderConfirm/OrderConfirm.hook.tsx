@@ -28,6 +28,8 @@ import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/C
 import endPont from "../../../utils/endPoints";
 
 export default function useOrderConfirmPage(props: StackScreenProps<ParamListBase>) {
+    const redirectUrl = "exp+boek://expo-development-client/";
+
     const { cart, setCart, setTotalProductQuantity, totalProductQuantity, user } = useAppContext();
     const { navigate, popToTop } = useRouter();
     const params = props.route.params as { orderType: number, selectedCampaignId: number };
@@ -126,6 +128,11 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
         setTotalProductQuantity(totalProductQuantity - subTotal);
         setCart(cart.filter(c => c.campaign.id != seltedCampaign?.campaign.id));
     }
+    const orderSuccess = (name: string) => {
+        popToTop();
+        navigate("Orders", { name: name });
+        removeCampaignFromCart();
+    }
 
     const onSumbit = async () => {
         setLoading(true);
@@ -149,9 +156,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                 appxios.post<OrderViewModel[]>(endPont.orders.customer.pickUp, request).then((response) => {
                     console.log(response.data);
                     if (response.status == 200) {
-                        popToTop();
-                        navigate("Orders", { name: "CounterOrders" });
-                        removeCampaignFromCart();
+                        orderSuccess("CounterOrders");
                     }
 
                 }).finally(() => {
@@ -159,8 +164,6 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                 });
             }
             else if (paymentMethod == OrderPayment.ZaloPay) {
-                const redirectUrl = "exp+boek://kn.com";
-                console.log(redirectUrl);
                 const request: CreateZaloPayOrderRequestModel = {
                     type: orderType,
                     campaignId: seltedCampaign?.campaign.id,
@@ -177,6 +180,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                     await Linking.openURL(response.data.order_url).catch(err => console.error("Couldn't load page", err));
                 }).finally(() => {
                     setLoading(false);
+                    orderSuccess("CounterOrders");
                 });
             }
         }
@@ -198,9 +202,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                     appxios.post<OrderViewModel[]>(endPont.orders.customer.shipping, request).then((response) => {
                         console.log(response.data);
                         if (response.status == 200) {
-                            popToTop();
-                            navigate("Orders", { name: "DeliveryOrders" });
-                            removeCampaignFromCart();
+                            orderSuccess("DeliveryOrders");
                         }
 
                     }).finally(() => {
@@ -208,9 +210,32 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                     });
                 }
                 else if (paymentMethod == OrderPayment.ZaloPay) {
-
+                    const request: CreateZaloPayOrderRequestModel = {
+                        type: orderType,
+                        campaignId: seltedCampaign?.campaign.id,
+                        customerId: customer?.user.id,
+                        customerEmail: customer?.user.email,
+                        customerName: customer?.user.name,
+                        customerPhone: customer?.user.phone,
+                        freight: calculation?.freight,
+                        orderDetails: orderDetails,
+                        payment: OrderPayment.ZaloPay,
+                        redirectUrl: redirectUrl,
+                        addressRequest: {
+                            detail: address,
+                            districtCode: district?.code as number,
+                            provinceCode: province?.code as number,
+                            wardCode: ward?.code as number
+                        }
+                    };
+                    appxios.post<ZaloPayOrderResponseModel>(endPont.orders.zaloPay, request).then(async response => {
+                        console.log(response.data.order_url);
+                        await Linking.openURL(response.data.order_url).catch(err => console.error("Couldn't load page", err));
+                    }).finally(() => {
+                        setLoading(false);
+                        orderSuccess("DeliveryOrders");
+                    });
                 }
-
             }
         }
     }

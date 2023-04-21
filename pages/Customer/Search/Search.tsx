@@ -1,7 +1,6 @@
 import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
-import DrawerLayout from 'react-native-drawer-layout';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { ParamListBase } from '@react-navigation/native';
 import { Button } from '@rneui/base';
@@ -25,6 +24,7 @@ import useRouter from '../../../libs/hook/useRouter';
 import useAppContext from '../../../context/Context';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import Shadow from '../../../components/Shadow/Shadow';
+import { DrawerLayout } from 'react-native-gesture-handler';
 
 const Tab = createMaterialTopTabNavigator();
 

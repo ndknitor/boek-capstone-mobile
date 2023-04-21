@@ -99,7 +99,7 @@ function StackNavigator() {
       <Stack.Screen options={{ title: "Đơn hàng của tôi" }} name={"Orders"} component={Orders} />
       <Stack.Screen options={{ title: "Đơn hàng", headerTitleAlign: "center" }} name={"OrderDetail"} component={OrderDetail} />
       <Stack.Screen options={{ title: "Thể loại sách yêu thích" }} name={"AskGenres"}>{() => <AskGenres />}</Stack.Screen>
-      <Stack.Screen options={{ title: "Theo dõi đơn hàng" }} name={"TrackOrder"}>{() => <TrackOrder />}</Stack.Screen>
+      <Stack.Screen options={{ title: "Theo dõi đơn hàng" }} name={"TrackOrder"} component={TrackOrder} />
       <Stack.Screen options={{ title: "Thanh toán" }} name="OrderType" component={OrderType} />
       <Stack.Screen options={{ title: "Xác nhận đơn hàng" }} name="OrderConfirm" component={OrderConfirm} />
 
