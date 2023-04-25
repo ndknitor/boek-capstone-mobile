@@ -24,13 +24,10 @@ import TitleTabedFlatBooks from '../../../components/TitleTabedFlatBooks/TitleTa
 import CampaignStatus from '../../../objects/enums/CampaignStatus';
 import { Button } from '@rneui/base';
 import Shadow from '../../../components/Shadow/Shadow';
-import { CampaignMobileViewModel } from '../../../objects/viewmodels/Campaigns/Mobile/CampaignMobileViewModel';
 
 function CampaignDetail(props: StackScreenProps<ParamListBase>) {
     const hook = useCampaignDetaillPage(props);
     const { push } = useRouter();
-
-
 
     return (
         <>
@@ -205,7 +202,7 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                                     <TitleTabedFlatBooks
                                         title={item.title}
                                         data={item.subHierarchicalBookProducts?.map(product => ({ tabLabel: product.subTitle, tabData: product.bookProducts })) as any} />
-                                    <ShowMoreButton onPress={() => push("IssuerMoreBook")} />
+                                    {/* <ShowMoreButton onPress={() => push("IssuerMoreBook")} /> */}
                                 </>
                             )
                         }

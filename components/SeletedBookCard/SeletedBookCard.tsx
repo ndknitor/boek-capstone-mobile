@@ -3,13 +3,12 @@ import { TouchableOpacity, View, Image, GestureResponderEvent } from 'react-nati
 import { Portal, Text } from '@react-native-material/core'
 import { paletteGray, paletteGrayLight, paletteGrayShade5, palettePink, palettePinkTint2, palettePinkTint4, palettePinkTint6, paletteRed, primaryTint2, primaryTint7 } from '../../utils/color'
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
-import { MobileBookProductsViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
 import formatNumber from '../../libs/functions/formatNumber';
 import { BookProductStatus } from '../../objects/enums/BookProductStatus';
 import Shadow from '../Shadow/Shadow';
 import truncateString from '../../libs/functions/truncateString';
 interface SeletedBookCardProps {
-    book: MobileBookProductViewModel | MobileBookProductsViewModel;
+    book: MobileBookProductViewModel;
     seleted: boolean;
     onPress?: (event: GestureResponderEvent) => void;
 }

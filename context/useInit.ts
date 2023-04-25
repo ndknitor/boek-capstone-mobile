@@ -27,9 +27,9 @@ export default function useInit() {
   }, [debounceCart]);
 
   useAsyncEffect(async () => {
-    AsyncStorage.removeItem(StorageKey.cart);
+    //AsyncStorage.removeItem(StorageKey.cart);
     const jsonString = await AsyncStorage.getItem(StorageKey.cart);
-    console.log(jsonString);
+    //console.log(jsonString);
 
     let storeCart: CampaignInCart[] = [];
 
@@ -39,8 +39,6 @@ export default function useInit() {
         setCart(storeCart);
       }
     }
-    //console.log("asd");
-
 
     if (storeCart.length > 0) {
       let totalQuantity = 0;
@@ -68,16 +66,16 @@ export default function useInit() {
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         if (loginResponse.status == 200) {
           user = loginResponse.data.data;
+          setUser(user);
+          setAuthorize([user.role.toString()]);
+          setAuthorizationBearer(user.accessToken);
+          console.log(appxios.defaults.headers.common['Authorization']);
         }
         else {
           await auth().signOut();
           await GoogleSignin.signOut();
         }
       }
-      setUser(user);
-      setAuthorize([user.role.toString()]);
-      setAuthorizationBearer(user.accessToken);
-      console.log(appxios.defaults.headers.common['Authorization']);
     }
     // console.log(appxios.defaults.baseURL);
 

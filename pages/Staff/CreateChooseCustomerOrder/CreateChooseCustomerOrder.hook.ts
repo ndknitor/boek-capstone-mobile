@@ -15,6 +15,7 @@ export default function useCreateChooseCustomerOrderPage(props: StackScreenProps
     const [maxPage, setMaxPage] = useState(0);
     const [seletedCustomer, setSeletedCustomer] = useState<MultiUserViewModel>();
     const [customers, setCustomers] = useState<MultiUserViewModel[]>([]);
+    const [name, setName] = useState("");
 
     const onPageNavigation = (page: number) => {
         getCustomer(page);
@@ -25,6 +26,9 @@ export default function useCreateChooseCustomerOrderPage(props: StackScreenProps
         query.append("Status", "true");
         query.append("Page", page.toString());
         query.append("Size", "30");
+        if (name != "") {
+            query.append("Name", name);
+        }
         setLoading(true);
         appxios.get<BaseResponsePagingModel<MultiUserViewModel>>(`${endPont.users.index}?${query.toString()}`).then(response => {
             setCustomers(response.data.data);
@@ -33,6 +37,9 @@ export default function useCreateChooseCustomerOrderPage(props: StackScreenProps
         }).finally(() => {
             setLoading(false);
         });
+    }
+    const onSearchSubmit = () => {
+        getCustomer(1);
     }
     useEffect(() => {
         console.log(params);
@@ -44,6 +51,13 @@ export default function useCreateChooseCustomerOrderPage(props: StackScreenProps
                 value: seletedCustomer,
                 set: setSeletedCustomer
             },
+            name: {
+                value: name,
+                set: setName
+            }
+        },
+        event: {
+            onSearchSubmit
         },
         data: {
             customers,

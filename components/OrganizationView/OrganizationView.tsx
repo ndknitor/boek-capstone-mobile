@@ -14,11 +14,15 @@ function OrganizationView(props: OrganizationViewProps) {
         <Shadow style={{
             backgroundColor: "white",
             flexDirection: "row",
-            height: 160,
+            //height: 160,
+            flex: 1,
             marginBottom: 20,
             borderRadius: 8
         }}>
-            <View style={{ height: 160, width: "25%", alignItems: "center" }}>
+            <View style={{
+                width: "25%",
+                alignItems: "center"
+            }}>
                 <Image style={{ height: "80%", width: "80%" }} source={{ uri: props.organization.imageUrl }} resizeMode={"contain"} />
             </View>
             <View style={{ width: "60%", overflow: "hidden", padding: 10, paddingTop: 20 }}>

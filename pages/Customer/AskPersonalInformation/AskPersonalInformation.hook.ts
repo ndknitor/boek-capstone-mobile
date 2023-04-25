@@ -56,11 +56,11 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
         const v = {
             name: [
                 required(name, "Tên không được trống"),
-                maxLength(name, 128, "Tên không vượt quá 128 ký tự")
+                maxLength(name, 255, "Tên không vượt quá 255 ký tự")
             ],
             address: [
                 required(address, "Địa chỉ không được trống"),
-                maxLength(address, 128, "Địa chỉ không vượt quá 128 ký tự")
+                maxLength(address, 255, "Địa chỉ không vượt quá 255 ký tự")
             ],
             province: [
                 required(province, "Tỉnh không được trống"),
@@ -76,7 +76,8 @@ export default function useAskPersonalInformationPage(props: StackScreenProps<Pa
                 maxDate(birth as Date, minBirth, "Bạn phải từ 13 tuổi trở lên"),
             ],
             phone: [
-                required(phone, "Số điện thoại không được trống")
+                required(phone, "Số điện thoại không được trống"),
+                maxLength(phone, 255, "Số điện thoại không vượt quá 255 ký tự")
             ]
         }
         setValidator(v);

@@ -42,13 +42,13 @@ export function useDeliveryOrdersPage() {
 
 
     const onPageNavigation = (page: number) => {
+        getOrders(page);
         ordersScrollViewRef.current?.scrollTo({
             y: 0,
             animated: true
         });
-        setCurrentPage(page);
     }
-    const getOrders = (page: number, type: number) => {
+    const getOrders = (page: number) => {
         setLoading(true);
         const query = new URLSearchParams();
         query.append("Page", page.toString());
@@ -73,7 +73,7 @@ export function useDeliveryOrdersPage() {
     }
 
     useEffect(() => {
-        getOrders(1, orderStatus);
+        getOrders(1);
     }, [orderStatus]);
 
     return {
@@ -139,13 +139,13 @@ export function useCounterOrdersPage() {
     }
 
     const onPageNavigation = (page: number) => {
+        getOrders(page);
         ordersScrollViewRef.current?.scrollTo({
             y: 0,
             animated: true
         });
-        setCurrentPage(page);
     }
-    const getOrders = (page: number, type: number) => {
+    const getOrders = (page: number) => {
         setLoading(true);
         const query = new URLSearchParams();
         query.append("Page", page.toString());
@@ -174,7 +174,7 @@ export function useCounterOrdersPage() {
     }
 
     useEffect(() => {
-        getOrders(1, orderStatus);
+        getOrders(1);
     }, [orderStatus]);
 
     return {

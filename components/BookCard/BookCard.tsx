@@ -1,14 +1,13 @@
 import React from 'react'
 import { View, Image, TouchableOpacity, Text, Dimensions } from 'react-native'
-import { paletteGray, paletteGrayShade5, paletteGreenShade1, palettePink, paletteRed, primaryColor, primaryTint2, primaryTint7 } from '../../utils/color';;
+import { paletteGray, paletteGrayLight, paletteGrayShade3, paletteGrayShade5, paletteGrayTint6, paletteGrayTint7, paletteGrayTint8, paletteGreenShade1, palettePink, paletteRed, primaryColor, primaryTint2, primaryTint7 } from '../../utils/color';;
 import useRouter from '../../libs/hook/useRouter';
 import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 import formatNumber from '../../libs/functions/formatNumber';
-import { MobileBookProductsViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
 import Shadow from '../Shadow/Shadow';
 import { BookProductStatus } from '../../objects/enums/BookProductStatus'
 interface BookCardProps {
-  book: MobileBookProductViewModel | MobileBookProductsViewModel;
+  book: MobileBookProductViewModel;
 }
 function BookCard({ book }: BookCardProps) {
   const getStatusBackgrundColor = (statusId: number) => {
@@ -18,7 +17,7 @@ function BookCard({ book }: BookCardProps) {
       statusId == BookProductStatus.NotSaleDueEndDate ||
       statusId == BookProductStatus.NotSaleDuePostponedCampaign ||
       statusId == BookProductStatus.Rejected) {
-      return paletteRed;
+      return paletteGrayShade5;
     }
     if (
       statusId == BookProductStatus.OutOfStock ||
@@ -42,7 +41,7 @@ function BookCard({ book }: BookCardProps) {
         justifyContent: "center"
       }}>
       <Shadow style={{
-        display : book.status == BookProductStatus.Sale ? "none" : "flex",
+        display: book.status == BookProductStatus.Sale ? "none" : "flex",
         backgroundColor: getStatusBackgrundColor(book.status as number),
         position: "absolute",
         borderRadius: 8,
@@ -51,7 +50,10 @@ function BookCard({ book }: BookCardProps) {
         zIndex: 1,
         padding: 10
       }}>
-        <Text style={{ color: "white", fontSize: 15 }}>{BookProductStatus.toDisplayString(book.status as number)}</Text>
+        <Text style={{ color: "white", fontSize: 15 }}>
+          {book.allowPurchasingByLevel && BookProductStatus.toDisplayString(book.status as number)}
+          {!book.allowPurchasingByLevel && "Không đủ cấp"}
+        </Text>
       </Shadow>
       <TouchableOpacity
         onPress={() => push("BookDetail", { bookId: book.id })}
@@ -60,7 +62,7 @@ function BookCard({ book }: BookCardProps) {
           borderWidth: 1,
           borderRadius: 8,
           height: "97%",
-          width: "95%"
+          width: "95%",
         }}>
         <View
           style={{

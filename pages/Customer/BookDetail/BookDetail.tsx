@@ -19,7 +19,6 @@ import { MobileBookProductViewModel } from '../../../objects/viewmodels/BookProd
 import truncateString from '../../../libs/functions/truncateString';
 import LibraryBooks from '../../../assets/SvgComponents/LibraryBooks';
 import AudioPlayer from '../../../components/AudioPlayer/AudioPlayer';
-import { MobileBookProductsViewModel } from '../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
 import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 import { BookProductStatus } from '../../../objects/enums/BookProductStatus';
 import Shadow from '../../../components/Shadow/Shadow';
@@ -141,7 +140,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                                 hook.data.book?.withAudio &&
                                 <View style={{ padding: 5, width: "50%" }}>
                                     <Button
-                                        onPress={() => {hook.ui.setTrialAudioVisible(!hook.ui.trialAudioVisible); hook.ref.audioPlayerRef.current?.stop(); }}
+                                        onPress={() => { hook.ui.setTrialAudioVisible(!hook.ui.trialAudioVisible); hook.ref.audioPlayerRef.current?.stop(); }}
                                         buttonStyle={{ backgroundColor: primaryColor }}>Audio mẫu - {formatNumber(hook.data.book.audioExtraPrice)}đ</Button>
                                 </View>
                             }
@@ -165,7 +164,7 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                             backgroundColor: "white",
                             borderRadius: 8,
                             padding: 10,
-                            marginTop : 20
+                            marginTop: 20
                         }}>
                             <TouchableOpacity
                                 onPress={() => push("BookItems", { data: hook.data.book })}
@@ -533,12 +532,12 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                 </View>
             </ScrollView>
             <Button
-                disabled={hook.data.book?.status != BookProductStatus.Sale}
+                disabled={hook.data.book?.status != BookProductStatus.Sale || !hook.data.book.allowPurchasingByLevel}
                 onPress={() => addToCart(hook.data.book!, 1)}
                 buttonStyle={{
                     backgroundColor: primaryColor,
                     padding: 12
-                }}>{hook.data.book?.status == BookProductStatus.Sale ? "Chọn mua" : hook.data.book?.statusName}</Button>
+                }}>{hook.data.book?.status == BookProductStatus.Sale ? hook.data.book.allowPurchasingByLevel ? "Chọn mua" : "Bạn không đủ cấp độ" : hook.data.book?.statusName}</Button>
         </>
 
     )

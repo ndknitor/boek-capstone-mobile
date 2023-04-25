@@ -2,7 +2,6 @@ import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { ParamListBase } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
-import DrawerLayout from "react-native-drawer-layout";
 import appxios from "../../../components/AxiosInterceptor";
 import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 import { AuthorBooksViewModel } from "../../../objects/viewmodels/Authors/AuthorBooksViewModel";
@@ -13,6 +12,7 @@ import { PublisherViewModel } from "../../../objects/viewmodels/Publishers/Publi
 import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserViewModel";
 import EndPont from "../../../utils/endPoints";
 import { getMaxPage } from "../../../libs/functions/paging";
+import { DrawerLayout } from "react-native-gesture-handler";
 
 export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const filterBooksDrawerRef = useRef<DrawerLayout>(null);
@@ -68,7 +68,6 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         query.append("Page", page.toString());
         query.append("Size", "30");
         //console.log(query.toString());
-
 
         appxios.get<BaseResponsePagingModel<MobileBookProductViewModel>>(`${EndPont.public.books.customer.products}?${query.toString()}`)
             .then(response => {

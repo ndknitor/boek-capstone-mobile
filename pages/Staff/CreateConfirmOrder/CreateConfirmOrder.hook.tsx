@@ -68,14 +68,14 @@ export default function useCreateConfirmOrderPage(props: StackScreenProps<ParamL
     useEffect(() => {
         //console.log(params.schedue);
 
-        props.navigation.setOptions({
-            headerRight: () =>
-                <View style={{ justifyContent: "center", alignItems: "center" }}>
-                    <TouchableOpacity onPress={() => setInfoModalVisible(true)}>
-                        <Info scale={60} fill="white" />
-                    </TouchableOpacity>
-                </View>
-        });
+        // props.navigation.setOptions({
+        //     headerRight: () =>
+        //         <View style={{ justifyContent: "center", alignItems: "center" }}>
+        //             <TouchableOpacity onPress={() => setInfoModalVisible(true)}>
+        //                 <Info scale={60} fill="white" />
+        //             </TouchableOpacity>
+        //         </View>
+        // });
         const orderDetails: CreateOrderDetailsRequestModel[] = [];
         staffCart.map(item => {
             orderDetails.push({

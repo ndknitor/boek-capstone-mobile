@@ -28,7 +28,11 @@ function CreateChooseCustomerOrder(props: StackScreenProps<ParamListBase>) {
                 style={{
                     backgroundColor: "white"
                 }}>
-                <StickyHeaderSearchBar placeHolder='Tìm kiếm khách hàng' />
+                <StickyHeaderSearchBar
+                    onChangeText={hook.input.name.set}
+                    value={hook.input.name.value}
+                    onSubmit={hook.event.onSearchSubmit}
+                    placeHolder='Tìm kiếm khách hàng' />
                 <View style={{
                     width: "100%",
                     alignItems: "center",

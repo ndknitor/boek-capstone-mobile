@@ -28,7 +28,7 @@ import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/C
 import endPont from "../../../utils/endPoints";
 
 export default function useOrderConfirmPage(props: StackScreenProps<ParamListBase>) {
-    const redirectUrl = "exp+boek://expo-development-client/";
+    const redirectUrl = "exp+boek://expo-development-client/?url=http%3A%2F%2F10.10.2.106%3A8081";
 
     const { cart, setCart, setTotalProductQuantity, totalProductQuantity, user } = useAppContext();
     const { navigate, popToTop } = useRouter();
@@ -178,6 +178,7 @@ export default function useOrderConfirmPage(props: StackScreenProps<ParamListBas
                 };
                 appxios.post<ZaloPayOrderResponseModel>(endPont.orders.zaloPay, request).then(async response => {
                     await Linking.openURL(response.data.order_url).catch(err => console.error("Couldn't load page", err));
+                    
                 }).finally(() => {
                     setLoading(false);
                     orderSuccess("CounterOrders");

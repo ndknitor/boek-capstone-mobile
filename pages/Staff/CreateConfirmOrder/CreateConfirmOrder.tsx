@@ -171,13 +171,13 @@ function CreateConfirmOrder(props: StackScreenProps<ParamListBase>) {
                         size={20}
                         fillColor={primaryTint1}
                         text="Tiền mặt" textStyle={{ textDecorationLine: "none" }} />
-                    <BouncyCheckbox
+                    {/* <BouncyCheckbox
                         isChecked={hook.input.paymentMethod.value == OrderPayment.ZaloPay}
                         onPress={() => hook.input.paymentMethod.set(OrderPayment.ZaloPay)}
                         disableBuiltInState
                         size={20}
                         fillColor={primaryTint1}
-                        text="ZaloPay" textStyle={{ textDecorationLine: "none" }} />
+                        text="ZaloPay" textStyle={{ textDecorationLine: "none" }} /> */}
                 </View>
                 <DelimiterLine />
                 <View style={{

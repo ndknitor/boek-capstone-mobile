@@ -422,7 +422,6 @@ function CounterOrders() {
                         )
                     }
                 </View>
-
                 <View style={{ marginTop: 20, marginBottom: 20 }}>
                     <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                 </View>

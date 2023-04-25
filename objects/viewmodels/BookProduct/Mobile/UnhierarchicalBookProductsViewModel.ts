@@ -1,8 +1,7 @@
-import { MobileBookProductsViewModel } from "./MobileBookProductsViewModel";
+import { MobileBookProductViewModel } from "./MobileBookProductViewModel";
 
-export interface UnhierarchicalBookProductsViewModel
-{
+export interface UnhierarchicalBookProductsViewModel {
     campaignId?: number;
-    title : string;
-    bookProducts : MobileBookProductsViewModel[];
+    title: string;
+    bookProducts: MobileBookProductViewModel[];
 }

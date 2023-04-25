@@ -103,10 +103,10 @@ export default function usePersonalInformationPage() {
     const onSubmit = () => {
         const minBirth = new Date();
         minBirth.setFullYear(new Date().getFullYear() - 13);
-        const v = {
+        const customerValidation = {
             name: [
                 required(name, "Tên không được trống"),
-                maxLength(name, 128, "Tên không vượt quá 128 ký tự")
+                maxLength(name, 255, "Tên không vượt quá 255 ký tự")
             ],
             province: [
                 required(province, "Tỉnh không được trống"),
@@ -119,19 +119,21 @@ export default function usePersonalInformationPage() {
             ],
             address: [
                 required(address, "Địa chỉ không được trống"),
+                maxLength(address, 255, "Địa chỉ không vượt quá 255 ký tự")
             ],
             dob: [
                 required(birth, "Ngày sinh không được trống"),
                 maxDate(birth as Date, minBirth, "Bạn phải từ 13 tuổi trở lên"),
             ],
             phone: [
-                required(phone, "Số điện thoại không được trống")
+                required(phone, "Số điện thoại không được trống"),
+                maxLength(phone, 50, "Số điện thoại không vượt quá 50 ký tự")
             ]
         };
         if (!user) {
             return;
         }
-        if (validate(v)) {
+        if (validate(customerValidation)) {
             const request: UpdateCustomerRequestModel = {
                 dob: birth,
                 gender: gender,
@@ -150,7 +152,7 @@ export default function usePersonalInformationPage() {
                     role: user?.role,
                     status: true
                 }
-            }
+            };
             appxios.put<CustomerUserViewModel>(EndPont.users.customer, request).then(response => {
                 setButtonShowed(false);
                 Toast.show({
@@ -158,8 +160,8 @@ export default function usePersonalInformationPage() {
                     text2: "Lưu thành công"
                 })
             });
-            setValidator(v);
         }
+        setValidator(customerValidation);
         setOpacity(0.6);
     }
 

@@ -53,22 +53,38 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
             rowGap: 15,
             justifyContent: "center"
           }}>
-            <Text style={{ fontSize: 16 }}>
+
+
+            <Text style={{
+              display: hook.data.order.type == OrderType.Shipping ? "flex" : "none"
+            }}>
               • NPH sẽ phụ trách giao hàng đến địa chỉ của
-              bạn.
-            </Text>
-            <Text style={{ fontSize: 16 }}>
+              bạn. {"\n\n"}
               • Phí vận chuyển của đơn phụ thuộc vào nội
               thành hay ngoại thành đối với các nơi hội
-              sách đang tổ chức {"\n"}
-              o Nội thành: 15,000 đ {"\n"}
-              o Ngoại thành: 30,000 đ
+              sách đang tổ chức {"\n\n"}
+              {"\t"}o Nội thành: 15,000 đ {"\n"}
+              {"\t"}o Ngoại thành: 30,000 đ {"\n\n"}
+              • Lưu ý: Boek không chịu trách nhiệm về đơn
+              đổi trả của khách hàng. Xin liên hệ NPH về
+              vấn đề này.{"\n\n"}
             </Text>
-            <Text style={{ fontSize: 16 }}>
+
+            <Text
+              style={{
+                display: hook.data.order.type == OrderType.PickUp ? "flex" : "none"
+              }}>
+              • NPH sẽ phụ trách thông báo địa điểm của
+              đơn nhận tại quầy cho bạn khi đơn hàng
+              sẵn sàng. {"\n\n"}
+              • Nếu bạn không nhận hàng tại quầy trong
+              thời gian hội sách diễn ra, thì đơn hàng sẽ
+              bị hủy.{"\n\n"}
               • Lưu ý: Boek không chịu trách nhiệm về đơn
               đổi trả của khách hàng. Xin liên hệ NPH về
               vấn đề này.
             </Text>
+
           </View>
         </Pressable>
       </LayoutModal>

@@ -1,12 +1,12 @@
 import React, { PropsWithChildren, RefObject, useRef } from 'react'
 import { View, Text, ScrollView, Image } from 'react-native';
-import DrawerLayout from 'react-native-drawer-layout'
-import { MobileBookProductsViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductsViewModel';
 import { paletteGrayLight, paletteGrayTint6, paletteGreenBold } from '../../utils/color';
 import { mockBooks } from '../../utils/mock';
 import zaloPay from "../../assets/zalopay.webp";
+import { DrawerLayout } from 'react-native-gesture-handler';
+import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel';
 interface OrderDetailDrawerLayoutProps extends PropsWithChildren {
-    orders?: MobileBookProductsViewModel[];
+    orders?: MobileBookProductViewModel[];
     drawerRef: RefObject<DrawerLayout>;
 }
 function OrderDetailDrawerLayout(props: OrderDetailDrawerLayoutProps) {

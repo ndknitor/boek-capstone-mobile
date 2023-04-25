@@ -1,6 +1,6 @@
 import { GenreViewModel } from "../Genres/GenreViewModel";
 import { UserViewModel } from "../Users/UserViewModel";
-import { MobileBookProductsViewModel } from "./Mobile/MobileBookProductsViewModel";
+import { MobileBookProductViewModel } from "./Mobile/MobileBookProductViewModel";
 
 export interface SubHierarchicalBookProductsViewModel {
     subTitle: string;
@@ -8,5 +8,5 @@ export interface SubHierarchicalBookProductsViewModel {
     issuerId?: string;
     genre?: GenreViewModel;
     issuer?: UserViewModel;
-    bookProducts?: MobileBookProductsViewModel[];
+    bookProducts?: MobileBookProductViewModel[];
 }
