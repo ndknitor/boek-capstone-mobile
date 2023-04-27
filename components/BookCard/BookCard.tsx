@@ -41,7 +41,7 @@ function BookCard({ book }: BookCardProps) {
         justifyContent: "center"
       }}>
       <Shadow style={{
-        display: book.status == BookProductStatus.Sale ? "none" : "flex",
+        display: book?.status != BookProductStatus.Sale || book.withLevel && !book.allowPurchasingByLevel ? "flex" : "none",
         backgroundColor: getStatusBackgrundColor(book.status as number),
         position: "absolute",
         borderRadius: 8,
@@ -51,8 +51,8 @@ function BookCard({ book }: BookCardProps) {
         padding: 10
       }}>
         <Text style={{ color: "white", fontSize: 15 }}>
-          {book.allowPurchasingByLevel && BookProductStatus.toDisplayString(book.status as number)}
-          {!book.allowPurchasingByLevel && "Không đủ cấp"}
+          {book?.status == BookProductStatus.Sale || BookProductStatus.toDisplayString(book.status as number)}
+          {book?.status != BookProductStatus.Sale || book.withLevel && !book.allowPurchasingByLevel && "Không đủ cấp"}
         </Text>
       </Shadow>
       <TouchableOpacity

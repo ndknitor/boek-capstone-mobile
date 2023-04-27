@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import QrCameraFrame from '../../../components/QrCameraFrame/QrCameraFrame';
-import { primaryColor, primaryTint1 } from '../../../utils/color';
+import { paletteRed, primaryColor, primaryTint1 } from '../../../utils/color';
 import { Text } from "@react-native-material/core"
 import useCreateOrderScanQrPage from './CreateOrderScanQr.hook';
 
@@ -39,8 +39,8 @@ function CreateOrderScanQr(props: StackScreenProps<ParamListBase>) {
                         width: 180,
                         height: 60,
                         borderRadius: 8,
-                        backgroundColor: primaryTint1
-                    }}>Quét mã</Button>
+                        backgroundColor: hook.ui.scanQr ? paletteRed : primaryTint1
+                    }}>{hook.ui.scanQr ? "Dừng quét mã" : "Quét mã"}</Button>
             </View>
         </View>
     )

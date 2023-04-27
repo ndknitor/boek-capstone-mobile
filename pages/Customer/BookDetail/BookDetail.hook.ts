@@ -5,6 +5,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 import AudioPlayer, { AudioPlayerRefProps } from "../../../components/AudioPlayer/AudioPlayer";
 import appxios from "../../../components/AxiosInterceptor";
 import CardHeader from "../../../components/CartHeader/CardHeader";
+import { BookProductStatus } from "../../../objects/enums/BookProductStatus";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
 import { OtherMobileBookProductsViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/OtherMobileBookProductsViewModel";
@@ -32,6 +33,39 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
         setTrialAudioVisible(false);
     }
 
+    const getDisabled = () => {
+        if (book?.status == BookProductStatus.Sale) {
+            if (book?.withLevel) {            
+                if (book?.allowPurchasingByLevel) {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
+
+    const getButtonText = () => {
+        const avalible = "Chọn mua";
+        if (book?.status == BookProductStatus.Sale) {
+            if (book?.withLevel) {
+                if (book?.allowPurchasingByLevel) {
+                    avalible;
+                }
+                else {
+                    return "Bạn không đủ cấp độ";
+                }
+            }
+            else {
+                return avalible;
+            }
+        }
+        return false;
+    }
+
     useEffect(() => {
         props.navigation.setOptions({
             headerRight: (props) => createElement(CardHeader)
@@ -44,8 +78,8 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
         appxios.get<MobileBookProductViewModel>(`${endPont.public.books.customer.products}/${params.bookId}`)
             .then(response => {
                 //console.log(response.data.unhierarchicalBookProducts?.length);
-                //console.log(response.data.allowPurchasingByLevel);
-                
+                console.log(response.data.allowPurchasingByLevel);
+
                 setBook(response.data);
                 props.navigation.setOptions({
                     title: response.data.title,
@@ -69,6 +103,8 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
             onTrialAudioModalClose
         },
         ui: {
+            getDisabled,
+            getButtonText,
             loading,
             descriptionExpanded,
             setDescriptionExpanded,

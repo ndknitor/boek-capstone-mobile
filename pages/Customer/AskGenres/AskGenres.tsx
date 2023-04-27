@@ -1,6 +1,7 @@
 import { Button, Input } from '@rneui/themed'
 import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
+import PageLoader from '../../../components/PageLoader/PageLoader';
 import SelectedChip from '../../../components/SeletedChip/SelectedChip';
 import useRouter from '../../../libs/hook/useRouter';
 import { paletteRed, primaryColor } from '../../../utils/color';
@@ -14,6 +15,7 @@ function AskGenres(props: AskGenresProps) {
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text style={{ marginBottom: 10 }}>Bạn muốn tham gia nhóm nào ?</Text>
+            <PageLoader loading={hook.loading}/>
             <ScrollView contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}
                 style={{ width: "95%", maxHeight: "30%", minHeight: "30%", marginBottom: 30 }}>
                 {
@@ -39,7 +41,6 @@ function AskGenres(props: AskGenresProps) {
                 } */}
                 <View style={{ marginLeft: 10, marginRight: 10 }} />
                 <Button
-                    loading={hook.loading}
                     onPress={() => hook.event.onAskGenresSubmit(false)}
                     buttonStyle={{
                         width: 120,

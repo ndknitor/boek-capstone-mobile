@@ -60,14 +60,14 @@ export function useStaffBooksPage() {
 export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>) {
     const params = props.route.params as { campaign: StaffCampaignMobilesViewModel };
     const campaginsScrollViewRef = useRef<ScrollView>(null);
-    const drawerLayoutRef = useRef<DrawerLayout>(null);
 
     const [loading, setLoading] = useState(false);
 
     const [orderStatus, setOrderStatus] = useState(0);
 
 
-    const [orders, setOrders] = useState<OrderViewModel[]>();
+    const [orders, setOrders] = useState<OrderViewModel[]>([]);
+    const [search, setSearch] = useState("");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
@@ -96,7 +96,9 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
         });
     }
     const onOrderDetailPress = () => {
-        drawerLayoutRef.current?.openDrawer();
+    }
+    const onSearchSubmit = () => {
+        getOrders(1);
     }
     const getOrders = (page: number) => {
         const query = new URLSearchParams();
@@ -105,6 +107,9 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
         query.append("Size", "30");
         if (orderStatus != 0) {
             query.append("Status", orderStatus.toString());
+        }
+        if (search != "") {
+            query.append("Code", search);
         }
         setLoading(true);
         appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders.index}?${query.toString()}`).then(response => {
@@ -120,10 +125,10 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
     return {
         ref: {
             campaginsScrollViewRef,
-            drawerLayoutRef,
         },
         event: {
-            onOrderDetailPress
+            onOrderDetailPress,
+            onSearchSubmit
         },
         data: {
             orders
@@ -141,6 +146,11 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
             orderStatus: {
                 value: orderStatus,
                 set: setOrderStatus
+            },
+            search:
+            {
+                value: search,
+                set: setSearch
             }
         }
     };

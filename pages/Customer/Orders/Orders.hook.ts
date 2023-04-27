@@ -21,6 +21,7 @@ export function useDeliveryOrdersPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [orderStatus, setOrderStatus] = useState(0);
+    const [search, setSearch] = useState("");
 
     const [orders, setOrders] = useState<OrderViewModel[]>([]);
 
@@ -57,6 +58,9 @@ export function useDeliveryOrdersPage() {
         if (orderStatus != 0) {
             query.append("Status", orderStatus.toString());
         }
+        if (search != "") {
+            query.append("Code", search);
+        }
         appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.orders.index}?${query.toString()}`).then(response => {
             //console.log(response.data);
 
@@ -68,8 +72,8 @@ export function useDeliveryOrdersPage() {
         });
     }
 
-    const onOrderSubmit = () => {
-
+    const onSearchSubmit = () => {
+        getOrders(1);
     }
 
     useEffect(() => {
@@ -93,10 +97,14 @@ export function useDeliveryOrdersPage() {
             orderStatus: {
                 value: orderStatus,
                 set: setOrderStatus
+            },
+            search: {
+                value: search,
+                set: setSearch
             }
         },
         event: {
-            onOrderSubmit
+            onSearchSubmit
         },
         paging: {
             currentPage,
@@ -118,6 +126,7 @@ export function useCounterOrdersPage() {
     const [maxPage, setMaxPage] = useState(0);
     const [orderStatus, setOrderStatus] = useState(0);
     const [qrString, setQrString] = useState("");
+    const [search, setSearch] = useState("");
 
     const [orders, setOrders] = useState<OrderViewModel[]>([]);
 
@@ -154,6 +163,9 @@ export function useCounterOrdersPage() {
         if (orderStatus != 0) {
             query.append("Status", orderStatus.toString());
         }
+        if (search != "") {
+            query.append("Code", search);
+        }
         appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.orders.index}?${query.toString()}`).then(response => {
             //console.log(response.data);
 
@@ -163,6 +175,9 @@ export function useCounterOrdersPage() {
         }).finally(() => {
             setLoading(false);
         });
+    }
+    const onSearchSubmit = () => {
+        getOrders(1);
     }
 
     const onShowQrPress = (orderId: string) => {
@@ -197,10 +212,15 @@ export function useCounterOrdersPage() {
             orderStatus: {
                 value: orderStatus,
                 set: setOrderStatus
+            },
+            search: {
+                value: search,
+                set: setSearch
             }
         },
         event: {
-            onShowQrPress
+            onShowQrPress,
+            onSearchSubmit
         },
         paging: {
             currentPage,

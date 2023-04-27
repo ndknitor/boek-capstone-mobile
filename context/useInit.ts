@@ -16,7 +16,7 @@ import { CampaignInCart } from '../objects/models/CampaignInCart';
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export default function useInit() {
-  const { setUser, cart, setCart, totalProductQuantity, setTotalProductQuantity } = useAppContext();
+  const { setUser, cart, setCart, setTotalProductQuantity } = useAppContext();
   const { setAuthorize, initLoading, setInitLoading } = useAuth();
   const debounceCart = useDebounce(cart, 900);
   const isFirstRender = useIsFirstRender();
@@ -54,7 +54,7 @@ export default function useInit() {
     //await GoogleSignin.signOut();
 
     if (auth().currentUser) {
-      let user: LoginViewModel = {} as LoginViewModel;
+      let user: LoginViewModel | undefined;
       if (userJsonString) {
         //console.log(userJsonString);
         user = JSON.parse(userJsonString);
@@ -66,15 +66,17 @@ export default function useInit() {
         const loginResponse = await appxios.post<BaseResponseModel<LoginViewModel>>(EndPont.public.login, request);
         if (loginResponse.status == 200) {
           user = loginResponse.data.data;
-          setUser(user);
-          setAuthorize([user.role.toString()]);
-          setAuthorizationBearer(user.accessToken);
-          console.log(appxios.defaults.headers.common['Authorization']);
         }
         else {
           await auth().signOut();
           await GoogleSignin.signOut();
         }
+      }
+      if (user) {
+        setUser(user);
+        setAuthorize([user.role.toString()]);
+        setAuthorizationBearer(user.accessToken);
+        console.log(appxios.defaults.headers.common['Authorization']);
       }
     }
     // console.log(appxios.defaults.baseURL);

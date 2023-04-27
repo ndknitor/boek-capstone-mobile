@@ -14,7 +14,6 @@ import { mockBooks, mockStaffCampaigns } from "../../../utils/mock";
 
 export default function useStaffOrdersPage() {
     const scrollViewRef = useRef<ScrollView>(null);
-    const drawerLayoutRef = useRef<DrawerLayout>(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -31,15 +30,16 @@ export default function useStaffOrdersPage() {
             y: 0
         });
     }
-    const onOrderDetailPress = () => {
-        drawerLayoutRef.current?.openDrawer();
-    }
+
     const getOrders = (page: number) => {
         const query = new URLSearchParams();
         query.append("Page", page.toString());
         query.append("Size", "30");
         if (orderStatus != 0) {
             query.append("Status", orderStatus.toString());
+        }
+        if (search != "") {
+            query.append("Code", search);
         }
         setLoading(true);
         appxios.get<BaseResponsePagingModel<OrderViewModel>>(`${endPont.staff.orders.index}?${query.toString()}`).then(response => {
@@ -50,13 +50,16 @@ export default function useStaffOrdersPage() {
             setLoading(false));
     }
 
+    const onSearchSubmit = () => {
+        getOrders(1);
+    }
+
     useEffect(() => {
         getOrders(1);
     }, [orderStatus]);
     return {
         ref: {
             scrollViewRef,
-            drawerLayoutRef
         },
         paging: {
             currentPage,
@@ -67,7 +70,7 @@ export default function useStaffOrdersPage() {
             loading,
         },
         event: {
-            onOrderDetailPress
+            onSearchSubmit
         },
         data: {
             orders

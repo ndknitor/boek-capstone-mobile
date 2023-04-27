@@ -1,38 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Button, Icon } from "@rneui/base";
-import { ScrollView, View, Image, TouchableOpacity, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import { ScrollView, View, Image, TouchableOpacity, StyleSheet, Pressable, FlatList, Dimensions } from "react-native";
+import { Text } from '@react-native-material/core'
 import BookCard from "../../../components/BookCard/BookCard";
 import HeaderSearchBar from "../../../components/HeaderSearchBar/HeaderSearchBar";
 import PageLoader from "../../../components/PageLoader/PageLoader";
 import Paging from "../../../components/Paging/Paging";
-import { paletteGray, paletteGrayLight, paletteGrayShade2, paletteGrayTint5, paletteGreen, paletteGreenBold, palettePink, primaryColor, primaryTint1, primaryTint4, primaryTint7 } from "../../../utils/color";
-import workHistoryWhite from "../../../assets/icons/work-history-white.png";
+import { paletteGray, primaryTint1 } from "../../../utils/color";
 import filterBlack from "../../../assets/icons/filter-black.png";
 import sortBlack from "../../../assets/icons/sort-black.png";
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from "react-native-popup-menu";
-import image from "../../../assets/hsxv.webp";
-import { mockBooks } from "../../../utils/mock";
 import useRouter from "../../../libs/hook/useRouter";
-import avatar from "../../../assets/avatar.jpg";
 import { useStaffBooksPage, useStaffCampaignOrderPage } from "./StaffCampagin.hook";
 import Header from "../../../components/Header/Header";
-import DrawerLayout from "react-native-drawer-layout";
-import range from "../../../libs/functions/range";
-import OrderDetailDrawerLayout from "../../../components/OrderDetailDrawerLayout/OrderDetailDrawerLayout";
-import Shadow from "../../../components/Shadow/Shadow";
-import formatNumber from "../../../libs/functions/formatNumber";
-import moment from "moment";
-import truncateString from "../../../libs/functions/truncateString";
-import { dateTimeFormat } from "../../../utils/format";
 import addWhite from "../../../assets/icons/add-white.png";
 import FloatActionButton from "../../../components/FloatActionButton/FloatActionButton";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ParamListBase } from "@react-navigation/native";
-import { createContext, useContext, useEffect } from "react";
 import { StaffCampaignMobilesViewModel } from "../../../objects/viewmodels/Campaigns/StaffCampaignMobilesViewModel";
 import StaffOrderCard from "../../../components/StaffOrderCard/StaffOrderCard";
 import SelectedChip from "../../../components/SeletedChip/SelectedChip";
 import { OrderStatus } from "../../../objects/enums/OrderStatus";
+import StickyHeaderSearchBar from "../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar";
 
 
 const Tab = createBottomTabNavigator();
@@ -66,73 +55,6 @@ function StaffCampagin(props: StackScreenProps<ParamListBase>) {
     )
 }
 
-function Books() {
-    const hook = useStaffBooksPage();
-    return (
-        <>
-            <PageLoader loading={hook.loading} />
-            <HeaderSearchBar />
-            <ScrollView
-                ref={hook.ref.booksScrollViewRef}
-                scrollEnabled={!hook.loading}
-                style={{
-                    backgroundColor: "white",
-                }}>
-
-                <View style={{
-                    //marginBottom: 5,
-                    width: "100%",
-                    height: 35,
-                    flexDirection: "row"
-                }}>
-                    <TouchableOpacity
-                        //onPress={() => hook.ref.filterBooksDrawerRef.current?.openDrawer()}
-                        style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
-                        <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
-                        <Text>Lọc</Text>
-                    </TouchableOpacity>
-                    <View style={{ width: "50%" }}>
-                        <Menu>
-                            <MenuTrigger style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
-                                <Image source={sortBlack} resizeMode="center" style={{ width: 16 }} />
-                                <Text>Sắp xếp</Text>
-                            </MenuTrigger>
-                            <MenuOptions optionsContainerStyle={{ padding: 7 }}>
-                                <MenuOption onSelect={() => alert(`Save`)}>
-                                    <Text style={{ fontSize: 16 }}>Gần đây nhất</Text>
-                                </MenuOption>
-                                <MenuOption onSelect={() => alert(`Not called`)}>
-                                    <Text style={{ fontSize: 16 }}>Giảm giá nhiều</Text>
-                                </MenuOption>
-                                <MenuOption onSelect={() => alert(`Not called`)}>
-                                    <Text style={{ fontSize: 16 }}>Giá thấp dần</Text>
-                                </MenuOption>
-                                <MenuOption onSelect={() => alert(`Not called`)} >
-                                    <Text>
-                                        <Text style={{ fontSize: 16 }}>Giá cao dần</Text>
-                                    </Text>
-                                </MenuOption>
-                            </MenuOptions>
-                        </Menu>
-                    </View>
-                </View>
-
-                <View style={{ paddingLeft: 10, paddingRight: 10, flexDirection: "row", flexWrap: "wrap" }}>
-                    {
-                        hook.data.books.map(item =>
-                            <View key={Math.random()}>
-                                <BookCard book={item} />
-                            </View>
-                        )
-                    }
-                </View>
-                <View style={{ marginBottom: 20 }}>
-                    <Paging maxPage={hook.paging.maxPage} currentPage={hook.paging.currentPage} onPageNavigation={hook.paging.onPageNavigation} />
-                </View>
-            </ScrollView>
-        </>
-    );
-}
 
 function Orders(props: StackScreenProps<ParamListBase>) {
     const hook = useStaffCampaignOrderPage(props);
@@ -183,46 +105,59 @@ function Orders(props: StackScreenProps<ParamListBase>) {
                     width: "100%",
                     height: "100%",
                 }}>
-                <FlatList
-                    style={{
-                        height: 50,
-                        backgroundColor: "white",
-                        borderBottomWidth: 1,
-                        borderBottomColor: paletteGray,
-                        paddingLeft: 10
-                    }}
-                    horizontal
-                    data={[
-                        {
-                            label: "Tất cả",
-                            input: 0
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Processing),
-                            input: OrderStatus.Processing
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
-                            input: OrderStatus.PickUpAvailable
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Received),
-                            input: OrderStatus.Received
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
-                            input: OrderStatus.Cancelled
-                        }]}
-                    renderItem={item =>
-                        <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                            <SelectedChip
-                                onPress={() => hook.input.orderStatus.set(item.item.input)}
-                                selected={hook.input.orderStatus.value == item.item.input}
-                                label={item.item.label} />
-                        </View>
-                    } />
-
+                <View>
+                    <FlatList
+                        style={{
+                            height: 50,
+                            backgroundColor: "white",
+                            borderBottomWidth: 1,
+                            borderBottomColor: paletteGray,
+                            paddingLeft: 10
+                        }}
+                        horizontal
+                        data={[
+                            {
+                                label: "Tất cả",
+                                input: 0
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Processing),
+                                input: OrderStatus.Processing
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
+                                input: OrderStatus.PickUpAvailable
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Received),
+                                input: OrderStatus.Received
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                                input: OrderStatus.Cancelled
+                            }]}
+                        renderItem={item =>
+                            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                                <SelectedChip
+                                    onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                    selected={hook.input.orderStatus.value == item.item.input}
+                                    label={item.item.label} />
+                            </View>
+                        } />
+                    <StickyHeaderSearchBar onChangeText={hook.input.search.set} onSubmit={hook.event.onSearchSubmit} value={hook.input.search.value} />
+                </View>
                 <View style={{ padding: 5, alignItems: "center" }}>
+                    {
+                        hook.data.orders.length == 0 &&
+                        <View style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                            height: Dimensions.get("screen").height * 80 / 100,
+                        }}>
+                            <Text variant='h5'>Không có đơn hàng</Text>
+                        </View>
+                    }
                     {
                         hook.data.orders?.map(item =>
                             item.orderDetails && item.orderDetails[0] &&

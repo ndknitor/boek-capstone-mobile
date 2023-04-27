@@ -104,6 +104,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                 drawerWidth={280}
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
+                drawerType="front"
                 renderNavigationView={
                     () =>
                         <ScrollView>

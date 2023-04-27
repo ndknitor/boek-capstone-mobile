@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
+import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, Pressable, Dimensions } from 'react-native'
 import { Text } from "@react-native-material/core";
 import logo from "../../assets/logo.png";
 import Paging from '../../../components/Paging/Paging';
@@ -22,6 +22,7 @@ import { OrderStatus } from '../../../objects/enums/OrderStatus';
 import truncateString from '../../../libs/functions/truncateString';
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 import QRCode from 'react-native-qrcode-svg';
+import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -64,50 +65,64 @@ function DeliveryOrders() {
                 ref={hook.ref.ordersScrollViewRef}
                 stickyHeaderIndices={[0]}
                 stickyHeaderHiddenOnScroll>
-                <FlatList
-                    style={{
-                        height: 50,
-                        backgroundColor: "white",
-                        borderBottomWidth: 1,
-                        borderBottomColor: paletteGray,
-                        justifyContent: "center",
-                        paddingLeft: 10
-                    }}
-                    horizontal
-                    data={[
-                        {
-                            label: "Tất cả",
-                            input: 0
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Processing),
-                            input: OrderStatus.Processing
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Shipping),
-                            input: OrderStatus.Shipping
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Shipped),
-                            input: OrderStatus.Shipped
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
-                            input: OrderStatus.Cancelled
-                        }
-                    ]}
-                    renderItem={item =>
-                        <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                            <SelectedChip
-                                onPress={() => hook.input.orderStatus.set(item.item.input)}
-                                selected={hook.input.orderStatus.value == item.item.input}
-                                label={item.item.label} />
-                        </View>
-                    } />
+                <View style={{ justifyContent: "center" }}>
+                    <FlatList
+                        style={{
+                            height: 50,
+                            backgroundColor: "white",
+                            borderBottomWidth: 1,
+                            borderBottomColor: paletteGray,
+                            //justifyContent: "center",
+                            paddingLeft: 10
+                        }}
+                        horizontal
+                        data={[
+                            {
+                                label: "Tất cả",
+                                input: 0
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Processing),
+                                input: OrderStatus.Processing
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Shipping),
+                                input: OrderStatus.Shipping
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Shipped),
+                                input: OrderStatus.Shipped
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                                input: OrderStatus.Cancelled
+                            }
+                        ]}
+                        renderItem={item =>
+                            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                                <SelectedChip
+                                    onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                    selected={hook.input.orderStatus.value == item.item.input}
+                                    label={item.item.label} />
+                            </View>
+                        } />
+                    <StickyHeaderSearchBar onChangeText={hook.input.search.set} onSubmit={hook.event.onSearchSubmit} value={hook.input.search.value} />
+                </View>
                 <View>
                     <View style={{
                         alignItems: "center"
                     }}>
+                        {
+                            hook.data.orders.length == 0 &&
+                            <View style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "100%",
+                                height: Dimensions.get("screen").height * 80 / 100,
+                            }}>
+                                <Text variant='h5'>Không có đơn hàng</Text>
+                            </View>
+                        }
                         {
                             hook.data.orders.map(item =>
                                 item.orderDetails && item.orderDetails[0] &&
@@ -265,7 +280,7 @@ function CounterOrders() {
                             backgroundColor="white"
                             color="black"
                             value={hook.data.qrString} />
-                        <Text style={{ fontSize: 16, textAlign: "center", marginTop : 10 }}>Đưa mã thanh toán này cho nhân viên</Text>
+                        <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>Đưa mã thanh toán này cho nhân viên</Text>
                     </View>
                 </Pressable>
             </LayoutModal>
@@ -276,50 +291,63 @@ function CounterOrders() {
                 ref={hook.ref.ordersScrollViewRef}
                 stickyHeaderIndices={[0]}
                 stickyHeaderHiddenOnScroll>
-                <FlatList
-                    style={{
-                        height: 50,
-                        backgroundColor: "white",
-                        borderBottomWidth: 1,
-                        borderBottomColor: paletteGray,
-                        justifyContent: "center",
-                        paddingLeft: 10
-                    }}
-                    horizontal
-                    data={[
-                        {
-                            label: "Tất cả",
-                            input: 0
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Processing),
-                            input: OrderStatus.Processing
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
-                            input: OrderStatus.PickUpAvailable
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Received),
-                            input: OrderStatus.Received
-                        },
-                        {
-                            label: OrderStatus.getLabel(OrderStatus.Cancelled),
-                            input: OrderStatus.Cancelled
-                        }]}
-                    renderItem={item =>
-                        <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-                            <SelectedChip
-                                onPress={() => hook.input.orderStatus.set(item.item.input)}
-                                selected={hook.input.orderStatus.value == item.item.input}
-                                label={item.item.label} />
-                        </View>
-                    } />
+                <View>
+                    <FlatList
+                        style={{
+                            height: 50,
+                            backgroundColor: "white",
+                            borderBottomWidth: 1,
+                            borderBottomColor: paletteGray,
+                            //justifyContent: "center",
+                            paddingLeft: 10
+                        }}
+                        horizontal
+                        data={[
+                            {
+                                label: "Tất cả",
+                                input: 0
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Processing),
+                                input: OrderStatus.Processing
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
+                                input: OrderStatus.PickUpAvailable
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Received),
+                                input: OrderStatus.Received
+                            },
+                            {
+                                label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                                input: OrderStatus.Cancelled
+                            }]}
+                        renderItem={item =>
+                            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                                <SelectedChip
+                                    onPress={() => hook.input.orderStatus.set(item.item.input)}
+                                    selected={hook.input.orderStatus.value == item.item.input}
+                                    label={item.item.label} />
+                            </View>
+                        } />
+                    <StickyHeaderSearchBar onChangeText={hook.input.search.set} onSubmit={hook.event.onSearchSubmit} value={hook.input.search.value} />
+                </View>
                 <View style={{
                     alignItems: "center"
                 }}>
                     {
-
+                        hook.data.orders.length == 0 &&
+                        <View style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                            height: Dimensions.get("screen").height * 80 / 100,
+                        }}>
+                            <Text variant='h5'>Không có đơn hàng</Text>
+                        </View>
+                    }
+                    {
                         hook.data.orders.map(item =>
                             item.orderDetails && item.orderDetails[0] &&
 

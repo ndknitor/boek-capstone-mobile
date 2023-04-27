@@ -19,6 +19,7 @@ import { OrderType } from '../../../objects/enums/OrderType';
 import AuthorizeView from '../../../libs/AuthorizeView';
 import { Role } from '../../../objects/enums/Role';
 import PageLoader from '../../../components/PageLoader/PageLoader';
+import { OrderStatus } from '../../../objects/enums/OrderStatus';
 
 function OrderDetail(props: StackScreenProps<ParamListBase>) {
   const { push } = useRouter();
@@ -293,7 +294,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
                 justifyContent: "center",
               }}>
                 {
-                  hook.data.order.type == OrderType.PickUp &&
+                  hook.data.order.type == OrderType.PickUp && hook.data.order.status == OrderStatus.PickUpAvailable &&
                   <Button
                     title="Thanh toán"
                     onPress={hook.event.onOrderSubmit}

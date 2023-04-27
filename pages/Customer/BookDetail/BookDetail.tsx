@@ -512,32 +512,35 @@ function BookDetail(props: StackScreenProps<ParamListBase>) {
                                 expanded={hook.ui.descriptionExpanded}
                                 onPress={() => hook.ui.setDescriptionExpanded(!hook.ui.descriptionExpanded)} />
                         }
+                        <View style={{ marginBottom: 20 }} />
                     </Shadow>
-
-                    <Shadow style={{
-                        backgroundColor: "white",
-                        borderRadius: 8,
-                        padding: 10,
-                        marginTop: 20
-                    }}>
-                        <Text variant='h5' style={{ marginBottom: 5 }}>Có thể bạn quan tâm</Text>
-                        {
-                            hook.data.book?.unhierarchicalBookProducts && hook.data.book?.unhierarchicalBookProducts?.map(item =>
-                                item.bookProducts.length > 0 &&
-                                <TitleFlatBooks
-                                    title={item.title}
-                                    data={item.bookProducts as MobileBookProductViewModel[]} />)
-                        }
-                    </Shadow>
+                    {
+                        hook.data.book?.unhierarchicalBookProducts.length != 0 &&
+                        <Shadow style={{
+                            backgroundColor: "white",
+                            borderRadius: 8,
+                            padding: 10,
+                            marginTop: 20
+                        }}>
+                            <Text variant='h5' style={{ marginBottom: 5 }}>Có thể bạn quan tâm</Text>
+                            {
+                                hook.data.book?.unhierarchicalBookProducts?.map(item =>
+                                    item.bookProducts.length > 0 &&
+                                    <TitleFlatBooks
+                                        title={item.title}
+                                        data={item.bookProducts as MobileBookProductViewModel[]} />)
+                            }
+                        </Shadow>
+                    }
                 </View>
             </ScrollView>
             <Button
-                disabled={hook.data.book?.status != BookProductStatus.Sale || !hook.data.book.allowPurchasingByLevel}
+                disabled={hook.ui.getDisabled()}
                 onPress={() => addToCart(hook.data.book!, 1)}
                 buttonStyle={{
                     backgroundColor: primaryColor,
                     padding: 12
-                }}>{hook.data.book?.status == BookProductStatus.Sale ? hook.data.book.allowPurchasingByLevel ? "Chọn mua" : "Bạn không đủ cấp độ" : hook.data.book?.statusName}</Button>
+                }}>{hook.ui.getButtonText()}</Button>
         </>
 
     )

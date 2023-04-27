@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Image, StyleSheet, FlatList, TouchableOpacity, Pressable } from 'react-native'
+import { ScrollView, View, Image, StyleSheet, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native'
 import { Text } from '@react-native-material/core'
 import { paletteGray, paletteGrayLight, paletteGrayShade2, paletteGrayShade5, paletteGreen, paletteGreenBold, paletteGreenShade1, palettePink, paletteRed, primaryTint1, primaryTint2, primaryTint4, primaryTint7 } from '../../../utils/color'
 import useStaffOrdersPage from './StaffOrders.hook';
@@ -23,6 +23,7 @@ import PageLoader from '../../../components/PageLoader/PageLoader';
 import StaffOrderCard from '../../../components/StaffOrderCard/StaffOrderCard';
 import { ParamListBase } from '@react-navigation/native';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import StickyHeaderSearchBar from '../../../components/StickyHeaderSearchBar/StickyHeaderSearchBar';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -73,46 +74,60 @@ function StaffOrders(props: BottomTabScreenProps<ParamListBase>) {
           width: "100%",
           height: "100%",
         }}>
-        <FlatList
-          style={{
-            height: 50,
-            backgroundColor: "white",
-            borderBottomWidth: 1,
-            borderBottomColor: paletteGray,
-            justifyContent: "center",
-            paddingLeft: 10
-          }}
-          horizontal
-          data={[
-            {
-              label: "Tất cả",
-              input: 0
-            },
-            {
-              label: OrderStatus.getLabel(OrderStatus.Processing),
-              input: OrderStatus.Processing
-            },
-            {
-              label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
-              input: OrderStatus.PickUpAvailable
-            },
-            {
-              label: OrderStatus.getLabel(OrderStatus.Received),
-              input: OrderStatus.Received
-            },
-            {
-              label: OrderStatus.getLabel(OrderStatus.Cancelled),
-              input: OrderStatus.Cancelled
-            }]}
-          renderItem={item =>
-            <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
-              <SelectedChip
-                onPress={() => hook.input.orderStatus.set(item.item.input)}
-                selected={hook.input.orderStatus.value == item.item.input}
-                label={item.item.label} />
-            </View>
-          } />
+        <View>
+          <FlatList
+            style={{
+              height: 50,
+              backgroundColor: "white",
+              borderBottomWidth: 1,
+              borderBottomColor: paletteGray,
+              //justifyContent: "center",
+              paddingLeft: 10
+            }}
+            horizontal
+            data={[
+              {
+                label: "Tất cả",
+                input: 0
+              },
+              {
+                label: OrderStatus.getLabel(OrderStatus.Processing),
+                input: OrderStatus.Processing
+              },
+              {
+                label: OrderStatus.getLabel(OrderStatus.PickUpAvailable),
+                input: OrderStatus.PickUpAvailable
+              },
+              {
+                label: OrderStatus.getLabel(OrderStatus.Received),
+                input: OrderStatus.Received
+              },
+              {
+                label: OrderStatus.getLabel(OrderStatus.Cancelled),
+                input: OrderStatus.Cancelled
+              }]}
+            renderItem={item =>
+              <View style={{ height: "100%", justifyContent: "center", marginRight: 2 }}>
+                <SelectedChip
+                  onPress={() => hook.input.orderStatus.set(item.item.input)}
+                  selected={hook.input.orderStatus.value == item.item.input}
+                  label={item.item.label} />
+              </View>
+            } />
+          <StickyHeaderSearchBar onChangeText={hook.input.search.set} onSubmit={hook.event.onSearchSubmit} value={hook.input.search.value} />
+        </View>
         <View style={{ padding: 5, alignItems: "center" }}>
+          {
+            hook.data.orders.length == 0 &&
+            <View style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: Dimensions.get("screen").height * 80 / 100,
+            }}>
+              <Text variant='h5'>Không có đơn hàng</Text>
+            </View>
+          }
           {
             hook.data.orders?.map(item =>
               item.orderDetails && item.orderDetails[0] &&
