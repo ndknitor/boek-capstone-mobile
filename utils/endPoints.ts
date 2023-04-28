@@ -75,7 +75,7 @@ const endPont =
     },
     orders: {
         index: "/api/orders",
-        zaloPay : "/api/orders/zalopay",
+        zaloPay: "/api/orders/zalopay",
         customer: {
             pickUp: "/api/orders/customer/pick-up",
             shipping: "/api/orders/customer/shipping"
@@ -85,6 +85,9 @@ const endPont =
             pickUp: "/api/orders/calculation/pick-up",
             shipping: "/api/orders/calculation/shipping"
         }
+    },
+    levels: {
+        index: "/api/levels"
     },
     lead: {
         districts: "/districts",

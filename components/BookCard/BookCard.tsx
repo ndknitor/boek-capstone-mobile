@@ -6,6 +6,7 @@ import { MobileBookProductViewModel } from '../../objects/viewmodels/BookProduct
 import formatNumber from '../../libs/functions/formatNumber';
 import Shadow from '../Shadow/Shadow';
 import { BookProductStatus } from '../../objects/enums/BookProductStatus'
+import CampaignStatus from '../../objects/enums/CampaignStatus';
 interface BookCardProps {
   book: MobileBookProductViewModel;
 }
@@ -30,6 +31,28 @@ function BookCard({ book }: BookCardProps) {
     }
     return "blue";
   }
+  const getStatusText = () => {
+    if (book.campaign.status != CampaignStatus.start) {
+      return CampaignStatus.toString(book.campaign.status as number);
+    }
+    if (book.status == BookProductStatus.Sale) {
+      if (book.withLevel && book.allowPurchasingByLevel) {
+        return "Không đủ cấp";
+      }
+    }
+  }
+
+  const getDisplay = () => {
+    if (book.campaign.status != CampaignStatus.start) {
+      return "flex";
+    }
+    if (book.status == BookProductStatus.Sale) {
+      if (book.withLevel && book.allowPurchasingByLevel) {
+        return "flex";
+      }
+    }
+    return "none";
+  }
 
   const { push } = useRouter();
   return (
@@ -41,7 +64,7 @@ function BookCard({ book }: BookCardProps) {
         justifyContent: "center"
       }}>
       <Shadow style={{
-        display: book?.status != BookProductStatus.Sale || book.withLevel && !book.allowPurchasingByLevel ? "flex" : "none",
+        display: getDisplay(),
         backgroundColor: getStatusBackgrundColor(book.status as number),
         position: "absolute",
         borderRadius: 8,
@@ -51,8 +74,7 @@ function BookCard({ book }: BookCardProps) {
         padding: 10
       }}>
         <Text style={{ color: "white", fontSize: 15 }}>
-          {book?.status == BookProductStatus.Sale || BookProductStatus.toDisplayString(book.status as number)}
-          {book?.status != BookProductStatus.Sale || book.withLevel && !book.allowPurchasingByLevel && "Không đủ cấp"}
+          {getStatusText()}
         </Text>
       </Shadow>
       <TouchableOpacity

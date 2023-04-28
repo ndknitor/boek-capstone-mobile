@@ -11,6 +11,7 @@ import moment from 'moment';
 import { CampaignViewModel } from '../../objects/viewmodels/Campaigns/CampaignViewModel';
 import { dateTimeFormat } from '../../utils/format';
 import Shadow from '../Shadow/Shadow';
+import CampaignStatus from '../../objects/enums/CampaignStatus';
 interface CampaignCardProps {
     campaign: CampaignViewModel;
 }
@@ -68,7 +69,7 @@ function CampaignCard(props: CampaignCardProps) {
                             alignItems: "center",
                             justifyContent: "center"
                         }}>
-                            <Text style={{ color: "white" }}>{props.campaign.statusName}</Text>
+                            <Text style={{ color: "white" }}>{CampaignStatus.toString(props.campaign.status)}</Text>
                         </Shadow>
                     </View>
                     <View style={{

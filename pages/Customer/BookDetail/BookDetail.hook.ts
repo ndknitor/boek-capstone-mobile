@@ -6,6 +6,7 @@ import AudioPlayer, { AudioPlayerRefProps } from "../../../components/AudioPlaye
 import appxios from "../../../components/AxiosInterceptor";
 import CardHeader from "../../../components/CartHeader/CardHeader";
 import { BookProductStatus } from "../../../objects/enums/BookProductStatus";
+import CampaignStatus from "../../../objects/enums/CampaignStatus";
 import { BaseResponseModel } from "../../../objects/responses/BaseResponseModel";
 import { MobileBookProductViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/MobileBookProductViewModel";
 import { OtherMobileBookProductsViewModel } from "../../../objects/viewmodels/BookProduct/Mobile/OtherMobileBookProductsViewModel";
@@ -34,36 +35,36 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
     }
 
     const getDisabled = () => {
-        if (book?.status == BookProductStatus.Sale) {
-            if (book?.withLevel) {            
-                if (book?.allowPurchasingByLevel) {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
+        if (book?.campaign.status != CampaignStatus.start) {
+            return true;
         }
-        return true;
+        if (book.withLevel && !book.allowPurchasingByLevel) {
+            return true;
+        }
+        if (book.status != BookProductStatus.Sale) {
+            return true;
+        }
+        return false;
     }
 
     const getButtonText = () => {
         const avalible = "Chọn mua";
-        if (book?.status == BookProductStatus.Sale) {
-            if (book?.withLevel) {
-                if (book?.allowPurchasingByLevel) {
-                    avalible;
+        if (book?.campaign.status == CampaignStatus.start) {
+            if (book?.status == BookProductStatus.Sale) {
+                if (book?.withLevel) {
+                    if (book?.allowPurchasingByLevel) {
+                        avalible;
+                    }
+                    else {
+                        return "Bạn không đủ cấp độ";
+                    }
                 }
                 else {
-                    return "Bạn không đủ cấp độ";
+                    return avalible;
                 }
             }
-            else {
-                return avalible;
-            }
         }
-        return false;
+        return book?.campaign.statusName;
     }
 
     useEffect(() => {

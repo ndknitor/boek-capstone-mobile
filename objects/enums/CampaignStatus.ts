@@ -5,16 +5,16 @@ const CampaignStatus = {
     postpone: 4,
     toString: (n: number) => {
         if (n == CampaignStatus.notStarted) {
-            return "Chưa bắt đầu"
+            return "Chưa diễn ra"
         }
         if (n == CampaignStatus.start) {
-            return "Bắt đầu hội sách"
+            return "Đang diễn ra"
         }
         if (n == CampaignStatus.end) {
-            return "Kết thúc hội sách"
+            return "Đã kết thúc"
         }
         if (n == CampaignStatus.end) {
-            return "Hủy hội sách"
+            return "Đã hủy"
         }
         return "";
     }

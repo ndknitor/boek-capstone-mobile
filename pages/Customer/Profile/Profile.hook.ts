@@ -17,14 +17,18 @@ import { SessionStorage } from "../../../utils/SessionStogare";
 import endPont from "../../../utils/endPoints";
 import useAsyncEffect from "use-async-effect";
 import { CustomerViewModel } from "../../../objects/viewmodels/Users/customers/CustomerViewModel";
+import { LevelViewModel } from "../../../objects/viewmodels/Levels/LevelViewModel";
+import { BaseResponsePagingModel } from "../../../objects/responses/BaseResponsePagingModel";
 
 export default function useProfilePage(props: ProfileProps) {
     const { setUser, user } = useAppContext();
     const { authenticated, setAuthorize } = useAuth();
 
     const [loading, setLoading] = useState(false);
+    const [levelModalShowed, setLevelModalShowed] = useState(false);
 
     const [customer, setCustomer] = useState<CustomerViewModel>();
+    const [levels, setLevels] = useState<LevelViewModel[]>([]);
 
 
     const logout = async (navigate?: boolean) => {
@@ -48,23 +52,44 @@ export default function useProfilePage(props: ProfileProps) {
             }
         }
     }
+    const randomColor = () => {
+        var color = Math.floor(Math.random() * Math.pow(256, 3)).toString(16);
+        while (color.length < 6) {
+            color = "0" + color;
+        }
+        return "#" + color;
+    }
 
     useAsyncEffect(async () => {
         if (user && user.role == Role.customer) {
             appxios.get<CustomerViewModel>(endPont.users.me).then(response => {
                 setCustomer(response.data);
             });
+            const query = new URLSearchParams();
+            query.append("Status", "true");
+            query.append("WithCustomers", "false");
+            query.append("Size", "1000");
+            query.append("Page", "1");
+            appxios.get<BaseResponsePagingModel<LevelViewModel>>(`${endPont.levels.index}?${query.toString()}`).then(response => {
+                setLevels(response.data.data);
+
+            });
         }
     }, []);
 
     return {
-        loading,
+        ui: {
+            levelModalShowed,
+            setLevelModalShowed,
+            randomColor
+        },
         event:
         {
             logout,
         },
         data: {
-            customer
+            customer,
+            levels
         }
 
     };

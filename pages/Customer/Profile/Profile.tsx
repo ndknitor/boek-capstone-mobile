@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable } from 'react-native';
 import useProfilePage from './Profile.hook';
 import { Button } from '@rneui/base';
 import accountWhite from "../../../assets/icons/account-circle-white.png";
@@ -9,12 +9,13 @@ import AuthorizeView from '../../../libs/AuthorizeView';
 import NonAuthorizeView from '../../../libs/NonAuthorizeView';
 import GoogleLoginButton from '../../../components/GoogleLoginButton/GoogleLoginButton';
 import TouchCard from '../../../components/TouchCard/TouchCard';
-import { primaryTint1 } from '../../../utils/color';
+import { paletteGray, paletteGrayLight, paletteGrayTint6, paletteGrayTint8, primaryTint1 } from '../../../utils/color';
 import { Role } from '../../../objects/enums/Role';
 import PageLoader from '../../../components/PageLoader/PageLoader';
 import useAppContext from '../../../context/Context';
 import Info from '../../../assets/SvgComponents/Info';
 import useRouter from '../../../libs/hook/useRouter';
+import LayoutModal from '../../../components/LayoutModal/LayoutModal';
 export interface ProfileProps extends BottomTabScreenProps<ParamListBase> {
 
 }
@@ -25,7 +26,64 @@ function Profile(props: ProfileProps) {
   const { user } = useAppContext();
   return (
     <>
-      <PageLoader loading={hook.loading} />
+      <LayoutModal visible={hook.ui.levelModalShowed} onClose={() => hook.ui.setLevelModalShowed(false)}>
+        <Pressable
+          onPress={() => hook.ui.setLevelModalShowed(false)}
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.6)"
+          }}>
+          <View style={{
+            backgroundColor: "white",
+            width: 320,
+            borderRadius : 8
+          }}>
+            {
+              hook.data.levels.map(item =>
+                <View style={{
+                  //borderWidth: 1,
+                  height: 90,
+                  width: "100%",
+                  flexDirection: "row"
+                }}>
+                  <View style={{
+                    //borderWidth: 1,
+                    width: "30%",
+                    height: "100%",
+                    alignItems: "center",
+                    justifyContent: 'center'
+                  }}>
+                    <View style={{
+                      backgroundColor: paletteGrayTint6,
+                      borderWidth: 1,
+                      borderRadius: 999,
+                      width: 60,
+                      height: 60,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}>
+                      <Text style={{ fontSize: 18 }}>{item.name[0].toLocaleUpperCase()}</Text>
+                    </View>
+                  </View>
+                  <View style={{
+                    //borderWidth: 1,
+                    width: "70%",
+                    justifyContent: "center",
+                    rowGap: 5
+                  }}>
+                    <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                    <Text style={{ fontSize: 16 }}>Số điểm: {item.conditionalPoint}</Text>
+                  </View>
+                </View>
+              )
+            }
+
+          </View>
+        </Pressable>
+      </LayoutModal>
       <View style={{ flex: 1 }}>
         <View style={{
           backgroundColor: "#1E293B",
@@ -78,7 +136,7 @@ function Profile(props: ProfileProps) {
                         <Text style={{ color: "white", fontWeight: "600" }}>Số điểm: {hook.data.customer && hook.data.customer?.point}</Text>
                       </View>
                       <View style={{ justifyContent: "center" }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => hook.ui.setLevelModalShowed(true)}>
                           <Info fill={"white"} />
                         </TouchableOpacity>
                       </View>
