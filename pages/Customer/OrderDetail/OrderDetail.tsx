@@ -142,6 +142,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
                 rowGap: 7
               }}>
                 <Text style={{ fontSize: 16 }}>Theo dõi đơn hàng</Text>
+                <Text>{hook.data.order.address ? `Địa chỉ nhận hàng: ${hook.data.order.address}` : "Địa chỉ nhận hàng sẽ được cập nhật sau"}</Text>
                 <Text style={{ color: hook.ui.getStatusColor() }}>{hook.data.order.statusName}</Text>
               </View>
               <View style={{
@@ -170,7 +171,7 @@ function OrderDetail(props: StackScreenProps<ParamListBase>) {
               }}>
                 <Text style={{ fontSize: 16 }}>{hook.data.order.customerName}</Text>
                 <Text style={{ fontSize: 16, color: paletteGrayShade3 }}>SĐT: {hook.data.order.customerPhone}</Text>
-                <Text style={{ fontSize: 16, color: paletteGrayShade3 }}>Địa chỉ: {hook.data.order.address}</Text>
+                <Text style={{ fontSize: 16, color: paletteGrayShade3 }}>Địa chỉ: {hook.data.order.customer?.user.address}</Text>
               </View>
             </View>
             <DelimiterLine />

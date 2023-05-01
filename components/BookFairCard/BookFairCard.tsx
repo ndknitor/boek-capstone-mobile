@@ -96,7 +96,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                         )
                     }
                     <View style={{ paddingLeft: 5, flex: 1 }}>
-                        <Text >Các nhà phát hành: {campagin?.participants.map(item => item.issuer.user.name).join(", ")}</Text>
+                        <Text >Nhà phát hành: {campagin?.participants.map(item => item.issuer.user.name).join(", ")}</Text>
                     </View>
                 </View>
             </View>
@@ -106,7 +106,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                 marginBottom: 10,
                 alignItems: "center",
                 justifyContent: "center",
-                width: "40%",
+                width: "30%",
                 height: 25,
                 borderRadius: 24
             }}>
@@ -114,7 +114,7 @@ function BookFairCard({ campagin }: BookFairCardProps) {
                     color: getTextColor(),
                     fontSize: 13,
                     fontWeight: "500"
-                }}>{campagin?.statusName}</Text>
+                }}>{CampaignStatus.toString(campagin?.status as number)}</Text>
             </View>
         </TouchableOpacity >
     )

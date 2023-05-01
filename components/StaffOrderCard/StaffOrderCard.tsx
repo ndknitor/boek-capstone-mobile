@@ -111,7 +111,7 @@ function StaffOrderCard(props: StaffOrderCardProps) {
                     padding: 7,
                     flexDirection: "row"
                 }}>
-                    <View style={{ width: "60%", rowGap: 10 }}>
+                    <View style={{ width: "100%", rowGap: 10 }}>
                         <Text style={{ fontSize: 14, color: paletteGray }}>Ngày đặt hàng: {moment(props.order.orderDate).format(dateTimeFormat)}</Text>
                         <Text style={{ color: paletteGrayShade2, fontSize: 15 }}>{truncateString(props.order.campaign?.name, 3)}</Text>
                     </View>

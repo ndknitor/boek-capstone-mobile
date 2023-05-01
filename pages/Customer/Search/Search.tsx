@@ -25,6 +25,7 @@ import useAppContext from '../../../context/Context';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import Shadow from '../../../components/Shadow/Shadow';
 import { DrawerLayout } from 'react-native-gesture-handler';
+import Close from '../../../assets/SvgComponents/Close';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -105,101 +106,116 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
                 drawerType="front"
-                
+
                 renderNavigationView={
                     () =>
-                        <ScrollView>
-                            <ExpandToggleView label="Thể loại"
-                                onExpand={hook.event.onGenreExpand}>
-                                {
-                                    hook.data.genres.map(item =>
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onGenresSeletedToggle(item.id)}
-                                            seleted={hook.input.seletedGenre.filter((id) => item.id == id).length > 0}
-                                            label={item.name}
-                                        />
-                                    )
-
-                                }
-                            </ExpandToggleView>
-                            <ExpandToggleView label="Định dạng">
-                                {
-                                    Object.values(BookFormat).map(item =>
-                                        typeof (item) == "number" &&
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onFormatsToggle(item)}
-                                            seleted={hook.input.selectedFormats.filter((id) => item == id).length > 0}
-                                            label={BookFormat.toString(item)}
-                                        />
-                                    )
-                                }
-                            </ExpandToggleView>
-                            <ExpandToggleView label="Ngôn ngữ"
-                                onExpand={hook.event.onLanguageExpand}>
-                                {
-                                    hook.data.languages.map(item =>
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onLanguageSeletedToggle(item)}
-                                            label={item}
-                                            seleted={hook.input.selectedLanguage.filter((id) => item == id).length > 0}
-                                        />
-                                    )
-                                }
-                            </ExpandToggleView>
-                            <ExpandToggleView label="Nhà phát hành"
-                                onExpand={hook.event.onIssuerExpand}>
-                                {
-                                    hook.data.issuers.map(item =>
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onIssuerSeletedToggle(item.id)}
-                                            label={item.name}
-                                            seleted={hook.input.seletedIssuer.filter((id) => item.id == id).length > 0}
-                                        />
-                                    )
-                                }
-                            </ExpandToggleView>
-                            <ExpandToggleView label="Tác giả"
-                                onExpand={hook.event.onAuthorExpand}>
-                                {
-                                    hook.data.authors.map(item =>
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onAuthorSeletedToggle(item.id as number)}
-                                            seleted={hook.input.seletedAuthor.filter((id) => item.id == id).length > 0}
-                                            label={item.name}
-                                        />
-                                    )
-                                }
-                            </ExpandToggleView>
-                            <ExpandToggleView label="Nhà xuất bản"
-                                onExpand={hook.event.onPublisherExpand}>
-                                {
-                                    hook.data.publishers?.map(item =>
-                                        <SelectedLabel
-                                            onPress={() => hook.event.onPublisherSeletedToggle(item.id as number)}
-                                            seleted={hook.input.selectedPublisher.filter((id) => item.id == id).length > 0}
-                                            label={item.name} />
-                                    )
-                                }
-                            </ExpandToggleView>
+                        <>
                             <View style={{
                                 //borderWidth: 1,
-                                flexDirection: "row",
-                                paddingTop: 25,
-                                paddingBottom: 25
+                                padding: 10,
+                                paddingRight: 20,
+                                width: "100%",
+                                alignItems: "flex-end"
                             }}>
-
-                                <View style={{ width: "50%", padding: 10 }}>
-                                    <Button
-                                        onPress={hook.event.onReset}
-                                        buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
-                                </View>
-                                <View style={{ width: "50%", padding: 10 }}>
-                                    <Button
-                                        onPress={hook.event.onSearchSubmit}
-                                        buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
-                                </View>
+                                <TouchableOpacity
+                                    onPress={() => hook.ref.filterBooksDrawerRef.current?.closeDrawer()}>
+                                    <Close width={25} height={25} fill="red" />
+                                </TouchableOpacity>
                             </View>
-                        </ScrollView>
+                            <ScrollView>
+                                <ExpandToggleView label="Thể loại"
+                                    onExpand={hook.event.onGenreExpand}>
+                                    {
+                                        hook.data.genres.map(item =>
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onGenresSeletedToggle(item.id)}
+                                                seleted={hook.input.seletedGenre.filter((id) => item.id == id).length > 0}
+                                                label={item.name}
+                                            />
+                                        )
+
+                                    }
+                                </ExpandToggleView>
+                                <ExpandToggleView label="Định dạng">
+                                    {
+                                        Object.values(BookFormat).map(item =>
+                                            typeof (item) == "number" &&
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onFormatsToggle(item)}
+                                                seleted={hook.input.selectedFormats.filter((id) => item == id).length > 0}
+                                                label={BookFormat.toString(item)}
+                                            />
+                                        )
+                                    }
+                                </ExpandToggleView>
+                                <ExpandToggleView label="Ngôn ngữ"
+                                    onExpand={hook.event.onLanguageExpand}>
+                                    {
+                                        hook.data.languages.map(item =>
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onLanguageSeletedToggle(item)}
+                                                label={item}
+                                                seleted={hook.input.selectedLanguage.filter((id) => item == id).length > 0}
+                                            />
+                                        )
+                                    }
+                                </ExpandToggleView>
+                                <ExpandToggleView label="Nhà phát hành"
+                                    onExpand={hook.event.onIssuerExpand}>
+                                    {
+                                        hook.data.issuers.map(item =>
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onIssuerSeletedToggle(item.id)}
+                                                label={item.name}
+                                                seleted={hook.input.seletedIssuer.filter((id) => item.id == id).length > 0}
+                                            />
+                                        )
+                                    }
+                                </ExpandToggleView>
+                                <ExpandToggleView label="Tác giả"
+                                    onExpand={hook.event.onAuthorExpand}>
+                                    {
+                                        hook.data.authors.map(item =>
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onAuthorSeletedToggle(item.id as number)}
+                                                seleted={hook.input.seletedAuthor.filter((id) => item.id == id).length > 0}
+                                                label={item.name}
+                                            />
+                                        )
+                                    }
+                                </ExpandToggleView>
+                                <ExpandToggleView label="Nhà xuất bản"
+                                    onExpand={hook.event.onPublisherExpand}>
+                                    {
+                                        hook.data.publishers?.map(item =>
+                                            <SelectedLabel
+                                                onPress={() => hook.event.onPublisherSeletedToggle(item.id as number)}
+                                                seleted={hook.input.selectedPublisher.filter((id) => item.id == id).length > 0}
+                                                label={item.name} />
+                                        )
+                                    }
+                                </ExpandToggleView>
+                                <View style={{
+                                    //borderWidth: 1,
+                                    flexDirection: "row",
+                                    paddingTop: 25,
+                                    paddingBottom: 25
+                                }}>
+
+                                    <View style={{ width: "50%", padding: 10 }}>
+                                        <Button
+                                            onPress={hook.event.onReset}
+                                            buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
+                                    </View>
+                                    <View style={{ width: "50%", padding: 10 }}>
+                                        <Button
+                                            onPress={hook.event.onSearchSubmit}
+                                            buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
+                                    </View>
+                                </View>
+                            </ScrollView>
+                        </>
+
                 }>
                 <ScrollView
                     stickyHeaderIndices={[0]}
@@ -280,101 +296,115 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                 drawerPosition={"left"}
                 drawerBackgroundColor={"white"}
                 renderNavigationView={() =>
-                    <ScrollView>
-                        <ExpandToggleView label="Thời gian">
-                            <View style={{ backgroundColor: primaryTint10 }}>
-                                <View style={{ flexDirection: "row", height: 40 }}>
-                                    <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
-                                        <Text style={{ fontSize: 15 }}>Từ :</Text>
-                                    </View>
-                                    <View style={{ width: "60%" }}>
-                                        <DateTimePickerInput
-                                            maximumDate={hook.input.filterEndDate.value}
-                                            value={hook.input.filterStartDate.value}
-                                            onConfirm={hook.input.filterStartDate.set}
-                                            onReset={() => hook.input.filterStartDate.set(undefined)} />
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: "row", height: 40 }}>
-                                    <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
-                                        <Text style={{ fontSize: 15 }}>Đến :</Text>
-                                    </View>
-                                    <View style={{ width: "60%" }}>
-                                        <DateTimePickerInput
-                                            minimumDate={hook.input.filterStartDate.value}
-                                            value={hook.input.filterEndDate.value}
-                                            onConfirm={hook.input.filterEndDate.set}
-                                            onReset={() => hook.input.filterEndDate.set(undefined)} />
-                                    </View>
-                                </View>
-                            </View>
-                        </ExpandToggleView>
-                        <ExpandToggleView label="Định dạng">
-                            {
-                                Object.values(CampaignFormat).map(item =>
-                                    typeof (item) == "number" &&
-                                    <SelectedLabel
-                                        onPress={() => hook.event.onFormatsSeletedToggle(item)}
-                                        seleted={hook.input.seletedFormat == item}
-                                        label={CampaignFormat.toString(item)}
-                                    />
-                                )
-                            }
-                        </ExpandToggleView>
-                        <ExpandToggleView label="Địa điểm">
-                            {
-                                Object.values(GeoLocate).map(item =>
-                                    typeof (item) == "string" &&
-                                    <SelectedLabel
-                                        onPress={() => hook.event.onLocationsSeletedToggle(item)}
-                                        seleted={hook.input.seletedLocation.filter((id) => item == id).length > 0}
-                                        label={item}
-                                    />
-                                )
-                            }
-                        </ExpandToggleView>
-                        <ExpandToggleView label="Thể loại"
-                            onExpand={hook.event.onGenreExpand}>
-                            {
-                                hook.data.genres.map(item =>
-                                    <SelectedLabel
-                                        onPress={() => hook.event.onGenresSeletedToggle(item.id)}
-                                        seleted={hook.input.seletedGenre.filter((id) => item.id == id).length > 0}
-                                        label={item.name}
-                                    />)
-                            }
-                        </ExpandToggleView>
-                        <ExpandToggleView
-                            onExpand={hook.event.onIssuerExpand}
-                            label="Nhà phát hành">
-                            {
-                                hook.data.issuers.map(item =>
-                                    <SelectedLabel
-                                        onPress={() => hook.event.onIssuerSeletedToggle(item.id)}
-                                        seleted={hook.input.seletedIssuer.filter((id) => item.id == id).length > 0}
-                                        label={item.name}
-                                    />)
-                            }
-                        </ExpandToggleView>
-                        <ExpandToggleView label="Tổ chức">
-
-                        </ExpandToggleView>
+                    <>
                         <View style={{
                             //borderWidth: 1,
-                            flexDirection: "row",
-                            paddingTop: 25,
-                            paddingBottom: 25
+                            padding: 10,
+                            paddingRight: 20,
+                            width: "100%",
+                            alignItems: "flex-end"
                         }}>
-                            <View style={{ width: "50%", padding: 10 }}>
-                                <Button
-                                    onPress={hook.event.onReset}
-                                    buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
-                            </View>
-                            <View style={{ width: "50%", padding: 10 }}>
-                                <Button buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
-                            </View>
+                            <TouchableOpacity
+                                onPress={() => hook.ref.filterBookFairsDrawerRef.current?.closeDrawer()}>
+                                <Close width={25} height={25} fill="red" />
+                            </TouchableOpacity>
                         </View>
-                    </ScrollView>
+                        <ScrollView>
+                            <ExpandToggleView label="Thời gian">
+                                <View style={{ backgroundColor: primaryTint10 }}>
+                                    <View style={{ flexDirection: "row", height: 40 }}>
+                                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                            <Text style={{ fontSize: 15 }}>Từ :</Text>
+                                        </View>
+                                        <View style={{ width: "60%" }}>
+                                            <DateTimePickerInput
+                                                maximumDate={hook.input.filterEndDate.value}
+                                                value={hook.input.filterStartDate.value}
+                                                onConfirm={hook.input.filterStartDate.set}
+                                                onReset={() => hook.input.filterStartDate.set(undefined)} />
+                                        </View>
+                                    </View>
+                                    <View style={{ flexDirection: "row", height: 40 }}>
+                                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                                            <Text style={{ fontSize: 15 }}>Đến :</Text>
+                                        </View>
+                                        <View style={{ width: "60%" }}>
+                                            <DateTimePickerInput
+                                                minimumDate={hook.input.filterStartDate.value}
+                                                value={hook.input.filterEndDate.value}
+                                                onConfirm={hook.input.filterEndDate.set}
+                                                onReset={() => hook.input.filterEndDate.set(undefined)} />
+                                        </View>
+                                    </View>
+                                </View>
+                            </ExpandToggleView>
+                            <ExpandToggleView label="Định dạng">
+                                {
+                                    Object.values(CampaignFormat).map(item =>
+                                        typeof (item) == "number" &&
+                                        <SelectedLabel
+                                            onPress={() => hook.event.onFormatsSeletedToggle(item)}
+                                            seleted={hook.input.seletedFormat == item}
+                                            label={CampaignFormat.toString(item)}
+                                        />
+                                    )
+                                }
+                            </ExpandToggleView>
+                            <ExpandToggleView label="Địa điểm">
+                                {
+                                    Object.values(GeoLocate).map(item =>
+                                        typeof (item) == "string" &&
+                                        <SelectedLabel
+                                            onPress={() => hook.event.onLocationsSeletedToggle(item)}
+                                            seleted={hook.input.seletedLocation.filter((id) => item == id).length > 0}
+                                            label={item}
+                                        />
+                                    )
+                                }
+                            </ExpandToggleView>
+                            <ExpandToggleView label="Thể loại"
+                                onExpand={hook.event.onGenreExpand}>
+                                {
+                                    hook.data.genres.map(item =>
+                                        <SelectedLabel
+                                            onPress={() => hook.event.onGenresSeletedToggle(item.id)}
+                                            seleted={hook.input.seletedGenre.filter((id) => item.id == id).length > 0}
+                                            label={item.name}
+                                        />)
+                                }
+                            </ExpandToggleView>
+                            <ExpandToggleView
+                                onExpand={hook.event.onIssuerExpand}
+                                label="Nhà phát hành">
+                                {
+                                    hook.data.issuers.map(item =>
+                                        <SelectedLabel
+                                            onPress={() => hook.event.onIssuerSeletedToggle(item.id)}
+                                            seleted={hook.input.seletedIssuer.filter((id) => item.id == id).length > 0}
+                                            label={item.name}
+                                        />)
+                                }
+                            </ExpandToggleView>
+                            <ExpandToggleView label="Tổ chức">
+
+                            </ExpandToggleView>
+                            <View style={{
+                                //borderWidth: 1,
+                                flexDirection: "row",
+                                paddingTop: 25,
+                                paddingBottom: 25
+                            }}>
+                                <View style={{ width: "50%", padding: 10 }}>
+                                    <Button
+                                        onPress={hook.event.onReset}
+                                        buttonStyle={{ backgroundColor: paletteRed }}>Thiết lập lại</Button>
+                                </View>
+                                <View style={{ width: "50%", padding: 10 }}>
+                                    <Button buttonStyle={{ backgroundColor: primaryTint1 }}>Lọc</Button>
+                                </View>
+                            </View>
+                        </ScrollView>
+                    </>
                 }>
                 <ScrollView
                     stickyHeaderIndices={[0]}

@@ -58,7 +58,7 @@ function Profile(props: ProfileProps) {
                   }}>
                     <View style={{
                       backgroundColor: paletteGrayTint6,
-                      borderWidth: 1,
+                      //borderWidth: 1,
                       borderRadius: 999,
                       width: 60,
                       height: 60,
