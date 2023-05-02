@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, Pressable, Dimensions } from 'react-native'
+import { View, Image, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, Pressable, Dimensions, RefreshControl } from 'react-native'
 import { Text } from "@react-native-material/core";
 import logo from "../../assets/logo.png";
 import Paging from '../../../components/Paging/Paging';
@@ -64,7 +64,10 @@ function DeliveryOrders() {
                 }}
                 ref={hook.ref.ordersScrollViewRef}
                 stickyHeaderIndices={[0]}
-                stickyHeaderHiddenOnScroll>
+                stickyHeaderHiddenOnScroll
+                refreshControl={
+                    <RefreshControl refreshing={hook.ui.refreshing}
+                        onRefresh={hook.event.onRefresh} />}>
                 <View style={{ justifyContent: "center" }}>
                     <FlatList
                         style={{
@@ -290,7 +293,11 @@ function CounterOrders() {
                 }}
                 ref={hook.ref.ordersScrollViewRef}
                 stickyHeaderIndices={[0]}
-                stickyHeaderHiddenOnScroll>
+                stickyHeaderHiddenOnScroll
+                refreshControl={
+                    <RefreshControl refreshing={hook.ui.refreshing}
+                        onRefresh={hook.event.onRefresh} />}
+                >
                 <View>
                     <FlatList
                         style={{

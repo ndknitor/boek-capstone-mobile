@@ -16,6 +16,8 @@ export function useDeliveryOrdersPage() {
     const ordersScrollViewRef = useRef<ScrollView>(null);
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
     const [confirmOrderSubmitModalVisible, setConfirmOrderSubmitModalVisible] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +78,12 @@ export function useDeliveryOrdersPage() {
         getOrders(1);
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getOrders(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getOrders(1);
     }, [orderStatus]);
@@ -87,6 +95,7 @@ export function useDeliveryOrdersPage() {
         ui: {
             getStatusBackgrundColor,
             loading,
+            refreshing,
             confirmOrderSubmitModalVisible,
             setConfirmOrderSubmitModalVisible,
         },
@@ -104,7 +113,8 @@ export function useDeliveryOrdersPage() {
             }
         },
         event: {
-            onSearchSubmit
+            onSearchSubmit,
+            onRefresh
         },
         paging: {
             currentPage,
@@ -119,6 +129,8 @@ export function useCounterOrdersPage() {
     const { user } = useAppContext();
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
     const [confirmOrderSubmitModalVisible, setConfirmOrderSubmitModalVisible] = useState(false);
     const [qrModalVisible, setQrModalVisible] = useState(false);
 
@@ -188,6 +200,12 @@ export function useCounterOrdersPage() {
         setQrModalVisible(true);
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getOrders(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getOrders(1);
     }, [orderStatus]);
@@ -202,7 +220,8 @@ export function useCounterOrdersPage() {
             confirmOrderSubmitModalVisible,
             setConfirmOrderSubmitModalVisible,
             qrModalVisible,
-            setQrModalVisible
+            setQrModalVisible,
+            refreshing
         },
         data: {
             orders,
@@ -220,7 +239,8 @@ export function useCounterOrdersPage() {
         },
         event: {
             onShowQrPress,
-            onSearchSubmit
+            onSearchSubmit,
+            onRefresh
         },
         paging: {
             currentPage,

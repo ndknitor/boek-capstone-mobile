@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Button, Icon } from "@rneui/base";
-import { ScrollView, View, Image, TouchableOpacity, StyleSheet, Pressable, FlatList, Dimensions } from "react-native";
+import { ScrollView, View, Image, TouchableOpacity, StyleSheet, Pressable, FlatList, Dimensions, RefreshControl } from "react-native";
 import { Text } from '@react-native-material/core'
 import BookCard from "../../../components/BookCard/BookCard";
 import HeaderSearchBar from "../../../components/HeaderSearchBar/HeaderSearchBar";
@@ -104,7 +104,11 @@ function Orders(props: StackScreenProps<ParamListBase>) {
                     backgroundColor: "white",
                     width: "100%",
                     height: "100%",
-                }}>
+                }}
+                refreshControl={
+                    <RefreshControl refreshing={hook.ui.refreshing}
+                        onRefresh={hook.event.onRefresh} />}
+                >
                 <View>
                     <FlatList
                         style={{

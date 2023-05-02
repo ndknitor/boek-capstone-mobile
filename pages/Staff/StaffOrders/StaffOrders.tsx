@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Image, StyleSheet, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native'
+import { ScrollView, View, Image, StyleSheet, FlatList, TouchableOpacity, Pressable, Dimensions, RefreshControl } from 'react-native'
 import { Text } from '@react-native-material/core'
 import { paletteGray, paletteGrayLight, paletteGrayShade2, paletteGrayShade5, paletteGreen, paletteGreenBold, paletteGreenShade1, palettePink, paletteRed, primaryTint1, primaryTint2, primaryTint4, primaryTint7 } from '../../../utils/color'
 import useStaffOrdersPage from './StaffOrders.hook';
@@ -73,7 +73,11 @@ function StaffOrders(props: BottomTabScreenProps<ParamListBase>) {
           backgroundColor: "white",
           width: "100%",
           height: "100%",
-        }}>
+        }}
+        refreshControl={
+          <RefreshControl refreshing={hook.ui.refreshing}
+            onRefresh={hook.event.onRefresh} />}
+      >
         <View>
           <FlatList
             style={{

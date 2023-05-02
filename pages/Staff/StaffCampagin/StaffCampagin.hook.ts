@@ -62,6 +62,7 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
     const campaginsScrollViewRef = useRef<ScrollView>(null);
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const [orderStatus, setOrderStatus] = useState(0);
 
@@ -119,6 +120,13 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
         }).finally(() =>
             setLoading(false));
     }
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        getOrders(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getOrders(1);
     }, [orderStatus]);
@@ -128,13 +136,15 @@ export function useStaffCampaignOrderPage(props: StackScreenProps<ParamListBase>
         },
         event: {
             onOrderDetailPress,
-            onSearchSubmit
+            onSearchSubmit,
+            onRefresh
         },
         data: {
             orders
         },
         ui: {
             loading,
+            refreshing,
             getStatusBackgrundColor
         },
         paging: {

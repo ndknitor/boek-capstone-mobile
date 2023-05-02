@@ -16,6 +16,7 @@ export default function useStaffOrdersPage() {
     const scrollViewRef = useRef<ScrollView>(null);
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
@@ -54,6 +55,12 @@ export default function useStaffOrdersPage() {
         getOrders(1);
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getOrders(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getOrders(1);
     }, [orderStatus]);
@@ -68,9 +75,11 @@ export default function useStaffOrdersPage() {
         },
         ui: {
             loading,
+            refreshing
         },
         event: {
-            onSearchSubmit
+            onSearchSubmit,
+            onRefresh
         },
         data: {
             orders

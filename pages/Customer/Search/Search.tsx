@@ -1,4 +1,4 @@
-import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity } from 'react-native'
+import { View, ScrollView, ActivityIndicator, Text, Image, TouchableOpacity, RefreshControl } from 'react-native'
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useBookFairsPage, useBooksPage } from './Search.hook';
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
@@ -63,7 +63,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
         <>
             <PageLoader
                 zIndex={1}
-                loading={hook.loading} />
+                loading={hook.ui.loading} />
             <FloatActionButton
                 zIndex={2}
                 onPress={() => navigate("Cart")}
@@ -221,10 +221,13 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                     stickyHeaderIndices={[0]}
                     stickyHeaderHiddenOnScroll
                     ref={hook.ref.booksScrollViewRef}
-                    scrollEnabled={!hook.loading}
+                    scrollEnabled={!hook.ui.loading}
                     style={{
                         backgroundColor: "white",
-                    }}>
+                    }}
+                    refreshControl={
+                        <RefreshControl refreshing={hook.ui.refreshing}
+                            onRefresh={hook.event.onRefresh} />}>
                     <StickyHeaderSearchBar
                         onChangeText={hook.input.search.set}
                         value={hook.input.search.value}
@@ -289,7 +292,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
     const hook = useBookFairsPage(props);
     return (
         <>
-            <PageLoader loading={hook.loading} />
+            <PageLoader loading={hook.ui.loading} />
             <DrawerLayout
                 ref={hook.ref.filterBookFairsDrawerRef}
                 drawerWidth={280}
@@ -410,6 +413,9 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                     stickyHeaderIndices={[0]}
                     stickyHeaderHiddenOnScroll
                     ref={hook.ref.bookFairsScrollViewRef}
+                    refreshControl={
+                        <RefreshControl refreshing={hook.ui.refreshing}
+                            onRefresh={hook.event.onRefresh} />}
                     style={{ height: "100%", backgroundColor: "white" }}>
                     <StickyHeaderSearchBar
                         onChangeText={hook.input.search.set}

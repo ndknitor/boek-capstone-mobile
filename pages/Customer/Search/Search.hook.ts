@@ -19,6 +19,8 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const booksScrollViewRef = useRef<ScrollView>(null);
 
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [books, setBooks] = useState<MobileBookProductViewModel[]>([]);
@@ -219,6 +221,12 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         }
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getBooks(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getBooks(1);
     }, [sort]);
@@ -264,7 +272,8 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
             onAuthorExpand,
             onAuthorSeletedToggle,
             onIssuerExpand,
-            onIssuerSeletedToggle
+            onIssuerSeletedToggle,
+            onRefresh
         },
         paging: {
             currentPage,
@@ -272,7 +281,10 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
             setCurrentPage,
             onPageNavigation
         },
-        loading
+        ui: {
+            loading,
+            refreshing
+        }
     };
 }
 
@@ -281,6 +293,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     const filterBookFairsDrawerRef = useRef<DrawerLayout>(null);
 
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
 
@@ -405,6 +418,12 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
         }
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getCampaigns(currentPage);
+        setRefreshing(false);
+    }
+
     useEffect(() => {
         getCampaigns(1);
     }, [sort]);
@@ -433,7 +452,8 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
             onGenreExpand,
             onGenresSeletedToggle,
             onIssuerExpand,
-            onIssuerSeletedToggle
+            onIssuerSeletedToggle,
+            onRefresh
         },
         input: {
             seletedFormat,
@@ -459,6 +479,9 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
                 set: setSort
             }
         },
-        loading,
+        ui: {
+            loading,
+            refreshing
+        }
     };
 }

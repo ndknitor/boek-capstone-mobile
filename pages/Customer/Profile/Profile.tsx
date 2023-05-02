@@ -166,7 +166,7 @@ function Profile(props: ProfileProps) {
           <TouchCard label="Đơn hàng" onPress={async () => navigate("Orders")} />
           <TouchCard label="Nhóm" onPress={async () => navigate("AskGenres")} />
           <TouchCard label="Tổ chức" onPress={async () => navigate("Organizations")} />
-          <TouchCard label="Sách của tôi" />
+          {/* <TouchCard label="Sách của tôi" /> */}
         </AuthorizeView>
         <NonAuthorizeView>
           <TouchCard label="Thông tin cá nhân" onPress={async () => navigate("PersonalInformation")} />
