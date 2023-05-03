@@ -49,22 +49,18 @@ export default function useBookDetailPage(props: StackScreenProps<ParamListBase>
 
     const getButtonText = () => {
         const avalible = "Chọn mua";
-        if (book?.campaign.status == CampaignStatus.start) {
-            if (book?.status == BookProductStatus.Sale) {
-                if (book?.withLevel) {
-                    if (book?.allowPurchasingByLevel) {
-                        avalible;
-                    }
-                    else {
-                        return "Bạn không đủ cấp độ";
-                    }
-                }
-                else {
-                    return avalible;
-                }
-            }
+        if (book?.campaign.status != CampaignStatus.start) {
+            return book?.campaign.statusName;
         }
-        return book?.campaign.statusName;
+        if (book?.status != BookProductStatus.Sale) {
+            return book?.campaign.statusName;
+        }
+        if (book?.withLevel && !book?.allowPurchasingByLevel) {
+            return "Bạn không đủ cấp độ";
+        }
+        else {
+            return avalible;
+        }
     }
 
     useEffect(() => {

@@ -32,26 +32,48 @@ function BookCard({ book }: BookCardProps) {
     return "blue";
   }
   const getStatusText = () => {
-    if (book.campaign.status != CampaignStatus.start) {
+    if (book?.campaign.status != CampaignStatus.start) {
       return CampaignStatus.toString(book.campaign.status as number);
     }
-    if (book.status == BookProductStatus.Sale) {
-      if (book.withLevel && book.allowPurchasingByLevel) {
-        return "Không đủ cấp";
-      }
+    if (book.withLevel && !book.allowPurchasingByLevel) {
+      return "Không đủ cấp";
     }
+    if (book.status != BookProductStatus.Sale) {
+      return CampaignStatus.toString(book.campaign.status as number);
+    }
+    return "";
+    // if (book.campaign.status != CampaignStatus.start) {
+    //   return CampaignStatus.toString(book.campaign.status as number);
+    // }
+    // if (book.status == BookProductStatus.Sale) {
+    //   if (book.withLevel && book.allowPurchasingByLevel) {
+    //     return "Không đủ cấp";
+    //   }
+    // }
   }
 
   const getDisplay = () => {
-    if (book.campaign.status != CampaignStatus.start) {
-      return "flex";
+    const flex = "flex";
+    const none = "none";
+    if (book?.campaign.status != CampaignStatus.start) {
+      return flex;
     }
-    if (book.status == BookProductStatus.Sale) {
-      if (book.withLevel && book.allowPurchasingByLevel) {
-        return "flex";
-      }
+    if (book.withLevel && !book.allowPurchasingByLevel) {
+      return flex;
     }
-    return "none";
+    if (book.status != BookProductStatus.Sale) {
+      return flex;
+    }
+    return none;
+    // if (book.campaign.status != CampaignStatus.start) {
+    //   return "flex";
+    // }
+    // if (book.status == BookProductStatus.Sale) {
+    //   if (book.withLevel && book.allowPurchasingByLevel) {
+    //     return "flex";
+    //   }
+    // }
+    // return "none";
   }
 
   const { push } = useRouter();
