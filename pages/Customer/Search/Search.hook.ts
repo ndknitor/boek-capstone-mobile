@@ -12,14 +12,16 @@ import { PublisherViewModel } from "../../../objects/viewmodels/Publishers/Publi
 import { MultiUserViewModel } from "../../../objects/viewmodels/Users/MultiUserViewModel";
 import EndPont from "../../../utils/endPoints";
 import { getMaxPage } from "../../../libs/functions/paging";
-import { DrawerLayout } from "react-native-gesture-handler";
+import { Drawer } from 'react-native-drawer-layout';
+
 
 export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
-    const filterBooksDrawerRef = useRef<DrawerLayout>(null);
+    // const filterBooksDrawerRef = useRef<Drawer>(null);
     const booksScrollViewRef = useRef<ScrollView>(null);
 
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
@@ -92,7 +94,8 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     }
     const onSearchSubmit = () => {
         getBooks(1);
-        filterBooksDrawerRef.current?.closeDrawer();
+        setDrawerOpen(false);
+        //filterBooksDrawerRef.current?.closeDrawer();
     }
     const onReset = () => {
         setSeletedGenre([]);
@@ -232,7 +235,6 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     }, [sort]);
     return {
         ref: {
-            filterBooksDrawerRef,
             booksScrollViewRef
         },
         input: {
@@ -283,14 +285,17 @@ export function useBooksPage(props: MaterialTopTabScreenProps<ParamListBase>) {
         },
         ui: {
             loading,
-            refreshing
+            refreshing,
+            drawerOpen,
+            setDrawerOpen
         }
     };
 }
 
 export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>) {
     const bookFairsScrollViewRef = useRef<ScrollView>(null);
-    const filterBookFairsDrawerRef = useRef<DrawerLayout>(null);
+    //const filterBookFairsDrawerRef = useRef<DrawerLayout>(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -339,6 +344,7 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     }
     const onSearchSubmit = () => {
         getCampaigns(1);
+        setDrawerOpen(false);
     }
     const onPageNavigation = (page: number) => {
         setCurrentPage(page);
@@ -431,7 +437,6 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
     return {
         ref: {
             bookFairsScrollViewRef,
-            filterBookFairsDrawerRef,
         },
         data: {
             campaigns,
@@ -481,7 +486,9 @@ export function useBookFairsPage(props: MaterialTopTabScreenProps<ParamListBase>
         },
         ui: {
             loading,
-            refreshing
+            refreshing,
+            drawerOpen,
+            setDrawerOpen
         }
     };
 }

@@ -26,6 +26,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import Shadow from '../../../components/Shadow/Shadow';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import Close from '../../../assets/SvgComponents/Close';
+import { Drawer } from 'react-native-drawer-layout';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -100,28 +101,15 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                     </View>
                 </View>
             </FloatActionButton>
-            <DrawerLayout
-                ref={hook.ref.filterBooksDrawerRef}
-                drawerWidth={280}
+            <Drawer
+                open={hook.ui.drawerOpen}
+                onOpen={() => hook.ui.setDrawerOpen(true)}
+                onClose={() => hook.ui.setDrawerOpen(false)}
                 drawerPosition={"left"}
-                drawerBackgroundColor={"white"}
                 drawerType="front"
-
-                renderNavigationView={
+                renderDrawerContent={
                     () =>
                         <>
-                            <View style={{
-                                //borderWidth: 1,
-                                padding: 10,
-                                paddingRight: 20,
-                                width: "100%",
-                                alignItems: "flex-end"
-                            }}>
-                                <TouchableOpacity
-                                    onPress={() => hook.ref.filterBooksDrawerRef.current?.closeDrawer()}>
-                                    <Close width={25} height={25} fill="red" />
-                                </TouchableOpacity>
-                            </View>
                             <ScrollView>
                                 <ExpandToggleView label="Thể loại"
                                     onExpand={hook.event.onGenreExpand}>
@@ -239,7 +227,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                         flexDirection: "row"
                     }}>
                         <TouchableOpacity
-                            onPress={() => hook.ref.filterBooksDrawerRef.current?.openDrawer()}
+                            onPress={() => hook.ui.setDrawerOpen(true)}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
                             <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
                             <Text>Lọc</Text>
@@ -282,7 +270,7 @@ function Books(props: MaterialTopTabScreenProps<ParamListBase>) {
                         <Paging maxPage={hook.paging.maxPage} currentPage={hook.paging.currentPage} onPageNavigation={hook.paging.onPageNavigation} />
                     </View>
                 </ScrollView>
-            </DrawerLayout>
+            </Drawer>
 
         </>
     );
@@ -293,25 +281,14 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
     return (
         <>
             <PageLoader loading={hook.ui.loading} />
-            <DrawerLayout
-                ref={hook.ref.filterBookFairsDrawerRef}
-                drawerWidth={280}
+            <Drawer
+                open={hook.ui.drawerOpen}
+                onOpen={() => hook.ui.setDrawerOpen(true)}
+                onClose={() => hook.ui.setDrawerOpen(false)}
                 drawerPosition={"left"}
-                drawerBackgroundColor={"white"}
-                renderNavigationView={() =>
+                drawerType="front"
+                renderDrawerContent={() =>
                     <>
-                        <View style={{
-                            //borderWidth: 1,
-                            padding: 10,
-                            paddingRight: 20,
-                            width: "100%",
-                            alignItems: "flex-end"
-                        }}>
-                            <TouchableOpacity
-                                onPress={() => hook.ref.filterBookFairsDrawerRef.current?.closeDrawer()}>
-                                <Close width={25} height={25} fill="red" />
-                            </TouchableOpacity>
-                        </View>
                         <ScrollView>
                             <ExpandToggleView label="Thời gian">
                                 <View style={{ backgroundColor: primaryTint10 }}>
@@ -428,7 +405,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         flexDirection: "row"
                     }}>
                         <TouchableOpacity
-                            onPress={() => hook.ref.filterBookFairsDrawerRef.current?.openDrawer()}
+                            onPress={() => hook.ui.setDrawerOpen(true)}
                             style={{ flexDirection: "row", width: "50%", alignItems: "center", justifyContent: "center", borderRightColor: primaryTint1 }}>
                             <Image source={filterBlack} resizeMode="center" style={{ width: 16 }} />
                             <Text>Lọc</Text>
@@ -468,7 +445,7 @@ function BookFairs(props: MaterialTopTabScreenProps<ParamListBase>) {
                         <Paging currentPage={hook.paging.currentPage} maxPage={hook.paging.maxPage} onPageNavigation={hook.paging.onPageNavigation} />
                     </View>
                 </ScrollView>
-            </DrawerLayout>
+            </Drawer>
         </>
     );
 }
