@@ -15,7 +15,7 @@ const endPont =
             bookCombo: "/api/issuer/books/book-combo",
             bookSeries: "/api/issuer/books/book-series",
             enableBook: "/api/issuer/books/enabled-book",
-            disabledBook: "​/api​/issuer​/books​/disabled-book​"
+            disabledBook: "/api/issuer/books/disabled-book"
         },
         formats: "/api/issuers/formats"
     },
