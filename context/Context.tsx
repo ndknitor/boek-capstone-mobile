@@ -28,10 +28,11 @@ export const useProvider: () => Store = () => {
     const [totalProductQuantity, setTotalProductQuantity] = useState(0);
     const [cart, setCart] = useState<CampaignInCart[]>([]);
     const [staffCart, setStaffCart] = useState<StaffProductInCart[]>([]);
-    
+
     const addToCart = (product: MobileBookProductViewModel, quantity: number) => {
         let totalQuantity = totalProductQuantity + quantity;
-        const campaign = cart.find(c => c.campaign.id == product.campaignId);
+        const cloneCart: CampaignInCart[] = Object.create(cart);
+        const campaign = cloneCart.find(c => c.campaign.id == product.campaignId);
         if (!campaign) {
             setCart([
                 ...cart,
@@ -63,19 +64,61 @@ export const useProvider: () => Store = () => {
                 }
             ]);
             setTotalProductQuantity(totalQuantity);
+            return;
+        }
+        const issuer = campaign.issuersInCart.find(i => i.issuer.id == product.issuerId);
+        if (!issuer) {
+            campaign.issuersInCart.push({
+                issuer: product.issuer,
+                productsInCart: [
+                    {
+                        id: product.id,
+                        imageUrl: product.imageUrl,
+                        quantity: 1,
+                        title: product.title,
+                        withAudio: product.withAudio || false,
+                        withPdf: product.withPdf || false,
+                        salePrice: product.salePrice,
+                        discount: product.discount,
+                        coverPrice: product.book?.coverPrice,
+                        pdfChecked: false,
+                        audioChecked: false,
+                        audioExtraPrice: product.audioExtraPrice as number,
+                        pdfExtraPrice: product.pdfExtraPrice as number,
+                        saleQuantity: product.saleQuantity
+                    }
+                ]
+            });
+            setCart(cloneCart);
+            setTotalProductQuantity(totalQuantity);
         }
         else {
-            //const cloneCart = Object.assign({}, cart);
-            const issuer = campaign.issuersInCart.find(i => i.issuer.id == product.issuerId);
-            if (issuer) {
-                const productInCart = issuer.productsInCart.find(p => p.id == product.id);
-                if (productInCart) {
-                    productInCart.quantity++;
-                    //console.log(campaign.issuersInCart[0].productsInCart);
-                    setTotalProductQuantity(totalQuantity);
-                }
+            const productInCart = issuer.productsInCart.find(p => p.id == product.id);
+            if (productInCart) {
+                productInCart.quantity++;
+                setCart(cloneCart);
+                setTotalProductQuantity(totalQuantity);
             }
-            setCart(cart);
+            else {
+                issuer.productsInCart.push({
+                    id: product.id,
+                    imageUrl: product.imageUrl,
+                    quantity: 1,
+                    title: product.title,
+                    withAudio: product.withAudio || false,
+                    withPdf: product.withPdf || false,
+                    salePrice: product.salePrice,
+                    discount: product.discount,
+                    coverPrice: product.book?.coverPrice,
+                    pdfChecked: false,
+                    audioChecked: false,
+                    audioExtraPrice: product.audioExtraPrice as number,
+                    pdfExtraPrice: product.pdfExtraPrice as number,
+                    saleQuantity: product.saleQuantity
+                });
+                setCart(cloneCart);
+                setTotalProductQuantity(totalQuantity);
+            }
         }
     }
     const removeFromCart = (campaignId: number, issuerId: string, productId: string) => {

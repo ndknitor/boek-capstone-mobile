@@ -55,7 +55,7 @@ function CartExpand(props: CartExpandProps) {
                     <View style={{
                         padding: 10,
                         //marginBottom : 20,
-                        borderBottomWidth: issuerIndex + 1 == props.campaignInCart.issuersInCart.length ? 0 : 1,
+                        borderBottomWidth: issuerIndex + 1 == props.campaignInCart.issuersInCart.length ? 0 : 0.5,
                         borderBottomColor: primaryTint4,
                     }}>
                         <TouchableOpacity
