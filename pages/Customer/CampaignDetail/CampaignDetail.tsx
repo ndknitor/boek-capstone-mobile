@@ -11,7 +11,7 @@ import useRouter from '../../../libs/hook/useRouter';
 import LabeledImage from '../../../components/LabeledImage/LabeledImage';
 import TitleFlatBooks from '../../../components/TitleFlatBooks/TitleFlatBooks';
 import ShowMoreButton from '../../../components/ShowMoreButton/ShowMoreButton';
-import { paletteGray, paletteGrayLight, paletteGrayTint9, paletteGreen, paletteGreenBold, paletteRed, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint8, primaryTint9 } from '../../../utils/color';
+import { paletteGray, paletteGrayLight, paletteGrayTint6, paletteGrayTint9, paletteGreen, paletteGreenBold, paletteRed, primaryColor, primaryTint1, primaryTint2, primaryTint7, primaryTint8, primaryTint9 } from '../../../utils/color';
 import FadeTransition from '../../../components/FadeTransition/FadeTransition';
 import eventBusyBlack from "../../../assets/icons/event-busy-black.png";
 import LayoutModal from '../../../components/LayoutModal/LayoutModal';
@@ -129,7 +129,7 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                     }}>
                         <Text variant="h5" style={{ marginBottom: 10 }} >{hook.data.campaign?.name}</Text>
                         <View style={{ marginTop: 4, backgroundColor: hook.ui.getColor(), alignItems: "center", justifyContent: "center", width: "40%", height: 25, borderRadius: 24 }}>
-                            <Text style={{ fontSize: 13, fontWeight: "500", color: hook.ui.getTextColor() }}>{hook.data.campaign?.statusName}</Text>
+                            <Text style={{ fontSize: 13, fontWeight: "500", color: hook.ui.getTextColor() }}>{CampaignStatus.toString(hook.data.campaign?.status as number)}</Text>
                         </View>
                         <View style={{ width: "100%", alignItems: "center" }}>
                             <Image source={{ uri: hook.data.campaign?.imageUrl }} style={{ marginTop: 20, marginBottom: 20, width: "90%", height: Dimensions.get("window").width / 16 * 9 }} resizeMethod="resize" resizeMode="contain" />
@@ -220,38 +220,93 @@ function CampaignDetail(props: StackScreenProps<ParamListBase>) {
                         </View>
                     </Shadow>
 
-                    <Shadow style={{
-                        elevation: 1,
-                        marginTop: 20,
-                        backgroundColor: "white",
-                        padding: 10,
-                        borderRadius: 8
-                    }}>
-                        <View style={{ width: "100%", flexDirection: "row" }}>
-                            <View style={{ width: "85%" }}>
-                                <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Tổ chức</Text>
+                    {
+                        hook.data.campaign?.organizations &&
+                        <Shadow style={{
+                            elevation: 1,
+                            marginTop: 20,
+                            backgroundColor: "white",
+                            padding: 10,
+                            borderRadius: 8
+                        }}>
+                            <View style={{ width: "100%", flexDirection: "row" }}>
+                                <View style={{ width: "85%" }}>
+                                    <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Tổ chức</Text>
+                                </View>
+                                {
+                                    hook.data.campaign?.isRecurring &&
+                                    <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
+                                        <Button
+                                            onPress={() => push("RecurringCampaign", { data: hook.data.campaign })}
+                                            buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 30, height: 30 }}>
+                                            <Image source={navigateRightWhite} style={{ width: 25, height: 25 }} resizeMode="contain" />
+                                        </Button>
+                                    </View>
+                                }
                             </View>
-                            {
-                                hook.data.campaign?.isRecurring &&
-                                <View style={{ width: "15%", alignItems: "center", justifyContent: "center" }}>
-                                    <Button
-                                        onPress={() => push("RecurringCampaign", { data: hook.data.campaign })}
-                                        buttonStyle={{ backgroundColor: primaryTint2, borderRadius: 999, width: 30, height: 30 }}>
-                                        <Image source={navigateRightWhite} style={{ width: 25, height: 25 }} resizeMode="contain" />
-                                    </Button>
-                                </View>
-                            }
-                        </View>
-                        <FlatList
-                            horizontal
-                            data={hook.data.campaign?.organizations}
-                            renderItem={e =>
-                                <View style={{ marginRight: 20 }}>
-                                    <LabeledImage label={e.item?.name} source={{ uri: e.item.imageUrl }} />
-                                </View>
-                            } />
-                    </Shadow>
+                            <FlatList
+                                horizontal
+                                data={hook.data.campaign?.organizations}
+                                renderItem={e =>
+                                    <View style={{ marginRight: 20 }}>
+                                        <LabeledImage label={e.item?.name} source={{ uri: e.item.imageUrl }} />
+                                    </View>
+                                } />
+                        </Shadow>
+                    }
+                    {
+                        hook.data.campaign?.groups &&
+                        <Shadow style={{
+                            elevation: 1,
+                            marginTop: 20,
+                            backgroundColor: "white",
+                            padding: 10,
+                            borderRadius: 8
+                        }}>
+                            <View style={{ width: "85%" }}>
+                                <Text variant="h6" style={{ marginTop: 10, marginBottom: 10 }}>Nhóm</Text>
+                            </View>
+                            <FlatList
+                                horizontal
+                                data={hook.data.campaign?.groups}
+                                renderItem={e =>
+                                    <View style={{ marginRight: 20 }}>
+                                        <View
+                                            style={{
+                                                height: 90,
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}>
+                                            <View
+                                                style={{
+                                                    alignItems: "center",
+                                                    justifyContent: "center"
+                                                }}>
+                                                <View
+                                                    style={{
+                                                        //borderWidth: 1,
+                                                        //borderColor: paletteGrayLight,
+                                                        width: 50,
+                                                        height: 50,
+                                                        borderRadius: 999,
+                                                        overflow: "hidden",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        backgroundColor: paletteGrayTint6,
+                                                        //marginBottom: 5,
 
+                                                    }}>
+                                                    <Text>{e.item.name[0]}</Text>
+                                                </View>
+                                                <View>
+                                                    <Text style={{ fontSize: 15 }}>{e.item.name}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                } />
+                        </Shadow>
+                    }
                     <View style={{ borderWidth: 1, borderColor: primaryTint7, borderRadius: 8, padding: 10, marginTop: 20, marginBottom: 10 }}>
                         <Text style={{ fontSize: 18, fontWeight: "600", }}>Lưu ý</Text>
                         <Text style={{ fontSize: 13, }}>Boek không chịu trách nhiệm về việc đơn hàng đổi trả sách của khách hàng. Xin liên hệ về các nhà phát hành nếu liên quan về đổi trả sách.</Text>
